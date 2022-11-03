@@ -1,0 +1,46 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# ADP3300ARTZ-3.2-RL
+#
+DEF ADP3300ARTZ-3.2-RL U 0 40 Y Y 1 F N
+F0 "U" 0 200 50 H V L CNN
+F1 "ADP3300ARTZ-3.2-RL" 0 300 50 H V L CNN
+F2 "adp3300:Analog_Devices-ADP3300ARTZ-3.2-RL-Level_A" 0 400 50 H I L CNN
+F3 "" 0 500 50 H I L CNN
+F4 "Manufacturer URL" 0 600 50 H I L CNN "Component Link 1 Description"
+F5 "http://www.analog.com/en/index.html" 0 700 50 H I L CNN "Component Link 1 URL"
+F6 "Package Specification" 0 800 50 H I L CNN "Component Link 3 Description"
+F7 "http://www.analog.com/static/imported-files/data_sheets/ADG465.pdf" 0 900 50 H I L CNN "Component Link 3 URL"
+F8 "URL Link1" 0 1000 50 H I L CNN "Component Link 4 Description"
+F9 "Product URL:http://www.analog.com/en/ADP3300/productSearch.html" 0 1100 50 H I L CNN "Component Link 4 URL"
+F10 "Rev. B" 0 1200 50 H I L CNN "Datasheet Version"
+F11 "50mA" 0 1300 50 H I L CNN "Iout max"
+F12 "Surface Mount" 0 1400 50 H I L CNN "Mounting Technology"
+F13 "6-Pin Plastic Surface Mount SOT-23 Package, Body 2.9 x 1.65 mm, Pitch 0.95 mm" 0 1500 50 H I L CNN "Package Description"
+F14 "REV. A, 11/2006" 0 1600 50 H I L CNN "Package Version"
+F15 "Reel" 0 1700 50 H I L CNN "Packing"
+F16 "3.2" 0 1800 50 H I L CNN "Preset Vout Values V"
+F17 "190uA" 0 1900 50 H I L CNN "Supply Current IGND  Small Load"
+F18 "12" 0 2000 50 H I L CNN "Vin max V"
+F19 "3" 0 2100 50 H I L CNN "Vin min V"
+F20 "IC" 0 2200 50 H I L CNN "category"
+F21 "1501192" 0 2300 50 H I L CNN "ciiva ids"
+F22 "ec1eaa7e8e6dfb05" 0 2400 50 H I L CNN "library id"
+F23 "Analog Devices" 0 2500 50 H I L CNN "manufacturer"
+F24 "RT-6" 0 2600 50 H I L CNN "package"
+F25 "1391097439" 0 2700 50 H I L CNN "release date"
+F26 "E48974D4-4D40-4DBD-B901-CF36D32F5B60" 0 2800 50 H I L CNN "vault revision"
+F27 "yes" 0 2900 50 H I L CNN "imported"
+DRAW
+S 200 100 800 -600 1 1 0 f
+X GND 1 500 -700 100 U 40 40 1 1 W
+X NR 2 900 -400 100 L 40 40 1 1 P
+X ~SD~ 3 100 -200 100 R 40 40 1 1 I
+X OUT 4 900 0 100 L 40 40 1 1 W
+X IN 5 100 0 100 R 40 40 1 1 W
+X ~ERR~ 6 900 -300 100 L 40 40 1 1 C
+ENDDRAW
+ENDDEF
+#
+#End Library

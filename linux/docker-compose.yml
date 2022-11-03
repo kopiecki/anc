@@ -1,0 +1,13 @@
+version: '3'
+services:
+    anc-linux:
+        image: anc/linux
+        build: .
+        volumes:
+            - .:/opt/src
+        command: bash -c "while true; do sleep 10; done"
+        tty: true
+networks: 
+    default:
+        external:
+            name: docker-shared

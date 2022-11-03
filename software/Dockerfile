@@ -1,4 +1,4 @@
-FROM debian as arm_base
+FROM debian:bullseye AS arm_base
 
 ENV GOSU_URL https://github.com/tianon/gosu/releases/download/1.12/gosu
 COPY tools/docker/entrypoint.sh /usr/local/bin/entrypoint.sh
@@ -42,9 +42,6 @@ RUN apt-get update  \
     && ln -s /usr/bin/clang-format-9 /usr/bin/clang-format
 
 FROM arm_base
-
-RUN mkdir /opt/linux \
-    && git clone https://github.com/beagleboard/linux.git /opt/linux
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8

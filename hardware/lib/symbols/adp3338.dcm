@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ADP3338AKCZ-5-REEL
+D High Accuracy, Ultralow IQ, 1 A, Low Dropout Regulator 
+F https://www.analog.com/media/en/technical-documentation/data-sheets/adp3338.pdf
+$ENDCMP
+#
+#End Doc Library

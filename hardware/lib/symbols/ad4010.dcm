@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP AD4010BCPZ
+D 18-Bit, 2 MSPS/1 MSPS/500 kSPS,Precision, Pseudo Differential, SAR ADCs
+F https://www.analog.com/media/en/technical-documentation/data-sheets/ad4002-4006-4010.pdf
+$ENDCMP
+#
+#End Doc Library

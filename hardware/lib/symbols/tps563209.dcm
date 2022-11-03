@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP TPS563209DDCR
+D 4.5V to 17 V Input, 2-A, 3-A Synchronous Step-Down Voltage Regulator in 6 pin SOT-23
+F https://www.ti.com/lit/ds/symlink/tps562209.pdf?ts=1667330996290&ref_url=https%253A%252F%252Fwww.google.com%252F
+$ENDCMP
+#
+#End Doc Library
