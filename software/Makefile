@@ -1,25 +1,25 @@
-AT						:= @
-SHELL					:= bash
-NCORES					:= $(shell nproc)
+AT := @
+SHELL := bash
+NCORES := $(shell nproc)
 
-ROOT_DIR				:= $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-DOCKER_SERVICE_NAME		:= anc-software
+DOCKER_SERVICE_NAME := anc-software
 
-SYSTEM_DIR				:= $(ROOT_DIR)/system
-SYSTEM_PATCHES_DIR		:= $(SYSTEM_DIR)/patches
-SYSTEM_CONFIG_DIR		:= $(SYSTEM_DIR)/config
-SYSTEM_LINUX_DIR		:= $(SYSTEM_DIR)/linux
-SYSTEM_REPO				:= https://github.com/beagleboard/linux.git
-SYSTEM_TAG				:= 5.10.140-ti-rt-r52
-SYSTEM_MENUCONFIG		:= n
-SYSTEM_CONFIGURE		:= n
-SYSTEM_DEFAULT_CONFIG	:= bb.org_defconfig
-SYSTEM_ARCH				:= arm
-SYSTEM_BUILD_OUTPUT		:= zImage modules dtbs
+SYSTEM_DIR := $(ROOT_DIR)/system
+SYSTEM_PATCHES_DIR := $(SYSTEM_DIR)/patches
+SYSTEM_CONFIG_DIR := $(SYSTEM_DIR)/config
+SYSTEM_LINUX_DIR := $(SYSTEM_DIR)/linux
+SYSTEM_REPO := https://github.com/beagleboard/linux.git
+SYSTEM_TAG := 5.10.140-ti-rt-r52
+SYSTEM_MENUCONFIG := n
+SYSTEM_CONFIGURE := n
+SYSTEM_DEFAULT_CONFIG := bb.org_defconfig
+SYSTEM_ARCH := arm
+SYSTEM_BUILD_OUTPUT := zImage modules dtbs
 
-TOOLCHAIN				:= /opt/toolchain/gcc-arm-8.2-2019.01-x86_64-arm-linux-gnueabihf/bin
-CROSS_COMPILER			:= $(TOOLCHAIN)/arm-linux-gnueabihf-
+TOOLCHAIN := /opt/toolchain/gcc-arm-8.2-2019.01-x86_64-arm-linux-gnueabihf/bin
+CROSS_COMPILER := $(TOOLCHAIN)/arm-linux-gnueabihf-
 
 #------------------------------------------------------------------------------
 
