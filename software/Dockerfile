@@ -1,8 +1,8 @@
-FROM debian:bullseye AS arm_base
+FROM debian:bullseye AS base
 
 ENV GOSU_URL https://github.com/tianon/gosu/releases/download/1.12/gosu
 COPY tools/docker/entrypoint.sh /usr/local/bin/entrypoint.sh
- 
+
 RUN apt-get update \
     && apt-get -y install \
         gnupg2 \
@@ -16,36 +16,54 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && chmod +x /usr/local/bin/gosu \
     && chmod +x /usr/local/bin/entrypoint.sh
- 
-RUN apt-get update  \
-    && apt-get install -y \
-        apt-transport-https \
-        software-properties-common wget
 
-RUN apt-get update  \
+RUN apt-get update \
     && apt-get install -y \
-        git \
-        git-lfs \
-        ruby \
-        cmake \
-        ninja-build \
-        clang-format-9 \
-        clang-tidy \
-        lcov \
-        python3-pip \
-        python3-setuptools \
         sudo \
-        gcc-arm-linux-gnueabihf \
+        apt-transport-https \
+        software-properties-common \
+        wget \
+        git \
+        lcov \
+        xz-utils \
+        unzip \
+        bc \
         bison \
         flex \
-    && gem install ceedling -v 0.30 \
-    && ln -s /usr/bin/clang-format-9 /usr/bin/clang-format
+        libgmp3-dev \
+        libmpc-dev \
+        libssl-dev \
+        cpio \
+        lzop \
+        make \
+        libc6-dev \
+        libncurses5-dev \
+        kmod \
+        gnutls-bin \
+        build-essential \
+    && apt-get clean
 
-FROM arm_base
+FROM base
+
+RUN mkdir -p /opt/toolchain/ \
+    && wget 'https://developer.arm.com/-/media/Files/downloads/gnu-a/8.2-2019.01/gcc-arm-8.2-2019.01-x86_64-arm-linux-gnueabihf.tar.xz' \
+    && tar -C /opt/toolchain -xf gcc-arm-8.2-2019.01-x86_64-arm-linux-gnueabihf.tar.xz \
+    && rm -rf gcc-arm-8.2-2019.01-x86_64-arm-linux-gnueabihf.tar.xz
+
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2-Linux-x86_64.sh \
+    && chmod +x cmake-3.19.2-Linux-x86_64.sh \
+    && ./cmake-3.19.2-Linux-x86_64.sh --skip-license --prefix=/usr \
+    && rm cmake-3.19.2-Linux-x86_64.sh
+
+RUN wget -O - https://apt.llvm.org/llvm.sh > /tmp/clang_install.sh && bash /tmp/clang_install.sh 12 \
+    && apt-get update && apt-get install -y clang-format-12 \
+    && ln -s /usr/bin/clang-format-12 /usr/bin/clang-format
+
+RUN chmod -R 777 /root
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
 WORKDIR /opt/src
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["bash"]
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
+CMD [ "bash" ]
