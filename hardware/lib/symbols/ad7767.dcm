@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP AD7767BRUZ
+D 24-Bit, 8.5 mW, 109 dB, 128 kSPS/64 kSPS/32 kSPS ADCs
+F https://www.analog.com/media/en/technical-documentation/data-sheets/AD7767.pdf
+$ENDCMP
+#
+#End Doc Library

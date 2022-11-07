@@ -1,96 +1,69 @@
-AT := @
-SHELL := bash
-NCORES := $(shell nproc)
+PROJECT_NAME := anc
+
+CORES := $(shell nproc)
 
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+BUILD_DIR := build
+TOOLCHAIN := cmake/toolchain/arm_linux.cmake
 
 DOCKER_SERVICE_NAME := anc-software
 
-SYSTEM_DIR := $(ROOT_DIR)/system
-SYSTEM_PATCHES_DIR := $(SYSTEM_DIR)/patches
-SYSTEM_CONFIG_DIR := $(SYSTEM_DIR)/config
-SYSTEM_LINUX_DIR := $(SYSTEM_DIR)/linux
-SYSTEM_REPO := https://github.com/beagleboard/linux.git
-SYSTEM_TAG := 5.10.140-ti-rt-r52
-SYSTEM_MENUCONFIG := n
-SYSTEM_CONFIGURE := n
-SYSTEM_DEFAULT_CONFIG := bb.org_defconfig
-SYSTEM_ARCH := arm
-SYSTEM_BUILD_OUTPUT := zImage modules dtbs
-
-TOOLCHAIN := /opt/toolchain/gcc-arm-8.2-2019.01-x86_64-arm-linux-gnueabihf/bin
-CROSS_COMPILER := $(TOOLCHAIN)/arm-linux-gnueabihf-
+DEBUG := y
 
 #------------------------------------------------------------------------------
 
-docker:
-	$(AT) docker-compose run --rm -e \
+ifeq ($(DEBUG),y)
+	CMAKE_CONF_FLAGS += -DCMAKE_BUILD_TYPE=Debug
+else
+	CMAKE_CONF_FLAGS += -DCMAKE_BUILD_TYPE=Release
+endif
+
+CMAKE_CONF_FLAGS += -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN)
+CMAKE_CONF_FLAGS += -DPROJECT_NAME=$(PROJECT_NAME)
+
+CMAKE := cmake
+CMAKE_CONFIGURE := $(CMAKE) $(CMAKE_CONF_FLAGS) ..
+CMAKE_BUILD := $(CMAKE) --build . $(CMAKE_BUILD_FLAGS) -- -j$(NCORES)
+
+#------------------------------------------------------------------------------
+
+default: build
+.PHONY: default
+
+#------------------------------------------------------------------------------
+
+build: | .mk-build-dir
+	@ cd $(BUILD_DIR) && \
+	        [ -f CMakeCache.txt ] \
+	            && echo "Build project $(PROJECT_NAME)" \
+	            || $(CMAKE_CONFIGURE) && \
+	        $(CMAKE_BUILD)
+.PHONY: build
+
+#------------------------------------------------------------------------------
+
+.mk-build-dir:
+	@ mkdir -p $(BUILD_DIR)
+.PHONY: .mk-build-dir
+
+#------------------------------------------------------------------------------
+
+docker-run:
+	@ docker-compose run --rm -e \
 		LOCAL_USER_ID=$(shell id -u) \
-		$(DOCKER_SERVICE_NAME) $(SHELL)
-.PHONY: docker
+		$(DOCKER_SERVICE_NAME) bash
+.PHONY: docker-run
 
 #------------------------------------------------------------------------------
 
 docker-build:
-	$(AT) docker-compose build
+	@ docker-compose build
 .PHONY: docker-build
 
 #------------------------------------------------------------------------------
 
-system: | .system-menuconfig
-	$(AT) cd $(SYSTEM_DIR) && \
-	make \
-		ARCH=$(SYSTEM_ARCH) \
-		CROSS_COMPILE=$(CROSS_COMPILER) \
-		$(SYSTEM_BUILD_OUTPUT) \
-		-j$(NCORES)
-.PHONY: system
-
-#------------------------------------------------------------------------------
-
-.system-menuconfig: | .system-configure
-ifeq ($(SYSTEM_MENUCONFIG),y)
-	$(AT) cd $(SYSTEM_DIR) && \
-	make \
-		ARCH=$(SYSTEM_ARCH) \
-		CROSS_COMPILE=$(CROSS_COMPILER) \
-		menuconfig \
-		-j$(NCORES)
-else
-	$(AT) echo "Omitting menuconfig"
-endif
-.PHONY: .system-menuconfig
-
-#------------------------------------------------------------------------------
-
-.system-configure: | .system-fetch
-ifeq ($(SYSTEM_CONFIGURE),y)
-	$(AT) echo "Configuring with $(SYSTEM_CONFIG)" && \
-	cd $(SYSTEM_DIR) && \
-		echo "Config: $(SYSTEM_CONFIG)" && \
-		make \
-			ARCH=$(SYSTEM_ARCH) \
-			CROSS_COMPILE=$(CROSS_COMPILER) \
-			$(SYSTEM_CONFIG)
-else
-	$(AT) echo "Copying config file from $(SYSTEM_CONFIG_DIR)" && \
-	cp -r $(SYSTEM_CONFIG_DIR)/.config $(SYSTEM_DIR)
-endif
-.PHONY: .system-configure
-
-#------------------------------------------------------------------------------
-
-.system-fetch:
-	$(AT) if [ ! -d "$(SYSTEM_LINUX_DIR)" ]; then \
-		echo "Fetching from $(SYSTEM_REPO), tag: $(SYSTEM_TAG)" && \
-		git clone --depth 1 --branch $(SYSTEM_TAG) $(SYSTEM_REPO); \
-	fi
-.PHONY: .system-fetch
-
-#------------------------------------------------------------------------------
-
-clean-system:
-	$(AT) rm -rf $(SYSTEM_DIR)
-.PHONY: clean-system
+clean:
+	@ rm -rf "$(BUILD_DIR)"
+.PHONY: clean
 
 #------------------------------------------------------------------------------

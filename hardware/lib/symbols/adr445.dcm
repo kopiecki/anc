@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ADR445ARZ
+D Ultralow Noise, LDO XFET Voltage References with Current Sink and Source
+F https://www.mouser.pl/datasheet/2/609/adr440_441_443_444_445-1529927.pdf
+$ENDCMP
+#
+#End Doc Library

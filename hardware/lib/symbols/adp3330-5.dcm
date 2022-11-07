@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ADP3330ARTZ-2.5-R7
+D High Accuracy, Ultralow IQ, 200 mA,SOT-23, anyCAP Low Dropout Regulator
+F https://www.mouser.pl/datasheet/2/609/ADP3330-1503295.pdf
+$ENDCMP
+#
+#End Doc Library
