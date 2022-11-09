@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP AD7680BRJZ-REEL7
+D 3 mW, 100 kSPS, 16-Bit ADC in 6-Lead SOT-23
+F https://www.mouser.pl/datasheet/2/609/AD7680-1502134.pdf
+$ENDCMP
+#
+#End Doc Library

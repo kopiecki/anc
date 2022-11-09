@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP AD5541LRZ
+D 7 V to 5.5 V, Serial-Input,Voltage-Output, 16-Bit DACs
+F https://www.analog.com/media/en/technical-documentation/data-sheets/AD5541_5542.pdf
+$ENDCMP
+#
+#End Doc Library
