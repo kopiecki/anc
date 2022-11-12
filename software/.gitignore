@@ -1,2 +1,4 @@
 build
 system/linux
+system/u-boot
+system/rootfs

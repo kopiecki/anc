@@ -1,20 +1,47 @@
-CORES := $(shell nproc)
+NCORES := 4
+
+TARGET ?=
+T ?= 
 
 SYSTEM_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-SYSTEM_PATCHES_DIR := $(SYSTEM_DIR)/patches
-SYSTEM_CONFIG_DIR := $(SYSTEM_DIR)/config
-SYSTEM_LINUX_DIR := $(SYSTEM_DIR)/linux
 
-SYSTEM_REPO := https://github.com/beagleboard/linux.git
-SYSTEM_TAG := 5.10.140-ti-rt-r52
-SYSTEM_MENUCONFIG := n
-SYSTEM_CONFIGURE := n
-SYSTEM_DEFAULT_CONFIG := bb.org_defconfig
-SYSTEM_ARCH := arm
-SYSTEM_BUILD_OUTPUT := zImage modules dtbs
+LINUX_DIR := $(SYSTEM_DIR)/linux
+UBOOT_DIR := $(SYSTEM_DIR)/u-boot
+ROOTFS_DIR := $(SYSTEM_DIR)/rootfs
+DEPLOY_DIR := $(SYSTEM_DIR)/deploy
 
+LINUX_REPO := https://github.com/beagleboard/linux.git
+UBOOT_REPO := https://github.com/u-boot/u-boot.git
+
+ROOTFS_HTTPS := https://rcn-ee.com/rootfs/eewiki/minfs/debian-11.5-minimal-armhf-2022-10-06.tar.xz
+ROOTFS_TAR := debian-11.5-minimal-armhf-2022-10-06.tar.xz
+
+UBOOT_DEFAULT_CONFIG := am335x_evm_defconfig
+LINUX_DEFAULT_CONFIG := bb.org_defconfig
+
+LINUX_TAG := 5.10.140-ti-rt-r52
+UBOOT_TAG := v2023.01-rc1
+
+DEVICE_TREE := am335x-boneblack.dtb
+
+LINUX_BUILD_OUTPUT :=
+
+ARCH := arm
 TOOLCHAIN := /opt/toolchain/gcc-arm-8.2-2019.01-x86_64-arm-linux-gnueabihf/bin
 CROSS_COMPILER := $(TOOLCHAIN)/arm-linux-gnueabihf-
+
+#------------------------------------------------------------------------------
+
+ifndef TARGET
+$(error TARGET not specified)
+else
+	T := $(shell echo $(TARGET) | tr a-z A-Z)
+	DIR := $($(T)_DIR)
+	REPO := $($(T)_REPO)
+	TAG := $($(T)_TAG)
+	CONFIG := $($(T)_DEFAULT_CONFIG)
+	OUTPUT := $($(T)_OUTPUT)
+endif
 
 #------------------------------------------------------------------------------
 
@@ -23,60 +50,67 @@ default: build
 
 #------------------------------------------------------------------------------
 
-build: | .menuconfig
-	@ cd $(SYSTEM_LINUX_DIR) && \
-	make \
-		ARCH=$(SYSTEM_ARCH) \
-		CROSS_COMPILE=$(CROSS_COMPILER) \
-		$(SYSTEM_BUILD_OUTPUT) \
-		-j$(NCORES)
+build:
+ifeq ($(TARGET), rootfs)
+	$(error Using premade rootfs)
+else
+	@ cd $(DIR) && \
+		make \
+			ARCH=$(ARCH) \
+			CROSS_COMPILE=$(CROSS_COMPILER) \
+			$(OUTPUT) \
+			-j$(NCORES)
+endif
 .PHONY: build
 
 #------------------------------------------------------------------------------
 
-.menuconfig: | .configure
-ifeq ($(SYSTEM_MENUCONFIG),y)
-	@ cd $(SYSTEM_LINUX_DIR) && \
+menuconfig:
+ifeq ($(TARGET), rootfs)
+	$(error Using premade rootfs)
+else
+	@ cd $(DIR) && \
 	make \
-		ARCH=$(SYSTEM_ARCH) \
+		ARCH=$(ARCH) \
 		CROSS_COMPILE=$(CROSS_COMPILER) \
 		menuconfig \
 		-j$(NCORES)
-else
-	@ echo "Omitting menuconfig"
 endif
-.PHONY: .menuconfig
+.PHONY: menuconfig
 
 #------------------------------------------------------------------------------
 
-.configure: | .fetch
-ifeq ($(SYSTEM_CONFIGURE),y)
-	@ echo "Configuring with $(SYSTEM_CONFIG)" && \
-	cd $(SYSTEM_LINUX_DIR) && \
-		echo "Config: $(SYSTEM_CONFIG)" && \
+configure:
+ifeq ($(TARGET), rootfs)
+	$(error Using premade rootfs)
+else
+	@ cd $(DIR) && \
 		make \
-			ARCH=$(SYSTEM_ARCH) \
+			ARCH=$(ARCH) \
 			CROSS_COMPILE=$(CROSS_COMPILER) \
-			$(SYSTEM_CONFIG)
-else
-	@ echo "Copying config file from $(SYSTEM_CONFIG_DIR)" && \
-	cp -r $(SYSTEM_CONFIG_DIR)/.config $(SYSTEM_LINUX_DIR)
+			$(CONFIG) \
+			-j$(NCORES)
 endif
-.PHONY: .configure
+.PHONY: configure
 
 #------------------------------------------------------------------------------
 
-.fetch:
-	@ if [ ! -d "$(SYSTEM_LINUX_DIR)" ]; then \
-		echo "Fetching from $(SYSTEM_REPO), tag: $(SYSTEM_TAG)" && \
-		git clone --depth 1 --branch $(SYSTEM_TAG) $(SYSTEM_REPO); \
-	fi
-.PHONY: .fetch
+fetch:
+ifeq ($(TARGET), rootfs)
+	@ mkdir -p $(DIR) && \
+	cd $(DIR) && \
+	wget $(ROOTFS_HTTPS) && \
+	tar -xf $(ROOTFS_TAR) && \
+	rm $(ROOTFS_TAR)
+else
+	@ git clone --depth 1 --branch $(TAG) $(REPO)
+endif
+.PHONY: fetch
 
 #------------------------------------------------------------------------------
 
 clean:
-	@ rm -rf $(SYSTEM_LINUX_DIR)
+	@ rm -rf $(DIR)
 .PHONY: clean
 
 #------------------------------------------------------------------------------

@@ -27,6 +27,8 @@ RUN apt-get update \
         lcov \
         xz-utils \
         unzip \
+        file \
+        rsync \
         bc \
         bison \
         flex \
