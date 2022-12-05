@@ -1,0 +1,13 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP LTC3261EMSE
+D High Voltage, Low Quiescent Current Inverting Charge Pump
+F https://www.analog.com/media/en/technical-documentation/data-sheets/3261fb.pdf
+$ENDCMP
+#
+$CMP ltc3261emse-pbf
+D High Voltage, Low Quiescent Current Inverting Charge Pump
+F https://www.analog.com/media/en/technical-documentation/data-sheets/3261fb.pdf
+$ENDCMP
+#
+#End Doc Library
