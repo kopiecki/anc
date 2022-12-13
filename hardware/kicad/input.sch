@@ -1810,18 +1810,6 @@ F 3 "~" H 10450 2000 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Connection ~ 10250 2000
-$Comp
-L Connector:TestPoint TP17
-U 1 1 639FFE9B
-P 10250 5000
-F 0 "TP17" V 10204 5188 50  0000 L CNN
-F 1 "TestPoint" V 10295 5188 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 10450 5000 50  0001 C CNN
-F 3 "~" H 10450 5000 50  0001 C CNN
-	1    10250 5000
-	0    1    1    0   
-$EndComp
-Connection ~ 10250 5000
 Wire Wire Line
 	10250 4750 10250 5000
 $Comp

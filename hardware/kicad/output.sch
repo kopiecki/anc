@@ -22,19 +22,6 @@ Wire Wire Line
 	7500 2200 7600 2200
 Wire Wire Line
 	7050 2200 7200 2200
-$Comp
-L Connector:XLR3 J?
-U 1 1 63D5E103
-P 9350 2650
-AR Path="/63D5E103" Ref="J?"  Part="1" 
-AR Path="/63A64E34/63D5E103" Ref="J4"  Part="1" 
-F 0 "J4" H 9350 3015 50  0000 C CNN
-F 1 "XLR3" H 9350 2924 50  0000 C CNN
-F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3FAH2_Horizontal" H 9350 2650 50  0001 C CNN
-F 3 " ~" H 9350 2650 50  0001 C CNN
-	1    9350 2650
-	-1   0    0    1   
-$EndComp
 Text Notes 8000 3350 0    50   ~ 0
 Single ended to differential. \nSame RC and CR combination as input.
 Text Notes 5300 1050 0    50   ~ 0
@@ -1325,32 +1312,8 @@ $EndComp
 Connection ~ 3200 4150
 Wire Wire Line
 	3200 4150 3300 4150
-$Comp
-L Connector:TestPoint TP20
-U 1 1 63B88DC1
-P 4150 1100
-F 0 "TP20" H 4100 1300 50  0000 L CNN
-F 1 "TestPoint" H 4050 1400 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 4350 1100 50  0001 C CNN
-F 3 "~" H 4350 1100 50  0001 C CNN
-	1    4150 1100
-	1    0    0    -1  
-$EndComp
-Connection ~ 4150 1100
 Wire Wire Line
 	4150 1100 4550 1100
-$Comp
-L Connector:TestPoint TP21
-U 1 1 63B9F4CE
-P 4200 3950
-F 0 "TP21" H 4150 4150 50  0000 L CNN
-F 1 "TestPoint" H 4100 4250 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 4400 3950 50  0001 C CNN
-F 3 "~" H 4400 3950 50  0001 C CNN
-	1    4200 3950
-	1    0    0    -1  
-$EndComp
-Connection ~ 4200 3950
 Connection ~ 2950 2000
 Wire Wire Line
 	2650 2000 2950 2000
@@ -1509,19 +1472,6 @@ Wire Wire Line
 Wire Wire Line
 	8800 2000 9100 2000
 Connection ~ 8800 2000
-$Comp
-L Connector:XLR3 J?
-U 1 1 63EE16E1
-P 9400 5500
-AR Path="/63EE16E1" Ref="J?"  Part="1" 
-AR Path="/63A64E34/63EE16E1" Ref="J3"  Part="1" 
-F 0 "J3" H 9400 5865 50  0000 C CNN
-F 1 "XLR3" H 9400 5774 50  0000 C CNN
-F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3FAH2_Horizontal" H 9400 5500 50  0001 C CNN
-F 3 " ~" H 9400 5500 50  0001 C CNN
-	1    9400 5500
-	-1   0    0    1   
-$EndComp
 $Comp
 L Device:C C?
 U 1 1 63EE16E7
@@ -1721,4 +1671,30 @@ Wire Notes Line
 	1750 6400 10200 6400
 Wire Notes Line
 	1750 700  10200 700 
+$Comp
+L Connector:XLR3 J?
+U 1 1 63D5E103
+P 9350 2650
+AR Path="/63D5E103" Ref="J?"  Part="1" 
+AR Path="/63A64E34/63D5E103" Ref="ANIT_OUT1"  Part="1" 
+F 0 "ANIT_OUT1" H 9400 3000 50  0000 C CNN
+F 1 "XLR3" H 9350 2924 50  0000 C CNN
+F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3FAH2_Horizontal" H 9350 2650 50  0001 C CNN
+F 3 " ~" H 9350 2650 50  0001 C CNN
+	1    9350 2650
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:XLR3 J?
+U 1 1 63EE16E1
+P 9400 5500
+AR Path="/63EE16E1" Ref="J?"  Part="1" 
+AR Path="/63A64E34/63EE16E1" Ref="NOISE_OUT1"  Part="1" 
+F 0 "NOISE_OUT1" H 9500 5850 50  0000 C CNN
+F 1 "XLR3" H 9400 5774 50  0000 C CNN
+F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3FAH2_Horizontal" H 9400 5500 50  0001 C CNN
+F 3 " ~" H 9400 5500 50  0001 C CNN
+	1    9400 5500
+	-1   0    0    1   
+$EndComp
 $EndSCHEMATC

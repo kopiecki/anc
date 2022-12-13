@@ -14,19 +14,6 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L ad5541:AD5541LRZ U?
-U 1 1 63C98779
-P 7000 4450
-AR Path="/63C98779" Ref="U?"  Part="1" 
-AR Path="/63B0C660/63C98779" Ref="U17"  Part="1" 
-F 0 "U17" H 7650 4800 60  0000 C CNN
-F 1 "AD5541LRZ" H 7650 4700 60  0000 C CNN
-F 2 "ad5541:AD5541LRZ" H 7800 4690 60  0001 C CNN
-F 3 "https://www.analog.com/media/en/technical-documentation/data-sheets/AD5541_5542.pdf" H 7000 4450 60  0001 C CNN
-	1    7000 4450
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR?
 U 1 1 63C98780
 P 3450 3800
@@ -224,7 +211,6 @@ Wire Wire Line
 	6800 5450 6800 5300
 Wire Wire Line
 	7150 5350 7150 5450
-Connection ~ 7150 5450
 Wire Wire Line
 	7150 4850 6800 4850
 Connection ~ 6800 5450
@@ -248,8 +234,6 @@ Wire Notes Line
 	5850 1900 9200 1900
 Text Notes 8550 2100 0    99   ~ 20
 2 x DAC
-Text Label 5050 2400 2    50   ~ 0
-FS
 Text Label 5450 2500 2    50   ~ 0
 RX1
 Text Label 5100 2600 2    50   ~ 0
@@ -275,17 +259,6 @@ TX2
 Text Label 8400 5450 2    50   ~ 0
 MCLK
 $Comp
-L ad7680:AD7680BRJZ-REEL7 U14
-U 1 1 63D79CCE
-P 3650 2550
-F 0 "U14" H 4325 2957 60  0000 C CNN
-F 1 "AD7680BRJZ-REEL7" H 4325 2851 60  0000 C CNN
-F 2 "ad7680:AD7680BRJZ-REEL7" H 4200 2790 60  0001 C CNN
-F 3 "https://www.mouser.pl/datasheet/2/609/AD7680-1502134.pdf" H 3800 2550 60  0001 C CNN
-	1    3650 2550
-	1    0    0    -1  
-$EndComp
-$Comp
 L ad7680:AD7680BRJZ-REEL7 U15
 U 1 1 63D7D703
 P 3650 3650
@@ -296,18 +269,6 @@ F 3 "https://www.mouser.pl/datasheet/2/609/AD7680-1502134.pdf" H 3800 3650 60  0
 	1    3650 3650
 	1    0    0    -1  
 $EndComp
-$Comp
-L ad5541:AD5541LRZ U16
-U 1 1 63E4272F
-P 7000 2750
-F 0 "U16" H 7650 3157 60  0000 C CNN
-F 1 "AD5541LRZ" H 7650 3051 60  0000 C CNN
-F 2 "ad5541:AD5541LRZ" H 7650 2990 60  0001 C CNN
-F 3 "https://www.analog.com/media/en/technical-documentation/data-sheets/AD5541_5542.pdf" H 7150 1900 60  0001 C CNN
-	1    7000 2750
-	1    0    0    -1  
-$EndComp
-Connection ~ 7150 3750
 Wire Notes Line
 	2750 4700 2750 6050
 Wire Notes Line
@@ -534,177 +495,17 @@ Wire Notes Line
 Wire Notes Line
 	5850 1900 5850 6050
 Wire Wire Line
-	4850 2500 5200 2500
-$Comp
-L Connector:TestPoint TP26
-U 1 1 63C32E7E
-P 4850 2400
-F 0 "TP26" H 4900 2650 50  0000 L CNN
-F 1 "TestPoint" H 4900 2550 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5050 2400 50  0001 C CNN
-F 3 "~" H 5050 2400 50  0001 C CNN
-	1    4850 2400
-	1    0    0    -1  
-$EndComp
-Connection ~ 4850 2400
-$Comp
-L Connector:TestPoint TP27
-U 1 1 63C33D77
-P 4850 2600
-F 0 "TP27" H 4800 2700 50  0000 R CNN
-F 1 "TestPoint" H 4800 2800 50  0000 R CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5050 2600 50  0001 C CNN
-F 3 "~" H 5050 2600 50  0001 C CNN
-	1    4850 2600
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
 	4850 2600 5100 2600
-Connection ~ 4850 2600
-$Comp
-L Connector:TestPoint TP30
-U 1 1 63C37A1F
-P 5200 2500
-F 0 "TP30" H 5150 2600 50  0000 R CNN
-F 1 "TestPoint" H 5150 2700 50  0000 R CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5400 2500 50  0001 C CNN
-F 3 "~" H 5400 2500 50  0001 C CNN
-	1    5200 2500
-	-1   0    0    1   
-$EndComp
-Connection ~ 5200 2500
-Wire Wire Line
-	5200 2500 5450 2500
-$Comp
-L Connector:TestPoint TP28
-U 1 1 63C3A68F
-P 4850 3500
-F 0 "TP28" H 4900 3750 50  0000 L CNN
-F 1 "TestPoint" H 4900 3650 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5050 3500 50  0001 C CNN
-F 3 "~" H 5050 3500 50  0001 C CNN
-	1    4850 3500
-	1    0    0    -1  
-$EndComp
-Connection ~ 4850 3500
 Wire Wire Line
 	4850 3500 5050 3500
-$Comp
-L Connector:TestPoint TP29
-U 1 1 63C43738
-P 4850 3700
-F 0 "TP29" H 4800 3800 50  0000 R CNN
-F 1 "TestPoint" H 4800 3900 50  0000 R CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5050 3700 50  0001 C CNN
-F 3 "~" H 5050 3700 50  0001 C CNN
-	1    4850 3700
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	4850 3700 5100 3700
-Connection ~ 4850 3700
-Wire Wire Line
-	4850 3600 5200 3600
-$Comp
-L Connector:TestPoint TP31
-U 1 1 63C545AE
-P 5200 3600
-F 0 "TP31" H 5150 3700 50  0000 R CNN
-F 1 "TestPoint" H 5150 3800 50  0000 R CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5400 3600 50  0001 C CNN
-F 3 "~" H 5400 3600 50  0001 C CNN
-	1    5200 3600
-	-1   0    0    1   
-$EndComp
-Connection ~ 5200 3600
-Wire Wire Line
-	5200 3600 5500 3600
 Wire Wire Line
 	8150 5250 8350 5250
-$Comp
-L Connector:TestPoint TP35
-U 1 1 63C61239
-P 8150 5450
-F 0 "TP35" H 8100 5550 50  0000 R CNN
-F 1 "TestPoint" H 8100 5650 50  0000 R CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8350 5450 50  0001 C CNN
-F 3 "~" H 8350 5450 50  0001 C CNN
-	1    8150 5450
-	-1   0    0    1   
-$EndComp
-$Comp
-L Connector:TestPoint TP33
-U 1 1 63C65A50
-P 8150 3750
-F 0 "TP33" H 8100 3850 50  0000 R CNN
-F 1 "TestPoint" H 8100 3950 50  0000 R CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8350 3750 50  0001 C CNN
-F 3 "~" H 8350 3750 50  0001 C CNN
-	1    8150 3750
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	8150 3750 8400 3750
-Connection ~ 8150 3750
 Wire Wire Line
 	8150 5450 8400 5450
-Connection ~ 8150 5450
-$Comp
-L Connector:TestPoint TP34
-U 1 1 63C71FB5
-P 8150 5250
-F 0 "TP34" H 8200 5500 50  0000 L CNN
-F 1 "TestPoint" H 8200 5400 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8350 5250 50  0001 C CNN
-F 3 "~" H 8350 5250 50  0001 C CNN
-	1    8150 5250
-	1    0    0    -1  
-$EndComp
-Connection ~ 8150 5250
-$Comp
-L Connector:TestPoint TP32
-U 1 1 63C75776
-P 8150 3550
-F 0 "TP32" H 8200 3800 50  0000 L CNN
-F 1 "TestPoint" H 8200 3700 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8350 3550 50  0001 C CNN
-F 3 "~" H 8350 3550 50  0001 C CNN
-	1    8150 3550
-	1    0    0    -1  
-$EndComp
-Connection ~ 8150 3550
-Wire Wire Line
-	8150 5350 8500 5350
-$Comp
-L Connector:TestPoint TP37
-U 1 1 63C818EA
-P 8500 5350
-F 0 "TP37" H 8450 5450 50  0000 R CNN
-F 1 "TestPoint" H 8450 5550 50  0000 R CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8700 5350 50  0001 C CNN
-F 3 "~" H 8700 5350 50  0001 C CNN
-	1    8500 5350
-	-1   0    0    1   
-$EndComp
-Connection ~ 8500 5350
-Wire Wire Line
-	8500 5350 8800 5350
-$Comp
-L Connector:TestPoint TP36
-U 1 1 63C84700
-P 8500 3650
-F 0 "TP36" H 8450 3750 50  0000 R CNN
-F 1 "TestPoint" H 8450 3850 50  0000 R CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8700 3650 50  0001 C CNN
-F 3 "~" H 8700 3650 50  0001 C CNN
-	1    8500 3650
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	8150 3650 8500 3650
-Connection ~ 8500 3650
-Wire Wire Line
-	8500 3650 8750 3650
 Wire Wire Line
 	4000 5200 4150 5200
 Wire Wire Line
@@ -773,4 +574,51 @@ F 3 "~" H 6400 2550 50  0001 C CNN
 	1    6400 2550
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	8150 3650 8750 3650
+Connection ~ 7150 3750
+$Comp
+L ad5541:AD5541LRZ U16
+U 1 1 63E4272F
+P 7000 2750
+F 0 "U16" H 7650 3157 60  0000 C CNN
+F 1 "AD5541LRZ" H 7650 3051 60  0000 C CNN
+F 2 "ad5541:AD5541LRZ" H 7650 2990 60  0001 C CNN
+F 3 "https://www.analog.com/media/en/technical-documentation/data-sheets/AD5541_5542.pdf" H 7150 1900 60  0001 C CNN
+	1    7000 2750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8150 5350 8800 5350
+Connection ~ 7150 5450
+$Comp
+L ad5541:AD5541LRZ U?
+U 1 1 63C98779
+P 7000 4450
+AR Path="/63C98779" Ref="U?"  Part="1" 
+AR Path="/63B0C660/63C98779" Ref="U17"  Part="1" 
+F 0 "U17" H 7650 4800 60  0000 C CNN
+F 1 "AD5541LRZ" H 7650 4700 60  0000 C CNN
+F 2 "ad5541:AD5541LRZ" H 7800 4690 60  0001 C CNN
+F 3 "https://www.analog.com/media/en/technical-documentation/data-sheets/AD5541_5542.pdf" H 7000 4450 60  0001 C CNN
+	1    7000 4450
+	1    0    0    -1  
+$EndComp
+Text Label 5050 2400 2    50   ~ 0
+FS
+Wire Wire Line
+	4850 2500 5450 2500
+$Comp
+L ad7680:AD7680BRJZ-REEL7 U14
+U 1 1 63D79CCE
+P 3650 2550
+F 0 "U14" H 4325 2957 60  0000 C CNN
+F 1 "AD7680BRJZ-REEL7" H 4325 2851 60  0000 C CNN
+F 2 "ad7680:AD7680BRJZ-REEL7" H 4200 2790 60  0001 C CNN
+F 3 "https://www.mouser.pl/datasheet/2/609/AD7680-1502134.pdf" H 3800 2550 60  0001 C CNN
+	1    3650 2550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4850 3600 5500 3600
 $EndSCHEMATC

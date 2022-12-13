@@ -721,17 +721,6 @@ F 3 "~" H 5150 3550 50  0001 C CNN
 	1    4950 3550
 	0    1    1    0   
 $EndComp
-$Comp
-L Connector:TestPoint TP13
-U 1 1 6390DA47
-P 8600 2900
-F 0 "TP13" H 8550 3100 50  0000 L CNN
-F 1 "TestPoint" H 8400 3200 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8800 2900 50  0001 C CNN
-F 3 "~" H 8800 2900 50  0001 C CNN
-	1    8600 2900
-	1    0    0    -1  
-$EndComp
 Connection ~ 8600 2900
 Wire Wire Line
 	8600 2900 8950 2900
@@ -1315,10 +1304,10 @@ Wire Wire Line
 Connection ~ 10000 4350
 Connection ~ 10000 4250
 $Comp
-L power:VCC #PWR?
+L power:VCC #PWR0132
 U 1 1 64096603
 P 4600 1750
-F 0 "#PWR?" H 4600 1600 50  0001 C CNN
+F 0 "#PWR0132" H 4600 1600 50  0001 C CNN
 F 1 "VCC" H 4615 1923 50  0000 C CNN
 F 2 "" H 4600 1750 50  0001 C CNN
 F 3 "" H 4600 1750 50  0001 C CNN
