@@ -554,19 +554,6 @@ F 3 "~" H 3250 1800 50  0001 C CNN
 	1    3250 1800
 	1    0    0    -1  
 $EndComp
-$Comp
-L Amplifier_Operational:TL074 U?
-U 1 1 63D5E1DB
-P 3550 1400
-AR Path="/63D5E1DB" Ref="U?"  Part="1" 
-AR Path="/63A64E34/63D5E1DB" Ref="U5"  Part="1" 
-F 0 "U5" H 3550 1767 50  0000 C CNN
-F 1 "TL074" H 3550 1676 50  0000 C CNN
-F 2 "tl074:TL074CD" H 3500 1500 50  0001 C CNN
-F 3 "http://www.ti.com/lit/ds/symlink/tl071.pdf" H 3600 1600 50  0001 C CNN
-	1    3550 1400
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	3500 1650 3250 1650
 Wire Wire Line
@@ -576,7 +563,6 @@ Wire Wire Line
 	3800 1650 3850 1650
 Wire Wire Line
 	3850 1650 3850 1400
-Connection ~ 3850 1400
 Wire Wire Line
 	7350 1900 7350 2000
 Wire Wire Line
@@ -597,8 +583,6 @@ F 3 "~" H 4700 1100 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 Connection ~ 3250 2000
-Wire Wire Line
-	2950 1300 3150 1300
 Wire Wire Line
 	2950 2000 3250 2000
 $Comp
@@ -1116,7 +1100,7 @@ P 3300 4650
 AR Path="/6410438A" Ref="R?"  Part="1" 
 AR Path="/63A64E34/6410438A" Ref="R40"  Part="1" 
 F 0 "R40" H 3370 4696 50  0000 L CNN
-F 1 "2k" H 3370 4605 50  0000 L CNN
+F 1 "6k" H 3370 4605 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" V 3230 4650 50  0001 C CNN
 F 3 "~" H 3300 4650 50  0001 C CNN
 	1    3300 4650
@@ -1151,8 +1135,6 @@ F 3 "~" H 4750 3950 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 Connection ~ 3300 4850
-Wire Wire Line
-	3000 4150 3200 4150
 Wire Wire Line
 	3000 4850 3300 4850
 $Comp
@@ -1270,32 +1252,7 @@ Wire Wire Line
 	2700 4650 2700 4850
 Wire Wire Line
 	2700 4850 3000 4850
-$Comp
-L Connector:TestPoint TP18
-U 1 1 63B406B5
-P 3150 1300
-F 0 "TP18" H 3100 1500 50  0000 L CNN
-F 1 "TestPoint" H 3050 1600 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 3350 1300 50  0001 C CNN
-F 3 "~" H 3350 1300 50  0001 C CNN
-	1    3150 1300
-	1    0    0    -1  
-$EndComp
-Connection ~ 3150 1300
-Wire Wire Line
-	3150 1300 3250 1300
 Connection ~ 3900 4250
-$Comp
-L Connector:TestPoint TP19
-U 1 1 63B47B34
-P 3200 4150
-F 0 "TP19" H 3150 4350 50  0000 L CNN
-F 1 "TestPoint" H 3100 4450 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 3400 4150 50  0001 C CNN
-F 3 "~" H 3400 4150 50  0001 C CNN
-	1    3200 4150
-	1    0    0    -1  
-$EndComp
 $Comp
 L Amplifier_Operational:TL074 U?
 U 1 1 64104390
@@ -1309,9 +1266,6 @@ F 3 "http://www.ti.com/lit/ds/symlink/tl071.pdf" H 3650 4450 50  0001 C CNN
 	1    3600 4250
 	1    0    0    -1  
 $EndComp
-Connection ~ 3200 4150
-Wire Wire Line
-	3200 4150 3300 4150
 Wire Wire Line
 	4150 1100 4550 1100
 Connection ~ 2950 2000
@@ -1429,8 +1383,6 @@ $EndComp
 Connection ~ 8550 2650
 Connection ~ 7950 2650
 Wire Wire Line
-	9350 1700 9350 2350
-Wire Wire Line
 	8800 1700 9100 1700
 $Comp
 L Device:CP C36
@@ -1460,9 +1412,6 @@ F 3 "~" H 8850 2800 50  0001 C CNN
 	1    8850 2800
 	1    0    0    -1  
 $EndComp
-Connection ~ 8850 2650
-Wire Wire Line
-	8850 2650 9050 2650
 Wire Wire Line
 	8550 2950 8850 2950
 Connection ~ 8550 2950
@@ -1575,8 +1524,6 @@ F 3 "~" H 8450 5500 50  0001 C CNN
 $EndComp
 Connection ~ 8600 5500
 Wire Wire Line
-	9400 4550 9400 5200
-Wire Wire Line
 	8850 4550 9150 4550
 Wire Wire Line
 	8600 5500 8900 5500
@@ -1593,9 +1540,6 @@ F 3 "~" H 8900 5650 50  0001 C CNN
 	1    8900 5650
 	1    0    0    -1  
 $EndComp
-Connection ~ 8900 5500
-Wire Wire Line
-	8900 5500 9100 5500
 Wire Wire Line
 	8600 5800 8900 5800
 Connection ~ 8600 5800
@@ -1621,34 +1565,6 @@ $EndComp
 Connection ~ 8000 5500
 Text Notes 8800 1650 0    50   ~ 0
 Place C60 and C63 as close \nto the connector as possible
-$Comp
-L power:GNDPWR #PWR?
-U 1 1 641EB96C
-P 9700 5700
-AR Path="/63A8EBCD/641EB96C" Ref="#PWR?"  Part="1" 
-AR Path="/63A64E34/641EB96C" Ref="#PWR0127"  Part="1" 
-F 0 "#PWR0127" H 9700 5500 50  0001 C CNN
-F 1 "GNDPWR" H 9704 5546 50  0000 C CNN
-F 2 "" H 9700 5650 50  0001 C CNN
-F 3 "" H 9700 5650 50  0001 C CNN
-	1    9700 5700
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9700 5500 9700 5700
-$Comp
-L power:GNDPWR #PWR?
-U 1 1 641FE2BA
-P 9650 2900
-AR Path="/63A8EBCD/641FE2BA" Ref="#PWR?"  Part="1" 
-AR Path="/63A64E34/641FE2BA" Ref="#PWR0131"  Part="1" 
-F 0 "#PWR0131" H 9650 2700 50  0001 C CNN
-F 1 "GNDPWR" H 9654 2746 50  0000 C CNN
-F 2 "" H 9650 2850 50  0001 C CNN
-F 3 "" H 9650 2850 50  0001 C CNN
-	1    9650 2900
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	9650 2650 9650 2900
 $Comp
@@ -1662,7 +1578,6 @@ F 3 "~" H 9650 2650 50  0001 C CNN
 	1    9650 2650
 	0    1    1    0   
 $EndComp
-Connection ~ 9650 2650
 Wire Notes Line
 	1750 3600 10200 3600
 Wire Notes Line
@@ -1671,6 +1586,8 @@ Wire Notes Line
 	1750 6400 10200 6400
 Wire Notes Line
 	1750 700  10200 700 
+Connection ~ 8850 2650
+Connection ~ 9650 2650
 $Comp
 L Connector:XLR3 J?
 U 1 1 63D5E103
@@ -1679,11 +1596,20 @@ AR Path="/63D5E103" Ref="J?"  Part="1"
 AR Path="/63A64E34/63D5E103" Ref="ANIT_OUT1"  Part="1" 
 F 0 "ANIT_OUT1" H 9400 3000 50  0000 C CNN
 F 1 "XLR3" H 9350 2924 50  0000 C CNN
-F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3FAH2_Horizontal" H 9350 2650 50  0001 C CNN
+F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3MAH-0_Horizontal" H 9350 2650 50  0001 C CNN
 F 3 " ~" H 9350 2650 50  0001 C CNN
 	1    9350 2650
 	-1   0    0    1   
 $EndComp
+Wire Wire Line
+	9350 1700 9350 2350
+Wire Wire Line
+	8850 2650 9050 2650
+Wire Wire Line
+	9400 4550 9400 5200
+Wire Wire Line
+	9100 5500 8900 5500
+Connection ~ 8900 5500
 $Comp
 L Connector:XLR3 J?
 U 1 1 63EE16E1
@@ -1692,9 +1618,55 @@ AR Path="/63EE16E1" Ref="J?"  Part="1"
 AR Path="/63A64E34/63EE16E1" Ref="NOISE_OUT1"  Part="1" 
 F 0 "NOISE_OUT1" H 9500 5850 50  0000 C CNN
 F 1 "XLR3" H 9400 5774 50  0000 C CNN
-F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3FAH2_Horizontal" H 9400 5500 50  0001 C CNN
+F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3MAH-0_Horizontal" H 9400 5500 50  0001 C CNN
 F 3 " ~" H 9400 5500 50  0001 C CNN
 	1    9400 5500
 	-1   0    0    1   
 $EndComp
+Wire Wire Line
+	9700 5500 9700 5700
+$Comp
+L power:GND #PWR?
+U 1 1 63A74DC7
+P 9650 2900
+AR Path="/63A74DC7" Ref="#PWR?"  Part="1" 
+AR Path="/63A64E34/63A74DC7" Ref="#PWR0127"  Part="1" 
+F 0 "#PWR0127" H 9650 2650 50  0001 C CNN
+F 1 "GND" H 9655 2727 50  0000 C CNN
+F 2 "" H 9650 2900 50  0001 C CNN
+F 3 "" H 9650 2900 50  0001 C CNN
+	1    9650 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 63A7AFBF
+P 9700 5700
+AR Path="/63A7AFBF" Ref="#PWR?"  Part="1" 
+AR Path="/63A64E34/63A7AFBF" Ref="#PWR0131"  Part="1" 
+F 0 "#PWR0131" H 9700 5450 50  0001 C CNN
+F 1 "GND" H 9705 5527 50  0000 C CNN
+F 2 "" H 9700 5700 50  0001 C CNN
+F 3 "" H 9700 5700 50  0001 C CNN
+	1    9700 5700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3000 4150 3300 4150
+Connection ~ 3850 1400
+$Comp
+L Amplifier_Operational:TL074 U?
+U 1 1 63D5E1DB
+P 3550 1400
+AR Path="/63D5E1DB" Ref="U?"  Part="1" 
+AR Path="/63A64E34/63D5E1DB" Ref="U5"  Part="1" 
+F 0 "U5" H 3550 1767 50  0000 C CNN
+F 1 "TL074" H 3550 1676 50  0000 C CNN
+F 2 "tl074:TL074CD" H 3500 1500 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/tl071.pdf" H 3600 1600 50  0001 C CNN
+	1    3550 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2950 1300 3250 1300
 $EndSCHEMATC

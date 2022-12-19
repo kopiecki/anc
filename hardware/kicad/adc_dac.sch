@@ -292,28 +292,24 @@ F 3 "~" H 2850 5500 50  0001 C CNN
 	1    2850 5500
 	1    0    0    -1  
 $EndComp
-Text Label 3350 5700 2    50   ~ 0
-TX2
-Text Label 3350 5600 2    50   ~ 0
-TX1
-Text Label 3350 5500 2    50   ~ 0
-RX2
 Text Label 3350 5400 2    50   ~ 0
+TX2
+Text Label 3350 5500 2    50   ~ 0
+TX1
+Text Label 3350 5600 2    50   ~ 0
+RX2
+Text Label 3350 5700 2    50   ~ 0
 RX1
-Text Label 3350 5300 2    50   ~ 0
-FS
 Text Label 3350 5200 2    50   ~ 0
-MCLK
-Wire Wire Line
-	3350 5700 3050 5700
-Wire Wire Line
-	3350 5600 3050 5600
-Wire Wire Line
-	3350 5500 3050 5500
+FS
 Wire Wire Line
 	3350 5400 3050 5400
 Wire Wire Line
-	3350 5300 3050 5300
+	3350 5500 3050 5500
+Wire Wire Line
+	3350 5600 3050 5600
+Wire Wire Line
+	3350 5700 3050 5700
 Wire Wire Line
 	3350 5200 3050 5200
 $Comp
@@ -411,7 +407,7 @@ AR Path="/63A64E34/63A53A03" Ref="J?"  Part="1"
 AR Path="/63B0C660/63A53A03" Ref="J2"  Part="1" 
 F 0 "J2" H 4857 5925 50  0000 C CNN
 F 1 "Output jack" H 4857 5834 50  0000 C CNN
-F 2 "Connector_BarrelJack:BarrelJack_CUI_PJ-036AH-SMT_Horizontal" H 4850 5560 50  0001 C CNN
+F 2 "Connector_BarrelJack:BarrelJack_Horizontal" H 4850 5560 50  0001 C CNN
 F 3 "~" H 4850 5560 50  0001 C CNN
 	1    4800 5600
 	-1   0    0    1   
@@ -621,4 +617,8 @@ F 3 "https://www.mouser.pl/datasheet/2/609/AD7680-1502134.pdf" H 3800 2550 60  0
 $EndComp
 Wire Wire Line
 	4850 3600 5500 3600
+Wire Wire Line
+	3350 5300 3050 5300
+Text Label 3350 5300 2    50   ~ 0
+MCLK
 $EndSCHEMATC

@@ -206,8 +206,6 @@ F 3 "" H 1050 2950 50  0001 C CNN
 	1    1050 2950
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	1950 3950 2050 3950
 $Comp
 L Device:CP C?
 U 1 1 64CA269F
@@ -491,7 +489,7 @@ AR Path="/63C0C3C6" Ref="J?"  Part="1"
 AR Path="/63A2DB78/63C0C3C6" Ref="J6"  Part="1" 
 F 0 "J6" H 4107 2175 50  0000 C CNN
 F 1 "Input jack" H 4107 2084 50  0000 C CNN
-F 2 "Connector_BarrelJack:BarrelJack_CUI_PJ-036AH-SMT_Horizontal" H 4100 1810 50  0001 C CNN
+F 2 "Connector_BarrelJack:BarrelJack_Horizontal" H 4100 1810 50  0001 C CNN
 F 3 "~" H 4100 1810 50  0001 C CNN
 	1    4050 1850
 	1    0    0    -1  
@@ -665,87 +663,10 @@ F 3 "~" H 8600 3050 50  0001 C CNN
 	1    8600 3050
 	1    0    0    -1  
 $EndComp
-$Comp
-L Connector:TestPoint TP1
-U 1 1 638DB053
-P 2250 3550
-F 0 "TP1" H 2200 3750 50  0000 L CNN
-F 1 "TestPoint" H 2050 3850 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 2450 3550 50  0001 C CNN
-F 3 "~" H 2450 3550 50  0001 C CNN
-	1    2250 3550
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:TestPoint TP4
-U 1 1 638DF882
-P 3850 2950
-F 0 "TP4" H 3650 3000 50  0000 L CNN
-F 1 "TestPoint" H 3450 3100 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 4050 2950 50  0001 C CNN
-F 3 "~" H 4050 2950 50  0001 C CNN
-	1    3850 2950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:TestPoint TP7
-U 1 1 638E166F
-P 3850 3550
-F 0 "TP7" H 4050 3750 50  0000 R CNN
-F 1 "TestPoint" H 4250 3650 50  0000 R CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 4050 3550 50  0001 C CNN
-F 3 "~" H 4050 3550 50  0001 C CNN
-	1    3850 3550
-	-1   0    0    1   
-$EndComp
-$Comp
-L Connector:TestPoint TP11
-U 1 1 638F835A
-P 4950 2950
-F 0 "TP11" V 4950 3150 50  0000 L CNN
-F 1 "TestPoint" V 4950 3350 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5150 2950 50  0001 C CNN
-F 3 "~" H 5150 2950 50  0001 C CNN
-	1    4950 2950
-	0    1    1    0   
-$EndComp
 Connection ~ 4950 2950
-$Comp
-L Connector:TestPoint TP12
-U 1 1 638FFEFA
-P 4950 3550
-F 0 "TP12" V 4950 3750 50  0000 L CNN
-F 1 "TestPoint" V 4950 3950 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5150 3550 50  0001 C CNN
-F 3 "~" H 5150 3550 50  0001 C CNN
-	1    4950 3550
-	0    1    1    0   
-$EndComp
-$Comp
-L Connector:TestPoint TP13
-U 1 1 6390DA47
-P 8600 2900
-F 0 "TP13" H 8550 3100 50  0000 L CNN
-F 1 "TestPoint" H 8400 3200 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8800 2900 50  0001 C CNN
-F 3 "~" H 8800 2900 50  0001 C CNN
-	1    8600 2900
-	1    0    0    -1  
-$EndComp
 Connection ~ 8600 2900
 Wire Wire Line
 	8600 2900 8950 2900
-$Comp
-L Connector:TestPoint TP14
-U 1 1 639146CC
-P 10100 4250
-F 0 "TP14" V 10100 4450 50  0000 L CNN
-F 1 "TestPoint" V 10100 4650 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 10300 4250 50  0001 C CNN
-F 3 "~" H 10300 4250 50  0001 C CNN
-	1    10100 4250
-	0    1    1    0   
-$EndComp
 $Comp
 L Device:CP C?
 U 1 1 63CEDF82
@@ -845,9 +766,6 @@ Wire Wire Line
 Wire Wire Line
 	8450 4700 8450 4850
 Wire Wire Line
-	7700 4850 8450 4850
-Connection ~ 8450 4850
-Wire Wire Line
 	8450 5150 6950 5150
 $Comp
 L Device:C C?
@@ -909,19 +827,6 @@ Wire Wire Line
 Wire Wire Line
 	7750 4600 7750 4650
 $Comp
-L power:PWR_FLAG #FLG?
-U 1 1 63B1F186
-P 8450 4250
-AR Path="/63B1F186" Ref="#FLG?"  Part="1" 
-AR Path="/63A2DB78/63B1F186" Ref="#FLG0101"  Part="1" 
-F 0 "#FLG0101" H 8450 4325 50  0001 C CNN
-F 1 "PWR_FLAG" H 8450 4423 50  0000 C CNN
-F 2 "" H 8450 4250 50  0001 C CNN
-F 3 "~" H 8450 4250 50  0001 C CNN
-	1    8450 4250
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:+6V #PWR0109
 U 1 1 63B28A63
 P 8800 4250
@@ -936,7 +841,6 @@ Wire Wire Line
 	9700 5150 10000 5150
 Wire Wire Line
 	10000 4250 10100 4250
-Connection ~ 10100 4250
 $Comp
 L LM2990:LM2990SX-12 U13
 U 1 1 638F52B4
@@ -1229,23 +1133,10 @@ Wire Wire Line
 	7400 1750 7800 1750
 Wire Wire Line
 	7400 2050 7800 2050
-Connection ~ 2250 3550
-Connection ~ 1350 3550
 Wire Wire Line
 	1350 3750 1350 3850
 Wire Wire Line
 	1350 3650 1350 3550
-$Comp
-L ltc3261emse-pbf:LTC3261EMSE U10
-U 1 1 63905E48
-P 650 3650
-F 0 "U10" H 1800 4007 60  0000 C CNN
-F 1 "LTC3261EMSE" H 1800 3901 60  0000 C CNN
-F 2 "ltc3261emse-pbf:ltc3261emse-pbf" H 1700 3890 60  0001 C CNN
-F 3 "https://www.analog.com/media/en/technical-documentation/data-sheets/3261fb.pdf" H 1200 3800 60  0001 C CNN
-	1    650  3650
-	1    0    0    -1  
-$EndComp
 $Comp
 L Device:C C81
 U 1 1 63914F01
@@ -1265,7 +1156,6 @@ Wire Wire Line
 Wire Wire Line
 	1350 3950 1350 3850
 NoConn ~ 1350 4050
-NoConn ~ 1600 2750
 Wire Wire Line
 	9700 4550 9700 5150
 Connection ~ 4400 3250
@@ -1325,4 +1215,19 @@ F 3 "" H 4600 1750 50  0001 C CNN
 	1    4600 1750
 	1    0    0    -1  
 $EndComp
+Connection ~ 1350 3550
+$Comp
+L ltc3261emse-pbf:LTC3261EMSE U10
+U 1 1 63905E48
+P 650 3650
+F 0 "U10" H 1800 4007 60  0000 C CNN
+F 1 "LTC3261EMSE" H 1800 3901 60  0000 C CNN
+F 2 "ltc3261emse-pbf:ltc3261emse-pbf" H 1700 3890 60  0001 C CNN
+F 3 "https://www.analog.com/media/en/technical-documentation/data-sheets/3261fb.pdf" H 1200 3800 60  0001 C CNN
+	1    650  3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7700 4850 8450 4850
+Connection ~ 8450 4850
 $EndSCHEMATC

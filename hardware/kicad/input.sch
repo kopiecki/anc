@@ -697,32 +697,6 @@ Connection ~ 9100 1650
 Wire Wire Line
 	9750 1350 10250 1350
 $Comp
-L Device:R R?
-U 1 1 63CE4618
-P 4800 1350
-AR Path="/63CE4618" Ref="R?"  Part="1" 
-AR Path="/63A8EBCD/63CE4618" Ref="R9"  Part="1" 
-F 0 "R9" V 4593 1350 50  0000 C CNN
-F 1 "10k" V 4700 1350 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 4730 1350 50  0001 C CNN
-F 3 "~" H 4800 1350 50  0001 C CNN
-	1    4800 1350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:R R?
-U 1 1 63CE461E
-P 4800 1550
-AR Path="/63CE461E" Ref="R?"  Part="1" 
-AR Path="/63A8EBCD/63CE461E" Ref="R10"  Part="1" 
-F 0 "R10" V 4900 1550 50  0000 C CNN
-F 1 "10k" V 5000 1550 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 4730 1550 50  0001 C CNN
-F 3 "~" H 4800 1550 50  0001 C CNN
-	1    4800 1550
-	0    1    1    0   
-$EndComp
-$Comp
 L Device:C C?
 U 1 1 63CE4624
 P 4450 1750
@@ -746,19 +720,6 @@ F 1 "10n" H 4150 1650 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0603_1608Metric" H 4188 1600 50  0001 C CNN
 F 3 "~" H 4150 1750 50  0001 C CNN
 	1    4150 1750
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:XLR3 INPUT_MIC?
-U 1 1 63CE4630
-P 2400 1350
-AR Path="/63CE4630" Ref="INPUT_MIC?"  Part="1" 
-AR Path="/63A8EBCD/63CE4630" Ref="INPUT_MIC1"  Part="1" 
-F 0 "INPUT_MIC1" H 2400 1715 50  0000 C CNN
-F 1 "XLR3" H 2400 1624 50  0000 C CNN
-F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3FAH2_Horizontal" H 2400 1350 50  0001 C CNN
-F 3 " ~" H 2400 1350 50  0001 C CNN
-	1    2400 1350
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -787,10 +748,6 @@ F 3 "~" H 3850 1350 50  0001 C CNN
 	1    3850 1350
 	0    1    1    0   
 $EndComp
-Wire Wire Line
-	2400 1650 2600 1650
-Wire Wire Line
-	2600 1650 2600 1550
 $Comp
 L Device:R R?
 U 1 1 63CE4644
@@ -805,14 +762,6 @@ F 3 "~" H 3300 1150 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 Connection ~ 4150 2000
-Text Label 2700 1350 0    50   ~ 0
-MIC_IN+
-Text Label 2700 1550 0    50   ~ 0
-MIC_IN-
-Wire Wire Line
-	2600 1550 3300 1550
-Wire Wire Line
-	2700 1350 3050 1350
 Wire Wire Line
 	2050 850  3050 850 
 Wire Wire Line
@@ -827,34 +776,18 @@ Wire Wire Line
 	3300 850  4150 850 
 Wire Wire Line
 	3050 1300 3050 1350
-Connection ~ 3050 1350
-Wire Wire Line
-	3050 1350 3400 1350
-Wire Wire Line
-	3300 1300 3300 1550
-Connection ~ 3300 1550
 Wire Wire Line
 	3300 1550 3400 1550
 Wire Wire Line
 	10250 1350 10250 1750
-Text Label 2700 4550 0    50   ~ 0
-MIC_ER-
 Wire Wire Line
 	3300 4550 3400 4550
-Connection ~ 3300 4550
 Wire Wire Line
 	3300 4300 3300 4550
 Wire Wire Line
 	3050 4350 3400 4350
-Connection ~ 3050 4350
 Wire Wire Line
 	3050 4300 3050 4350
-Wire Wire Line
-	2600 4550 3300 4550
-Wire Wire Line
-	2700 4350 3050 4350
-Text Label 2700 4350 0    50   ~ 0
-MIC_ER+
 Wire Wire Line
 	2050 3850 3050 3850
 Wire Wire Line
@@ -880,10 +813,6 @@ F 3 "~" H 3300 4150 50  0001 C CNN
 	1    3300 4150
 	-1   0    0    1   
 $EndComp
-Wire Wire Line
-	2600 4650 2600 4550
-Wire Wire Line
-	2400 4650 2600 4650
 $Comp
 L Device:R R?
 U 1 1 63CE4682
@@ -1798,52 +1727,8 @@ Wire Wire Line
 	4500 5450 4500 5950
 Wire Wire Line
 	4450 1300 4450 1550
-$Comp
-L Connector:TestPoint TP16
-U 1 1 639F95B9
-P 10250 2000
-F 0 "TP16" V 10204 2188 50  0000 L CNN
-F 1 "TestPoint" V 10295 2188 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 10450 2000 50  0001 C CNN
-F 3 "~" H 10450 2000 50  0001 C CNN
-	1    10250 2000
-	0    1    1    0   
-$EndComp
-Connection ~ 10250 2000
 Wire Wire Line
 	10250 4750 10250 5000
-$Comp
-L Connector:TestPoint TP10
-U 1 1 63A28918
-P 7150 5550
-F 0 "TP10" H 7200 5800 50  0000 L CNN
-F 1 "TestPoint" H 7200 5700 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 7350 5550 50  0001 C CNN
-F 3 "~" H 7350 5550 50  0001 C CNN
-	1    7150 5550
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:TestPoint TP15
-U 1 1 63A31C3B
-P 7200 2550
-F 0 "TP15" H 7250 2800 50  0000 L CNN
-F 1 "TestPoint" H 7250 2700 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 7400 2550 50  0001 C CNN
-F 3 "~" H 7400 2550 50  0001 C CNN
-	1    7200 2550
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6900 2550 7200 2550
-Connection ~ 7200 2550
-Wire Wire Line
-	7200 2550 7500 2550
-Connection ~ 7150 5550
-Wire Wire Line
-	7150 5550 7300 5550
-Wire Wire Line
-	6900 5550 7150 5550
 Wire Wire Line
 	4150 2000 4450 2000
 Wire Wire Line
@@ -1872,75 +1757,17 @@ Wire Wire Line
 	5300 1800 5550 1800
 Wire Wire Line
 	4450 2000 5100 2000
-Connection ~ 5300 1550
 Wire Wire Line
 	5100 1600 5100 1350
 Wire Wire Line
 	4450 5000 5100 5000
 Connection ~ 5300 4550
-$Comp
-L power:+5VD #PWR0115
-U 1 1 63C62B0C
-P 6900 2250
-F 0 "#PWR0115" H 6900 2100 50  0001 C CNN
-F 1 "+5VD" H 6915 2423 50  0000 C CNN
-F 2 "" H 6900 2250 50  0001 C CNN
-F 3 "" H 6900 2250 50  0001 C CNN
-	1    6900 2250
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:+5VD #PWR0116
-U 1 1 63CA073C
-P 6900 5250
-F 0 "#PWR0116" H 6900 5100 50  0001 C CNN
-F 1 "+5VD" H 6915 5423 50  0000 C CNN
-F 2 "" H 6900 5250 50  0001 C CNN
-F 3 "" H 6900 5250 50  0001 C CNN
-	1    6900 5250
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GNDPWR #PWR0121
-U 1 1 641299D2
-P 2250 1700
-F 0 "#PWR0121" H 2250 1500 50  0001 C CNN
-F 1 "GNDPWR" H 2254 1546 50  0000 C CNN
-F 2 "" H 2250 1650 50  0001 C CNN
-F 3 "" H 2250 1650 50  0001 C CNN
-	1    2250 1700
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	2250 1700 2250 1650
 Wire Wire Line
 	2250 1650 2100 1650
 Wire Wire Line
 	2100 1650 2100 1350
-$Comp
-L power:GNDPWR #PWR0126
-U 1 1 64187366
-P 2250 4700
-F 0 "#PWR0126" H 2250 4500 50  0001 C CNN
-F 1 "GNDPWR" H 2254 4546 50  0000 C CNN
-F 2 "" H 2250 4650 50  0001 C CNN
-F 3 "" H 2250 4650 50  0001 C CNN
-	1    2250 4700
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:XLR3 ERROR_MIC?
-U 1 1 63CE468E
-P 2400 4350
-AR Path="/63CE468E" Ref="ERROR_MIC?"  Part="1" 
-AR Path="/63A8EBCD/63CE468E" Ref="ERROR_MIC1"  Part="1" 
-F 0 "ERROR_MIC1" H 2400 4715 50  0000 C CNN
-F 1 "XLR3" H 2400 4624 50  0000 C CNN
-F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3FAH2_Horizontal" H 2400 4350 50  0001 C CNN
-F 3 " ~" H 2400 4350 50  0001 C CNN
-	1    2400 4350
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	2250 4700 2250 4650
 Wire Wire Line
@@ -1953,14 +1780,9 @@ Wire Wire Line
 	4950 1350 5100 1350
 Wire Wire Line
 	4450 1550 4650 1550
-Wire Wire Line
-	4950 1550 5300 1550
 Connection ~ 5100 2000
 Wire Wire Line
 	5100 2000 6500 2000
-Connection ~ 5100 1350
-Wire Wire Line
-	5100 1350 5300 1350
 Connection ~ 5100 5000
 Wire Wire Line
 	5100 5000 6500 5000
@@ -1975,4 +1797,138 @@ Wire Wire Line
 	4450 4550 4650 4550
 Wire Wire Line
 	4950 4550 5300 4550
+$Comp
+L Device:R R?
+U 1 1 63CE4618
+P 4800 1550
+AR Path="/63CE4618" Ref="R?"  Part="1" 
+AR Path="/63A8EBCD/63CE4618" Ref="R9"  Part="1" 
+F 0 "R9" V 4900 1550 50  0000 C CNN
+F 1 "10k" V 5000 1550 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 4730 1550 50  0001 C CNN
+F 3 "~" H 4800 1550 50  0001 C CNN
+	1    4800 1550
+	0    1    1    0   
+$EndComp
+Connection ~ 5300 1550
+Wire Wire Line
+	4950 1550 5300 1550
+Connection ~ 5100 1350
+Wire Wire Line
+	5100 1350 5300 1350
+Wire Wire Line
+	3050 1350 3400 1350
+Wire Wire Line
+	3300 1300 3300 1550
+$Comp
+L Device:R R?
+U 1 1 63CE461E
+P 4800 1350
+AR Path="/63CE461E" Ref="R?"  Part="1" 
+AR Path="/63A8EBCD/63CE461E" Ref="R10"  Part="1" 
+F 0 "R10" V 4600 1350 50  0000 C CNN
+F 1 "10k" V 4700 1350 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 4730 1350 50  0001 C CNN
+F 3 "~" H 4800 1350 50  0001 C CNN
+	1    4800 1350
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector:XLR3 INPUT_MIC?
+U 1 1 63CE4630
+P 2400 1350
+AR Path="/63CE4630" Ref="INPUT_MIC?"  Part="1" 
+AR Path="/63A8EBCD/63CE4630" Ref="INPUT_MIC1"  Part="1" 
+F 0 "INPUT_MIC1" H 2400 1715 50  0000 C CNN
+F 1 "XLR3" H 2400 1624 50  0000 C CNN
+F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3MAH-0_Horizontal" H 2400 1350 50  0001 C CNN
+F 3 " ~" H 2400 1350 50  0001 C CNN
+	1    2400 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:XLR3 ERROR_MIC?
+U 1 1 63CE468E
+P 2400 4350
+AR Path="/63CE468E" Ref="ERROR_MIC?"  Part="1" 
+AR Path="/63A8EBCD/63CE468E" Ref="ERROR_MIC1"  Part="1" 
+F 0 "ERROR_MIC1" H 2400 4715 50  0000 C CNN
+F 1 "XLR3" H 2400 4624 50  0000 C CNN
+F 2 "Connector_Audio:Jack_XLR_Neutrik_NC3MAH-0_Horizontal" H 2400 4350 50  0001 C CNN
+F 3 " ~" H 2400 4350 50  0001 C CNN
+	1    2400 4350
+	1    0    0    -1  
+$EndComp
+Connection ~ 3050 4350
+$Comp
+L power:+5VA #PWR0115
+U 1 1 63E727D1
+P 6900 5250
+F 0 "#PWR0115" H 6900 5100 50  0001 C CNN
+F 1 "+5VA" H 6915 5423 50  0000 C CNN
+F 2 "" H 6900 5250 50  0001 C CNN
+F 3 "" H 6900 5250 50  0001 C CNN
+	1    6900 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5VA #PWR0116
+U 1 1 63E7CA90
+P 6900 2250
+F 0 "#PWR0116" H 6900 2100 50  0001 C CNN
+F 1 "+5VA" H 6915 2423 50  0000 C CNN
+F 2 "" H 6900 2250 50  0001 C CNN
+F 3 "" H 6900 2250 50  0001 C CNN
+	1    6900 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2700 4350 3050 4350
+Wire Wire Line
+	3300 4550 2550 4550
+Wire Wire Line
+	2550 4550 2550 4650
+Wire Wire Line
+	2550 4650 2400 4650
+Connection ~ 3300 4550
+Wire Wire Line
+	2700 1350 3050 1350
+Connection ~ 3050 1350
+Wire Wire Line
+	2400 1650 3050 1650
+Wire Wire Line
+	3050 1650 3050 1550
+Wire Wire Line
+	3050 1550 3300 1550
+Connection ~ 3300 1550
+$Comp
+L power:GND #PWR?
+U 1 1 63A0A40F
+P 2250 1700
+AR Path="/63A0A40F" Ref="#PWR?"  Part="1" 
+AR Path="/63A8EBCD/63A0A40F" Ref="#PWR0121"  Part="1" 
+F 0 "#PWR0121" H 2250 1450 50  0001 C CNN
+F 1 "GND" H 2255 1527 50  0000 C CNN
+F 2 "" H 2250 1700 50  0001 C CNN
+F 3 "" H 2250 1700 50  0001 C CNN
+	1    2250 1700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 63A16EDE
+P 2250 4700
+AR Path="/63A16EDE" Ref="#PWR?"  Part="1" 
+AR Path="/63A8EBCD/63A16EDE" Ref="#PWR0126"  Part="1" 
+F 0 "#PWR0126" H 2250 4450 50  0001 C CNN
+F 1 "GND" H 2255 4527 50  0000 C CNN
+F 2 "" H 2250 4700 50  0001 C CNN
+F 3 "" H 2250 4700 50  0001 C CNN
+	1    2250 4700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 2550 7500 2550
+Wire Wire Line
+	6900 5550 7300 5550
 $EndSCHEMATC
