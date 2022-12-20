@@ -599,7 +599,7 @@ AR Path="/63C0C369" Ref="L?"  Part="1"
 AR Path="/63A2DB78/63C0C369" Ref="L1"  Part="1" 
 F 0 "L1" V 6190 1750 50  0000 C CNN
 F 1 "4.7u, 74.8 mOhms" V 6099 1750 50  0000 C CNN
-F 2 "Inductor_SMD:L_Vishay_IHLP-2525" H 6000 1750 50  0001 C CNN
+F 2 "Inductor_SMD:L_Wuerth_MAPI-4020" H 6000 1750 50  0001 C CNN
 F 3 "~" H 6000 1750 50  0001 C CNN
 	1    6000 1750
 	0    -1   -1   0   
