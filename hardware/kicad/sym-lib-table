@@ -1,4 +1,2 @@
 (sym_lib_table
-  (lib (name BeagleBone-Black-Cape-rescue)(type Legacy)(uri /home/dk/dk_masters_thesis/anc/electronics/kicad-library/template/BeagleBone-Black-Cape/BeagleBone-Black-Cape-rescue.lib)(options "")(descr ""))
-  (lib (name in_input-rescue)(type Legacy)(uri ${KIPRJMOD}/in_input-rescue.lib)(options "")(descr ""))
 )
