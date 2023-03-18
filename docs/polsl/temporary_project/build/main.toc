@@ -1,0 +1,40 @@
+\contentsline {section}{\numberline {1}Wstęp}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Cel projektu}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Założenia projektowe}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Wykorzystane narzędzia}{5}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Implementacja}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Najważniejsze układy i wymagania z nich wynikające}{6}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Wybrany przetwornik AD}{6}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Wybrany przetwornik DA}{7}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Podsumowanie wymagań narzuconych przez dobrane przetworniki}{8}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Protokół cyfrowy}{8}{subsubsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.2}Zasilanie}{11}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Sekcja wejściowa}{11}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Sekcja rozdzielacza napięcia}{12}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Sekcja referencji}{12}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Sekcja zasilania}{12}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5}Sekcja składowej stałej}{12}{subsubsection.2.2.5}%
+\contentsline {subsubsection}{\numberline {2.2.6}Sekcja LED}{13}{subsubsection.2.2.6}%
+\contentsline {subsection}{\numberline {2.3}Tory analogowe}{14}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Wejście}{14}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Zasilanie Phantom}{15}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Filtr EMI}{15}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}Limiter diodowy}{15}{subsubsection.2.4.3}%
+\contentsline {subsubsection}{\numberline {2.4.4}Wzmacniacz różnicowy}{15}{subsubsection.2.4.4}%
+\contentsline {subsubsection}{\numberline {2.4.5}Dolnoprzepustowy filtr aktywny}{15}{subsubsection.2.4.5}%
+\contentsline {subsubsection}{\numberline {2.4.6}Wzmacniacz odwracający}{16}{subsubsection.2.4.6}%
+\contentsline {subsubsection}{\numberline {2.4.7}Dolnoprzepustowy filtr pasywny}{16}{subsubsection.2.4.7}%
+\contentsline {subsection}{\numberline {2.5}Wyjście}{17}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Pasywny filtr dolnoprzepustowy i górnoprzepustowy}{17}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}Wzmacniacz nieodwracający}{18}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}Aktywny filtr dolnoprzepustowy}{18}{subsubsection.2.5.3}%
+\contentsline {subsubsection}{\numberline {2.5.4}Sterownik pojedynczy-różnicowy}{18}{subsubsection.2.5.4}%
+\contentsline {subsection}{\numberline {2.6}Tory cyfrowe}{19}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}Sekcja przetworników DA}{20}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}Sekcja napięcia wyjściowego}{21}{subsubsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.7}Sekcja wejść cyfrowych}{21}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Projekt PCB}{21}{section.3}%
+\contentsline {section}{\numberline {4}BOM - bills of materials}{21}{section.4}%
+\contentsline {section}{\numberline {5}Rezultaty}{21}{section.5}%
+\contentsline {section}{\numberline {6}Bibliografia}{22}{section.6}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

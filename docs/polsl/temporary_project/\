@@ -1,0 +1,366 @@
+\documentclass{scrartcl}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[margin=3cm]{geometry}
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{polski}
+\usepackage{amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{standalone}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{cleveref}
+\usepackage{subcaption}
+\usepackage{comment}
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=8pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\title{Projekt przejściowy}
+\subtitle{Analogowo-cyfrowy układ elektroniczny jako baza sprzętowa dla implementacji metod aktywnego tłumienia hałasu}
+\author{Daniel Kopiecki}
+\begin{document}
+\maketitle
+\begin{figure}[h]
+\centering
+\includegraphics[scale = 0.38]{logo_pl.jpg}
+\end{figure} 
+\newpage
+\tableofcontents
+\listoftables
+\listoffigures
+\newpage
+\section{Wstęp}
+Zrealizowany projekt przejściowy jest ściśle powiązany z realizowanym projektem magisterskim, w którego skład wchodzi implementacja metod aktywnego tłumienia hałasu od strony sprzętowej oraz programowej. 
+\\
+\par Istnieje sporo gotowych układów scalonych, zaopatrzonych w odpowiednio dobrane przetworniki, zasilania oraz interfejsy analogowe jak i cyfrowe, zdolnych do bezproblemowego rozwiązania sprzętowych problemów implementacyjnych, których rozwiązanie wybrał sobie autor niniejszego dokumentu. Idąc krok dalej, całą warstwę sprzętową można zamknąć w najprostszej karcie dźwiękowej, zdolnej obsługiwać dwa wejścia i dwa wyjścia audio, z którą bezproblemowo docelowa platforma dogada się po uniwersalnych protokołach cyfrowych. Takie wyjście byłoby z pewnością optymalne, jednak autor z niego zrezygnował, implementując całą elektronikę od podstaw.
+\\
+\par Powodem takiego wyboru były szerokie horyzonty edukacyjne. Zdaniem autora nic tak nie uczy, jak realizacja postawionego sobie celu od fundamentów. Mówiąc tutaj o fundamentach, za najniższy poziom abstrakcji sprzętowej wybrano niezależne od siebie, ale pracujące w końcowym układzie razem, przetworniki AD i DA, wzmacniacze operacyjne wchodzące w skład zaprojektowanych samodzielnie filtrów, regulatory oraz przetwornice napięcia, jak i również własny, niestandardowy protokół cyfrowy do komunikacji z przetwornikami.
+\subsection{Cel projektu}
+Odnosząc się bezpośrednio do opisanej wyżej myśli przewodniej, celem projektu jest zaprojektowanie własnego układu elektronicznego będącego bazą pod implementacje programowe metod aktywnego tłumienia hałasu. Zaprojektowany i zasymulowany układ zostanie następnie odwzorowany na płycie PCB, której wykonanie zostanie zlecone zewnętrznej firmie. Na tak uzyskanych płytach zostaną następnie przez autora obsadzone podzespoły elektroniczne i całość po złożeniu zostanie weryfikowana pod kątem działania do momentu uzyskania akceptowalnych, założonych wcześniej rezultatów.
+\subsection{Założenia projektowe}
+Poza opisanymi wyżej założeniami głównymi, czyli implementacją elektroniki na niskim poziomie abstrakcji, z założeń projektowych można wyróżnić:
+\begin{enumerate}
+    \item Obsługę dwóch wejściowych, jednokanałowych torów audio próbkowanych przez osobne przetworniki analogowo-cyfrowe stosunkowo wysokiej jakości.
+    \item Obsługę dwóch wyjściowych, jednokanałowych torów audio obsługiwanych przez osobne przetworniki cyfrowo-analogowe stosunkowo wysokiej jakości.
+    \item Odpowiednie przetwarzanie kanałów analogowych, zapewnienie odpowiedniej filtracji oraz wzmocnień.
+    \item Zapewnienie odpowiednich zasilań oraz napięć referencyjnych dla całego układu oraz zewnętrznej centralnej jednostki obliczeniowej.
+    \item Zapewnienie obsługi opracowanego interfejsu cyfrowego, dostępu do sygnałów wejściowych i wyjściowych zastosowanych przetworników.
+    \item Synchronizacja układów analogowo-cyfrowych.
+\end{enumerate}
+\subsection{Wykorzystane narzędzia}
+W trakcie projektowania układu wykorzystano następujące narzędzia:
+\begin{enumerate}
+    \item KiCAD - jako główne środowisko projektowe
+    \item Ngspice - jako główne środowisko symulacyjne
+    \item GNU Octave - jako narzędzie wspomagające projektowanie filtrów
+    \item Vim - jako główny edytor tekstu
+    \item Git - jako główny system kontroli wersji
+\end{enumerate}
+\section{Implementacja}
+Zaprojektowany układ można podzielić na cztery najważniejsze sekcje, przedstawione na rysunku \ref{fig:full}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = \textwidth]{images/full.png}
+    \caption{Schemat warstwy nadrzędnej}
+    \label{fig:full}
+\end{figure}
+Sekcje połączone są ze odpowiednimi sygnałami wejściowymi i wyjściowymi. Warto wspomnieć, że zasilania na schemacie nie są wyszczególnione, ponieważ w środowisku KiCAD napięcia zasilające mają globalny zasięg i nie są definiowane przez lokalne etykiety. 
+\\
+\par Poszczególne sekcje i ich sygnały wejściowe/wyjściowe można zdefiniować następująco:
+\begin{enumerate}
+    \item Input - sekcja wejść audio
+    \begin{enumerate}
+        \item Wejście - sygnał stałonapięciowy o potencjale $+1.25$ V względem masy
+        \item Wyjście - przetworzony sygnał audio mikrofonu wejściowego (MIC\_IN) i przetworzony sygnał audio mikrofonu błędu (MIC\_ERR).
+    \end{enumerate}
+    \item Output - sekcja wyjść audio
+    \begin{enumerate}
+        \item Wejście - bezpośrednie wyjścia przetworników cyfrowo-analogowych (sygnały DAC\_OUT i DAC\_NOISE)
+    \end{enumerate}
+    \item Power supply (PSU, \textit{Power supply unit}) - sekcja zasilań
+    \begin{enumerate}
+        \item Wyjście - Sygnał stałonapięciowy o potencjale $+1.25$ V względem masy
+    \end{enumerate}
+    \item ADC/DAC - sekcja sygnałów cyfrowych i przetworników
+    \begin{enumerate}
+        \item Wejściowe i wyjściowe przetworzone sygnały audio.
+    \end{enumerate}
+\end{enumerate}
+Prócz bloków reprezentowanych przez poszczególne sekcje, na \ref{fig:full} można również zauważyć symbol globalnego otworu montażowego. Przyjęło się, że elementy montażowe definiuje się w warstwie nadrzędnej projektu.
+\subsection{Najważniejsze układy i wymagania z nich wynikające}
+Przed przystąpieniem do projektowania określonych części układu autor musiał podjąć decyzję o wyborze najbardziej znaczących czipów w układzie, jakimi są przetworniki analogowo-cyfrowe i cyfrowo-analogowe. Bazą do wyboru tych układów były następujące, wynikające z późniejszej, docelowej implementacji części programowej, wymagania:
+\begin{enumerate}
+    \item Relatywnie niska częstotliwość próbkowania - na bazie literatury oraz konsultacjach z promotorem projektu określono, że częstotliwość próbkowania zastosowana w projekcie nie będzie przekraczała 1 kHz. Powodem jest wąskie zastosowanie układów aktywnej redukcji hałasu, które w wyniku swojej złożoności, a co za tym idzie, wysokich kosztów, nie są optymalnym wyborem przy zadaniach tłumienia sygnałów relatywnie szybko zmiennych (w takich sytuacjach lepiej wykorzystać rozwiązania mechaniczne).
+    \item Cyfrowy interfejs komunikacyjny z przetwornikami musi być jednakowy i wspierany przez wybraną platformę (jednostkę obliczeniową). Trzeba tutaj również uwzględnić, że wybrane przetworniki muszą być skonfigurowane tak, aby jednostka obliczeniowa posiadała wystarczającą ilość wolnych linii wybranego interfejsu, tak, aby wszystkie obsłużyć.
+    \item Wybrane przetworniki muszą być stosunkowo wysokiej rozdzielczości. Sygnał dźwiękowy jest dość skomplikowanym sygnałem i wymagane jest, aby strumień danych będący wynikiem jego próbkowania był stosunkowo wysokiej dokładności.
+    \item Stosunkowo niska cena, wysoka dostępność i prostota implementacji projektowej na PCB.
+\end{enumerate}
+Zważając na wyszczególnione wyżej wymagania, autor zdecydował się na wykorzystanie przetworników firmy Analog Devices, a dokładniej układów AD7680 jako przeworniki AD i układów AD5541 jako przetworniki DA. 
+\subsubsection{Wybrany przetwornik AD}
+Układ AD7680 spod szyldu firmy Analog Devices jest 16 bitowym przetwornikiem analogowo-cyfrowym typu SAR o maksymalnej częstotliwości próbkowania równej $f_s = 100$ kSPS oraz maksymalnym zapotrzebowaniu mocy równym $3$ mW. Sposób interakcji przeprowadzany jest przez protokół SPI, gdzie główny sygnał zegarowy SCLK odpowiada za częstotliwość próbkowania przetwornika. Układ ten jest dostępny masowo w internetowych sklepach elektronicznych, a jego cena nie zwala z nóg.
+\\
+\par Piny układu przedstawiono na rysunku \ref{fig:adc}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.3\textwidth]{images/adc.png}
+    \caption{Piny wybranego przetwornika AD}
+    \label{fig:adc}
+\end{figure}
+Jak można wywnioskować bezpośrednio z rysunku \ref{fig:adc}, wybrany przetwornik jest prostym układem. Poza trzema sygnałami cyfrowymi protokołu SPI trzeba mu zapewnić dostęp do masy układu (GND), napięcia zasilania ($V_{dd}$) oraz próbkowanego przez niego napięcia wejściowego.
+\\
+\par Przy obsłudze tego przetwornika nasuwają się jednak dwie ważne kwestie. 
+\begin{enumerate}
+    \item Wejściowy sygnał napięciowy próbkowany przez przetwornik (sygnał $V_{in}$) musi być w zakresie potencjałów masy i napięcia referencyjnego. Biorąc za masę potencjał zerowy, oraz standardowe napięcie zasilające przetwornik wynikające z dokumentacji, czyli $+5$ V zrozumiałe jest, że sygnał $V_{in}$ musi być z przedziału $(0, +5)$ V. Bezpośrednio stąd wynika, że wejściowy sygnał napięciowy musi zostać odpowiednio wyskalowany tak, aby znalazł się w środku przedziału przetwornika.
+    \item Sygnał zasilający $V_{dd}$ pełni funkcję sygnału $V_{ref}$. Oznacza to, że zasilanie musi również pełnić funkcję referencji. Jako, że zapotrzebowanie energetyczne układu jest małe, do zasilania przetwornika można wykorzystać bezpośrednio źródła napięć referencyjnych o małej wydajności prądowej (nota z dokumentacji). 
+\end{enumerate}
+Podsumowując, wymagania wynikające z doboru układu AD7680 można streścić następująco:
+\begin{enumerate}
+    \item Wyskalowanie próbkowanego napięcia wejściowego do środka zakresu przetwornika $(0, +5)$ V.
+    \item Zapewnienie czystego napięcia zasilającego $+5$ V pełniącego równocześnie funkcję referencji układu.
+    \item Protokół SPI jako główny cyfrowy interfejs komunikacyjny.
+\end{enumerate}
+\subsubsection{Wybrany przetwornik DA}
+Układ AD5541 spod szyldu firmy Analog Devices jest 16 bitowym, napięciowo wyjściowym przetwornikiem cyfrowo-analogowym o niskim maksymalnym zapotrzebowaniu energetycznym równym 0.625 mW. Identycznie jak w dobranym przetworniku analogowo-cyfrowym, cyfrowym interfejsem komunikacyjnym układu jest protokół SPI.
+\\
+\par Piny układu przedstawiono na rysunku \ref{fig:dac}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.3\textwidth]{images/dac.png}
+    \caption{Piny wybranego przetwornika DA}
+    \label{fig:dac}
+\end{figure}
+Jak można wywnioskować bezpośrednio z rysunku \ref{fig:dac}, poza standardowymi sygnałami potrzebnymi przy tego typu układów, używany przetwornik poza zasilaniem posiada swoją oddzielną referencje (sygnał REF) mogącą osiągać wartości z zakresu $(2, V_{dd})$.
+Wynikają stąd następujące wymagania projektowe:
+\begin{enumerate}
+    \item Potrzeba zapewnienia czystego referencyjnego zasilania o określonym potencjale oraz określonego napięcia zasilania ($(2, 5)$ V).
+    \item Protokół SPI jako główny cyfrowy interfejs komunikacyjny.
+\end{enumerate}
+\subsubsection{Podsumowanie wymagań narzuconych przez dobrane przetworniki}
+Reasumując sprawy poruszane w poprzednich sekcjach, na pewno podsumować można następujące kwestie:
+\begin{enumerate}
+    \item Sumarycznie potrzebne są dwa sygnały zasilające, z czego jeden pełnić będzie funkcję napięcia referencyjnego dla układu przetwornika DA jak i funkcję referencyjno-zasilającą dla układu AD. Z racji standardowych wartości zdecydowano się tutaj na napięcie $+5$ V. Wydajność prądowa sygnału wynikająca z dokumentacji układów oraz tego, że sumarycznie do tego sygnału będą podpięte cztery układy nie może być mniejsza niż $10$ mA.
+    \item Układowi DA poza referencją trzeba zagwarantować zasilanie. Tutaj również zdecydowano się na klasyczne $+5$ V. Ten sygnał nie musi być równie czysty jak wyżej opisywane napięcie referencyjne.
+    \item Interfejsem komunikacyjnym dla wszystkich przetworników jest SPI, więc trzeba zapewnić, aż cztery wolne linie protokołu na docelowej jednostce obliczeniowej.
+\end{enumerate}
+Pierwsze dwa punkty są możliwe i proste w realizacji, trzeci natomiast spowodował dodatkowe problemy projektowe. Platforma, na której będzie realizowana część programowa projektu (procesor Sitara AM3357 na płytce rozwojowej BeagleBone Black) posiada tylko dwa kanały SPI, po których dodatkowo niemożliwa jest jednoczesna transmisja bez użycia zewnętrznego kontrolera (DMA lub RPU). Prowadzi to do kolejnej sekcji, a mianowicie określenia protokołu komunikacyjnego, zdolnego zastąpić cztery osobne kanały RX/TX SPI.
+\subsubsection{Protokół cyfrowy}
+Wymagania dla protokołu cyfrowego wynikające z podjętych decyzji projektowych są następujące:
+\begin{enumerate}
+    \item Potrzebna ilość linii TX - 2
+    \item Potrzebna ilość linii RX - 2
+    \item Wymagana jest linia zegarowa, synchronizująca układy i zapewniające określone częstotliwości próbkowania
+    \item Wymagany jest sygnał symulujący CS SPI (stan niski oznacza zaczęcie rozmowy z układem).
+    \item Interfejs powinien być możliwy do realizacji od strony programowej, tzn. biblioteki do komunikacji po tym interfejsie powinny być zapewnione od strony wykorzystywanego systemu operacyjnego.
+\end{enumerate}
+Zważając na wyszczególnione wyżej wymagania, autor po okresie poszukiwań zdecydował się na protokół McASP (Multichannel Audio Serial Port). Przebiegi czasowe poszczególnych linii protokołu przedstawione są na rysunku 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{images/mcasp.png}
+    \caption{Linie McASP}
+    \label{fig:mcasp}
+\end{figure}
+Protokół jest używany jako główne medium interakcji systemu operacyjnego GNU/Linux z kartami dźwiękowymi za pośrednictwem bibliotek ALSA. Streścić go można następująco:
+\begin{enumerate}
+    \item X linii RX oznaczonych jako DRX. Wykorzystywana jednostka ma ich cztery.
+    \item X linii TX oznaczonych jako DTX. Wykorzystywana jednostka ma ich cztery.
+    \item Główna linia zegarowa o wysokiej częstotliwości (sygnał PCLK).
+    \item Linia synchronizująca będąca zegarem o niskiej częstotliwości (FSYNC)
+\end{enumerate}
+Protokół jest wykorzystywany do interakcji z wielokanałowymi kartami dźwiękowymi, więc X linii RX i TX jest niezbędnych. Dodatkowo, częstotliwość sygnałów PCLK i FSYNC jest w pełni konfigurowalna. Korzystając z bibliotek ALSA istnieje możliwość jednoczesnego odczytu i zapisu.
+\\
+\par Dzięki wykorzystaniu tego protokołu, główny problem, który pojawił się po wyborze przetworników został zażegnany. Sygnał FSYNC można traktować jako globalny sygnał CS SPI dla wszystkich używanych przetworników, gwarantując tym samym pełną synchronizację oraz odczyt/zapis w tym samym momencie. Interakcja z czipami będzie zaczynała się na zboczu opadającym sygnału.
+\\
+\par Odpowiednie sygnały SPI dzięki skorzystaniu z McASP przyjmują zatem następującą formę:
+\begin{enumerate}
+    \item SCLK - PCLK
+    \item CS - FSYNC
+    \item MISO - DRX
+    \item MOSI - DTX
+\end{enumerate}
+\newpage
+Przykładowy schemat komunikacji jednego mastera (w aktualnym przypadku masterem jest BBB) z dwoma slave'ami przedstawiono na rysunku \ref{fig:codeces}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{images/codecs.png}
+    \caption{Komunikacja master - multislave}
+    \label{fig:codeces}
+\end{figure}
+\newpage
+\subsection{Zasilanie}
+Sekcja zasilania przedstawiono na rysunku \ref{fig:psu}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = \textwidth]{pdfs/psu.pdf}
+    \caption{Sekcja zasilania}
+    \label{fig:psu}
+\end{figure}
+Jak można zauważyć z \ref{fig:psu}, sekcja zasilania składa się z sześciu podsekcji, z których można wyróżnić:
+\begin{enumerate}
+	\item Sekcję wejściową.
+	\item Sekcję rozdzielacza napięcia.
+	\item Sekcję referencji $+5$ V.
+	\item Sekcję zasilania $+5$ V.
+	\item Sekcję składowej stałej $+1.25$ V.
+	\item Sekcję LED.
+\end{enumerate}
+\subsubsection{Sekcja wejściowa}
+Sekcja wejściowa składa się z złącza Barrel Jack, do którego wpinane zewnętrzne zasilanie $+15$ V pochodzące z przetwornicy impulsowej. Jako, że przetwornice impulsowe nie słyną z czystego napięcia wyjściowego (relatywnie wysoki, typowo w okolicach $200$ mV p-p i wysokoczęstoliwościowy ripple, zależny od częstotliwości przełączania przetwornicy), aby zasilanie wyczyścić, zastosowano filtr $\pi$, składający się z buforujących kondensatorów bezpośrednio na wejściu o sumarycznej pojemności równej $210.1$ $\mu F$ oraz częstotiwości odcięcia równej:
+\begin{equation}
+ f_c = \frac{1}{2\pi\sqrt{LC}} = 2233.8774 \text{ Hz}
+\end{equation}
+Ważne jest, aby przy projektowaniu tego typu filtrów zapewnić tłumienie krytyczne, z którego dla danych parametrów wynika rezystancja cewki określona zależnością:
+\begin{equation}
+	R_L = \sqrt{\frac{L}{C}} = 65.9685 \text{ m}\Omega
+\end{equation}
+Zastosowana cewka posiada wewnętrzny opór równy $74.8$ m$\Omega$, więc zapewniono lekki zapas.
+\subsubsection{Sekcja rozdzielacza napięcia}
+Sekcja ma za zadanie rozdzielić napięcie wejściowe na dwa symetryczne zasilania $\pm12$ V. W tym celu, do wygenerowania ujemnego zasilania zastosowano układ LTC3261, będący ujemną pompą ładunków o wydajności prądowej równej $100$ mA. Układ generuje wysoki ripple (500 kHz, 100 mV p-p), dlatego dla wyjściowego napięcia wymagana jest filtracja. Tutaj również, żeby nie generować strat zastosowano filtr $\pi$ ($f_c = 10703.4987$ Hz). Wejściowe napięcie $+15$ V oraz przefiltrowane ujemne napięcie $-15$ V trafia następnie na układ dwóch symetrycznych regulatorów LDO (low dropout), zapewniających stabilizację i utrzymanie napięcia $\pm5$ V. Z dodatkowych rzeczy w tej sekcji można wyróżnić również niezbędne dla każdego układu kondensatory odsprzęgające, których pojemności wynikają z dokumentacji układów.
+\subsubsection{Sekcja referencji}
+Prosta sekcja napięcia referencyjnego składa się z układu REF195, zapewniającego bardzo stabilne (dokładność $\pm2$ mV) napięcie wyjściowe $+5$ V. Układ ma maksymalną wydajność prądową równą $30$ mA, co jest wystarczające, żeby zapewnić referencję dla przetworników, jak i zasilanie dla przetworników AD. Tutaj również, na bazie dokumentacji układu, zastosowano kondensatory odsprzęgające.
+\subsubsection{Sekcja zasilania}
+Celem sekcji jest zapewnienie wysokoprądowego zasilania $+5$ V dla przetworników cyfowo-analogowych, jak i zewnętrznej jednostki obliczeniowej. W tym celu, dla wejściowego napiecia $+15$ V pochodzącego bezpośrednio z przefiltrowanego wejścia zastosowano układ SMPS (Switching Mode Power Supply) skofigurowany przez dobór odpowiednich rezystancji, pojemności i induktancji do osiągnięcia napięcia wyjściowego $+6$ V. Nie bez powodu zdecydowano się na takie napięcie wyjściowe, ponieważ układy SMPS znane są nieczystego napięcia wyjściowego (ripple), dlatego żeby napięcie wygładzić, wyjście przetwornicy przez kondensatory buforujące podłączono do wysokoprądowego regulatora LDO, tak, aby osiągność wysokoprądowe, relatywnie czyste napięcie $+5$ V zdolne zasilać przetworniki DA i zewnętrzną jednostkę obliczeniową.
+\subsubsection{Sekcja składowej stałej}
+Jak później okaże się w sekcji opisującej tory analogowe, aby odpowiednio wyskalować napięcie wejściowe przetworników, tak aby znalazło się w środku ich zakresu, odpowiednia jest odpowiednia składowa stała dodawana do zmiennego, wejściowego sygnału próbkowanego przez przetworniki. Z obliczeń autora wynika, że musi ona wynosić $U_c = 1.25$ V i aby taki potencjał uzyskać, zastosowano układ MAX6001 zapewniający referencję napięciową na takim właśnie poziomie. Układ ma bardzo niską wydajność prądową, ale w tym przypadku nie jest to istotne. Na wejście i wyjście układu dołożone odpowiednie kondensatory odsprzęgające.
+\subsubsection{Sekcja LED}
+Sekcja składa się jedynie z limitującego prąd rezystora oraz diody LED, mającej za zadanie poinformować użytkownika, że zasilanie jest włączone. 
+\subsection{Tory analogowe}
+\subsection{Tory analogowe - wejście}
+Sekcję wejściowych torów analogowych przedstawiono na rysunku \ref{fig:analog-in}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = \textwidth]{pdfs/analog-in.pdf}
+    \caption{Sekcja torów analogowych - wejscie}
+    \label{fig:analog-in}
+\end{figure}
+Sekcja składa się z dwóch identycznych torów na poszczególne wejściowe sygnały audio (sygnał z mikrofonu wejściowego i sygnał z mikrofonu błędu) doprowadzonych układu przez złącza XLR. Poszczególne bloki sekcji toru analogowego można przedstawić następująco:
+\begin{enumerate}
+	\item Zasilanie Phantom $+15$ V.
+	\item Filtr EMI.
+	\item Limiter diodowy.
+	\item Wzmacniacz różnicowy.
+	\item Dolnoprzepustowy filtr aktywny.
+	\item Wzmacniacz odwracający.
+	\item Dolnoprzepustowy filtr pasywny.
+	\item Limiter diodowy.
+\end{enumerate}
+\subsubsection{Zasilanie Phantom}
+Mikrofony wykorzystywane w projekcie to wysokojakościowe mikrofony pojemnościowe Bayerdynamic MM1. Takie mikrofony wymagają zasilania i układ je zapewniający nosi nazwę zasilania Phantomowego. Według dokumentacji, standardowe $+12$ V w tym przypadku wystarcza i typowe rezystancje dla takiego napięcia to $680$ $\Omega$. Dodana składowa stała zostaje następnie usunięta przez wpięte szeregowo kondensatory elektrolityczne tak, aby nie zaburzać dalszej pracy układu.
+\subsubsection{Filtr EMI}
+Zadaniem dolnoprzepustowego filtru EMI jest niwelacja wysokoczęstotliwościowych zakłóceń mogących występować w surowym sygnale wejściowym. Wysokoczęstotliwościowe składowe sygnału wejściowego źle wpływają na pracę późniejszych wzmacniaczy operacyjnych, posiadających niski wskaźnik CMRR (Common Mode Rejection Ratio) dla wysokich częstotliwości. Aby te składowe usunąć, zastosowano dolnoprzepustowy filtr EMI z $f_c = 7.957$ Hz.
+\subsubsection{Limiter diodowy}
+Zadaniem układu limitera jest, jak sama nazwa wskazuje, ograniczenie napięcia do określonej, stałej wartości. W tym przypadku tą wartością jest $+12$ V. Układ limitera w tym przypadku składa się z dwóch diod prostowniczych, jednej na jeden tor sygnału wejściowego (XLR zapewnia sygnał różnicowy, gdzie $+$ i $-$ są odpowiednio odwrócone w fazie względem siebie).
+\subsubsection{Wzmacniacz różnicowy}
+Różnicowy sygnał ze złącza XLR należy przekonwertować do pojedynczego oraz odpowiednio wzmocnić, tak, aby znalazł się w środku zakresu przetwornika. Wzmacniacz różnicowy definiuje następująca zależność:
+\begin{equation}
+	U_{out} = \frac{R_3}{R_1}(U_2 - U_1)
+\end{equation}
+Dla zastosowanych oporności wzmocnienie zaprojektowanego wzmacniacza wynosi 10, czyli $20$ dB. Wyjściowy sygnał jest więc odpowiednio wzmocniony i pozbawiony wejściowych zakłóceń, poprzez zastosowanie różnicy sygnałów odwróconych wzgledem siebie w fazie.
+\subsubsection{Dolnoprzepustowy filtr aktywny}
+Zaprojektowany filtr do dolnoprzepustowy filtr Butterwortha szóstego rzędu, z jednostkowym wzmocnieniem i częstotliwością odcięcia $f_c = 500$ Hz. Jak pisano we wstępie, tłumienie hałasów powżej 500 Hz mija się z celem. Próbkowanie przetworników oraz częstotliwość Nyquista z niego wynikająca wynosi
+\begin{equation}
+	f_p = 1 \text{ kHz} \implies f_n = \frac{f_p}{2} = 500 \text{ Hz}
+\end{equation}
+więc zaprojektowany filtr spełnia wymagania dotyczące próbkowania. Charakterystykę amplitudową przedstawiono na rysunku \ref{fig:filter}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = \textwidth]{images/freqResponse.jpg}
+    \caption{Charakterystyka amplitudowa zaprojektowanego filtra}
+    \label{fig:filter}
+\end{figure}
+\subsubsection{Wzmacniacz odwracający}
+Rolą, którą pełni w wejściowym torze analogowym wzmacniacz odwracający jest dodanie odpowiedniej składowej stałej do sygnału. Jak wspominano w sekcji dotyczącej zastosowanych przetworników AD, środek zakresu to $+2.5$ V. Przed wzmacniaczem napięcie powinno oscylować z amplitudą równą $+2.5$ V, więc jedyne co należy dodatkowo zrobić, to dodać składową stałą o wysokości amplitudy. Aby to zrobić, zastosowano wzmacniacz odwracający ze stałym sygnałem na plusie. W wyniku takiej decyzji, równiania wzmacniacza z zasady superpozycji są zdefiniowane:
+\begin{equation}
+	U_{odw} = \frac{R_f}{R_{in}}U_- = -U_- = -U_{in}
+\end{equation}
+\begin{equation}
+	U_{nodw} = 1 + \frac{R_f}{R_{in}}U_+ = 2U_+ = 2U_c 
+	\label{eq:nieod}
+\end{equation}
+Jeżeli $U_c = 1.25$ V, to z \ref{eq:nieod} mamy $+2.5$ V dodanej składowej stałej, czyli to, co autor chciał osiągnąć.
+\subsubsection{Dolnoprzepustowy filtr pasywny}
+Z dokumentacji zastosowanych wzmacniaczy operacyjnych (tanie układy TL071) oraz praktyki autora wynika, że dla lepszej stabilności sygnału wyjściowego takiego wzmacniacza lepiej bezpośrednio na jego wyjściu dać pojedynczy, dolnoprzepustowy filtr pasywny. Takie rozwiązanie zapewni lepszą stabilność wzmacniacza. Zastosowany filtr ma $f_c = 15.9154$ Hz.
+\subsection{Tory analogowe - wejście}
+Sekcję wyjściowych torów analogowych przedstawiono na rysunku \ref{fig:analog-out}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = \textwidth]{pdfs/analog-out.pdf}
+    \caption{Sekcja torów analogowych - wyjście}
+    \label{fig:analog-out}
+\end{figure}
+\subsection{Tory cyfrowe}
+Sekcję torów cyfrowych przedstawiono na rysunku \ref{fig:digital}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = \textwidth]{pdfs/conv.pdf}
+    \caption{Sekcja torów cyfrowych}
+    \label{fig:digital}
+\end{figure}
+Jak można zauważyć z rysunku \ref{fig:digital}, sekcja torów cyfrowych składa się z następujących podsekcji:
+\begin{enumerate}
+	\item Sekcja przetworników AD
+	\item Sekcja przetworników DA
+	\item Sekcja napięcia wyjściowego
+	\item Sekcja wejść cyfrowych
+\end{enumerate}
+\subsubsection{Sekcja przetworników AD}
+\subsubsection{Sekcja przetworników DA}
+\subsubsection{Sekcja napięcia wyjściowego}
+\subsection{Sekcja wejść cyfrowych}
+\section{Koszty}
+\section{Rezultaty}
+\section{Schematy, projekt PCB}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1.2\textwidth]{pdfs/main-F_Cu.pdf}
+    \caption{Sekcja torów analogowych - wyjście}
+    \label{fig:analog-out}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1.2\textwidth]{pdfs/main-F_Mask.pdf}
+    \caption{Sekcja torów analogowych - wyjście}
+    \label{fig:analog-out}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1.2\textwidth]{pdfs/main-F_Paste.pdf}
+    \caption{Sekcja torów analogowych - wyjście}
+    \label{fig:analog-out}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1.2\textwidth]{pdfs/main-F_Fab.pdf}
+    \caption{Sekcja torów analogowych - wyjście}
+    \label{fig:analog-out}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1.2\textwidth]{pdfs/main-F_Silkscreen.pdf}
+    \caption{Sekcja torów analogowych - wyjście}
+    \label{fig:analog-out}
+\end{figure}
+
+
+\end{document}
