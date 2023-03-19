@@ -1,6 +1,7 @@
 set(target_name utils)
 set(target_sources
         src/dummy.c
+        src/malloc_wrapper.c
 )
 
 add_library(${target_name}

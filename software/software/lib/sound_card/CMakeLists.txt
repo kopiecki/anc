@@ -1,6 +1,6 @@
 set(target_name sound_card)
 set(target_sources
-        src/sound_card.c    
+        src/sound_card.c
 )
 
 add_library(${target_name}
@@ -18,4 +18,5 @@ target_link_libraries(${target_name}
         asound
         logger
         utils
+        m
 )

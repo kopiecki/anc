@@ -17,7 +17,7 @@ AllowShortBlocksOnASingleLine:                    false
 AllowShortCaseLabelsOnASingleLine:                false
 AllowShortFunctionsOnASingleLine:                 true
 AllowShortLambdasOnASingleLine:                   All
-AllowShortIfStatementsOnASingleLine:              true
+AllowShortIfStatementsOnASingleLine:              false
 AllowShortLoopsOnASingleLine:                     true
 AlwaysBreakAfterDefinitionReturnType:             None
 AlwaysBreakAfterReturnType:                       None
