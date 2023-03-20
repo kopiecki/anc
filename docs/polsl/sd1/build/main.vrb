@@ -1,0 +1,23 @@
+\frametitle{Część sprzętowo-programowa}
+\framesubtitle{Protokół cyfrowy - bit banging, przykład}
+
+\begin{lstlisting}[frame=single, language=C, basicstyle=\tiny]
+void tx_byte(uint8_t data)
+{
+	gpio_low(SD_CS);
+	for (uint8_t i = 0u; i < 8u; ++i) {
+		if (data & 0x80u)
+			gpio_high(SD_DI);
+		else
+			gpio_low(SD_DI);
+		
+		gpio_low(SD_CLK);
+		delay();
+		gpio_high(SD_CLK);
+		
+		data <<= 1u;
+	}
+	
+	gpio_low(SD_CS);
+}
+\end{lstlisting}
