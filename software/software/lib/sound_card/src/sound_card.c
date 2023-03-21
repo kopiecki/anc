@@ -22,7 +22,7 @@
 #define FORMAT_SIZE_BITS(format)  snd_pcm_format_physical_width(format)
 #define FORMAT_SIZE_BYTES(format) (snd_pcm_format_physical_width(format) >> 3u)
 
-struct SoundCard_s
+struct sound_card_s
 {
         const char* name;
         uint8_t channels;
@@ -36,58 +36,78 @@ struct SoundCard_s
         snd_pcm_format_t format;
 };
 
-static inline snd_pcm_uframes_t sound_card_get_start_threshold(SoundCard_t* const this)
+static inline const snd_pcm_uframes_t sound_card_get_start_threshold(
+        sound_card_t* const this)
 {
         return (this->buffer_size_frames / this->period_size_frames)
                * this->period_size_frames;
 }
 
 static void generate_sine(
-        SoundCard_t* const this,
+        sound_card_t* const this,
         const snd_pcm_channel_area_t* areas,
         snd_pcm_uframes_t offset,
-        double* _phase,
+        double* _phase_1,
+        double* _phase_2,
         double frequency)
 {
-        double phase = *_phase;
-        double step  = MAX_PHASE * frequency / (double)this->rate;
+        double phase_1 = *_phase_1;
+        double phase_2 = *_phase_2;
 
-        unsigned char* samples[this->channels];
+        double step_1 = MAX_PHASE * SINE_FREQUENCY / (double)this->rate;
+        double step_2 = MAX_PHASE * SINE_FREQUENCY * 3 / ((double)this->rate * 2);
+
+        uint8_t* samples[this->channels];
         int steps[this->channels];
-
-        unsigned int maxval = (1 << (FORMAT_SIZE_BITS(this->format) - 1)) - 1;
 
         for (uint8_t channel = 0u; channel < this->channels; channel++)
         {
+                /* samples byte address + channel offset */
                 samples[channel] =
-                        (((unsigned char*)areas[channel].addr)
+                        (((uint8_t*)areas[channel].addr)
                          + (areas[channel].first / 8));
+
+                /* step in bytes */
                 steps[channel] = areas[channel].step / 8;
+
+                /* += 0 */
                 samples[channel] += offset * steps[channel];
         }
 
         int count = this->period_size_frames;
-        /* fill the channel areas */
         while (count-- > 0)
         {
-                int res = sin(phase) * maxval;
-
+                int res_1 = (sin(phase_1) + sin(phase_2)) * INT16_MAX;
                 for (uint8_t channel = 0; channel < this->channels; channel++)
                 {
                         for (int i = 0; i < FORMAT_SIZE_BYTES(this->format); i++)
-                                *(samples[channel] + i) = (res >> i * 8) & 0xff;
+                        {
+                                if (channel == 0)
+                                {
+                                        *(samples[channel] + i) =
+                                                (res_1 >> (i * 8)) & 0xFF;
+                                }
+                                else
+                                        *(samples[channel] + i) = 0;
+                        }
                         samples[channel] += steps[channel];
                 }
-                phase += step;
-                if (phase >= MAX_PHASE)
-                        phase -= MAX_PHASE;
+
+                phase_1 += step_1;
+                phase_2 += step_2;
+
+                if (phase_1 >= MAX_PHASE)
+                        phase_1 += MAX_PHASE;
+                if (phase_2 >= MAX_PHASE)
+                        phase_2 += MAX_PHASE;
         }
-        *_phase = phase;
+        *_phase_1 = phase_1;
+        *_phase_2 = phase_2;
 }
 
 static int sound_card_open(
-        SoundCard_t* const this,
-        const SoundCard_Config_t* const config)
+        sound_card_t* const this,
+        const struct sound_card_config* const config)
 {
         ASSERT(this != NULL);
         ASSERT(config != NULL);
@@ -109,7 +129,7 @@ static int sound_card_open(
         return error;
 }
 
-static int sound_card_allocate_hw_params(SoundCard_t* const this)
+static int sound_card_allocate_hw_params(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -139,7 +159,7 @@ static int sound_card_allocate_hw_params(SoundCard_t* const this)
         return error;
 }
 
-static int sound_card_allocate_sw_params(SoundCard_t* const this)
+static int sound_card_allocate_sw_params(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -173,7 +193,7 @@ static int sound_card_allocate_sw_params(SoundCard_t* const this)
 }
 
 
-static void sound_card_deallocate(SoundCard_t* const this)
+static void sound_card_deallocate(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -187,7 +207,7 @@ static void sound_card_deallocate(SoundCard_t* const this)
         LOG_DEBUG("Sound card resources deallocated");
 }
 
-static int sound_card_hw_set_access(SoundCard_t* const this)
+static int sound_card_hw_set_access(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -206,7 +226,9 @@ static int sound_card_hw_set_access(SoundCard_t* const this)
         return error;
 }
 
-static int sound_card_hw_set_format(SoundCard_t* const this, SoundCard_Format_t format)
+static int sound_card_hw_set_format(
+        sound_card_t* const this,
+        enum sound_card_sample_format format)
 {
         ASSERT(this != NULL);
 
@@ -231,7 +253,7 @@ static int sound_card_hw_set_format(SoundCard_t* const this, SoundCard_Format_t 
         return error;
 }
 
-static int sound_card_hw_set_rate(SoundCard_t* const this, uint32_t rate)
+static int sound_card_hw_set_rate(sound_card_t* const this, uint32_t rate)
 {
         ASSERT(this != NULL);
 
@@ -266,7 +288,7 @@ static int sound_card_hw_set_rate(SoundCard_t* const this, uint32_t rate)
         return error;
 }
 
-static int sound_card_hw_set_channels(SoundCard_t* const this, uint8_t channels)
+static int sound_card_hw_set_channels(sound_card_t* const this, uint8_t channels)
 {
         ASSERT(this != NULL);
 
@@ -292,7 +314,7 @@ static int sound_card_hw_set_channels(SoundCard_t* const this, uint8_t channels)
         return error;
 }
 
-static int sound_card_hw_set_buffer(SoundCard_t* const this, uint32_t buffer_time_us)
+static int sound_card_hw_set_buffer(sound_card_t* const this, uint32_t buffer_time_us)
 {
         ASSERT(this != NULL);
 
@@ -344,7 +366,7 @@ static int sound_card_hw_set_buffer(SoundCard_t* const this, uint32_t buffer_tim
         return error;
 }
 
-static int sound_card_hw_set_period(SoundCard_t* const this, uint32_t period_time_us)
+static int sound_card_hw_set_period(sound_card_t* const this, uint32_t period_time_us)
 {
         ASSERT(this != NULL);
 
@@ -396,7 +418,7 @@ static int sound_card_hw_set_period(SoundCard_t* const this, uint32_t period_tim
         return error;
 }
 
-static int sound_card_hw_write_params(SoundCard_t* const this)
+static int sound_card_hw_write_params(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -414,7 +436,7 @@ static int sound_card_hw_write_params(SoundCard_t* const this)
         return error;
 }
 
-static int sound_card_sw_set_start_threshold(SoundCard_t* const this)
+static int sound_card_sw_set_start_threshold(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -437,7 +459,7 @@ static int sound_card_sw_set_start_threshold(SoundCard_t* const this)
         return error;
 }
 
-static int sound_card_sw_set_min_transfer(SoundCard_t* const this)
+static int sound_card_sw_set_min_transfer(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -460,7 +482,7 @@ static int sound_card_sw_set_min_transfer(SoundCard_t* const this)
         return error;
 }
 
-static int sound_card_sw_write_params(SoundCard_t* const this)
+static int sound_card_sw_write_params(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -478,10 +500,9 @@ static int sound_card_sw_write_params(SoundCard_t* const this)
         return error;
 }
 
-
 static int sound_card_hw_configure(
-        SoundCard_t* const this,
-        const SoundCard_Config_t* const config)
+        sound_card_t* const this,
+        const struct sound_card_config* const config)
 {
         ASSERT(this != NULL);
 
@@ -516,7 +537,7 @@ static int sound_card_hw_configure(
         return error;
 }
 
-static int sound_card_sw_configure(SoundCard_t* const this)
+static int sound_card_sw_configure(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -531,7 +552,7 @@ static int sound_card_sw_configure(SoundCard_t* const this)
         return error;
 }
 
-static int sound_card_xrun_recovery(SoundCard_t* const this, int error)
+static int sound_card_xrun_recovery(sound_card_t* const this, int error)
 {
         if (error == -EPIPE)
         {
@@ -566,12 +587,12 @@ static int sound_card_xrun_recovery(SoundCard_t* const this, int error)
         return error;
 }
 
-SoundCard_t* const sound_card_init(const SoundCard_Config_t* const config)
+sound_card_t* const sound_card_init(const struct sound_card_config* const config)
 {
         ASSERT(config != NULL);
         ASSERT(config->name != NULL);
 
-        SoundCard_t* this = malloc(sizeof(*this));
+        sound_card_t* this = malloc(sizeof(*this));
         if (this == NULL)
                 return NULL;
 
@@ -606,7 +627,7 @@ fail:
         return NULL;
 }
 
-void sound_card_deinit(SoundCard_t* const this)
+void sound_card_deinit(sound_card_t* const this)
 {
         ASSERT(this != NULL);
 
@@ -616,13 +637,13 @@ void sound_card_deinit(SoundCard_t* const this)
         sound_card_deallocate(this);
 }
 
-int sound_card_capture(SoundCard_t* this, void* buffer, size_t size)
+int sound_card_capture(sound_card_t* this, void* buffer, size_t size)
 {
         ASSERT(this != NULL);
 }
 
 static int16_t* const sound_card_allocate_playback_samples(
-        SoundCard_t* const this,
+        sound_card_t* const this,
         uint8_t num_of_periods)
 {
         const size_t frame_size_bytes =
@@ -638,7 +659,7 @@ static int16_t* const sound_card_allocate_playback_samples(
 }
 
 static snd_pcm_channel_area_t* const sound_card_allocate_playback_areas(
-        SoundCard_t* const this)
+        sound_card_t* const this)
 {
         snd_pcm_channel_area_t* const areas =
                 calloc(this->channels, sizeof(snd_pcm_channel_area_t));
@@ -649,7 +670,7 @@ static snd_pcm_channel_area_t* const sound_card_allocate_playback_areas(
 }
 
 static void sound_card_prepare_playback_areas(
-        SoundCard_t* const this,
+        sound_card_t* const this,
         int16_t* const samples,
         snd_pcm_channel_area_t* const areas)
 {
@@ -662,10 +683,12 @@ static void sound_card_prepare_playback_areas(
         }
 }
 
-int sound_card_playback(SoundCard_t* const this, const void* buffer, uint8_t num_of_periods)
+int sound_card_playback(
+        sound_card_t* const this,
+        const struct sound_card_playback_task* const task)
 {
         int16_t* const samples =
-                sound_card_allocate_playback_samples(this, num_of_periods);
+                sound_card_allocate_playback_samples(this, task->num_of_periods);
         if (samples == NULL)
                 goto bad_alloc;
 
@@ -676,10 +699,12 @@ int sound_card_playback(SoundCard_t* const this, const void* buffer, uint8_t num
 
         sound_card_prepare_playback_areas(this, samples, areas);
 
+        uint16_t num_of_periods = task->num_of_periods;
         while (num_of_periods--)
         {
-                double phase = 0.0f;
-                generate_sine(this, areas, 0, &phase, SINE_FREQUENCY);
+                double phase_1 = 0.0f;
+                double phase_2 = 0.0f;
+                generate_sine(this, areas, 0, &phase_1, &phase_2, 0);
                 int16_t* ptr = samples;
                 int cptr     = this->period_size_frames;
                 while (cptr > 0)

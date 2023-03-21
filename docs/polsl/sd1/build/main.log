@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.2.12)  21 MAR 2023 00:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.2.12)  21 MAR 2023 19:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1111,7 +1111,7 @@ Overfull \vbox (22.67023pt too high) detected at line 230
 [14
 
  <./images/alsa.png>]
-<images/pcm.jpg, id=451, 436.63126pt x 240.9pt>
+<images/pcm.jpg, id=452, 436.63126pt x 240.9pt>
 File: images/pcm.jpg Graphic file (type jpg)
 <use images/pcm.jpg>
 Package pdftex.def Info: images/pcm.jpg  used on input line 246.
@@ -1119,6 +1119,59 @@ Package pdftex.def Info: images/pcm.jpg  used on input line 246.
  [15
 
  <./images/pcm.jpg>]
+<images/aplay.png, id=480, 750.55406pt x 195.73125pt>
+File: images/aplay.png Graphic file (type png)
+<use images/aplay.png>
+Package pdftex.def Info: images/aplay.png  used on input line 263.
+(pdftex.def)             Requested size: 273.83728pt x 71.41293pt.
+ [16
+
+ <./images/aplay.png (PNG copy)>]
+<images/circ.jpg, id=507, 318.18875pt x 214.8025pt>
+File: images/circ.jpg Graphic file (type jpg)
+<use images/circ.jpg>
+Package pdftex.def Info: images/circ.jpg  used on input line 278.
+(pdftex.def)             Requested size: 171.14764pt x 115.53603pt.
+
+Overfull \vbox (13.6134pt too high) detected at line 278
+ []
+
+[17
+
+ <./images/circ.jpg>]
+<images/alsa_frames.png, id=534, 360.59718pt x 246.1697pt>
+File: images/alsa_frames.png Graphic file (type png)
+<use images/alsa_frames.png>
+Package pdftex.def Info: images/alsa_frames.png  used on input line 294.
+(pdftex.def)             Requested size: 171.14764pt x 116.8379pt.
+
+Overfull \vbox (1.31528pt too high) detected at line 294
+ []
+
+[18
+
+ <./images/alsa_frames.png (PNG copy)>] [19
+
+] [20
+
+] [21
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 4
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+))
+Overfull \vbox (8.44186pt too high) detected at line 369
+ []
+
+[22
+
+]
 \tf@nav=\write6
 \openout6 = `main.nav'.
 
@@ -1133,21 +1186,26 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 23934 strings out of 480139
- 453535 string characters out of 5893693
- 896515 words of memory out of 5000000
- 41330 multiletter control sequences out of 15000+600000
- 509716 words of font info for 71 fonts, out of 8000000 for 9000
+ 24091 strings out of 480139
+ 456071 string characters out of 5893693
+ 926770 words of memory out of 5000000
+ 41464 multiletter control sequences out of 15000+600000
+ 511166 words of font info for 73 fonts, out of 8000000 for 9000
  79 hyphenation exceptions out of 8191
- 99i,15n,104p,387b,1268s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/t
-imes/utmri8a.pfb>
-Output written on main.pdf (15 pages, 1124168 bytes).
+ 99i,15n,104p,433b,1387s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plmi.enc}{/usr/share/texliv
+e/texmf-dist/fonts/enc/dvips/pl/plms.enc}{/usr/share/texlive/texmf-dist/fonts/e
+nc/dvips/pl/plrm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
+}</usr/share/texlive/texmf-dist/fonts/type1/public/pl/plmi10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/pl/plr10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/pl/plsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/pl/plsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (22 pages, 1277501 bytes).
 PDF statistics:
- 502 PDF objects out of 1000 (max. 8388607)
- 445 compressed objects within 5 object streams
- 31 named destinations out of 1000 (max. 500000)
- 129 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 717 PDF objects out of 1000 (max. 8388607)
+ 640 compressed objects within 7 object streams
+ 45 named destinations out of 1000 (max. 500000)
+ 144 words of extra memory for PDF output out of 10000 (max. 10000000)
 

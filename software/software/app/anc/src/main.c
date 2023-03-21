@@ -11,7 +11,7 @@
 
 int main(int argc, char* argv[])
 {
-        SoundCard_Config_t config = {
+        const struct sound_card_config config = {
                 .name           = SOUND_CARD_NAME,
                 .format         = S16,
                 .rate           = 44100,
@@ -21,10 +21,15 @@ int main(int argc, char* argv[])
                 .period_time_us = 500000,
         };
 
-        SoundCard_t* const sound_card = sound_card_init(&config);
+        const struct sound_card_playback_task task = {
+                .channel_data   = NULL,
+                .num_of_periods = 2,
+        };
+
+        sound_card_t* const sound_card = sound_card_init(&config);
         if (sound_card != NULL)
         {
-                sound_card_playback(sound_card, NULL, 1);
+                sound_card_playback(sound_card, &task);
                 sound_card_deinit(sound_card);
         }
 

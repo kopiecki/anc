@@ -233,7 +233,7 @@ void tx_byte(uint8_t data)
 \frametitle{Część programowa}
 \framesubtitle{Cyfrowa reprezentacja dźwięku}
 \begin{itemize}
-\item Cyfrową reprezentacją dźwięku, wykorzystywaną przez środowisko \textbf{ALSA} jest modulacja pulsowo-kodowa (\textit{PCM - Pulse Code Modulation}
+\item Cyfrową reprezentacją dźwięku, wykorzystywaną przez środowisko \textbf{ALSA} jest modulacja pulsowo-kodowa (\textit{PCM - Pulse Code Modulation})
 
 \begin{figure}[H]
 \centering
@@ -243,6 +243,129 @@ void tx_byte(uint8_t data)
 
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}
+\frametitle{Część programowa}
+\framesubtitle{ALSA}
+\begin{itemize}
+\item ALSA korzysta ze specjalnego nazewnictwa urządzeń dźwiękowych dostępnych dla użytkownika. Mogą to być rzeczywiste urządzenia (karty dźwiękowe), lub ich wirtualne reprezentacje.
+\item W przypadku fizycznych urządzeń, korzysta się z formatu \textit{hw:i,j}, gdzie \textit{i} oznacza numer karty, a \textit{j} numer urządzenia kontrolowanego przez kartę, czyli przypkładowo zestawu głośników lub mikrofonu.
+\item W przpyadku wirtualnych urządzeń, korzysta się z formatu \textit{plughw:i, j}.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{images/aplay.png}
+\caption{Rezultat polecenia \textit{aplay -l}}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Część programowa}
+\framesubtitle{ALSA - lokowanie próbek}
+\begin{itemize}
+\item Na poziomie sterownika jądra sprzętu audio, \textbf{ALSA} tworzy bufor cykliczny, którego długość można modyfikować używając udostępnionego API.
+\item Jeżeli bufor jest zapełniony, sterownik jądra generuje przerwanie. Rolę obsługi przerwania obejmuje DMA (\textit{Direct Memory Access}), które nieblokująco przenosi próbki z bufora sterownika do bufora aplikacji.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{images/circ.jpg}
+\caption{Bufor cykliczny}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Część programowa}
+\framesubtitle{ALSA - lokowanie próbek}
+\begin{itemize}
+\item Bufor tworzony przez sterownik jądra zapełniany jest przez \textbf{fragmenty} (lub okresy, \textit{periods}).
+\item \textbf{Fragmenty} składają się z określonej liczby \textbf{ramek} (\textit{frames}).
+\item \textbf{Ramka} składa się z próbek dla każdego kanału karty dźwiękowej (liczba kanałów może być wyspecifikowana, tak jak format próbki).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{images/alsa_frames.png}
+\caption{Podział danych}
+\end{figure}
+\end{frame}
+\begin{frame}
+\frametitle{Część programowa}
+\frametitle{ALSA - bufory}
+\begin{itemize}
+\item Jeżeli aplikacja jest uruchomiona, to dane w nieprzerwany sposób są transportowane z/do bufora cyklicznego sterownika jądra do/z bufora aplikacji.
+\item W przypadku odczytywania danych (\textit{capture}), jeżeli nie są one odpowiednio szybko czytane, to może dojść do sytuacji, kiedy dane w buforze cyklicznym zostaną nadpisane nowymi. Taka sytuacja nosi nazwę \textbf{buffer overrun}.
+\item W przypadku zapisywania danych (\textit{playback}), jeżeli nie są one odpowiednio szybko wysyłane, to może dojść do odwrotnej sytuacji, czyli bufor cykliczny w pewnym momencie się całkowicie opróżni. Taka sytuacja nosi nazwę \textbf{buffer underrun}.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Część programowa}
+\framesubtitle{ALSA - latencja}
+\begin{itemize}
+\item Bardzo ważnym pojęciem związanym z przetwarzaniem sygnału audio jest \textbf{latencja}
+\item \textbf{Latencja} to nic innego jak opóźnienie, które towarzyszy sygnałowi audio od momentu trafienia na wejście systemu do jego opuszczenia.
+\item W środowisku \textbf{ALSA} latencja definiowana jest następującą zależnością:
+\begin{equation}
+	T_L = \frac{n_fF_{rb}}{f_sP_{rb}}
+\end{equation}
+gdzie $n_f$ - ilość fragmentów, $F_{rb}$ - rozmiar fragmentu w bajtach, $f_s$ - częstotliwość próbkowania, $P_{rb}$ - rozmiar próbki w bajtach. 
+\item Licznik równania to nic innego jak zadeklarowany rozmiar bufora w bajtach, czyli całe wyrażenie odpowiada czasowi potrzebnemu na przesłanie całego bufora (zbuforowaniu danych).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Część programowa}
+\framesubtitle{ALSA - latencja}
+Przykładowo
+\begin{itemize}
+\item Chcąc odtworzyć dźwięk z szesnatostobitowego systemu stereo (dwa kanały, głośnik lewy i prawy, próbki po 16 bitów $=$ 2 bajty) z typową częstotliwością audio równą 44100 kHz, nasza \textbf{ramka} ma rozmiar 4 bajtów (dwie dwu-bajtowe próbki, jedna na kanał). Deklarując rozmiar \textbf{fragmentu} na 2048 \textbf{ramek}, otrzymujemy długość \textbf{fragmentu} w bajtach równą 8192 bajtów.
+\item Deklarując rozmiar bufora na dwa fragmenty, otrzymujemy rozmiar bufora równy 16384 bajtów.
+\item Zbuforowanie tych danych, definiujące latencję, w tak skonstruowanym systemie zajmie $\frac{16384}{44100 * 4} \approx 0.093$ s.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Część programowa}
+\framesubtitle{ALSA - przykładowy prosty program}
+\begin{lstlisting}[language=C, basicstyle=\tiny]
+int playback(uint8_t* const buffer, size_t size)
+{
+        const uint8_t channels        = 1;
+        const uint32_t rate           = 48000;
+        const char* pcm_name          = "hw:0,0";
+        const snd_pcm_stream_t stream = SND_PCM_STREAM_PLAYBACK;
+        const snd_pcm_format_t format = SND_PCM_FORMAT_U8;
+        const snd_pcm_access_t access = SND_PCM_ACCESS_RW_INTERLEAVED;
+        const uint32_t latency_us     = 500000u;
+
+        snd_pcm_t* pcm_handle = NULL;
+        int error             = snd_pcm_open(&pcm_handle, pcm_name, stream, 0);
+        if (error < 0)
+                return error;
+
+        error = snd_pcm_set_params(
+                pcm_handle, format, access, channels, rate, true, latency_us);
+        if (error < 0)
+                return error;
+
+        for (uint8_t i = 0u; i < 16u; ++i) {
+                snd_pcm_sframes_t transfered_frames =
+                        snd_pcm_writei(pcm_handle, buffer, size);
+                if (transfered_frames < 0)
+                        xrun_recover(pcm_handle, transfered_frames, 0);
+                else if ((transfered_frames > 0) && (transfered_frames < size))
+                        LOG_ERROR("Short write!");
+        }
+
+        snd_pcm_drain(pcm_handle);
+        snd_pcm_close(pcm_handle);
+}
+\end{lstlisting}
 \end{frame}
 
 \end{document}
