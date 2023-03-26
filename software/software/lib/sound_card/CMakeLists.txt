@@ -16,6 +16,7 @@ target_include_directories(${target_name}
 target_link_libraries(${target_name}
     PRIVATE
         asound
+        signal
         logger
         utils
         m

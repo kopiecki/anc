@@ -6,6 +6,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{hyperref}
 \usefonttheme{serif}
 
 \title{Seminarium dyplomowe}
@@ -124,7 +125,6 @@
 \begin{itemize}
 \item Płaszczyzną odniesienia dla relatywnie szybkich sygnałów cyfrowych może w równym stopniu być płaszczyzna masy, jak i płaszczyzna \textbf{zasilania}
 \item Z Henry W. Ott, \textit{Electromagnetic Compatibility Engineering} - układ scalony \textbf{nie jest źródłem prądu} sam w sobie, lecz stanowi jedynie jego \textbf{sterownik}. Prawdziwym źródłem jest kondensator odsprzęgający lub/i pasożytnicza pojemność pomiędzy ścieżkami/płaszczyznami.
-end{frame}
 \end{itemize}
 \begin{figure}[H]
 \centering
@@ -366,6 +366,15 @@ int playback(uint8_t* const buffer, size_t size)
         snd_pcm_close(pcm_handle);
 }
 \end{lstlisting}
+
+\end{frame}
+\begin{frame}
+\frametitle{Wykorzystane materiały}
+\begin{itemize}
+\item Henry W. Ott, \textit{Electromagnetic Compatibillity Engineering}
+\item \href{www.alsa-project.org/wiki}{Strona domowa projektu ALSA}
+\item \href{https://www.linuxjournal.com/article/6735}{Jeff Tranter, \textit{Introduction to Sound Programming with ALSA}}, Linux Journal
+\end{itemize}
 \end{frame}
 
 \end{document}

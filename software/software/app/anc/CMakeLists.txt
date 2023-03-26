@@ -10,7 +10,9 @@ include_directories(${target_name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(${target_name}
         PRIVATE
                 sound_card
+                signal
                 logger
+                utils
 )
 
 install(TARGETS ${target_name} RUNTIME DESTINATION bin)

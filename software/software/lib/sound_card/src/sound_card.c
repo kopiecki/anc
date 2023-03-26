@@ -25,247 +25,189 @@
 struct sound_card_s
 {
         const char* name;
+
         uint8_t channels;
         uint32_t rate;
+
         snd_pcm_t* pcm_handle;
         snd_pcm_hw_params_t* pcm_hw_params_handle;
         snd_pcm_sw_params_t* pcm_sw_params_handle;
+
         snd_pcm_uframes_t buffer_size_frames;
         snd_pcm_uframes_t period_size_frames;
+
         uint8_t frame_size_bytes;
         snd_pcm_format_t format;
 };
 
 static inline const snd_pcm_uframes_t sound_card_get_start_threshold(
-        sound_card_t* const this)
+        sound_card_t* const self)
 {
-        return (this->buffer_size_frames / this->period_size_frames)
-               * this->period_size_frames;
-}
-
-static void generate_sine(
-        sound_card_t* const this,
-        const snd_pcm_channel_area_t* areas,
-        snd_pcm_uframes_t offset,
-        double* _phase_1,
-        double* _phase_2,
-        double frequency)
-{
-        double phase_1 = *_phase_1;
-        double phase_2 = *_phase_2;
-
-        double step_1 = MAX_PHASE * SINE_FREQUENCY / (double)this->rate;
-        double step_2 = MAX_PHASE * SINE_FREQUENCY * 3 / ((double)this->rate * 2);
-
-        uint8_t* samples[this->channels];
-        int steps[this->channels];
-
-        for (uint8_t channel = 0u; channel < this->channels; channel++)
-        {
-                /* samples byte address + channel offset */
-                samples[channel] =
-                        (((uint8_t*)areas[channel].addr)
-                         + (areas[channel].first / 8));
-
-                /* step in bytes */
-                steps[channel] = areas[channel].step / 8;
-
-                /* += 0 */
-                samples[channel] += offset * steps[channel];
-        }
-
-        int count = this->period_size_frames;
-        while (count-- > 0)
-        {
-                int res_1 = (sin(phase_1) + sin(phase_2)) * INT16_MAX;
-                for (uint8_t channel = 0; channel < this->channels; channel++)
-                {
-                        for (int i = 0; i < FORMAT_SIZE_BYTES(this->format); i++)
-                        {
-                                if (channel == 0)
-                                {
-                                        *(samples[channel] + i) =
-                                                (res_1 >> (i * 8)) & 0xFF;
-                                }
-                                else
-                                        *(samples[channel] + i) = 0;
-                        }
-                        samples[channel] += steps[channel];
-                }
-
-                phase_1 += step_1;
-                phase_2 += step_2;
-
-                if (phase_1 >= MAX_PHASE)
-                        phase_1 += MAX_PHASE;
-                if (phase_2 >= MAX_PHASE)
-                        phase_2 += MAX_PHASE;
-        }
-        *_phase_1 = phase_1;
-        *_phase_2 = phase_2;
+        return (self->buffer_size_frames / self->period_size_frames)
+               * self->period_size_frames;
 }
 
 static int sound_card_open(
-        sound_card_t* const this,
+        sound_card_t* const self,
         const struct sound_card_config* const config)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
         ASSERT(config != NULL);
 
         int error =
-                snd_pcm_open(&this->pcm_handle, this->name, config->stream, 0);
+                snd_pcm_open(&self->pcm_handle, self->name, config->stream, 0);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot open PCM device %s [%d, %s]",
-                        this->name,
+                        self->name,
                         error,
                         strerror(-error));
         else
                 LOG_DEBUG(
                         "PCM device %s with %s stream opened successfully",
-                        this->name,
+                        self->name,
                         snd_pcm_stream_name(config->stream));
 
         return error;
 }
 
-static int sound_card_allocate_hw_params(sound_card_t* const this)
+static int sound_card_allocate_hw_params(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
-        int error = snd_pcm_hw_params_malloc(&this->pcm_hw_params_handle);
+        int error = snd_pcm_hw_params_malloc(&self->pcm_hw_params_handle);
         if (error < 0)
         {
                 LOG_ERROR(
                         "Cannot allocate parameters for PCM device %s [%s]",
-                        this->name,
+                        self->name,
                         snd_strerror(error));
                 return error;
         }
 
         error = snd_pcm_hw_params_any(
-                this->pcm_handle, this->pcm_hw_params_handle);
+                self->pcm_handle, self->pcm_hw_params_handle);
         if (error < 0)
         {
                 LOG_ERROR(
                         "Cannot get hardware parameters for PCM device %s [%s]",
-                        this->name,
+                        self->name,
                         snd_strerror(error));
-                snd_pcm_hw_params_free(this->pcm_hw_params_handle);
+                snd_pcm_hw_params_free(self->pcm_hw_params_handle);
         }
         else
-                LOG_DEBUG("Allocated parameters for PCM device %s", this->name);
+                LOG_DEBUG("Allocated parameters for PCM device %s", self->name);
 
         return error;
 }
 
-static int sound_card_allocate_sw_params(sound_card_t* const this)
+static int sound_card_allocate_sw_params(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
-        int error = snd_pcm_sw_params_malloc(&this->pcm_sw_params_handle);
+        int error = snd_pcm_sw_params_malloc(&self->pcm_sw_params_handle);
         if (error < 0)
         {
                 LOG_ERROR(
                         "Cannot allocate software parameters for PCM device %s "
                         "[%s]",
-                        this->name,
+                        self->name,
                         snd_strerror(error));
                 return error;
         }
 
         error = snd_pcm_sw_params_current(
-                this->pcm_handle, this->pcm_sw_params_handle);
+                self->pcm_handle, self->pcm_sw_params_handle);
         if (error < 0)
         {
                 LOG_ERROR(
                         "Cannot get software parameters for PCM device %s [%s]",
-                        this->name,
+                        self->name,
                         snd_strerror(error));
-                snd_pcm_sw_params_free(this->pcm_sw_params_handle);
+                snd_pcm_sw_params_free(self->pcm_sw_params_handle);
         }
         else
                 LOG_DEBUG(
                         "Allocated software parameters for PCM device %s",
-                        this->name);
+                        self->name);
 
         return error;
 }
 
 
-static void sound_card_deallocate(sound_card_t* const this)
+static void sound_card_deallocate(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
-        if (this->pcm_hw_params_handle != NULL)
-                snd_pcm_hw_params_free(this->pcm_hw_params_handle);
-        if (this->pcm_sw_params_handle != NULL)
-                snd_pcm_sw_params_free(this->pcm_sw_params_handle);
+        if (self->pcm_hw_params_handle != NULL)
+                snd_pcm_hw_params_free(self->pcm_hw_params_handle);
+        if (self->pcm_sw_params_handle != NULL)
+                snd_pcm_sw_params_free(self->pcm_sw_params_handle);
 
-        free(this);
+        free(self);
 
         LOG_DEBUG("Sound card resources deallocated");
 }
 
-static int sound_card_hw_set_access(sound_card_t* const this)
+static int sound_card_hw_set_access(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
         int error = snd_pcm_hw_params_set_access(
-                this->pcm_handle,
-                this->pcm_hw_params_handle,
+                self->pcm_handle,
+                self->pcm_hw_params_handle,
                 SND_PCM_ACCESS_RW_INTERLEAVED);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot set PCM device %s access [%s]",
-                        this->name,
+                        self->name,
                         snd_strerror(error));
         else
-                LOG_DEBUG("Setted access for PCM device %s", this->name);
+                LOG_DEBUG("Setted access for PCM device %s", self->name);
 
         return error;
 }
 
 static int sound_card_hw_set_format(
-        sound_card_t* const this,
+        sound_card_t* const self,
         enum sound_card_sample_format format)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
         int error = snd_pcm_hw_params_set_format(
-                this->pcm_handle, this->pcm_hw_params_handle, SND_PCM_FORMAT_S16);
+                self->pcm_handle, self->pcm_hw_params_handle, format);
         if (error < 0)
         {
                 LOG_ERROR(
                         "Cannot set PCM device %s format [%s]",
-                        this->name,
+                        self->name,
                         snd_strerror(error));
                 return error;
         }
         else
                 LOG_DEBUG(
                         "Setted PCM device %s format %s",
-                        this->name,
-                        snd_pcm_format_name(SND_PCM_FORMAT_S16));
+                        self->name,
+                        snd_pcm_format_name(format));
 
-        this->format = format;
+        self->format = format;
 
         return error;
 }
 
-static int sound_card_hw_set_rate(sound_card_t* const this, uint32_t rate)
+static int sound_card_hw_set_rate(sound_card_t* const self, uint32_t rate)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
         uint32_t exact_rate = rate;
         int error           = snd_pcm_hw_params_set_rate_near(
-                this->pcm_handle, this->pcm_hw_params_handle, &exact_rate, NULL);
+                self->pcm_handle, self->pcm_hw_params_handle, &exact_rate, NULL);
         if (error < 0)
         {
                 LOG_ERROR(
                         "Can't set rate %d for PCM device %s [%s]",
                         rate,
-                        this->name,
+                        self->name,
                         snd_strerror(error));
                 return error;
         }
@@ -281,24 +223,24 @@ static int sound_card_hw_set_rate(sound_card_t* const this, uint32_t rate)
         }
         else
                 LOG_DEBUG(
-                        "Setted rate %d for PCM device %s", exact_rate, this->name);
+                        "Setted rate %d for PCM device %s", exact_rate, self->name);
 
-        this->rate = rate;
+        self->rate = rate;
 
         return error;
 }
 
-static int sound_card_hw_set_channels(sound_card_t* const this, uint8_t channels)
+static int sound_card_hw_set_channels(sound_card_t* const self, uint8_t channels)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
         int error = snd_pcm_hw_params_set_channels(
-                this->pcm_handle, this->pcm_hw_params_handle, channels);
+                self->pcm_handle, self->pcm_hw_params_handle, channels);
         if (error < 0)
         {
                 LOG_ERROR(
                         "Cannot set PCM device %s channels [%s]",
-                        this->name,
+                        self->name,
                         snd_strerror(error));
 
                 return error;
@@ -307,28 +249,28 @@ static int sound_card_hw_set_channels(sound_card_t* const this, uint8_t channels
                 LOG_DEBUG(
                         "Setted channels %d for PCM device %s",
                         channels,
-                        this->name);
+                        self->name);
 
-        this->channels = channels;
+        self->channels = channels;
 
         return error;
 }
 
-static int sound_card_hw_set_buffer(sound_card_t* const this, uint32_t buffer_time_us)
+static int sound_card_hw_set_buffer(sound_card_t* const self, uint32_t buffer_time_us)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
         uint32_t exact_buffer_time_us = buffer_time_us;
         int error                     = snd_pcm_hw_params_set_buffer_time_near(
-                this->pcm_handle,
-                this->pcm_hw_params_handle,
+                self->pcm_handle,
+                self->pcm_hw_params_handle,
                 &exact_buffer_time_us,
                 NULL);
         if (error < 0)
         {
                 LOG_ERROR(
                         "Cannot set PCM device %s buffer time %d [%s]",
-                        this->name,
+                        self->name,
                         buffer_time_us,
                         snd_strerror(error));
                 return error;
@@ -345,42 +287,42 @@ static int sound_card_hw_set_buffer(sound_card_t* const this, uint32_t buffer_ti
         else
                 LOG_DEBUG(
                         "Setted PCM device %s buffer time %d",
-                        this->name,
+                        self->name,
                         buffer_time_us);
 
         error = snd_pcm_hw_params_get_buffer_size(
-                this->pcm_hw_params_handle, &(this->buffer_size_frames));
+                self->pcm_hw_params_handle, &(self->buffer_size_frames));
         if (error < 0)
                 LOG_ERROR(
                         "Cannot get PCM device %s buffer size in frames [%d, "
                         "%s]",
-                        this->name,
+                        self->name,
                         error,
                         strerror(-error));
         else
                 LOG_DEBUG(
                         "PCM device %s configured with buffer size %d frames",
-                        this->name,
-                        this->buffer_size_frames);
+                        self->name,
+                        self->buffer_size_frames);
 
         return error;
 }
 
-static int sound_card_hw_set_period(sound_card_t* const this, uint32_t period_time_us)
+static int sound_card_hw_set_period(sound_card_t* const self, uint32_t period_time_us)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
         uint32_t exact_period_time_us = period_time_us;
         int error                     = snd_pcm_hw_params_set_period_time_near(
-                this->pcm_handle,
-                this->pcm_hw_params_handle,
+                self->pcm_handle,
+                self->pcm_hw_params_handle,
                 &exact_period_time_us,
                 NULL);
         if (error < 0)
         {
                 LOG_ERROR(
                         "Cannot set PCM device %s period time %d [%s]",
-                        this->name,
+                        self->name,
                         period_time_us,
                         snd_strerror(error));
                 return error;
@@ -397,168 +339,168 @@ static int sound_card_hw_set_period(sound_card_t* const this, uint32_t period_ti
         else
                 LOG_DEBUG(
                         "Setted PCM device %s period size %d",
-                        this->name,
+                        self->name,
                         period_time_us);
 
         error = snd_pcm_hw_params_get_period_size(
-                this->pcm_hw_params_handle, &(this->period_size_frames), NULL);
+                self->pcm_hw_params_handle, &(self->period_size_frames), NULL);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot get PCM device %s period size in frames [%d, "
                         "%s]",
-                        this->name,
+                        self->name,
                         error,
                         strerror(-error));
         else
                 LOG_DEBUG(
                         "PCM device %s configured with period size %d frames",
-                        this->name,
-                        this->period_size_frames);
+                        self->name,
+                        self->period_size_frames);
 
         return error;
 }
 
-static int sound_card_hw_write_params(sound_card_t* const this)
+static int sound_card_hw_write_params(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
         int error =
-                snd_pcm_hw_params(this->pcm_handle, this->pcm_hw_params_handle);
+                snd_pcm_hw_params(self->pcm_handle, self->pcm_hw_params_handle);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot save hardware parameters for PCM device %s "
                         "parameters [%s]",
-                        this->name,
+                        self->name,
                         snd_strerror(error));
         else
-                LOG_DEBUG("Saved PCM device %s hardware parameters", this->name);
+                LOG_DEBUG("Saved PCM device %s hardware parameters", self->name);
 
         return error;
 }
 
-static int sound_card_sw_set_start_threshold(sound_card_t* const this)
+static int sound_card_sw_set_start_threshold(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
-        snd_pcm_uframes_t start_threshold = sound_card_get_start_threshold(this);
+        snd_pcm_uframes_t start_threshold = sound_card_get_start_threshold(self);
         int error = snd_pcm_sw_params_set_start_threshold(
-                this->pcm_handle, this->pcm_sw_params_handle, start_threshold);
+                self->pcm_handle, self->pcm_sw_params_handle, start_threshold);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot set start threshold %d for playback for PCM "
                         "device %s [%s]",
-                        this->name,
+                        self->name,
                         start_threshold,
                         snd_strerror(error));
         else
                 LOG_DEBUG(
                         "Setted start threshold %d for PCM device %s",
                         start_threshold,
-                        this->name);
+                        self->name);
 
         return error;
 }
 
-static int sound_card_sw_set_min_transfer(sound_card_t* const this)
+static int sound_card_sw_set_min_transfer(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
         int error = snd_pcm_sw_params_set_avail_min(
-                this->pcm_handle,
-                this->pcm_sw_params_handle,
-                this->period_size_frames);
+                self->pcm_handle,
+                self->pcm_sw_params_handle,
+                self->period_size_frames);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot set minimum transfer %d for PCM device %s [%s]",
-                        this->period_size_frames,
-                        this->name,
+                        self->period_size_frames,
+                        self->name,
                         snd_strerror(error));
         else
                 LOG_DEBUG(
                         "Setted %d minimum transfer for PCM device %s",
-                        this->period_size_frames,
-                        this->name);
+                        self->period_size_frames,
+                        self->name);
 
         return error;
 }
 
-static int sound_card_sw_write_params(sound_card_t* const this)
+static int sound_card_sw_write_params(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
         int error =
-                snd_pcm_sw_params(this->pcm_handle, this->pcm_sw_params_handle);
+                snd_pcm_sw_params(self->pcm_handle, self->pcm_sw_params_handle);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot save software parameters for PCM device %s "
                         "[%s]",
-                        this->name,
+                        self->name,
                         snd_strerror(error));
         else
-                LOG_DEBUG("Saved PCM device %s software parameters", this->name);
+                LOG_DEBUG("Saved PCM device %s software parameters", self->name);
 
         return error;
 }
 
 static int sound_card_hw_configure(
-        sound_card_t* const this,
+        sound_card_t* const self,
         const struct sound_card_config* const config)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
-        int error = sound_card_hw_set_access(this);
+        int error = sound_card_hw_set_access(self);
         if (error < 0)
                 return error;
 
-        error = sound_card_hw_set_format(this, config->format);
+        error = sound_card_hw_set_format(self, config->format);
         if (error < 0)
                 return error;
 
-        error = sound_card_hw_set_channels(this, config->channels);
+        error = sound_card_hw_set_channels(self, config->channels);
         if (error < 0)
                 return error;
 
-        error = sound_card_hw_set_rate(this, config->rate);
+        error = sound_card_hw_set_rate(self, config->rate);
         if (error < 0)
                 return error;
 
-        error = sound_card_hw_set_buffer(this, config->buffer_time_us);
+        error = sound_card_hw_set_buffer(self, config->buffer_time_us);
         if (error < 0)
                 return error;
 
-        error = sound_card_hw_set_period(this, config->period_time_us);
+        error = sound_card_hw_set_period(self, config->period_time_us);
         if (error < 0)
                 return error;
 
-        error = sound_card_hw_write_params(this);
+        error = sound_card_hw_write_params(self);
         if (error < 0)
                 return error;
 
         return error;
 }
 
-static int sound_card_sw_configure(sound_card_t* const this)
+static int sound_card_sw_configure(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
-        int error = sound_card_sw_set_start_threshold(this);
+        int error = sound_card_sw_set_start_threshold(self);
         if (error < 0)
                 return error;
 
-        error = sound_card_sw_set_min_transfer(this);
+        error = sound_card_sw_set_min_transfer(self);
         if (error < 0)
                 return error;
 
         return error;
 }
 
-static int sound_card_xrun_recovery(sound_card_t* const this, int error)
+static int sound_card_xrun_recovery(sound_card_t* const self, int error)
 {
         if (error == -EPIPE)
         {
-                LOG_WARNING("Underrun occured for PCM device %s", this->name);
+                LOG_WARNING("Underrun occured for PCM device %s", self->name);
 
-                error = snd_pcm_prepare(this->pcm_handle);
+                error = snd_pcm_prepare(self->pcm_handle);
                 if (error < 0)
                 {
                         LOG_ERROR(
@@ -569,11 +511,11 @@ static int sound_card_xrun_recovery(sound_card_t* const this, int error)
         }
         else if (error == -ESTRPIPE)
         {
-                while ((error = snd_pcm_resume(this->pcm_handle)) == -EAGAIN)
+                while ((error = snd_pcm_resume(self->pcm_handle)) == -EAGAIN)
                         sleep(1);
                 if (error < 0)
                 {
-                        error = snd_pcm_prepare(this->pcm_handle);
+                        error = snd_pcm_prepare(self->pcm_handle);
                         if (error < 0)
                         {
                                 LOG_ERROR(
@@ -592,143 +534,108 @@ sound_card_t* const sound_card_init(const struct sound_card_config* const config
         ASSERT(config != NULL);
         ASSERT(config->name != NULL);
 
-        sound_card_t* this = malloc(sizeof(*this));
-        if (this == NULL)
+        sound_card_t* self = malloc(sizeof(*self));
+        if (self == NULL)
                 return NULL;
 
-        this->name = config->name;
+        self->name = config->name;
 
-        int error = sound_card_open(this, config);
+        int error = sound_card_open(self, config);
         if (error < 0)
                 goto fail;
 
-        error = sound_card_allocate_hw_params(this);
+        error = sound_card_allocate_hw_params(self);
         if (error < 0)
                 goto fail;
 
-        error = sound_card_hw_configure(this, config);
+        error = sound_card_hw_configure(self, config);
         if (error < 0)
                 goto fail;
 
-        error = sound_card_allocate_sw_params(this);
+        error = sound_card_allocate_sw_params(self);
         if (error < 0)
                 goto fail;
 
-        error = sound_card_sw_configure(this);
+        error = sound_card_sw_configure(self);
         if (error < 0)
                 goto fail;
 
-        LOG_INFO("PCM device %s configured", this->name);
+        LOG_INFO("PCM device %s configured", self->name);
 
-        return this;
+        return self;
 
 fail:
-        sound_card_deallocate(this);
+        sound_card_deallocate(self);
         return NULL;
 }
 
-void sound_card_deinit(sound_card_t* const this)
+void sound_card_deinit(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
+        ASSERT(self != NULL);
 
-        snd_pcm_drain(this->pcm_handle);
-        snd_pcm_close(this->pcm_handle);
+        snd_pcm_drain(self->pcm_handle);
+        snd_pcm_close(self->pcm_handle);
 
-        sound_card_deallocate(this);
+        sound_card_deallocate(self);
 }
 
-int sound_card_capture(sound_card_t* this, void* buffer, size_t size)
+size_t sound_card_get_period_size_bytes(sound_card_t* const self)
 {
-        ASSERT(this != NULL);
-}
+        ASSERT(self != NULL);
 
-static int16_t* const sound_card_allocate_playback_samples(
-        sound_card_t* const this,
-        uint8_t num_of_periods)
-{
         const size_t frame_size_bytes =
-                FORMAT_SIZE_BYTES(this->format) * this->channels;
-        const size_t period_size_bytes =
-                frame_size_bytes * this->period_size_frames;
-
-        int16_t* const samples = malloc(period_size_bytes * num_of_periods);
-        if (samples == NULL)
-                LOG_ERROR("Cannot allocate samples");
-
-        return samples;
+                FORMAT_SIZE_BYTES(self->format) * self->channels;
+        return frame_size_bytes * self->period_size_frames;
 }
 
-static snd_pcm_channel_area_t* const sound_card_allocate_playback_areas(
-        sound_card_t* const this)
+int sound_card_capture(sound_card_t* self, void* buffer, size_t size)
 {
-        snd_pcm_channel_area_t* const areas =
-                calloc(this->channels, sizeof(snd_pcm_channel_area_t));
-        if (areas == NULL)
-                LOG_ERROR("Cannot allocate areas");
-
-        return areas;
+        ASSERT(self != NULL);
 }
 
-static void sound_card_prepare_playback_areas(
-        sound_card_t* const this,
-        int16_t* const samples,
-        snd_pcm_channel_area_t* const areas)
+static void sound_card_prepare_buffer(
+        sound_card_t* const self,
+        struct sound_card_playback_task* const task,
+        uint16_t* const buffer)
 {
-        uint8_t format_size_bits = FORMAT_SIZE_BITS(this->format);
-        for (uint8_t channel = 0u; channel < this->channels; channel++)
-        {
-                areas[channel].addr  = samples;
-                areas[channel].first = channel * format_size_bits;
-                areas[channel].step  = this->channels * format_size_bits;
-        }
+        size_t j = 0u;
+        for (size_t i = 0u; i < task->size; i++)
+                for (uint8_t channel = 0u; channel < self->channels; channel++)
+                        buffer[j++] = task->sample_buffers[channel][i];
 }
 
 int sound_card_playback(
-        sound_card_t* const this,
-        const struct sound_card_playback_task* const task)
+        sound_card_t* const self,
+        struct sound_card_playback_task* const task)
 {
-        int16_t* const samples =
-                sound_card_allocate_playback_samples(this, task->num_of_periods);
-        if (samples == NULL)
-                goto bad_alloc;
+        ASSERT(self != NULL);
+        ASSERT(task != NULL);
 
-        snd_pcm_channel_area_t* const areas =
-                sound_card_allocate_playback_areas(this);
-        if (areas == NULL)
-                goto bad_alloc;
+        uint16_t* buffer = malloc(
+                sound_card_get_period_size_bytes(self) * task->num_of_periods);
 
-        sound_card_prepare_playback_areas(this, samples, areas);
+        sound_card_prepare_buffer(self, task, buffer);
 
         uint16_t num_of_periods = task->num_of_periods;
         while (num_of_periods--)
         {
-                double phase_1 = 0.0f;
-                double phase_2 = 0.0f;
-                generate_sine(this, areas, 0, &phase_1, &phase_2, 0);
-                int16_t* ptr = samples;
-                int cptr     = this->period_size_frames;
+                uint16_t* ptr = buffer;
+                int cptr      = self->period_size_frames;
                 while (cptr > 0)
                 {
-                        int error = snd_pcm_writei(this->pcm_handle, ptr, cptr);
+                        int error = snd_pcm_writei(self->pcm_handle, ptr, cptr);
                         if (error == -EAGAIN)
                                 continue;
                         if (error < 0)
                         {
-                                if (sound_card_xrun_recovery(this, error) < 0)
+                                if (sound_card_xrun_recovery(self, error) < 0)
                                         return error;
                                 break;
                         }
-                        ptr += error * this->channels;
+                        ptr += error * self->channels;
                         cptr -= error;
                 }
         }
 
         return 0;
-
-bad_alloc:
-        if (samples != NULL)
-                free(samples);
-        if (areas != NULL)
-                free(areas);
-        return -ENOMEM;
 }

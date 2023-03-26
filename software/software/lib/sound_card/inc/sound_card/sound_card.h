@@ -15,22 +15,17 @@
 /* Opaque sound card handle */
 typedef struct sound_card_s sound_card_t;
 
-struct buffer_and_size
-{
-        void* buffer;
-        uint32_t size;
-};
-
 enum sound_card_stream
 {
-        PLAYBACK = 0,
-        CAPTURE,
-        FULL_DUPLEX,
+        SOUND_CARD_STREAM_PLAYBACK = 0,
+        SOUND_CARD_STREAM_CAPTURE,
+        SOUND_CARD_STREAM_FULL_DUPLEX,
 };
 
 enum sound_card_sample_format
 {
-        S16 = 2,
+        SOUND_CARD_FORMAT_S16 = 2,
+        SOUND_CARD_FORMAT_U16 = 4,
 };
 
 struct sound_card_config
@@ -49,16 +44,19 @@ struct sound_card_config
 
 struct sound_card_playback_task
 {
-        struct buffer_and_size channel_data[SOUND_CARD_MAX_CHANNEL];
+        uint16_t* sample_buffers[SOUND_CARD_MAX_CHANNEL];
+        size_t size;
         uint16_t num_of_periods;
 };
 
 sound_card_t* const sound_card_init(const struct sound_card_config* const config);
 void sound_card_deinit(sound_card_t* const this);
 
+size_t sound_card_get_period_size_bytes(sound_card_t* const this);
+
 int sound_card_capture(sound_card_t* const this, void* buffer, size_t size);
 int sound_card_playback(
         sound_card_t* const this,
-        const struct sound_card_playback_task* const task);
+        struct sound_card_playback_task* const task);
 
 #endif /* SOUND_CARD_H_ */

@@ -1,6 +1,6 @@
 set(target_name utils)
 set(target_sources
-        src/dummy.c
+        src/file_helpers.c
 )
 
 add_library(${target_name}
