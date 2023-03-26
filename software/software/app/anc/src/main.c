@@ -4,6 +4,7 @@
  */
 
 #define __FORCE_DEBUG_SEVERITY LOGGER_DEBUG_SEVERITY_TRACE
+#define SIGNAL_FORMAT_UINT16   true
 
 #include <errno.h>
 #include <stdlib.h>

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import argparse as arg
-import matplotlib.pyplot as plt
+import pylab
 
 
 def read_file(name: str) -> list[float]:
@@ -14,8 +14,10 @@ def read_file(name: str) -> list[float]:
 
 
 def plot(buffer: list[float]) -> None:
-    plt.plot(list(range(0, len(buffer))), buffer)
-    plt.show()
+    pylab.figure(1)
+    pylab.plot(buffer, linewidth=2)
+    pylab.xlabel("i")
+    pylab.ylabel("y(i)")
 
 
 if __name__ == "__main__":

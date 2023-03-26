@@ -7,13 +7,14 @@
 #define ASSERT_H_
 
 #if (DEBUG == 1)
-#define ASSERT(_x)                                                                   \
-        do {                                                                             \
-                if (!(_x))                                                               \
-                {                                                                        \
-                        LOG_ERROR("Assert failed!");                                     \
-                        assert(_x);                                                      \
-                }                                                                        \
+#define ASSERT(_x)                                                             \
+        do                                                                     \
+        {                                                                      \
+                if (!(_x))                                                     \
+                {                                                              \
+                        LOG_ERROR("Assert failed!");                           \
+                        assert(_x);                                            \
+                }                                                              \
         } while (0)
 #else
 #define ASSERT(_x) (void)(_x)

@@ -21,9 +21,12 @@ enum signal_type
 struct signal
 {
         double frequency, sampling_frequency, phase;
+#ifdef SIGNAL_FORMAT_DOUBLE
+        double amplitude;
+#endif
         enum signal_type type;
 };
 
-void signal_generate(struct signal* const self, uint16_t* const buffer, size_t size);
+void signal_generate(struct signal* const self, void* buffer, size_t size);
 
 #endif /* SIGNAL_H_ */

@@ -50,6 +50,10 @@ run:
 
 #------------------------------------------------------------------------------
 
+test:
+	@ cd test/unit && ceedling
+.PHONY: test
+
 clean:
 	@ rm -rf "$(BUILD_DIR)"
 .PHONY: clean

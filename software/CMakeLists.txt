@@ -12,4 +12,3 @@ project(${PROJECT_NAME} LANGUAGES C CXX ASM)
 # ----------------------------------------------------
 
 add_subdirectory(software)
-add_subdirectory(test)
