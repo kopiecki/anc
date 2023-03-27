@@ -81,7 +81,6 @@ void ring_buffer_write(ring_buffer_t* const self, RING_BUFFER_FORMAT data)
                 self->read_i = (self->read_i + 1u) & self->capacity;
 
         self->buffer[self->write_i] = data;
-        LOG_INFO("BUFFER[%d] = %d", self->write_i, self->buffer[self->write_i]);
         self->write_i = (self->write_i + 1) & self->capacity;
 }
 

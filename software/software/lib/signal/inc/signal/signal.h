@@ -9,6 +9,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#ifndef SIGNAL_FORMAT
+#define SIGNAL_FORMAT uint16_t
+#endif
+
 enum signal_type
 {
         SIGNAL_TYPE_SINE = 0u,
@@ -21,7 +25,7 @@ enum signal_type
 struct signal
 {
         double frequency, sampling_frequency, phase;
-#ifdef SIGNAL_FORMAT_DOUBLE
+#if SIGNAL_FORMAT == double
         double amplitude;
 #endif
         enum signal_type type;

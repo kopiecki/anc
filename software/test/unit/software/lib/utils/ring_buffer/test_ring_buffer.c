@@ -94,22 +94,20 @@ void test_ring_buffer_should_override_old_data(void)
 {
         test_ring_buffer_should_construct();
 
-        uint16_t expected_samples[20u] = {0u};
-        for (uint8_t i = 0u; i < 20u; i++)
-                expected_samples[i] = i;
+        uint16_t written_samples[TEST_RING_BUFFER_CAPACITY + 4u] = {0u};
+        for (uint8_t i = 0u; i < TEST_RING_BUFFER_CAPACITY + 4u; i++)
+                written_samples[i] = i;
 
-        ring_buffer_write_burst(rb, expected_samples, 20u);
+        ring_buffer_write_burst(
+                rb, written_samples, TEST_RING_BUFFER_CAPACITY + 4u);
 
-        expected_samples[0] = 17u;
-        expected_samples[1] = 18u;
-        expected_samples[2] = 19u;
-        expected_samples[3] = 20u;
+        uint16_t* const expected_samples = &written_samples[5u];
 
-        uint16_t test_samples[20u] = {0u};
-        int error = ring_buffer_read_burst(rb, test_samples, 20u);
+        uint16_t test_samples[TEST_RING_BUFFER_CAPACITY - 1] = {0u};
+        int error = ring_buffer_read_burst(
+                rb, test_samples, TEST_RING_BUFFER_CAPACITY - 1);
 
-        for (uint8_t i = 0; i < 20; i++)
-                LOG_DEBUG("BUFFER[%d] = %d", i, test_samples[i]);
-
-        TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_samples, test_samples, 20u);
+        TEST_ASSERT_EQUAL(0, error);
+        TEST_ASSERT_EQUAL_UINT16_ARRAY(
+                expected_samples, test_samples, TEST_RING_BUFFER_CAPACITY - 1);
 }
