@@ -12,7 +12,8 @@
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
-        uint16_t* buffer,
+        const float* const buffer,
         size_t size);
+int file_helpers_read_buf(const char* name, float* const buffer);
 
 #endif /* FILE_HELPERS_H_ */

@@ -1,7 +1,7 @@
 set(target_name utils)
 set(target_sources
         src/file_helpers.c
-        src/ring_buffer.c
+        src/circ_lifo.c
 )
 
 add_library(${target_name}

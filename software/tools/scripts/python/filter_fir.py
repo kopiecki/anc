@@ -38,11 +38,11 @@ def export_impulse_response(impulse_response: list[float], filename: str = "imp_
 
 
 if __name__ == "__main__":
-    SAMPLE_RATE: float = 44100
+    SAMPLE_RATE: float = 500
     nyquist_hz: float = SAMPLE_RATE / 2
-    width: float = 1000.0 / nyquist_hz
-    cutoff_hz: float = 10000.0
-    stopband_atten_db: float = 60.0
+    width: float = 25 / nyquist_hz
+    cutoff_hz: float = 50
+    stopband_atten_db: float = 20.0
 
     impulse_response, order = design_filter(
         width, stopband_atten_db, cutoff_hz, nyquist_hz)

@@ -6,6 +6,8 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
-#include <stdint.h>
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
+#endif
 
 #endif /* COMMON_H_ */

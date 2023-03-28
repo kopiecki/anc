@@ -13,89 +13,111 @@
 #include "utils/assert.h"
 
 #define SIGNAL_MAX_PHASE 2.0 * M_PI
-#define BUFFER           ((SIGNAL_FORMAT*)buffer)
+#define BUFFER		 ((float*)buffer)
 
-static inline void signal_sine_calc(struct signal* const self, void* buffer, size_t i)
+static inline float signal_normalize(float y, float min, float max)
 {
-#if (SIGNAL_FORMAT == uint16_t)
-        BUFFER[i] = INT16_MAX * (1 + sin(self->phase));
-#else
-        BUFFER[i] = self->amplitude * sin(self->phase);
-#endif
+	return 2 * ((y - min) / (max - min)) - 1;
 }
 
-static inline void signal_square_calc(struct signal* const self, void* buffer, size_t i)
+static inline float signal_sine_calc(struct signal* const self)
 {
-#if (SIGNAL_FORMAT == uint16_t)
-        signal_sine_calc(self, buffer, i);
-        BUFFER[i] = (BUFFER[i] > INT16_MAX) ? UINT16_MAX : 0u;
-#else
-        BUFFER[i] = (signal_sine_calc(self->phase) > 0.0) ? self->amplitude :
-                                                            -self->amplitude;
-#endif
+	return self->amplitude * sin(self->phase);
 }
 
-static inline void signal_triangle_calc(
-        struct signal* const self,
-        void* buffer,
-        size_t i)
+static inline float signal_square_calc(struct signal* const self)
 {
-#if (SIGNAL_FORMAT == uint16_t)
-        BUFFER[i] = (1 + ((2 / M_PI) * asin(sin(self->phase)))) * INT16_MAX;
-#else
-        return (1 + ((2 / M_PI) * asin(sin(self->phase)))) * self->amplitude;
-#endif
+	return (sin(self->phase) > 0.0) ? self->amplitude :
+					  -self->amplitude;
 }
 
-static inline void signal_saw_calc(struct signal* const self, void* buffer, size_t i)
+static inline float signal_triangle_calc(struct signal* const self)
 {
-#if (SIGNAL_FORMAT_UINT16 == uint16_t)
-#else
-#endif
+	return (1 + ((2 / M_PI) * asin(sin(self->phase))))
+	       * self->amplitude;
 }
 
-static inline void signal_noise_calc(struct signal* const self, void* buffer, size_t i)
+static inline float signal_saw_calc(struct signal* const self)
 {
-#ifdef SIGNAL_FORMAT == uint16_t
-        BUFFER[i] = rand() & UINT16_MAX;
-#endif
+	return 0.0f;
+}
+
+static inline float signal_noise_calc(struct signal* const self)
+{
+	return (2 * (rand() / (float)RAND_MAX) - 1) * self->amplitude;
 }
 
 static void signal_generator_template(
-        struct signal* const self,
-        void (*calculation)(struct signal* const self, void* buffer, size_t i),
-        void* buffer,
-        size_t size)
+	struct signal* const self,
+	float (*calculation)(struct signal* const self),
+	void* buffer,
+	size_t size)
 {
-        ASSERT(self != NULL);
-        ASSERT(buffer != NULL);
+	ASSERT(self != NULL);
+	ASSERT(buffer != NULL);
 
-        const double angle =
-                SIGNAL_MAX_PHASE * self->frequency / self->sampling_frequency;
-        for (size_t i = 0u; i < size; i++)
-        {
-                self->phase += angle;
-                calculation(self, buffer, i);
+	const float angle = SIGNAL_MAX_PHASE * self->frequency
+			    / self->sampling_frequency;
+	for (size_t i = 0u; i < size; i++)
+	{
+		self->phase += angle;
+		BUFFER[i] = calculation(self);
 
-                if (self->phase >= SIGNAL_MAX_PHASE)
-                        self->phase -= SIGNAL_MAX_PHASE;
-        }
+		if (self->phase >= SIGNAL_MAX_PHASE)
+			self->phase -= SIGNAL_MAX_PHASE;
+	}
 }
 
-static void (
-        *signal_calculators[])(struct signal* const self, void* buffer, size_t i) = {
-        signal_sine_calc,
-        signal_square_calc,
-        signal_triangle_calc,
-        signal_saw_calc,
-        signal_noise_calc,
+static float (*signal_calculators[])(struct signal* const self) = {
+	signal_sine_calc,
+	signal_square_calc,
+	signal_triangle_calc,
+	signal_saw_calc,
+	signal_noise_calc,
 };
 
 void signal_generate(struct signal* const self, void* buffer, size_t size)
 {
-        if (self->type == SIGNAL_TYPE_NOISE)
-                srand(time(NULL));
+	signal_generator_template(
+		self, signal_calculators[self->type], buffer, size);
+}
 
-        signal_generator_template(
-                self, signal_calculators[self->type], buffer, size);
+void signal_generate_sum(
+	struct signal* signals[],
+	uint8_t num_of_signals,
+	void* buffer,
+	size_t size)
+{
+	float max = 1.0f;
+	float min = -1.0f;
+
+	for (size_t i = 0u; i < size; i++)
+	{
+		float y = 0.0f;
+		for (uint8_t j = 0u; j < num_of_signals; ++j)
+		{
+			float temp = 0.0f;
+			signal_generator_template(
+				signals[j],
+				signal_calculators[signals[j]->type],
+				&temp,
+				1u);
+			y += temp;
+		}
+
+		if (y > max)
+			max = y;
+		else if (y < min)
+			min = y;
+
+		BUFFER[i] = y;
+	}
+
+	for (size_t i = 0u; i < size; i++)
+		BUFFER[i] = signal_normalize(BUFFER[i], min, max);
+}
+
+void signal_initialize_noise(void)
+{
+	srand(time(NULL));
 }

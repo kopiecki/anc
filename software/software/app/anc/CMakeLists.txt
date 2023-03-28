@@ -10,6 +10,7 @@ include_directories(${target_name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(${target_name}
         PRIVATE
                 sound_card
+                filter
                 signal
                 logger
                 utils

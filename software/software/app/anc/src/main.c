@@ -4,79 +4,68 @@
  */
 
 #define __FORCE_DEBUG_SEVERITY LOGGER_DEBUG_SEVERITY_TRACE
-#define SIGNAL_FORMAT_UINT16   true
 
 #include <errno.h>
 #include <stdlib.h>
 
+#include "filter/fir.h"
 #include "logger/logger.h"
 #include "signal/signal.h"
 #include "sound_card/sound_card.h"
+#include "utils/common.h"
 #include "utils/file_helpers.h"
 
-#define SOUND_CARD_NAME "plughw:1,0"
-#define SINE_FREQUENCY  100
+#define SOUND_CARD_NAME	      "plughw:1,0"
+#define SAMPLING_FREQUEUCY    500
+#define LOW_SINE_FREQUENCY    10
+#define MEDIUM_SINE_FREQUENCY 80
+#define NUM_OF_SAMPLES	      SAMPLING_FREQUEUCY
 
 int main(int argc, char* argv[])
 {
-        const struct sound_card_config config = {
-                .name           = SOUND_CARD_NAME,
-                .format         = SOUND_CARD_FORMAT_U16,
-                .rate           = 44100,
-                .channels       = 2,
-                .stream         = SOUND_CARD_STREAM_PLAYBACK,
-                .buffer_time_us = 1000000,
-                .period_time_us = 500000,
-        };
+	float* sample_buffer = calloc(NUM_OF_SAMPLES, sizeof(float));
+	float* fir_output    = calloc(NUM_OF_SAMPLES, sizeof(float));
+	float* imp_res	     = calloc(NUM_OF_SAMPLES, sizeof(float));
 
-        sound_card_t* const sound_card = sound_card_init(&config);
-        if (sound_card == NULL)
-                return -ENOMEM;
+	struct signal sine_100_hz = {
+		.type		    = SIGNAL_TYPE_SINE,
+		.frequency	    = LOW_SINE_FREQUENCY,
+		.sampling_frequency = SAMPLING_FREQUEUCY,
+		.amplitude	    = 1.0f,
+	};
 
-        const size_t period_size =
-                sound_card_get_period_size_bytes(sound_card) / sizeof(uint16_t);
+	struct signal sine_high = {
+		.type		    = SIGNAL_TYPE_SINE,
+		.frequency	    = MEDIUM_SINE_FREQUENCY,
+		.sampling_frequency = SAMPLING_FREQUEUCY,
+		.amplitude	    = 0.3f,
+	};
 
-        struct sound_card_playback_task task = {
-                .size           = period_size,
-                .num_of_periods = 2,
-        };
+	struct signal* signals[] = {&sine_100_hz, &sine_high};
+	signal_generate_sum(signals, 2, sample_buffer, NUM_OF_SAMPLES);
 
-        task.sample_buffers[0] = calloc(period_size, sizeof(uint16_t));
-        task.sample_buffers[1] = calloc(period_size, sizeof(uint16_t));
+	file_helpers_write_buf(
+		"before_fir.csv", '\n', sample_buffer, NUM_OF_SAMPLES);
+	int imp_res_size = file_helpers_read_buf(
+		"/home/dk/projects/thesis/anc/software/imp_res.csv",
+		imp_res);
 
+	struct circ_lifo cl = {0u};
+	circ_lifo_construct(&cl, 1 << 24u, true);
 
-        struct signal square_100_hz = {
-                .type               = SIGNAL_TYPE_TRIANGLE,
-                .frequency          = SINE_FREQUENCY,
-                .sampling_frequency = 44100,
-        };
+	for (size_t i = 0; i < NUM_OF_SAMPLES; i++)
+		circ_lifo_write(&cl, sample_buffer[i]);
 
-        struct signal triangle_100_hz = {
-                .type               = SIGNAL_TYPE_SINE,
-                .frequency          = SINE_FREQUENCY,
-                .sampling_frequency = 44100,
-        };
+	for (size_t i = NUM_OF_SAMPLES - 1; i > 0; i--)
+		fir_output[i] = fir_filter(&cl, imp_res, imp_res_size);
 
-        struct signal saw_100_hz = {
-                .type               = SIGNAL_TYPE_SAW,
-                .frequency          = SINE_FREQUENCY,
-                .sampling_frequency = 44100,
-        };
+	file_helpers_write_buf(
+		"after_fir.csv", '\n', fir_output, NUM_OF_SAMPLES);
 
-        struct signal noise = {
-                .type = SIGNAL_TYPE_NOISE,
-        };
+	free(sample_buffer);
+	free(fir_output);
+	free(imp_res);
+	circ_lifo_destruct(&cl);
 
-        signal_generate(&square_100_hz, task.sample_buffers[0], period_size);
-        signal_generate(&triangle_100_hz, task.sample_buffers[1], period_size);
-
-        sound_card_playback(sound_card, &task);
-        sound_card_deinit(sound_card);
-
-        signal_generate(&saw_100_hz, task.sample_buffers[0], period_size);
-
-        file_helpers_write_buf(
-                "saw.csv", '\n', task.sample_buffers[0], period_size);
-
-        return 0;
+	return 0;
 }
