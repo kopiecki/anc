@@ -9,7 +9,7 @@
   :use_exceptions: FALSE
   :use_test_preprocessor: TRUE
   :use_auxiliary_dependencies: TRUE
-  :build_root: /home/dk/projects/thesis/anc/software/build
+  :build_root: ../../build
 #  :release_build: TRUE
   :test_file_prefix: test_
   :which_ceedling: gem
@@ -33,8 +33,8 @@
   :test:
     - software/**
   :source:
-    - /home/dk/projects/thesis/anc/software/software/lib/**
-    - /home/dk/projects/thesis/anc/software/software/app/**
+    - ../../software/lib/**
+    - ../../software/app/**
   :libraries: []
 
 :defines:
