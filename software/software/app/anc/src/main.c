@@ -12,6 +12,7 @@
 #include "logger/logger.h"
 #include "signal/signal.h"
 #include "sound_card/sound_card.h"
+#include "utils/circ_fifo.h"
 #include "utils/common.h"
 #include "utils/file_helpers.h"
 
@@ -47,25 +48,23 @@ int main(int argc, char* argv[])
 	file_helpers_write_buf(
 		"before_fir.csv", '\n', sample_buffer, NUM_OF_SAMPLES);
 	int imp_res_size = file_helpers_read_buf(
-		"/home/dk/projects/thesis/anc/software/imp_res.csv",
-		imp_res);
+		"/home/dk/projects/thesis/anc/software/imp_res.csv", imp_res);
 
-	struct circ_lifo cl = {0u};
-	circ_lifo_construct(&cl, 1 << 24u, true);
+	struct circ_fifo cf = {0u};
+	circ_fifo_construct(&cf, NULL, (1u << 10u));
 
 	for (size_t i = 0; i < NUM_OF_SAMPLES; i++)
-		circ_lifo_write(&cl, sample_buffer[i]);
+		circ_fifo_write(&cf, sample_buffer[i]);
 
 	for (size_t i = NUM_OF_SAMPLES - 1; i > 0; i--)
-		fir_output[i] = fir_filter(&cl, imp_res, imp_res_size);
+		fir_output[i] = fir_filter(&cf, imp_res, imp_res_size);
 
-	file_helpers_write_buf(
-		"after_fir.csv", '\n', fir_output, NUM_OF_SAMPLES);
+	file_helpers_write_buf("after_fir.csv", '\n', fir_output, NUM_OF_SAMPLES);
 
 	free(sample_buffer);
 	free(fir_output);
 	free(imp_res);
-	circ_lifo_destruct(&cl);
+	circ_fifo_destruct(&cf);
 
 	return 0;
 }

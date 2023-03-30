@@ -7,17 +7,19 @@
 
 #include "logger/logger.h"
 #include "utils/assert.h"
+#include "utils/circ_fifo.h"
 
-float fir_filter(struct circ_lifo* const cl, const float* const imp_res,
-		 size_t imp_res_size)
+#define CF ((struct circ_fifo*)(cf))
+
+float fir_filter(void* const cf, const float* const imp_res, size_t imp_res_size)
 {
-	ASSERT(cl != NULL);
+	ASSERT(cf != NULL);
 	ASSERT(imp_res != NULL);
 
 	float y = 0.0f;
 	for (size_t i = 0u; i < imp_res_size; i++)
-		y += imp_res[i] * circ_lifo_peek(cl, i);
-	cl->i = (cl->i + 1u) & cl->mask;
+		y += imp_res[i] * circ_fifo_peek(CF, i);
+	CF->i = (CF->i + 1u) & CF->mask;
 
 	return y;
 }
