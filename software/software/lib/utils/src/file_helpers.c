@@ -51,5 +51,4 @@ int file_helpers_read_buf(const char* name, float* const buffer)
                 sscanf(line, "%f", &buffer[i++]);
 
         return i;
-
 }
