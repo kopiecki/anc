@@ -1,4 +1,5 @@
 PROJECT_NAME := anc
+FUNCTIONAL_TEST_NAME := functional
 
 CORES := $(shell nproc)
 
@@ -40,19 +41,29 @@ build: | .mk-build-dir
 
 #------------------------------------------------------------------------------
 
-run: 
+run_app: 
 	@ ./$(BUILD_DIR)/software/app/anc/$(PROJECT_NAME)
 .PHONY: run
+
+#------------------------------------------------------------------------------
+
+run_unit_test:
+	@ cd test/unit && ceedling
+.PHONY: test
+
+#------------------------------------------------------------------------------
+
+run_functional_test: 
+	@ ./$(BUILD_DIR)/test/$(FUNCTIONAL_TEST_NAME) $(TEST_TYPE)
+.PHONY: run
+
+#------------------------------------------------------------------------------
 
 .mk-build-dir:
 	@ mkdir -p $(BUILD_DIR)
 .PHONY: .mk-build-dir
 
 #------------------------------------------------------------------------------
-
-test:
-	@ cd test/unit && ceedling
-.PHONY: test
 
 clean:
 	@ rm -rf "$(BUILD_DIR)"
