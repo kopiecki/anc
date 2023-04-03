@@ -28,6 +28,7 @@ def plot(buffer: list[float], sampling_rate: float, name: str) -> None:
     plt.legend()
     plt.xlabel("t, s")
     plt.ylabel("y(t)")
+    plt.grid()
     plt.show()
 
 
