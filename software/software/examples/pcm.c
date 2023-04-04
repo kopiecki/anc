@@ -89,7 +89,8 @@ static void generate_sine(
                 }
                 else
                         res = sin(phase) * maxval;
-                if (to_unsigned) res ^= 1U << (format_bits - 1);
+                if (to_unsigned)
+                        res ^= 1U << (format_bits - 1);
                 for (chn = 0; chn < channels; chn++)
                 {
                         /* Generate data in native endian format */
@@ -108,7 +109,8 @@ static void generate_sine(
                         samples[chn] += steps[chn];
                 }
                 phase += step;
-                if (phase >= max_phase) phase -= max_phase;
+                if (phase >= max_phase)
+                        phase -= max_phase;
         }
         *_phase = phase;
 }
@@ -291,7 +293,8 @@ static int set_swparams(snd_pcm_t* handle, snd_pcm_sw_params_t* swparams)
 
 static int xrun_recovery(snd_pcm_t* handle, int err)
 {
-        if (verbose) printf("stream recovery\n");
+        if (verbose)
+                printf("stream recovery\n");
         if (err == -EPIPE)
         { /* under-run */
                 err = snd_pcm_prepare(handle);
@@ -339,7 +342,8 @@ static int write_loop(
                 while (cptr > 0)
                 {
                         err = snd_pcm_writei(handle, ptr, cptr);
-                        if (err == -EAGAIN) continue;
+                        if (err == -EAGAIN)
+                                continue;
                         if (err < 0)
                         {
                                 if (xrun_recovery(handle, err) < 0)
@@ -368,8 +372,10 @@ static int wait_for_poll(snd_pcm_t* handle, struct pollfd* ufds, unsigned int co
         {
                 poll(ufds, count, -1);
                 snd_pcm_poll_descriptors_revents(handle, ufds, count, &revents);
-                if (revents & POLLERR) return -EIO;
-                if (revents & POLLOUT) return 0;
+                if (revents & POLLERR)
+                        return -EIO;
+                if (revents & POLLOUT)
+                        return 0;
         }
 }
 
@@ -456,7 +462,8 @@ static int write_and_poll_loop(
                                 init = 0;
                         ptr += err * channels;
                         cptr -= err;
-                        if (cptr == 0) break;
+                        if (cptr == 0)
+                                break;
                         /* it is possible, that the initial buffer cannot store
                          */
                         /* all data from the last period, so wait awhile */
@@ -539,11 +546,11 @@ static int async_loop(
         struct async_private_data data;
         snd_async_handler_t* ahandler;
         int err, count;
-
         data.samples = samples;
         data.areas   = areas;
         data.phase   = 0;
         err = snd_async_add_pcm_handler(&ahandler, handle, async_callback, &data);
+        fprintf(stderr, "state = %s", snd_pcm_state_name(snd_pcm_state(handle)));
         if (err < 0)
         {
                 printf("Unable to register async handler\n");
@@ -565,9 +572,20 @@ static int async_loop(
                                period_size);
                         exit(EXIT_FAILURE);
                 }
+                fprintf(stderr,
+                        "state = %s",
+                        snd_pcm_state_name(snd_pcm_state(handle)));
         }
+
+        fprintf(stderr, "state = %s", snd_pcm_state_name(snd_pcm_state(handle)));
+
         if (snd_pcm_state(handle) == SND_PCM_STATE_PREPARED)
         {
+
+                fprintf(stderr,
+                        "state = %s",
+                        snd_pcm_state_name(snd_pcm_state(handle)));
+
                 err = snd_pcm_start(handle);
                 if (err < 0)
                 {
@@ -907,7 +925,8 @@ static int direct_write_loop(
                 while (cptr > 0)
                 {
                         err = snd_pcm_mmap_writei(handle, ptr, cptr);
-                        if (err == -EAGAIN) continue;
+                        if (err == -EAGAIN)
+                                continue;
                         if (err < 0)
                         {
                                 if (xrun_recovery(handle, err) < 0)
@@ -969,7 +988,8 @@ static void help(void)
         for (k = 0; k < SND_PCM_FORMAT_LAST; ++k)
         {
                 const char* s = snd_pcm_format_name(k);
-                if (s) printf(" %s", s);
+                if (s)
+                        printf(" %s", s);
         }
         printf("\n");
         printf("Recognized transfer methods are:");
@@ -1138,7 +1158,8 @@ int main(int argc, char* argv[])
                 exit(EXIT_FAILURE);
         }
 
-        if (verbose > 0) snd_pcm_dump(handle, output);
+        if (verbose > 0)
+                snd_pcm_dump(handle, output);
 
         samples = malloc(
                 (period_size * channels * snd_pcm_format_physical_width(format))
@@ -1164,7 +1185,8 @@ int main(int argc, char* argv[])
         }
 
         err = transfer_methods[method].transfer_loop(handle, samples, areas);
-        if (err < 0) printf("Transfer failed: %s\n", snd_strerror(err));
+        if (err < 0)
+                printf("Transfer failed: %s\n", snd_strerror(err));
 
         free(areas);
         free(samples);

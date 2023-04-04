@@ -38,8 +38,8 @@ def export_impulse_response(impulse_response: list[float], filename: str = "imp_
 
 
 if __name__ == "__main__":
-    SAMPLE_RATE: float = 500
-    nyquist_hz: float = SAMPLE_RATE / 2
+    sample_rate: float = 500
+    nyquist_hz: float = sample_rate / 2
     width: float = 25 / nyquist_hz
     cutoff_hz: float = 50
     stopband_atten_db: float = 20.0

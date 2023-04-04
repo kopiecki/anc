@@ -1,15 +1,15 @@
 /**
- * @file    test_signal.h
+ * @file    test_filter.h
  * @brief   <Provide some short description here>
  */
 
-#ifndef TEST_SIGNAL_H_
-#define TEST_SIGNAL_H_
+#ifndef TEST_FILTER_H_
+#define TEST_FILTER_H_
 
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
-int test_filter_fir(const char* imp_res_file, size_t order);
+int test_filter_fir(void);
 
-#endif /* TEST_SIGNAL_H_ */
+#endif /* TEST_FILTER_H_ */

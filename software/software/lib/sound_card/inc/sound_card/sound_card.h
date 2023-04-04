@@ -8,6 +8,7 @@
 #ifndef SOUND_CARD_H_
 #define SOUND_CARD_H_
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -47,6 +48,8 @@ struct sound_card_config
 
         uint32_t buffer_time_us;
         uint32_t period_time_us;
+
+        bool poll;
 };
 
 struct sound_card_task
@@ -66,5 +69,10 @@ int sound_card_capture(sound_card_t* const this, struct sound_card_task* const t
 int sound_card_playback(sound_card_t* const this, struct sound_card_task* const task);
 
 int sound_card_synchronize(sound_card_t* const playback, sound_card_t* const capture);
+
+int sound_card_poll_playback_loop(
+        sound_card_t* const playback, struct sound_card_task* const task);
+
+int sound_card_poll_is_ready(sound_card_t* const self, bool* const ready);
 
 #endif /* SOUND_CARD_H_ */

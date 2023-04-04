@@ -3,6 +3,7 @@ set(target_name "functional")
 set(target_sources
         functional/test_signal/test_signal.c
         functional/test_filter/test_filter.c
+        functional/test_sound/test_sound.c
         functional/main.c
 )
 

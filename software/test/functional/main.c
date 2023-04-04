@@ -11,6 +11,7 @@
 #include "logger/logger.h"
 #include "test_filter/test_filter.h"
 #include "test_signal/test_signal.h"
+#include "test_sound/test_sound.h"
 #include "utils/common.h"
 
 static int signal_test(void)
@@ -33,7 +34,7 @@ static int signal_test(void)
         if (error < 0)
                 return error;
 
-        LOG_INFO("Signal test ended with success");
+        LOG_INFO("Signal test ended");
 
         return 0;
 }
@@ -42,24 +43,28 @@ static int filter_test(void)
 {
         LOG_INFO("Running filter test");
 
-        LOG_INFO("Filter test ended with success");
+        test_filter_fir();
+
+        LOG_INFO("Filter test ended");
 }
 
-static int audio_test(void)
+static int sound_test(void)
 {
         LOG_INFO("Running audio test");
+        test_sound_poll_playback_loop();
+        LOG_INFO("Sound test ended");
 }
 
 static int (*tests[])(void) = {
         signal_test,
         filter_test,
-        audio_test,
+        sound_test,
 };
 
 static const char* TEST_TYPES[] = {
         "signal",
         "filter",
-        "audio",
+        "sound",
 };
 
 int main(int argc, char* argv[])
