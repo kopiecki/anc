@@ -18,7 +18,7 @@
 
 #ifndef SOUND_CARD_FORMAT
 #define SOUND_CARD_FORMAT SOUND_CARD_FORMAT_FLOAT
-#define SAMPLE_FORMAT     float
+#define SAMPLE_FORMAT     double
 #endif
 
 /* Opaque sound card handle */
@@ -54,7 +54,7 @@ struct sound_card_config
 
 struct sound_card_task
 {
-        float* sample_buffers[SOUND_CARD_MAX_CHANNEL];
+        SAMPLE_FORMAT* sample_buffers[SOUND_CARD_MAX_CHANNEL];
         size_t size;
         uint16_t num_of_periods;
 };

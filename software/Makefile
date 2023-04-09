@@ -53,8 +53,20 @@ run_unit_test:
 
 #------------------------------------------------------------------------------
 
-run_functional_test: 
-	@ ./$(BUILD_DIR)/test/$(FUNCTIONAL_TEST_NAME) $(TEST_TYPE)
+run_test_fir: 
+	@ ./$(BUILD_DIR)/test/test_fir
+.PHONY: run
+
+#------------------------------------------------------------------------------
+
+run_test_lms: 
+	@ ./$(BUILD_DIR)/test/test_lms
+.PHONY: run
+
+#------------------------------------------------------------------------------
+
+run_test_signal: 
+	@ ./$(BUILD_DIR)/test/test_signal
 .PHONY: run
 
 #------------------------------------------------------------------------------

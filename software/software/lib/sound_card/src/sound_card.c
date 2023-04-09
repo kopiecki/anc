@@ -5,8 +5,6 @@
  * transparent.
  */
 
-#define ALSA_PCM_NEW_HW_PARAMS_API
-
 #include "sound_card/sound_card.h"
 
 #include <alsa/asoundlib.h>
@@ -15,8 +13,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "logger/logger.h"
 #include "utils/assert.h"
+#include "utils/logger.h"
 
 #define SINE_FREQUENCY 100
 #define MAX_PHASE      2.0f * M_PI

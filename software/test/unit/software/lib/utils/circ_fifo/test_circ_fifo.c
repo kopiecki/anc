@@ -7,8 +7,8 @@
 #include <string.h>
 #include <unity.h>
 
-#include "logger/logger.h"
 #include "utils/circ_fifo.h"
+#include "utils/logger.h"
 
 // clang-format off
 #define TEST_CIRC_FIFO_TEST_BUFFER_SIZE 	6u

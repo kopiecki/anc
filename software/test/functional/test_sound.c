@@ -3,26 +3,24 @@
  * @brief   <Provide some short description here>
  */
 
-#include "test_sound.h"
-
 #include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 
-#include "logger/logger.h"
 #include "signal/signal.h"
 #include "sound_card/sound_card.h"
+#include "utils/logger.h"
 
 #define SOUND_CARD_NAME    "plughw:1,0"
 #define SAMPLING_FREQUENCY 44100
 #define NUM_OF_SAMPLES     SAMPLING_FREQUENCY
 
-static float test_sound_sine_buffer[NUM_OF_SAMPLES];
+static TEST_FORMAT test_sound_sine_buffer[NUM_OF_SAMPLES];
 static sound_card_t* test_sound_sc;
 
-static void test_sound_generate_sine(float* const sample_buffer, size_t size)
+static void test_sound_generate_sine(TEST_FORMAT* const sample_buffer, size_t size)
 {
         struct signal sine = {
                 .amplitude          = 1.0f,
@@ -58,13 +56,13 @@ static struct sound_card_task test_sound_card_create_task(void)
 {
         const size_t period_size_bytes =
                 sound_card_get_period_size_bytes(test_sound_sc);
-        float* sample_buffer =
-                calloc(2 * period_size_bytes / sizeof(float), sizeof(float));
+        TEST_FORMAT* sample_buffer = calloc(
+                2 * period_size_bytes / sizeof(TEST_FORMAT), sizeof(TEST_FORMAT));
 
         struct sound_card_task task = {
                 .sample_buffers = {sample_buffer, sample_buffer},
                 .num_of_periods = 2u,
-                .size           = 2 * period_size_bytes / (sizeof(float)),
+                .size           = 2 * period_size_bytes / (sizeof(TEST_FORMAT)),
         };
 
         return task;
@@ -103,6 +101,18 @@ int test_sound_poll_playback_loop(void)
                                 ready = false;
                 }
         }
+
+        return error;
+}
+
+int main(int argc, char* argv[])
+{
+        LOG_INFO("Running sound test");
+        int error = test_sound_poll_playback_loop();
+        if (error < 0)
+                LOG_ERROR("Sound test failed");
+        else
+                LOG_INFO("Sound test ended with success");
 
         return error;
 }

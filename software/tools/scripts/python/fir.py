@@ -94,7 +94,8 @@ class FIR(object):
 
 
 if __name__ == "__main__":
-    filter = FIR(sampling_hz=1000, stopband_ripple_db=30,
-                 trans_band_width_hz=100, cutoff_hz=250)
+    SAMPLING_HZ = 4000
+    filter = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
+                       cutoff_hz=200, trans_band_width_hz=500)
     filter.plot()
     filter.export()

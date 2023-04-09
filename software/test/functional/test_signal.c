@@ -3,23 +3,23 @@
  * @brief   <Provide some short description here>
  */
 
-#include "test_signal.h"
-
 #include "signal/signal.h"
 #include "utils/file_helpers.h"
+#include "utils/logger.h"
 
 #define SAMPLING_FREQUENCY 44100
 #define NUM_OF_SAMPLES     SAMPLING_FREQUENCY
 
-static float test_signal_buffer[NUM_OF_SAMPLES] = {0u};
+static TEST_FORMAT test_signal_buffer[NUM_OF_SAMPLES] = {0};
 
-int test_signal_dump_sine(void)
+static int __test_signal_dump_sine(void)
 {
         struct signal sine_5_hz = {
-                .amplitude          = 1.0f,
-                .frequency          = 5.0f,
+                .amplitude          = 1,
+                .frequency          = 5,
                 .sampling_frequency = SAMPLING_FREQUENCY,
                 .type               = SIGNAL_TYPE_SINE,
+                .phase              = 0,
         };
 
         signal_generate(&sine_5_hz, test_signal_buffer, NUM_OF_SAMPLES);
@@ -27,16 +27,18 @@ int test_signal_dump_sine(void)
                 "test/functional/output/sine_5_hz.csv",
                 '\n',
                 test_signal_buffer,
-                NUM_OF_SAMPLES);
+                NUM_OF_SAMPLES,
+                false);
 }
 
-int test_signal_dump_triangle(void)
+static int __test_signal_dump_triangle(void)
 {
         struct signal triangle_10_hz = {
-                .amplitude          = 1.0f,
-                .frequency          = 10.0f,
+                .amplitude          = 1,
+                .frequency          = 10,
                 .sampling_frequency = SAMPLING_FREQUENCY,
                 .type               = SIGNAL_TYPE_TRIANGLE,
+                .phase              = 0,
         };
 
         signal_generate(&triangle_10_hz, test_signal_buffer, NUM_OF_SAMPLES);
@@ -44,15 +46,17 @@ int test_signal_dump_triangle(void)
                 "test/functional/output/triangle_10_hz.csv",
                 '\n',
                 test_signal_buffer,
-                NUM_OF_SAMPLES);
+                NUM_OF_SAMPLES,
+                false);
 }
 
-int test_signal_dump_noise(void)
+static int __test_signal_dump_noise(void)
 {
         struct signal noise = {
-                .amplitude          = 2.0f,
+                .amplitude          = 2,
                 .sampling_frequency = SAMPLING_FREQUENCY,
                 .type               = SIGNAL_TYPE_NOISE,
+                .phase              = 0,
         };
 
         signal_generate(&noise, test_signal_buffer, NUM_OF_SAMPLES);
@@ -60,23 +64,26 @@ int test_signal_dump_noise(void)
                 "test/functional/output/noise.csv",
                 '\n',
                 test_signal_buffer,
-                NUM_OF_SAMPLES);
+                NUM_OF_SAMPLES,
+                false);
 }
 
-int test_signal_dump_sum(void)
+static int __test_signal_dump_sum(void)
 {
         struct signal sine_5_hz = {
-                .amplitude          = 2.0f,
+                .amplitude          = 2,
                 .sampling_frequency = SAMPLING_FREQUENCY,
                 .type               = SIGNAL_TYPE_SINE,
-                .frequency          = 5.0f,
+                .frequency          = 5,
+                .phase              = 0,
         };
 
         struct signal sine_10_hz = {
-                .amplitude          = 1.0f,
+                .amplitude          = 1,
                 .sampling_frequency = SAMPLING_FREQUENCY,
                 .type               = SIGNAL_TYPE_SINE,
-                .frequency          = 50.0f,
+                .frequency          = 50.0,
+                .phase              = 0,
         };
 
         struct signal* signals[] = {&sine_5_hz, &sine_10_hz};
@@ -86,5 +93,31 @@ int test_signal_dump_sum(void)
                 "test/functional/output/sum.csv",
                 '\n',
                 test_signal_buffer,
-                NUM_OF_SAMPLES);
+                NUM_OF_SAMPLES,
+                false);
+}
+
+int main(int argc, char* argv[])
+{
+        LOG_INFO("Running signal test");
+
+        int error = __test_signal_dump_sine();
+        if (error < 0)
+                return error;
+
+        error = __test_signal_dump_triangle();
+        if (error < 0)
+                return error;
+
+        error = __test_signal_dump_noise();
+        if (error < 0)
+                return error;
+
+        error = __test_signal_dump_sum();
+        if (error < 0)
+                return error;
+
+        LOG_INFO("Signal test ended");
+
+        return 0;
 }

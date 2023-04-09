@@ -51,20 +51,32 @@ class LMS(object):
         plt.legend()
         plt.show()
 
+def __generate_x(sampling_hz: int, num_of_samples: int):
+    t = np.arange(num_of_samples) / sampling_hz
+
+    def omega(freq: int) -> float:
+        return 2 * np.pi * freq
+
+    sine_100_hz = 2 * np.sin(omega(100) * t)
+    sine_250_hz = 0.5 * np.sin(omega(300) * t)
+    noise = 0.1 * np.random.normal(0, 1, num_of_samples)
+
+    return sine_100_hz + sine_250_hz + noise
 
 if __name__ == "__main__":
-    SAMPLING_HZ = 1000
+    SAMPLING_HZ = 4000
+    NUM_OF_SAMPLES = 2 * SAMPLING_HZ
 
-    filter = FIR(sampling_hz=1000, stopband_ripple_db=30,
-                 trans_band_width_hz=250, cutoff_hz=250)
+    filter = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
+                       cutoff_hz=200, trans_band_width_hz=500)
 
-    noise = np.random.normal(0, 1, 1000)
-    lms = LMS(1000, 0.05, np.zeros(filter.order))
+    lms = LMS(NUM_OF_SAMPLES, 0.005, np.zeros(filter.order))
+    x = __generate_x(SAMPLING_HZ, NUM_OF_SAMPLES)
     
     x_ring = deque([0] * filter.order, maxlen=filter.order)
 
     lms_filter = lms.filter
-    for sample in noise:
+    for sample in x:
         x_ring.appendleft(sample)
 
         d = filter(x_ring)
@@ -73,4 +85,6 @@ if __name__ == "__main__":
         error = d - y
         lms_filter = lms(x_ring, error)
 
+    logger.info("Last LMS estimate = {}", lms_filter.coeffs)
+    logger.info("Real filter coeffs = {}", filter.coeffs)
     lms.plot_w_history()

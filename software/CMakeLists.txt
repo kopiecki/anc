@@ -12,4 +12,6 @@ project(${PROJECT_NAME} LANGUAGES C CXX ASM)
 # ----------------------------------------------------
 
 add_subdirectory(software)
+
+add_definitions(-DTEST_FORMAT=double)
 add_subdirectory(test)

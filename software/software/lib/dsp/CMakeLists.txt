@@ -1,6 +1,7 @@
-set(target_name logger)
+set(target_name dsp)
 set(target_sources
-        src/logger.c    
+        src/fir.c
+        src/lms.c
 )
 
 add_library(${target_name}
@@ -11,4 +12,9 @@ add_library(${target_name}
 target_include_directories(${target_name}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/inc
+)
+
+target_link_libraries(${target_name}
+    PUBLIC
+        utils
 )

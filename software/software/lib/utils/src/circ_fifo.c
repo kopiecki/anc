@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "logger/logger.h"
 #include "utils/assert.h"
+#include "utils/logger.h"
 
 static inline void circ_fifo_deallocate(struct circ_fifo* const self)
 {
@@ -45,9 +45,7 @@ static int circ_fifo_prepare(struct circ_fifo* const self, size_t capacity)
 }
 
 int circ_fifo_construct(
-        struct circ_fifo* const self,
-        CIRC_FIFO_FORMAT* buffer,
-        size_t capacity)
+        struct circ_fifo* const self, CIRC_FIFO_FORMAT* buffer, size_t capacity)
 {
         ASSERT(self != NULL);
 
@@ -94,8 +92,4 @@ CIRC_FIFO_FORMAT circ_fifo_read(struct circ_fifo* const self)
         self->i                        = (self->i + 1u) & self->mask;
 
         return newest_sample;
-}
-
-CIRC_FIFO_FORMAT* circ_fifo_purge(struct circ_fifo* const self)
-{
 }

@@ -8,19 +8,20 @@
 #include <errno.h>
 #include <stdio.h>
 
-#include "logger/logger.h"
 #include "utils/assert.h"
+#include "utils/logger.h"
 
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
-        const float* const buffer,
-        size_t size)
+        const FILE_BUFFER_FORMAT* const buffer,
+        size_t size,
+        bool append)
 {
         ASSERT(name != NULL);
         ASSERT(buffer != NULL);
 
-        FILE* file = fopen(name, "w");
+        FILE* file = fopen(name, (append) ? "a" : "w");
         if (file == NULL)
         {
                 LOG_ERROR("Cannot open %s file", name);
@@ -29,11 +30,13 @@ int file_helpers_write_buf(
 
         for (size_t i = 0u; i < size; i++)
                 fprintf(file, "%f%c", buffer[i], delimiter);
+        if (delimiter != '\n')
+                fprintf(file, "%c", '\n');
 
         fclose(file);
 }
 
-int file_helpers_read_buf(const char* name, float* const buffer)
+int file_helpers_read_buf(const char* name, FILE_BUFFER_FORMAT* const buffer)
 {
         ASSERT(name != NULL);
         ASSERT(buffer != NULL);
@@ -48,7 +51,6 @@ int file_helpers_read_buf(const char* name, float* const buffer)
         char* line = NULL;
         size_t size, i = 0u;
         while ((getline(&line, &size, file)) > 0)
-                sscanf(line, "%f", &buffer[i++]);
-
+                sscanf(line, "%lf", &buffer[i++]);
         return i;
 }

@@ -88,15 +88,19 @@ if __name__ == "__main__":
 
     primary_path = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
                        cutoff_hz=300, trans_band_width_hz=500)
+    primary_path.export("primary_coeffs.csv")
+
     secondary_path = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=20,
                          cutoff_hz=500, trans_band_width_hz=300)
+    secondary_path.export("secondary_coeffs.csv")
+
     secondary_path_estimate = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=20,
                                   cutoff_hz=500, trans_band_width_hz=300)
 
     sim = Simulation(SAMPLING_HZ, NUM_OF_SAMPLES, primary_path,
                      secondary_path, secondary_path_estimate, 0.005)
 
-    primary_output, errors = sim(False)
+    primary_output, errors = sim()
 
     plt.figure(1)
     plt.plot(primary_output)
