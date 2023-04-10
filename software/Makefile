@@ -8,6 +8,7 @@ BUILD_DIR := build
 TOOLCHAIN := native
 
 DEBUG := y
+TEST_PLATFORM := dkop@192.168.0.228
 
 #------------------------------------------------------------------------------
 
@@ -49,25 +50,25 @@ run_app:
 
 run_unit_test:
 	@ cd test/unit && ceedling
-.PHONY: test
+.PHONY: run_unit_test
 
 #------------------------------------------------------------------------------
 
 run_test_fir: 
 	@ ./$(BUILD_DIR)/test/test_fir
-.PHONY: run
+.PHONY: run_test_fir
 
 #------------------------------------------------------------------------------
 
 run_test_lms: 
 	@ ./$(BUILD_DIR)/test/test_lms
-.PHONY: run
+.PHONY: run_test_lms
 
 #------------------------------------------------------------------------------
 
 run_test_signal: 
 	@ ./$(BUILD_DIR)/test/test_signal
-.PHONY: run
+.PHONY: run_test_signal
 
 #------------------------------------------------------------------------------
 
@@ -77,8 +78,18 @@ run_test_signal:
 
 #------------------------------------------------------------------------------
 
+deploy_sound_test:
+	@ scp $(BUILD_DIR)/test/test_sound $(TEST_PLATFORM):/home/dkop/anc
+.PHONY: deploy_sound_test
+
+#------------------------------------------------------------------------------
+
+get_captured_samples:
+	@scp $(TEST_PLATFORM):/home/dkop/anc/capture.csv .
+.PHONY: get_captured_samples
+
+#------------------------------------------------------------------------------
+
 clean:
 	@ rm -rf "$(BUILD_DIR)"
 .PHONY: clean
-
-#------------------------------------------------------------------------------

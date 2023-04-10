@@ -14,7 +14,7 @@ def parse_arguments() -> arg.Namespace:
     parser.add_argument(
         "--e", type=str, default="test/functional/output/lms_e.csv")
     parser.add_argument("--real", type=str,
-                        default="test/functional/input/fir_coeffs_14.csv")
+                        default="test/functional/input/fir_coeffs_26.csv")
     return parser.parse_args()
 
 
@@ -53,6 +53,7 @@ if __name__ == "__main__":
 
     plt.figure(1)
     plt.plot(e)
+    plt.grid()
 
     plt.figure(2)
     plot_w(real_w, w)

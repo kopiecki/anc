@@ -12,7 +12,7 @@
 #include <stdint.h>
 
 #ifndef SIGNAL_FORMAT
-#define SIGNAL_FORMAT double
+#define SIGNAL_FORMAT float
 #endif
 
 enum signal_type

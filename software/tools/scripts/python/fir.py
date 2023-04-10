@@ -37,12 +37,20 @@ class FIR(object):
             x_ring = list(islice(x_ring, 0, self._order))
         return self._coeffs @ x_ring
 
-    def plot(self):
-        plt.figure(1)
-        self._plot_coeffs()
-        plt.figure(2)
-        self._plot__freq_res()
-        plt.show()
+    def lib_filter(self, x):
+        return scisig.lfilter(self._coeffs, 1.0, x)
+
+    def plot(self, freqs: bool = True, imp: bool = True):
+
+        i = 1
+        if imp:
+            plt.figure(i)
+            i = i + 1
+            self._plot_coeffs()
+        
+        if freqs:
+            plt.figure(i)
+            self._plot__freq_res()
 
     def export(self, file: str = None):
         if file is None:
@@ -93,9 +101,30 @@ class FIR(object):
                                      self._nyquist_hz, window=('kaiser', beta))
 
 
+def __generate_x(sampling_hz, num_of_samples):
+        t = np.arange(num_of_samples) / sampling_hz
+
+        def omega(freq: int) -> float:
+            return 2 * np.pi * freq
+
+        sine_100_hz = 1 * np.sin(omega(5) * t)
+        sine_250_hz = 0.2 * np.sin(omega(500) * t)
+
+        return sine_100_hz + sine_250_hz
+
 if __name__ == "__main__":
     SAMPLING_HZ = 4000
+    NUM_OF_SAMPLES = SAMPLING_HZ
     filter = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
-                       cutoff_hz=200, trans_band_width_hz=500)
+                       cutoff_hz=200, trans_band_width_hz=250)
+    
+    x = __generate_x(SAMPLING_HZ, NUM_OF_SAMPLES)
+
     filter.plot()
     filter.export()
+    filtered = filter.lib_filter(x)
+
+    plt.plot(x)
+    plt.plot(filtered)
+    plt.grid()
+    plt.show()

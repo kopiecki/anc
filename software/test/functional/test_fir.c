@@ -10,11 +10,11 @@
 #include "utils/logger.h"
 
 #define CIRC_FIFO_CAPACITY (1u << 16u)
-#define SAMPLING_FREQUENCY 500
+#define SAMPLING_FREQUENCY 4000
 #define NUM_OF_SAMPLES     SAMPLING_FREQUENCY
 #define IMP_RES_MAX_SIZE   100
-#define IMP_RES_FILE       "test/functional/input/imp_res.csv"
-#define fir_ORDER          18
+#define IMP_RES_FILE       "test/functional/input/fir_coeffs_26.csv"
+#define FIR_ORDER          26
 
 static TEST_FORMAT test_fir_signal_buffer[NUM_OF_SAMPLES];
 static TEST_FORMAT test_fir_filtered_signal_buffer[NUM_OF_SAMPLES];
@@ -32,7 +32,7 @@ static int test_fir_generate_signal(void)
         struct signal sine_100_hz = {
                 .amplitude          = 0.2f,
                 .sampling_frequency = SAMPLING_FREQUENCY,
-                .frequency          = 100.0f,
+                .frequency          = 500.0f,
                 .type               = SIGNAL_TYPE_SINE,
         };
 
@@ -49,7 +49,7 @@ static int test_fir_generate_signal(void)
 
 static int test_dsp_fir(void)
 {
-        float* imp_res[fir_ORDER] = {0};
+        float* imp_res[FIR_ORDER] = {0};
         struct circ_fifo cf;
 
         int error = circ_fifo_construct(&cf, NULL, CIRC_FIFO_CAPACITY);

@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 #ifndef FILE_BUFFER_FORMAT
-#define FILE_BUFFER_FORMAT double
+#define FILE_BUFFER_FORMAT float
 #endif
 
 int file_helpers_write_buf(

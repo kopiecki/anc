@@ -18,7 +18,7 @@
 
 #ifndef SOUND_CARD_FORMAT
 #define SOUND_CARD_FORMAT SOUND_CARD_FORMAT_FLOAT
-#define SAMPLE_FORMAT     double
+#define SAMPLE_FORMAT     float
 #endif
 
 /* Opaque sound card handle */

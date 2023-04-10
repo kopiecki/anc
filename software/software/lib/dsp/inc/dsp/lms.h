@@ -9,7 +9,7 @@
 #include <stddef.h>
 
 #ifndef __FORMAT
-#define DSP_FORMAT double
+#define DSP_FORMAT float
 #endif
 
 /**

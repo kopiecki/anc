@@ -61,8 +61,8 @@ static int sound_card_open(
         ASSERT(self != NULL);
         ASSERT(config != NULL);
 
-        int error = snd_pcm_open(
-                &self->pcm_handle, self->name, config->stream, SND_PCM_NONBLOCK);
+        int error =
+                snd_pcm_open(&self->pcm_handle, self->name, config->stream, 0);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot open PCM device %s [%d, %s]",
@@ -690,14 +690,10 @@ int sound_card_playback(sound_card_t* const self, struct sound_card_task* const 
         ASSERT(self != NULL);
         ASSERT(task != NULL);
 
-        SAMPLE_FORMAT* buffer = malloc(
-                sound_card_get_period_size_bytes(self) * task->num_of_periods);
-
-        if (self->access == SOUND_CARD_ACCESS_INTERLEAVED)
-                sound_card_prepare_buffer_interleaved(self, task, buffer);
-
         int error = snd_pcm_writen(
-                self->pcm_handle, (void**)(task->sample_buffers), task->size);
+                self->pcm_handle,
+                (void**)(task->sample_buffers),
+                self->period_size_frames);
         if (error < 0)
         {
                 error = sound_card_xrun_recovery(self, error);
@@ -731,19 +727,14 @@ int sound_card_capture(sound_card_t* const self, struct sound_card_task* const t
         ASSERT(self != NULL);
         ASSERT(task != NULL);
 
-        int error               = 0;
-        uint16_t num_of_periods = task->num_of_periods;
-        while (num_of_periods--)
+        int error = 0;
+        do
         {
-                int cptr = self->period_size_frames;
-                do
-                {
-                        error = snd_pcm_readn(
-                                self->pcm_handle,
-                                (void**)(task->sample_buffers),
-                                cptr);
-                } while (error == -EAGAIN);
-        }
+                error = snd_pcm_readn(
+                        self->pcm_handle,
+                        (void**)(task->sample_buffers),
+                        task->size);
+        } while (error == -EAGAIN);
 
         return error;
 }
@@ -792,6 +783,5 @@ int sound_card_poll_is_ready(sound_card_t* const self, bool* const ready)
         }
 
         *ready = true;
-        LOG_DEBUG("Sound card ready!");
         return 0;
 }

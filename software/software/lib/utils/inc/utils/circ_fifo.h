@@ -35,7 +35,7 @@ CIRC_FIFO_FORMAT* circ_fifo_purge(struct circ_fifo* const self);
 
 static inline CIRC_FIFO_FORMAT circ_fifo_peek(struct circ_fifo* const self, size_t index)
 {
-        return self->buffer[(self->i) + index & self->mask];
+        return self->buffer[(self->i + index) & self->mask];
 }
 
 static inline size_t circ_fifo_capacity(struct circ_fifo* const self)

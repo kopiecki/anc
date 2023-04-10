@@ -10,15 +10,15 @@
 #include "utils/file_helpers.h"
 #include "utils/logger.h"
 
-#define FIR_W_FILE "test/functional/input/fir_coeffs_14.csv"
+#define FIR_W_FILE "test/functional/input/fir_dummy_14.csv"
 #define LMS_W_FILE "test/functional/output/lms_w.csv"
 #define LMS_E_FILE "test/functional/output/lms_e.csv"
 
-#define SAMPLING_HZ    4000
-#define NUM_OF_SAMPLES 2 * SAMPLING_HZ
+#define SAMPLING_HZ    2 * 4000
+#define NUM_OF_SAMPLES SAMPLING_HZ
 #define ORDER          14u
 #define FIFO_CAPACITY  1u << 14u
-#define LMS_STEP       0.01
+#define LMS_STEP       0.1
 
 static TEST_FORMAT __x[NUM_OF_SAMPLES] = {0};
 static TEST_FORMAT __d[NUM_OF_SAMPLES] = {0};
@@ -35,22 +35,23 @@ static struct circ_fifo __x_lms_cf;
 static int __test_dsp_prepare_x(void)
 {
         struct signal sine_100_hz = {
-                .amplitude          = 2.0,
+                .amplitude          = 5.0,
                 .frequency          = 100,
                 .sampling_frequency = SAMPLING_HZ,
                 .type               = SIGNAL_TYPE_SINE,
         };
 
         struct signal sine_300_hz = {
-                .amplitude          = 0.5,
+                .amplitude          = 1.5,
                 .frequency          = 300,
                 .sampling_frequency = SAMPLING_HZ,
                 .type               = SIGNAL_TYPE_SINE,
         };
 
-        struct signal noise = {.amplitude = 0.1, .type = SIGNAL_TYPE_NOISE};
+        struct signal noise = {.amplitude = 1, .type = SIGNAL_TYPE_NOISE};
         struct signal* signals[] = {&sine_100_hz, &sine_300_hz, &noise};
-
+        
+        signal_initialize_noise();
         signal_generate_sum(signals, 3, __x, NUM_OF_SAMPLES);
 
         int error = circ_fifo_construct(&__x_p_cf, NULL, FIFO_CAPACITY);
@@ -99,6 +100,14 @@ int test_dsp_lms(void)
                 __e[i] = __d[i] - __y[i];
                 dsp_lms(__w_est, __e[i], LMS_STEP, &__x_lms_cf, order);
         }
+
+        for (uint8_t i = 0; i < order; i++)
+        {
+                LOG_INFO("Filter coeff[%d] = %f", i, __w[i]);
+                LOG_INFO("LSM Filter coeff[%d] = %f", i, __w_est[i]);
+        }
+
+        LOG_INFO("Last error = %f", __e[NUM_OF_SAMPLES - 1]);
 
         error = file_helpers_write_buf(
                 LMS_E_FILE, '\n', __e, NUM_OF_SAMPLES, false);

@@ -51,6 +51,6 @@ int file_helpers_read_buf(const char* name, FILE_BUFFER_FORMAT* const buffer)
         char* line = NULL;
         size_t size, i = 0u;
         while ((getline(&line, &size, file)) > 0)
-                sscanf(line, "%lf", &buffer[i++]);
+                sscanf(line, "%f", &buffer[i++]);
         return i;
 }
