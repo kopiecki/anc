@@ -9,29 +9,29 @@ from loguru import logger
 
 if __name__ == "__main__":
     SAMPLING_HZ = 4000
-    NUM_OF_SAMPLES = 2 * SAMPLING_HZ
+    COEFFS_LEN = 300
+
     model = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
-                       cutoff_hz=200, trans_band_width_hz=1000)
+                cutoff_hz=200, trans_band_width_hz=1000)
 
-    x = np.random.normal(0, 1, NUM_OF_SAMPLES)
-    y = model.lib_filter(x)
+    x = np.genfromtxt("input.csv", delimiter='\n')
+    y = np.genfromtxt("capture.csv", delimiter='\n')
 
-    print(len(x))
-    print(len(y))
+    x = x[int(SAMPLING_HZ / 2) : ]
+    y = y[int(SAMPLING_HZ / 2) : ]
+
+    rxx = scisig.correlate(x, x)
+    ryy = scisig.correlate(y, y)
 
     c = scisig.correlate(y, x)
-    xx = scisig.correlate(x, x)
+    lags = scisig.correlation_lags(len(x), len(y))
+    gk = c / np.max(rxx)
+    gk = gk[lags]
+    gk = gk[: COEFFS_LEN]
 
-    gk = c / np.max(xx)
+    logger.info("Estimated coeffs: {}", gk)
 
-    est = gk[NUM_OF_SAMPLES - 1: NUM_OF_SAMPLES - 1 + len(model.coeffs)]
-
-    logger.info("Model coeffs = {}", model.coeffs)
-    logger.info("Model est = {}", est)
-
-    model.plot(freqs=False) 
-
-    plt.figure(2)
-    plt.plot(est)
+    plt.figure(1)
+    plt.plot(gk)
     plt.grid()
     plt.show()

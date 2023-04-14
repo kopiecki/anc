@@ -43,7 +43,9 @@ struct sound_card_s
 
         snd_pcm_format_t format;
         snd_pcm_access_t access;
+        snd_pcm_stream_t stream;
 
+        bool poll;
         struct pollfd* poll_ufds;
         size_t poll_count;
 };
@@ -61,8 +63,8 @@ static int sound_card_open(
         ASSERT(self != NULL);
         ASSERT(config != NULL);
 
-        int error =
-                snd_pcm_open(&self->pcm_handle, self->name, config->stream, 0);
+        int error = snd_pcm_open(
+                &self->pcm_handle, self->name, config->stream, SND_PCM_NONBLOCK);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot open PCM device %s [%d, %s]",
@@ -75,6 +77,8 @@ static int sound_card_open(
                         "successfully",
                         self->name,
                         snd_pcm_stream_name(config->stream));
+
+        self->stream = config->stream;
 
         return error;
 }
@@ -149,16 +153,21 @@ static int sound_card_allocate_sw_params(sound_card_t* const self)
 
 static void sound_card_deallocate(sound_card_t* const self)
 {
-        ASSERT(self != NULL);
+        if (self != NULL)
+        {
+                snd_pcm_drain(self->pcm_handle);
 
-        if (self->pcm_hw_params_handle != NULL)
-                snd_pcm_hw_params_free(self->pcm_hw_params_handle);
-        if (self->pcm_sw_params_handle != NULL)
-                snd_pcm_sw_params_free(self->pcm_sw_params_handle);
-        if (self->poll_ufds != NULL)
-                free(self->poll_ufds);
+                if (self->pcm_hw_params_handle != NULL)
+                        snd_pcm_hw_params_free(self->pcm_hw_params_handle);
+                if (self->pcm_sw_params_handle != NULL)
+                        snd_pcm_sw_params_free(self->pcm_sw_params_handle);
+                if (self->poll)
+                        free(self->poll_ufds);
 
-        free(self);
+                snd_pcm_close(self->pcm_handle);
+
+                free(self);
+        }
 
         LOG_DEBUG("Sound card resources deallocated");
 }
@@ -527,6 +536,9 @@ static int sound_card_sw_configure(sound_card_t* const self)
 
 static int sound_card_configure_poll(sound_card_t* const self)
 {
+        if (!self->poll)
+                return 0;
+
         self->poll_count = snd_pcm_poll_descriptors_count(self->pcm_handle);
         if (self->poll_count <= 0)
         {
@@ -554,6 +566,13 @@ static int sound_card_configure_poll(sound_card_t* const self)
                         snd_strerror(error));
                 return error;
         }
+
+        if (self->stream == SOUND_CARD_STREAM_CAPTURE)
+                error = snd_pcm_start(self->pcm_handle);
+        if (self->stream == SOUND_CARD_STREAM_PLAYBACK)
+                error = snd_pcm_prepare(self->pcm_handle);
+
+        return error;
 }
 
 sound_card_t* const sound_card_construct(const struct sound_card_config* const config)
@@ -587,8 +606,8 @@ sound_card_t* const sound_card_construct(const struct sound_card_config* const c
         if (error < 0)
                 goto fail;
 
-        if (config->poll)
-                error = sound_card_configure_poll(self);
+        self->poll = config->poll;
+        error      = sound_card_configure_poll(self);
         if (error < 0)
                 goto fail;
 
@@ -604,10 +623,6 @@ fail:
 void sound_card_destruct(sound_card_t* const self)
 {
         ASSERT(self != NULL);
-
-        snd_pcm_drain(self->pcm_handle);
-        snd_pcm_close(self->pcm_handle);
-
         sound_card_deallocate(self);
 }
 
@@ -633,7 +648,10 @@ static void sound_card_prepare_buffer_interleaved(
 
 static int sound_card_epipe_recovery(sound_card_t* const self)
 {
-        LOG_WARNING("Underrun occured for PCM device %s", self->name);
+        LOG_WARNING(
+                "Underrun occured for PCM device %s %s",
+                self->name,
+                snd_pcm_stream_name(self->stream));
 
         int error = snd_pcm_prepare(self->pcm_handle);
         if (error < 0)
@@ -696,6 +714,7 @@ int sound_card_playback(sound_card_t* const self, struct sound_card_task* const 
                 self->period_size_frames);
         if (error < 0)
         {
+                LOG_WARNING("Write error, trying recover...");
                 error = sound_card_xrun_recovery(self, error);
                 if (error < 0)
                 {
@@ -714,8 +733,8 @@ int sound_card_synchronize(sound_card_t* const playback, sound_card_t* const cap
 {
         int error = snd_pcm_link(playback->pcm_handle, capture->pcm_handle);
         if (error < 0)
-                LOG_ERROR(
-                        "Cannot link pcm devices %s and %s [%s]",
+                LOG_WARNING(
+                        "Cannot link PCM devices %s and %s [%s]",
                         playback->name,
                         capture->name,
                         snd_strerror(error));
@@ -727,14 +746,23 @@ int sound_card_capture(sound_card_t* const self, struct sound_card_task* const t
         ASSERT(self != NULL);
         ASSERT(task != NULL);
 
-        int error = 0;
-        do
+        int error = snd_pcm_readn(
+                self->pcm_handle,
+                (void**)(task->sample_buffers),
+                self->period_size_frames);
+        if (error < 0)
         {
-                error = snd_pcm_readn(
-                        self->pcm_handle,
-                        (void**)(task->sample_buffers),
-                        task->size);
-        } while (error == -EAGAIN);
+                LOG_WARNING("Read error, trying recover...");
+                error = sound_card_xrun_recovery(self, error);
+                if (error < 0)
+                {
+                        LOG_ERROR(
+                                "Read error for PCM device %s [%s]",
+                                self->name,
+                                snd_strerror(error));
+                        return error;
+                }
+        }
 
         return error;
 }
@@ -753,7 +781,11 @@ static int sound_card_wait_for_poll(sound_card_t* const self)
 
                 if (revents & POLLERR)
                         return -EIO;
-                if (revents & POLLOUT)
+                else if ((revents & POLLOUT) && (self->stream == SOUND_CARD_STREAM_PLAYBACK))
+                        return 0;
+                else if ((revents & POLLIN) && (self->stream == SOUND_CARD_STREAM_CAPTURE))
+                        return 0;
+                else if ((revents & POLLIN) && (revents & POLLOUT))
                         return 0;
         }
 }
@@ -776,7 +808,8 @@ int sound_card_poll_is_ready(sound_card_t* const self, bool* const ready)
                 else
                 {
                         LOG_ERROR(
-                                "Wait for poll failed for PCM device %s",
+                                "Wait for poll failed for PCM device "
+                                "%s",
                                 self->name);
                         return error;
                 }

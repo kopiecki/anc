@@ -34,22 +34,24 @@ class LMS(object):
         self._filter.coeffs = self._filter.coeffs + \
             [self._step * x * error for x in x_ring]
         self._w_history = np.vstack([self._w_history, self._filter.coeffs])
-        
+
         return self._filter
 
-    @property 
+    @property
     def filter(self) -> FIR:
         return self._filter
 
-    def plot_w_history(self):
+    def plot_w_history(self, plot_filter: bool = True):
         self._w_history = np.matrix.transpose(self._w_history)
         for i, (filter_coeffs, lms_filter_coeffs) in enumerate(zip(self._filter.coeffs, self._w_history)):
             plt.plot(lms_filter_coeffs, label="lms coeff {}".format(i))
-            plt.plot(np.ones(self._w_history.shape[1]) * filter_coeffs,
-                     label="filter coeff {}".format(i))
+            if (plot_filter):
+                plt.plot(np.ones(self._w_history.shape[1]) * filter_coeffs,
+                        label="filter coeff {}".format(i))
         plt.grid()
         plt.legend()
         plt.show()
+
 
 def __generate_x(sampling_hz: int, num_of_samples: int):
     t = np.arange(num_of_samples) / sampling_hz
@@ -63,16 +65,43 @@ def __generate_x(sampling_hz: int, num_of_samples: int):
 
     return sine_100_hz + sine_250_hz + noise
 
-if __name__ == "__main__":
+
+def __estimate_sec() -> None:
+    SAMPLING_HZ = 4000
+    ORDER = 200
+
+    lms = LMS(SAMPLING_HZ, 0.001, np.zeros(ORDER))
+
+    x = np.genfromtxt("input.csv", delimiter='\n')
+    y = np.genfromtxt("capture.csv", delimiter='\n')
+    x = x[int(SAMPLING_HZ / 2) : 20 * SAMPLING_HZ]
+    y = y[int(SAMPLING_HZ / 2) : 20 * SAMPLING_HZ]
+
+    x_ring = deque([0] * ORDER, maxlen=ORDER)
+
+    lms_filter = lms.filter
+    for _x, _d in zip(x, y):
+        x_ring.appendleft(_x)
+
+        y = lms_filter(x_ring)
+
+        error = _d - y
+        lms_filter = lms(x_ring, error)
+
+    logger.info("Last LMS estimate = {}", lms_filter.coeffs)
+    lms.plot_w_history(False)
+
+
+def __estimate_filter() -> None:
     SAMPLING_HZ = 4000
     NUM_OF_SAMPLES = 2 * SAMPLING_HZ
 
     filter = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
-                       cutoff_hz=200, trans_band_width_hz=500)
+                 cutoff_hz=200, trans_band_width_hz=500)
 
     lms = LMS(NUM_OF_SAMPLES, 0.005, np.zeros(filter.order))
     x = __generate_x(SAMPLING_HZ, NUM_OF_SAMPLES)
-    
+
     x_ring = deque([0] * filter.order, maxlen=filter.order)
 
     lms_filter = lms.filter
@@ -88,3 +117,7 @@ if __name__ == "__main__":
     logger.info("Last LMS estimate = {}", lms_filter.coeffs)
     logger.info("Real filter coeffs = {}", filter.coeffs)
     lms.plot_w_history()
+
+
+if __name__ == "__main__":
+    __estimate_sec()

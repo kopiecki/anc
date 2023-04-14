@@ -28,7 +28,7 @@ class FIR(object):
             self._design(stopband_ripple_db, cutoff_hz, trans_band_width_hz)
         else:
             self._coeffs = initial_w
-            self._order = len(self._coeffs)
+            self._order = len(initial_w)
 
         logger.info("Created FIR filter with order {}", self._order)
 
@@ -73,7 +73,7 @@ class FIR(object):
 
     @coeffs.setter
     def coeffs(self, new_coeffs: np.ndarray) -> np.ndarray:
-        if len(new_coeffs) is self._order:
+        if len(new_coeffs) == self._order:
             self._coeffs = new_coeffs
         else:
             logger.error("Cannot update coeffs because order doesn't match!")
