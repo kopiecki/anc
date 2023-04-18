@@ -1,0 +1,21 @@
+\frametitle{Aktywne tłumienie hałasu}
+        \framesubtitle{Filtr SOI}
+        Przykładowa implementacja w języku C:
+        \begin{lstlisting}[frame=single, language=C, basicstyle=\tiny]
+        float dsp_fir(struct circ_fifo* const cf,
+                           const float* const w,
+                           size_t order, size_t cnt)
+        {
+                float y = 0.0f;
+                for (size_t i = 0u; i < order; i++)
+                        y += w[i] * circ_fifo_peek(cf, i + cnt);
+
+                return y;
+        }
+        \end{lstlisting}
+        \begin{itemize}
+        \item Struktura circ\_fifo jest kolejką.
+        \item Metoda circ\_fifo\_peek zwraca najnowszą próbkę opóźnioną o i.
+        \item Parameter cnt stosowany jest w przypadku wykonywania filtracji na buforach.
+        \item Wprowadza dodatkowe opóźnienie ("przesuwa" całą kolejkę).
+        \end{itemize}

@@ -41,7 +41,6 @@ class FIR(object):
         return scisig.lfilter(self._coeffs, 1.0, x)
 
     def plot(self, freqs: bool = True, imp: bool = True):
-
         i = 1
         if imp:
             plt.figure(i)

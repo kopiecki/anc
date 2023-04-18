@@ -24,6 +24,7 @@ target_link_libraries(${test_sound}
                 signal
                 utils
                 sound_card
+                dsp
 )
 install(TARGETS ${test_sound} RUNTIME DESTINATION bin)
 
@@ -58,3 +59,20 @@ target_link_libraries(${test_lms}
 )
 
 install(TARGETS ${test_lms} RUNTIME DESTINATION bin)
+
+set(test_anc "test_anc")
+set(test_anc_sources
+        functional/test_anc.c
+)
+
+add_executable(${test_anc} ${test_anc_sources})
+include_directories(${test_anc} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(${test_anc}
+        PRIVATE
+                signal
+                sound_card
+                utils
+                dsp
+)
+
+install(TARGETS ${test_anc} RUNTIME DESTINATION bin)

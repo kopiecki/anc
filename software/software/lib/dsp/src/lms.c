@@ -15,12 +15,13 @@ void dsp_lms(
         DSP_FORMAT error,
         DSP_FORMAT step,
         void* const cf_x,
-        size_t order)
+        size_t order,
+        size_t cnt)
 {
         ASSERT(w != NULL);
         ASSERT(cf_x != NULL);
 
         for (size_t i = 0u; i < order; i++)
-                w[i] += step * circ_fifo_peek(CF_X, i) * error;
-        CF_X->i = ((CF_X->i + 1u)) & CF_X->mask;
+                w[i] += step * circ_fifo_peek(CF_X, i + cnt) * error;
+        // CF_X->i = ((CF_X->i + 1u)) & CF_X->mask;
 }

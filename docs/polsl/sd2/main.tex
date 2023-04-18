@@ -1,0 +1,678 @@
+\documentclass{beamer}
+
+\usetheme{Boadilla}
+\usepackage{polski}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{subcaption}
+\usefonttheme{serif}
+
+\title{Seminarium dyplomowe, 2}
+\subtitle{Układ aktywnego tłumienia hałasu pod nadzorem jądra systemu Linux z rozszerzeniami real-time}
+
+\author{Daniel Kopiecki}
+\institute{Politechnika Śląska}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Aktywne tłumienie hałasu}
+\framesubtitle{Główna idea}
+\begin{itemize}
+    \item Aktywne tłumienie hałasu (ang. \textit{Active noise control, ANC}) 
+    polega na niwelowaniu hałasu w oparciu o zasadę superpozycji.
+    \item Za pomocą specjalistycznej aparatury elektroakustycznej generowany jest sygnał o takiej samej 
+    amplitudzie, lecz przeciwnej fazie do sygnału tłumionego.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{../images/anc.png}
+\caption{Główna idea aktywnego tłumienia hałasu}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Aktywne tłumienie hałasu}
+\framesubtitle{Ograniczenia}
+\begin{itemize}
+    \item Aktywne tłumienie hałasu jest stosowane głównie do tłumienia sygnałów o częstotliwościach
+    relatywnie niskich (zazwyczaj mniejszych niż $500$ Hz).
+    \item Jest to spowodowane wysoką wydajnością i niskimi kosztami zastosowań pasywnych dla tego typu sygnałów (tłumiki, wygłuszacze).
+    \item Wraz ze wzrostem częstotliwości tłumionego sygnału rośnie częstotliwość próbkowania projektowanego układu wraz ze skomplikowaniem 
+    algorytmiki i modelów matematycznych.
+\end{itemize}
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.25\textwidth}
+    \includegraphics[width=\textwidth]{../images/sil1.jpg}
+    \caption{Pianka akustyczna}
+\end{subfigure}
+\begin{subfigure}{0.25\textwidth}
+    \includegraphics[width=\textwidth]{../images/atten.jpg}
+    \caption{Wytłumiacz}
+\end{subfigure}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Aktywne tłumienie hałasu}
+\framesubtitle{Zastosowania}
+Z przykładowych zastosowań można jednak wyróżnić:
+\begin{enumerate}
+    \item Przestrzenne, akustyczne ANC:
+    \begin{itemize}
+        \item Hałas rozchodzący się kanałami (wentylacja, ogrzewanie, rurociagi)
+        \item Generowanie przestrzennych stref ciszy (hałas w pomieszczeniu)
+        \item Ochrona słuchu
+    \end{itemize}
+    \item Hydroakustyczne ANC (łowienie ryb, aktywne tłumienie fal wodnych)
+    \item Wibracyjne ANC (ang. \textit{Active vibration control, AVC})
+\end{enumerate}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.2\textwidth}
+        \includegraphics[width=\textwidth]{../images/headphones.jpg}
+        \caption{ANC}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../images/vibration.jpg}
+        \caption{AVC}
+    \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Aktywne tłumienie hałasu}
+\framesubtitle{Od ogółu do szczegółu}
+Sposób realizacji aktywnego tłumienia hałasu akustycznego z perspektywy sterowania można podzielić na dwa typy:
+\begin{enumerate}
+    \item Sterowanie z pętlą sprzężenia w przód (ang. \textit{feedforward control}) - sygnał tłumiony jest mierzony bezpośrednio przy źródle (pomiar referencyjny), 
+    przed jego propagacją wzdłóż toru podstawowego w kierunku toru wtórnego (wymagane są dwa czujniki akustyczne).
+    \item Sterowanie z pętlą sprzężenia w tył (ang. \textit{feedback control}) - sygnał tłumiony nie jest mierzony przy źródle, lecz po propagacji wzdłóż toru (wymagany jest jeden czujnik akustyczny).
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Aktywne tłumienie hałasu}
+    \framesubtitle{Od ogółu do szczegółu}
+    Sterowanie z pętlą sprzężenia w przód można jednak znowuż podzielić na dwa podtypy:
+    \begin{itemize}
+        \item Szerokopasmowe sterowanie z pętlą sprzężenia w przód
+        \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../images/broadband.png}
+        \caption{Szerokopasmowe ANC ze sterowaniem w przód}
+        \end{figure}
+    \end{itemize}
+    \end{frame}
+
+
+\begin{frame}
+    \frametitle{Aktywne tłumienie hałasu}
+    \framesubtitle{Od ogółu do szczegółu}
+    \begin{itemize}
+        \item Wąskopasmowe sterowanie z pętlą sprzężenia w przód
+        \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../images/narrowband.png}
+        \caption{Wąskopasmowe ANC ze sterowaniem w przód}
+        \end{figure}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Aktywne tłumienie hałasu}
+    \framesubtitle{Od ogółu do szczegółu}
+    \begin{itemize}
+        \item Sterowanie z pętlą sprzężenia w tył
+        \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../images/feedback.png}
+        \caption{ANC ze sterowaniem w tył}
+        \end{figure}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Aktywne tłumienie hałasu}
+    \framesubtitle{Od ogółu do szczegółu}
+    W ramach projektu realizowane jest:
+    \begin{itemize}
+        \item \textbf{Szerokopasmowe sterowanie z pętlą sprzężenia w przód}
+        \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\linewidth]{../images/broadband.png}
+        \caption{Szerokopasmowe ANC ze sterowaniem w przód}
+        \end{figure}
+    \end{itemize}
+        Zacznijmy więc omawiać temat w języku automatyki.
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Aktywne tłumienie hałasu}
+        \framesubtitle{Od ogółu do szczegółu}
+        Zaczynamy z jedynie blokiem będącym modelem toru podstawowego.
+            \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\linewidth]{../images/sch_0.png}
+            \caption{Wyprowadzenie schematu, 0}
+            \end{figure}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Aktywne tłumienie hałasu}
+        \framesubtitle{Od ogółu do szczegółu}
+        \begin{itemize}
+        \item Modelowanie dynamiki w omawianym temacie 
+        uogólnione zostaje do filtrów SOI (skończona odpowiedź impulsowa, ang. \textit{Finite impulse response, FIR}).
+        \item Tego typu modele są najczęśniej stosowane w zagadnieniach związanych z aktywnym tłumieniem hałasu, ponieważ są 
+        zawsze stabilne, stosunkowo łatwe w implementacji jak i posiadają liniową odpowiedź fazową.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Aktywne tłumienie hałasu}
+        \framesubtitle{Filtr SOI}
+        Postać filtru SOI (skończona odpowiedź impulsowa) dana jest zależnością:
+        \begin{equation}
+            W(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L - 1}w_lz^{-l}
+        \end{equation}
+        gdzie: 
+        \begin{itemize}
+        \item $w_l$ - współczynnik filtra o numerze $l$.
+        \item $L$ - rząd filtra (ilość współczynników, długość odpowiedzi impulsowej)
+        \item $z^{-l}$ - opóźnienie o $l$ próbek
+        \end{itemize}
+        W związku z tym, wyjście filtra SOI $y(n)$ dane jest:
+        \begin{equation}
+                y(n) = \sum_{l = 0}^{L - 1}w_lx(n - l) \implies y(n) = \textbf{w}^T\textbf{x}(n)
+        \end{equation}
+        \begin{equation}
+            \textbf{w} = \begin{bmatrix} w_0 & w_1 & \cdots & w_{L-1} \end{bmatrix}^T
+        \end{equation}
+        \begin{equation}
+            \textbf{x}(n) = \begin{bmatrix} x(n) & x(n - 1) & \cdots & x(n - L + 1) \end{bmatrix}^T
+        \end{equation}
+    \end{frame}
+
+    \begin{frame}[fragile]
+        \frametitle{Aktywne tłumienie hałasu}
+        \framesubtitle{Filtr SOI}
+        Przykładowa implementacja w języku C:
+        \begin{lstlisting}[frame=single, language=C, basicstyle=\tiny]
+        float dsp_fir(struct circ_fifo* const cf, 
+                           const float* const w, 
+                           size_t order, size_t cnt)
+        {
+                float y = 0.0f;
+                for (size_t i = 0u; i < order; i++)
+                        y += w[i] * circ_fifo_peek(cf, i + cnt);
+
+                return y;
+        }
+        \end{lstlisting}
+        \begin{itemize}
+        \item Struktura circ\_fifo jest kolejką. 
+        \item Metoda circ\_fifo\_peek zwraca najnowszą próbkę opóźnioną o i.
+        \item Parameter cnt stosowany jest w przypadku wykonywania filtracji na buforach. 
+        \item Wprowadza dodatkowe opóźnienie ("przesuwa" całą kolejkę).
+        \end{itemize}
+    \end{frame}
+    \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            Uzupełnijmy schemat o elementy pomiarowe i aktuatory.
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{../images/sch_1.png}
+                \caption{Wyprowadzenie schematu, 1}
+                \end{figure}
+    \end{frame}
+
+    \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            Jak wyznaczyć transmitancję $P(z^{-1})$?
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{../images/sch_2.png}
+                \caption{Wyprowadzenie schematu, 2}
+                \end{figure}
+            Jest to bardzo trudne. Transmitancja $P(z^{-1})$ zmienia się w czasie i zazwyczaj nie sposób przewidzieć charakterystyki tych zmian.
+    \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            Jeżeli więc transmitancja $P(z^{-1})$ jest zależna od czasu i nieprzewidywalna, potrzebny jest mechanizm estymacji jej parametrów na biężąco.
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{../images/sch_3.png}
+                \caption{Wyprowadzenie schematu, 3}
+                \end{figure}
+            Wprowadzamy więc filtr $W(z^{-1})$ będący bieżącą estymacją obiektu $P(z^{-1})$. Jak wyznaczyć biężace parametry tego modelu?
+            \end{frame}
+        
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Algorytm LMS}
+            \begin{itemize}
+            \item Jednym z najbardziej znanych algorytmów służącej do biężącej estymacji parametrów modelu jest algorytm LMS (ang. \textit{least mean squares}).
+            \item Opiera się on na zastosowaniu gradientowej metody najniższego spadku (ang. \textit{method of steepest descent}) do minimalizacji błędu średniokwadratowego.
+            \item Błąd w tym przypadku dany jest zależnością:
+            \begin{equation}
+                    e(n) = d(n) - y(n) = d(n) - \textbf{w}^T\textbf{x}(n)
+            \end{equation}
+            \item $d(n)$ to wyjście estymowanego na biężaco, nieznanego modelu (w analizowanym wypadku nieznanego obiektu $P(z^{-1})$ opisującego dynamikę toru podstawowego, którym propaguje się hałas).
+            \item $y(n)$ to wyjście modelu $W(z^{-1})$.
+        \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Algorytm LMS}
+            \begin{itemize}
+            \item Algorytmy estymujące na bieżąco parametry modelu noszą nazwę \textbf{algorytmów adaptacyjnych}, a filtry (modele) powstałe na skutek ich zastosowania \textbf{filtrami adaptacyjnymi}.
+            \item Zaniechając wyprowadzania, z literatury w analizowanym przypadku algorytm LMS dany jest następującą zależnością:
+            \begin{equation}
+                \textbf{w}(n + 1) = \textbf{w}(n) + \mu \textbf{x}(n)e(n)
+            \end{equation}
+            \begin{equation}
+                \textbf{w}(n) = \begin{bmatrix} w_0(n) & w_1(n) & \cdots & w_{L-1}(n) \end{bmatrix}^T
+            \end{equation}
+            \begin{equation}
+                \textbf{x}(n) = \begin{bmatrix} x(n) & x(n - 1) & \cdots & x(n - L + 1) \end{bmatrix}^T
+            \end{equation}
+            gdzie $\mu$ to "krok" algorytmu, który musi spełniać określone warunki stabilności.
+            \item Wynikiem działania algorytmu jest więc nowy wektor współczynników filtra $W(z^{-1})$ (nowa odpowiedź impulsowa).
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            Proces realizacji \textbf{filtra adaptacyjnego} można przedstawić następującymi krokami:
+            \begin{enumerate}
+                \item Dobranie długości filtra $W(z^{-1})$ $L$, kroku $\mu$ oraz początkowej odpowiedzi impulsowej $\textbf{w}(0)$.
+                \item Obliczenie wyjścia filtra $W(z^{-1})$ zgodnie z zależnością:
+                \begin{equation}
+                    y(n) = \sum_{l = 0}^{L - 1}w_l(n)x(n - l)
+                \end{equation}
+                \item Obliczenie błędu:
+                \begin{equation}
+                 e(n) = d(n) - y(n)
+                \end{equation}
+                \item Aktualizacja parametrów filtra $W(z^{-1})$ z wykorzystaniem algorytmu LMS:
+                \begin{equation}
+                    w_l(n + 1) = w_l(n) + \mu x(n - l)e(n), \quad l = 0,1,\dots,L - 1
+                \end{equation}
+            \end{enumerate}
+        \end{frame}
+
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            Mając więc aparat obliczeniowy do aktualizacji parametrów filtra $W(z^{-1})$ zaktualizujmy schemat.
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{../images/sch_4.png}
+                \caption{Wyprowadzenie schematu, 4}
+                \end{figure}
+        \end{frame}
+
+        \begin{frame}
+            Analizując schemat, można zapisać:
+            \begin{equation}
+                E(z^{-1}) = D(z^{-1}) - Y(z^{-1}) =  P(z^{-1})X(z^{-1}) - W(z^{-1})X(z^{-1})  
+            \end{equation}
+            Idealnie, jeżeli $W(z^{-1})$ będzie zbieżny, to:
+            \begin{equation}
+                E(z^{-1}) = 0 \implies P(z^{-1}) = W(z^{-1})
+            \end{equation}
+            Z czego, gdy $X(z^{-1}) \neq 0$ wynika:
+            \begin{equation}
+                y(n) = d(n) \implies e(n) = d(n) - y(n) = 0
+            \end{equation}
+            Zerowy błąd świadczy o idealnym tłumieniu hałasu.
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            \begin{itemize}
+            \item Sprawa nie jest jednak tak prosta jak się wydaje. 
+            \item Komplikacją jest fakt, że obydwa sygnały $x(n)$ jak i $e(n)$ są mierzone za pomocą czujników akustycznych (mikrofonów), 
+            do których sygnał docierając i odchodząc przebywa pewną drogę. 
+            \item Dodatkowo, wyjście liczonego filtra $y(n)$ jest wstrzykiwane w środowisko za pomocą głośnika.
+            \item \textbf{Wszystkie} wyszczególnione tutaj elementy \textbf{posiadają swoją dynamikę} i zaniechanie ich opisów powoduje 
+            gorszą zbieżność algorytmu adaptacyjnego, a co za tym idzie, gorsze tłumienie.
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            Uzupełnijmy więc schemat o dodatkowe dynamiki opisane w $slajd(n)z^{-1}$.
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.65\linewidth]{../images/sch_5.png}
+                \caption{Wyprowadzenie schematu, 5}
+                \end{figure}
+            \begin{itemize}
+                \item $S'(z^{-1})$ reprezentuje dynamikę toru od wyjścia filtra adaptacyjnego $W(z^{-1})$ do "węzła sumacyjnego" w domenie akustycznej (układ DA, filtr rekonstrukcyjny, wzmacniacz mocy, głośnik, tor dźwięku z głośnika).
+                \item $R(z^{-1})$ reprezentuje dynamikę toru od "węzła sumacyjnego" w domenie akustycznej do wejścia filtra adaptycjnego $W(z^{-1})$ (tor akustyczny do mikrofonu błędu, filtr antyaliasingowy, układ AC).
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.65\linewidth]{../images/sch_5.png}
+                \caption{Wyprowadzenie schematu, 5}
+                \end{figure}
+            \begin{itemize}
+                \item Transmitancję \textbf{toru podstawowego} (ang. \textit{primary path}) można więc teraz zapisać:
+                \begin{equation}
+                        P(z^{-1}) = P'(z^{-1})R(z^{-1})
+                \end{equation}
+                \item Uwzględnienie nowych dynamik powoduje wprowadzenie pojęcia transmitancji \textbf{toru wtórnego} (ang. \textit{secondary path}):
+                \begin{equation}
+                        S(z^{-1}) = S'(z^{-1})R(z^{-1})
+                \end{equation}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.65\linewidth]{../images/sch_5.png}
+                \caption{Wyprowadzenie schematu, 5}
+                \end{figure}
+            \begin{itemize}
+                \item W tym przypadku, błąd $E(z^{-1})$ zdefiniowany jest następująco:
+                \begin{equation}
+                    E(z^{-1}) = R(z^{-1})[P'(z^{-1}) - S'(z^{-1})W(z^{-1})]X(z^{-1})
+                \end{equation}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.65\linewidth]{../images/sch_5.png}
+                \caption{Wyprowadzenie schematu, 5}
+                \end{figure}
+            \begin{itemize}
+                \item I tutaj również, jeżeli $W(z^{-1})$ jest zbieżne, to:
+                \begin{equation}
+                    E(z^{-1}) = 0 \implies W(z^{-1}) = \frac{P'(z^{-1})}{S'(z^{-1})}
+                    \label{eq:W}
+                \end{equation}
+                \item Wynika z tego, że filtr adaptacyjny $W(z^{-1})$ musi nie tylko na biężąco estymować parametry 
+                transmitancji toru $P'(z^{-1})$, ale również odwracać transmitancję toru $S'(z^{-1})$.
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.65\linewidth]{../images/sch_5.png}
+                \caption{Wyprowadzenie schematu, 5}
+                \end{figure}
+            \begin{itemize}
+                \item Niemożliwym jest jednak kompensować opóźnienie $S'(z^{-1})$, 
+                jeżeli $P'(z^{-1})$ nie zawiera przynajmniej takiego samego lub mniejszego.
+                \item Jest to znaczące \textbf{ograniczenie} szerokopasmowych systemów ANC ze sprzężeniem w przód.
+                \item Dodatkowo, jeżeli istnieje taka częstotliwość, dla której $S'(\omega) = 0$, to filtr adaptacyjny staje się niestabilny.
+            \end{itemize}
+        \end{frame}
+    
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            \begin{itemize}
+                    \item Uprośćmy jednak schemat, bazując na obserwacji, ze tor $P(z^{-1})$ jak i $S(z^{-1})$ posiadają wspólny składnik
+                    w postaci transmitancji $R(z^{-1})$.
+            \end{itemize}
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.65\linewidth]{../images/sch_6.png}
+                \caption{Wyprowadzenie schematu, 6}
+                \end{figure}
+        \end{frame}  
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.65\linewidth]{../images/sch_6.png}
+                \caption{Wyprowadzenie schematu, 6}
+                \end{figure}
+                \begin{itemize}
+                    \item W takim przypadku błąd $E(z^{-1})$ dany jest:
+                    \begin{equation}
+                       E(z^{-1}) = [P(z^{-1}) - S(z^{-1})W(z^{-1})]X(z^{-1})
+                    \end{equation}
+                    \begin{equation}
+                       W(z^{-1}) = \frac{P(z^{-1})}{S(z^{-1})}
+                    \end{equation}
+            \end{itemize}
+        \end{frame}  
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+                \begin{itemize}
+                    \item Filtr adaptacyjny musi modelować więc zależność $P(z^{-1})$ jak i $S(z^{-1})^{-1}$
+                    \item Jest to bardzo trudne zadanie.
+                    \item Modelowanie $S(z^{-1})^{-1}$ za pomocą filtru SOI prowadzi do relatywnie długich rzędów. Dodatkowo, jeżeli filtr $S(z^{-1})$ posiada właściwości pasmowozaporowe 
+                    dla pewnych częstotliwośći, ich wytłumienie w końcowym rozrachunku może okazać się niemożliwe.
+                    \item Jeżeli opóźnienie $P(z^{-1})$ nie jest mniejsze lub równe opóźnieniu $S(z^{-1})$, zadania tego nie sposób zrealizować.
+                    \item \textbf{Czy istnieje zatem jakiś sposób, żeby kompensować wpływ $S(z^{-1})$ i adaptować się jedynie do zmieniającej się charakterystki toru podstawowego $P(z^{-1})$?}
+            \end{itemize}
+        \end{frame} 
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            Spróbujmy przeanalizować sprawę z punktu widzenia algorytmu LMS:
+                \begin{itemize}
+                    \item Bład w takiej sytuacji dany jest:
+                    \begin{equation}
+                        e(n) = d(n) - y'(n) = d(n) - \textbf{s}^T(n)\textbf{y}(n)
+                    \end{equation}
+                    \begin{equation}
+                        e(n) = d(n) - y'(n) = d(n) - \textbf{s}^T(n)[\textbf{w}^T(n)\textbf{x}(n)]
+                    \end{equation}
+                    \begin{equation}
+                        \textbf{w}(n) = \begin{bmatrix} w_0(n) & w_1(n) & \cdots & w_{L_w-1}(n) \end{bmatrix}^T
+                    \end{equation}
+                    \begin{equation}
+                        \textbf{s}(n) = \begin{bmatrix} s_0(n) & s_1(n) & \cdots & s_{L_s-1}(n) \end{bmatrix}^T
+                    \end{equation}
+                    \begin{equation}
+                        \textbf{x}(n) = \begin{bmatrix} x(n) & x(n - 1) & \cdots & x(n - L_w + 1) \end{bmatrix}^T
+                    \end{equation}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Alogrytm FXLMS}
+            \begin{itemize}
+                \item Jeżeli dla takiego błędu $e(n)$ wyprowadzimy algorytm LMS, otrzymamy:
+                \begin{equation}
+                    \textbf{w}(n + 1) = \textbf{w}(n) + \mu \textbf{x'}(n)e(n)
+                \end{equation}
+                \begin{equation}
+                    \textbf{x'}(n) = \textbf{s}^T(n)\textbf{x}(n)
+                \end{equation}
+            \item Niestety nie znamy odpowiedzi impulsowej $\textbf{s}^T(n)$, jednak zakładając, że tor wtórny jest dużo
+            mniej skomplikowany i zmienny niż tor podstawowy, możemy zidentyfikować tę odpowiedź nieadaptacyjnie aparatem identyfikacji procesów.
+            \begin{equation}
+                \textbf{w}(n + 1) = \textbf{w}(n) + \mu \textbf{x'}(n)e(n)
+            \end{equation}
+            \begin{equation}
+                \textbf{x'}(n) = \hat{\textbf{s}}^T(n)\textbf{x}(n)
+            \end{equation}
+        \end{itemize}
+        Tak zmodyfikowany algorytm LMS nosi nazwę algorytmu \textbf{FXLMS}, od filtracji wejścia (ang. \textit{filtered-x least means squares}).
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+                \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{../images/sch_7.png}
+                \caption{Wyprowadzenie schematu, FXLMS}
+                \end{figure}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            \begin{itemize}
+            \item Jak identyfikować $S(z^{-1})$?
+            \item Można to robić aktywnie i \textbf{pasywnie}.
+            \item Z pasywnych metod można wyróżnić:
+            \begin{itemize}
+                \item Identyfikację odpowiedzi impulsowej metodą korelacyjną:
+                \begin{equation}
+                    \hat{s}(n) = \frac{R_{xy}(n)}{\lambda^2}
+                    \label{eq::corr}
+            \end{equation}
+            W tym przypadku na wejście identyfikowanego obiektu podajemy biały szum o wariancji $\lambda^2$. 
+            Liczymy funkcję korelacji wejścia z wyjściem, a następnie dzielimy ją przez wariancję $\lambda^2$.
+            \\
+            Z perspektywy ANC, puszczany jest biały szum z głośnika mającego emitować antyhałas. Jest on próbkowany wraz z wyjściem, 
+            czyli sygnałem nagranym przy pomocy mikrofonu błedu. Tak powstałe wektory pomiarowe służą następnie do wyznaczenia 
+            zależność $\hat{s}(n)$.
+
+            \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            \begin{itemize}
+                \item Wykorzystanie doświadczalnego estymatora transmitancji:
+                \begin{equation}
+                    \hat{S}(j\omega) = \frac{\hat{Y}(j\omega)}{\hat{X}(j\omega)}
+                \end{equation}
+                Liczona jest transformata Fouriera wejścia i wyjścia, a następnie transformaty są przez siebie dzielone.
+                Zależność $\hat{s}(n)$ otrzymujemy poprzez zastosowanie odwrotnej transformaty na zależności $\hat{S}(j\omega)$.
+                \item Zastosowanie algorytmu LMS. Obserwowanie aktualizowanych parametrów i zatrzymanie obliczeń w przypadku, kiedy
+                osiągną one odpowiedni poziom zbieżności.
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            Posiadając zidentyfikowaną odpowiedź impulsową $\hat{s}(n)$, proces implementacji 
+            algorytmu FXLMS realizującego zadanie aktywnego tłumienia hałasu można opisać następująco:
+            \begin{itemize}
+                \item Zebrać sygnały $x(n)$ i $e(n)$ z mikrofonu referencyjnego i błędu.
+                \item Obliczyć antyhałas zgodnie z zależnością:
+                \begin{equation}
+                    y(n) = \sum_{l = 0}^{L_w - 1}w_l(n)x(n - l)
+                \end{equation}
+                \item Puścić antyhałas $y(n)$ na głośniku.
+                \item Przefiltrować sygnał $x(n)$ przez zidentyfikowaną odpowiedź impulsową $\hat{s}(n)$.
+                \begin{equation}
+                        x'(n) = \sum_{l = 0}^{L_s - 1}\hat{s}_l(n)x(n - l)
+                \end{equation}
+            \end{itemize}
+        \end{frame}
+
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{Od ogółu do szczegółu}
+            \begin{itemize}
+                \item Zaktualizować parametru filtru adaptacyjnego $W(z^{-1})$ zgodnie z algorytmem FXLMS:
+                \begin{equation}
+                    w_l(n + 1) = w_l(n) + \mu x'(n - l)e(n)
+                \end{equation}
+                \item Powtórzyć wyżej przedstawiony proces dla kolejnej iteracji.
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{LMS i FXLMS, porównanie}
+            Symulacyjne rezultaty surowego LMS w kontekście ANC:
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{../images/lms.png}
+                \caption{Symulacja LMS, aktualizacja parametrów}
+                \end{figure}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{LMS i FXLMS, porównanie}
+            Symulacyjne rezultaty surowego LMS w kontekście ANC:
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{../images/lms_e.png}
+                \caption{Symulacja LMS, hałas i błąd}
+                \end{figure}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{LMS i FXLMS, porównanie}
+            Symulacyjne rezultaty surowego FXLMS w kontekście ANC:
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{../images/fxlms.png}
+                \caption{Symulacja FXLMS, aktualizacja parametrów}
+                \end{figure}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Aktywne tłumienie hałasu}
+            \framesubtitle{LMS i FXLMS, porównanie}
+            Symulacyjne rezultaty surowego FXLMS w kontekście ANC:
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{../images/fxlms_e.png}
+                \caption{Symulacja FXLMS, hałas i błąd}
+                \end{figure}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Wykorzystane materiały}
+            \begin{itemize}
+            \item Active Noise Control Systems: Algorithms and DSP Implementations,
+            Sen Maw Kuo and Dennis R. Morgan,
+            1996
+            \item Cyfrowe przetwarzanie sygnałów, A.V. Oppenheim, R.W. Schaffer, Wydawnictwa Łączności i Telekomunikacji
+            \end{itemize}
+            \hfil \hfil
+            \vfil \vfil \vfil
+            \textbf{Serdecznie dziękuję za uwagę}
+            \end{frame}
+\end{document}

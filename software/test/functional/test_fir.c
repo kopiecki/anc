@@ -67,9 +67,9 @@ static int test_dsp_fir(void)
 
         for (size_t i = 0u; i < NUM_OF_SAMPLES; i++)
                 circ_fifo_write(&cf, test_fir_signal_buffer[i]);
-        for (size_t i = NUM_OF_SAMPLES; i > 0; i--)
-                test_fir_filtered_signal_buffer[i] =
-                        dsp_fir(&cf, test_fir_imp_res_buffer, imp_res_size);
+        for (size_t i = 0; i < NUM_OF_SAMPLES; i++)
+                test_fir_filtered_signal_buffer[NUM_OF_SAMPLES - 1 - i] =
+                        dsp_fir(&cf, test_fir_imp_res_buffer, imp_res_size, i);
 
         return file_helpers_write_buf(
                 "test/functional/output/after_fir.csv",

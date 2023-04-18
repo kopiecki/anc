@@ -29,6 +29,7 @@ void dsp_lms(
         DSP_FORMAT error,
         DSP_FORMAT step,
         void* const cf_x,
-        size_t order);
+        size_t order,
+        size_t cnt);
 
 #endif /* LMS_H_ */

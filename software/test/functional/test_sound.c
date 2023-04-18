@@ -10,8 +10,11 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "dsp/fir.h"
+#include "dsp/lms.h"
 #include "signal/signal.h"
 #include "sound_card/sound_card.h"
+#include "utils/circ_fifo.h"
 #include "utils/file_helpers.h"
 #include "utils/logger.h"
 
@@ -27,26 +30,27 @@
 #define SAMPLING_FREQUENCY 4000
 #define NUM_OF_SAMPLES     SAMPLING_FREQUENCY
 
-#define BUFFER_TIME_US 2000000
-#define PERIOD_TIME_US 1000000
+#define BUFFER_TIME_US 4000
+#define PERIOD_TIME_US 2000
 #define CHANNELS       2
 
-static sound_card_t* __sc_playback = NULL;
-static sound_card_t* __sc_capture  = NULL;
+static sound_card_t* sc_playback = NULL;
+static sound_card_t* sc_capture  = NULL;
 
-static struct sound_card_task __playback_task;
-static struct sound_card_task __capture_task;
+static struct sound_card_task playback_task;
+static struct sound_card_task capture_task;
 
-static TEST_FORMAT* __noise_buffer;
-static TEST_FORMAT* __antinoise_buffer;
+static TEST_FORMAT* noise_buffer;
+static TEST_FORMAT* antinoise_buffer;
+static TEST_FORMAT* antinoise_buffer_tmp;
 
-static TEST_FORMAT* __input_buffer;
-static TEST_FORMAT* __error_buffer;
+static TEST_FORMAT* input_buffer;
+static TEST_FORMAT* error_buffer;
 
-#define NUM_OF_BUFFS 100
-static TEST_FORMAT* __noise_buffers[NUM_OF_BUFFS];
-static TEST_FORMAT* __error_buffers[NUM_OF_BUFFS];
-static TEST_FORMAT* __input_buffers[NUM_OF_BUFFS];
+#define NUM_OF_BUFFS 10000
+static TEST_FORMAT* noise_buffers[NUM_OF_BUFFS];
+static TEST_FORMAT* error_buffers[NUM_OF_BUFFS];
+static TEST_FORMAT* input_buffers[NUM_OF_BUFFS];
 
 static struct signal __noise = {
         .amplitude = 1.0f,
@@ -91,15 +95,15 @@ static int __create_cards(void)
                 .poll           = true,
         };
 
-        __sc_playback = sound_card_construct(&sc_playback_config);
-        if (__sc_playback == NULL)
+        sc_playback = sound_card_construct(&sc_playback_config);
+        if (sc_playback == NULL)
                 return -ENOTSUP;
 
-        __sc_capture = sound_card_construct(&sc_capture_config);
-        if (__sc_capture == NULL)
+        sc_capture = sound_card_construct(&sc_capture_config);
+        if (sc_capture == NULL)
                 return -ENOTSUP;
 
-        sound_card_synchronize(__sc_capture, __sc_playback);
+        sound_card_synchronize(sc_capture, sc_playback);
 
         LOG_INFO("Created sound cards");
 
@@ -109,46 +113,46 @@ static int __create_cards(void)
 static int __create_buffers(void)
 {
         const size_t period_size_bytes_playback =
-                sound_card_get_period_size_bytes(__sc_playback);
+                sound_card_get_period_size_bytes(sc_playback);
         const size_t period_size_bytes_capture =
-                sound_card_get_period_size_bytes(__sc_capture);
+                sound_card_get_period_size_bytes(sc_capture);
 
         period_size =
                 period_size_bytes_playback / (sizeof(TEST_FORMAT) * CHANNELS);
 
-        __noise_buffer =
+        noise_buffer =
                 calloc(period_size_bytes_playback / sizeof(TEST_FORMAT),
                        sizeof(TEST_FORMAT));
-        if (__noise_buffer == NULL)
+        if (noise_buffer == NULL)
                 return -ENOMEM;
 
-        __antinoise_buffer =
+        antinoise_buffer =
                 calloc(period_size_bytes_playback / sizeof(TEST_FORMAT),
                        sizeof(TEST_FORMAT));
-        if (__antinoise_buffer == NULL)
+        if (antinoise_buffer == NULL)
                 return -ENOMEM;
 
-        __input_buffer =
+        input_buffer =
                 calloc(period_size_bytes_capture / sizeof(TEST_FORMAT),
                        sizeof(TEST_FORMAT));
-        if (__input_buffer == NULL)
+        if (input_buffer == NULL)
                 return -ENOMEM;
 
-        __error_buffer =
+        error_buffer =
                 calloc(period_size_bytes_capture / sizeof(TEST_FORMAT),
                        sizeof(TEST_FORMAT));
-        if (__error_buffer == NULL)
+        if (error_buffer == NULL)
                 return -ENOMEM;
 
         for (size_t i = 0u; i < NUM_OF_BUFFS; i++)
         {
-                __noise_buffers[i] =
+                noise_buffers[i] =
                         calloc(period_size_bytes_capture / sizeof(TEST_FORMAT),
                                sizeof(TEST_FORMAT));
-                __error_buffers[i] =
+                error_buffers[i] =
                         calloc(period_size_bytes_capture / sizeof(TEST_FORMAT),
                                sizeof(TEST_FORMAT));
-                __input_buffers[i] =
+                input_buffers[i] =
                         calloc(period_size_bytes_capture / sizeof(TEST_FORMAT),
                                sizeof(TEST_FORMAT));
         }
@@ -161,11 +165,11 @@ static int __create_buffers(void)
 void __create_playback_task(void)
 {
         const size_t period_size_bytes =
-                sound_card_get_period_size_bytes(__sc_playback);
+                sound_card_get_period_size_bytes(sc_playback);
 
-        __playback_task.sample_buffers[NOISE_BUFFER]     = __noise_buffer;
-        __playback_task.sample_buffers[ANTINOISE_BUFFER] = __antinoise_buffer;
-        __playback_task.size = period_size_bytes / sizeof(float);
+        playback_task.sample_buffers[NOISE_BUFFER]     = noise_buffer;
+        playback_task.sample_buffers[ANTINOISE_BUFFER] = antinoise_buffer;
+        playback_task.size = period_size_bytes / sizeof(float);
 
         LOG_INFO("Created playback task");
 }
@@ -173,30 +177,30 @@ void __create_playback_task(void)
 void __create_capture_task(void)
 {
         const size_t period_size_bytes =
-                sound_card_get_period_size_bytes(__sc_capture);
+                sound_card_get_period_size_bytes(sc_capture);
 
-        struct sound_card_task task                 = {0};
-        __capture_task.sample_buffers[INPUT_BUFFER] = __input_buffer;
-        __capture_task.sample_buffers[ERROR_BUFFER] = __error_buffer;
-        __capture_task.size = period_size_bytes / sizeof(float);
+        struct sound_card_task task               = {0};
+        capture_task.sample_buffers[INPUT_BUFFER] = input_buffer;
+        capture_task.sample_buffers[ERROR_BUFFER] = error_buffer;
+        capture_task.size = period_size_bytes / sizeof(float);
 
         LOG_INFO("Created capture task");
 }
 
 void __cleanup(void)
 {
-        if (__sc_capture != NULL)
-                sound_card_destruct(__sc_capture);
-        if (__sc_playback != NULL)
-                sound_card_destruct(__sc_playback);
-        if (__input_buffer != NULL)
-                free(__input_buffer);
-        if (__error_buffer != NULL)
-                free(__error_buffer);
-        if (__noise_buffer != NULL)
-                free(__noise_buffer);
-        if (__antinoise_buffer != NULL)
-                free(__antinoise_buffer);
+        if (sc_capture != NULL)
+                sound_card_destruct(sc_capture);
+        if (sc_playback != NULL)
+                sound_card_destruct(sc_playback);
+        if (input_buffer != NULL)
+                free(input_buffer);
+        if (error_buffer != NULL)
+                free(error_buffer);
+        if (noise_buffer != NULL)
+                free(noise_buffer);
+        if (antinoise_buffer != NULL)
+                free(antinoise_buffer);
 }
 
 void* __playback_poll_loop(void*)
@@ -206,16 +210,15 @@ void* __playback_poll_loop(void*)
         bool ready = false;
         for (size_t i = 0; i < NUM_OF_BUFFS; i++)
         {
-                int error = sound_card_poll_is_ready(__sc_playback, &ready);
+                int error = sound_card_poll_is_ready(sc_playback, &ready);
                 if (error < 0)
                         return NULL;
 
                 if (ready)
                 {
-                        __playback_task.sample_buffers[NOISE_BUFFER] =
-                                __noise_buffers[i];
-                        error = sound_card_playback(
-                                __sc_playback, &__playback_task);
+                        playback_task.sample_buffers[NOISE_BUFFER] =
+                                noise_buffers[i];
+                        error = sound_card_playback(sc_playback, &playback_task);
                         if (error < 0)
                                 ready = false;
                 }
@@ -231,17 +234,17 @@ void* __capture_poll_loop(void*)
         bool ready = false;
         for (size_t i = 0; i < NUM_OF_BUFFS; i++)
         {
-                int error = sound_card_poll_is_ready(__sc_capture, &ready);
+                int error = sound_card_poll_is_ready(sc_capture, &ready);
                 if (error < 0)
                         return NULL;
 
                 if (ready)
                 {
-                        __capture_task.sample_buffers[ERROR_BUFFER] =
-                                __error_buffers[i];
-                        __capture_task.sample_buffers[INPUT_BUFFER] =
-                                __input_buffers[i];
-                        sound_card_capture(__sc_capture, &__capture_task);
+                        capture_task.sample_buffers[ERROR_BUFFER] =
+                                error_buffers[i];
+                        capture_task.sample_buffers[INPUT_BUFFER] =
+                                input_buffers[i];
+                        sound_card_capture(sc_capture, &capture_task);
                         if (error < 0)
                                 ready = false;
                 }
@@ -270,7 +273,7 @@ int __test_loop(void)
         __create_capture_task();
 
         for (size_t i = 0; i < NUM_OF_BUFFS; i++)
-                signal_generate(&__noise, __noise_buffers[i], period_size);
+                signal_generate(&__noise, noise_buffers[i], period_size);
 
         pthread_t capture_thread;
         pthread_t playback_thread;
@@ -284,9 +287,9 @@ int __test_loop(void)
         for (size_t i = 0; i < NUM_OF_BUFFS; i++)
         {
                 file_helpers_write_buf(
-                        "capture.csv", '\n', __error_buffers[i], period_size, true);
+                        "capture.csv", '\n', error_buffers[i], period_size, true);
                 file_helpers_write_buf(
-                        "input.csv", '\n', __noise_buffers[i], period_size, true);
+                        "input.csv", '\n', noise_buffers[i], period_size, true);
         }
 
         return 0;

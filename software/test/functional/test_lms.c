@@ -20,6 +20,10 @@
 #define FIFO_CAPACITY  1u << 14u
 #define LMS_STEP       0.1
 
+#ifndef TEST_FORMAT
+#define TEST_FORMAT float
+#endif
+
 static TEST_FORMAT __x[NUM_OF_SAMPLES] = {0};
 static TEST_FORMAT __d[NUM_OF_SAMPLES] = {0};
 static TEST_FORMAT __y[NUM_OF_SAMPLES] = {0};
@@ -48,9 +52,9 @@ static int __test_dsp_prepare_x(void)
                 .type               = SIGNAL_TYPE_SINE,
         };
 
-        struct signal noise = {.amplitude = 1, .type = SIGNAL_TYPE_NOISE};
+        struct signal noise      = {.amplitude = 1, .type = SIGNAL_TYPE_NOISE};
         struct signal* signals[] = {&sine_100_hz, &sine_300_hz, &noise};
-        
+
         signal_initialize_noise();
         signal_generate_sum(signals, 3, __x, NUM_OF_SAMPLES);
 
@@ -94,11 +98,11 @@ int test_dsp_lms(void)
                 if (error < 0)
                         return error;
 
-                __d[i] = dsp_fir(&__x_p_cf, __w, ORDER);
-                __y[i] = dsp_fir(&__x_w_cf, __w_est, ORDER);
+                __d[i] = dsp_fir(&__x_p_cf, __w, ORDER, i);
+                __y[i] = dsp_fir(&__x_w_cf, __w_est, ORDER, i);
 
                 __e[i] = __d[i] - __y[i];
-                dsp_lms(__w_est, __e[i], LMS_STEP, &__x_lms_cf, order);
+                dsp_lms(__w_est, __e[i], LMS_STEP, &__x_lms_cf, order, i);
         }
 
         for (uint8_t i = 0; i < order; i++)

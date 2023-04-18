@@ -9,7 +9,7 @@ from loguru import logger
 
 if __name__ == "__main__":
     SAMPLING_HZ = 4000
-    COEFFS_LEN = 300
+    COEFFS_LEN = 140
 
     model = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
                 cutoff_hz=200, trans_band_width_hz=1000)
@@ -17,8 +17,8 @@ if __name__ == "__main__":
     x = np.genfromtxt("input.csv", delimiter='\n')
     y = np.genfromtxt("capture.csv", delimiter='\n')
 
-    x = x[int(SAMPLING_HZ / 2) : ]
-    y = y[int(SAMPLING_HZ / 2) : ]
+    x = x[SAMPLING_HZ :]
+    y = y[SAMPLING_HZ :]
 
     rxx = scisig.correlate(x, x)
     ryy = scisig.correlate(y, y)
@@ -30,6 +30,7 @@ if __name__ == "__main__":
     gk = gk[: COEFFS_LEN]
 
     logger.info("Estimated coeffs: {}", gk)
+    np.savetxt("sec_coeffs.csv", gk, delimiter='\n')
 
     plt.figure(1)
     plt.plot(gk)

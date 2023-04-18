@@ -49,7 +49,8 @@ class LMS(object):
                 plt.plot(np.ones(self._w_history.shape[1]) * filter_coeffs,
                         label="filter coeff {}".format(i))
         plt.grid()
-        plt.legend()
+        plt.xlabel("i")
+        plt.ylabel("w_l(i)")
         plt.show()
 
 
@@ -68,14 +69,14 @@ def __generate_x(sampling_hz: int, num_of_samples: int):
 
 def __estimate_sec() -> None:
     SAMPLING_HZ = 4000
-    ORDER = 200
+    ORDER = 150
 
     lms = LMS(SAMPLING_HZ, 0.001, np.zeros(ORDER))
 
     x = np.genfromtxt("input.csv", delimiter='\n')
     y = np.genfromtxt("capture.csv", delimiter='\n')
-    x = x[int(SAMPLING_HZ / 2) : 20 * SAMPLING_HZ]
-    y = y[int(SAMPLING_HZ / 2) : 20 * SAMPLING_HZ]
+    x = x[int(SAMPLING_HZ / 2) : int(len(x) / 4) - 200]
+    y = y[int(SAMPLING_HZ / 2) + 200 : int(len(y) / 4)]
 
     x_ring = deque([0] * ORDER, maxlen=ORDER)
 

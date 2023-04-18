@@ -84,6 +84,12 @@ deploy_sound_test:
 
 #------------------------------------------------------------------------------
 
+deploy_anc_test:
+	@ scp $(BUILD_DIR)/test/test_anc $(TEST_PLATFORM):/home/dkop/anc
+.PHONY: deploy_anc_test
+
+#------------------------------------------------------------------------------
+
 get_captured_samples:
 	@scp $(TEST_PLATFORM):/home/dkop/anc/capture.csv .
 .PHONY: get_captured_samples

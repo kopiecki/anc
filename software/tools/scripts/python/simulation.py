@@ -84,27 +84,32 @@ class Simulation(object):
 
 if __name__ == "__main__":
     SAMPLING_HZ = 4000
-    NUM_OF_SAMPLES = 2 * SAMPLING_HZ
+    NUM_OF_SAMPLES = SAMPLING_HZ
 
     primary_path = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
-                       cutoff_hz=300, trans_band_width_hz=500)
+                       cutoff_hz=250, trans_band_width_hz=500)
     primary_path.export("primary_coeffs.csv")
 
-    secondary_path = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=20,
-                         cutoff_hz=500, trans_band_width_hz=300)
+    secondary_path = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=25,
+                         cutoff_hz=500, trans_band_width_hz=500)
     secondary_path.export("secondary_coeffs.csv")
 
     secondary_path_estimate = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=20,
                                   cutoff_hz=500, trans_band_width_hz=300)
 
     sim = Simulation(SAMPLING_HZ, NUM_OF_SAMPLES, primary_path,
-                     secondary_path, secondary_path_estimate, 0.005)
+                     secondary_path, secondary_path_estimate, 0.001)
 
-    primary_output, errors = sim()
+    primary_output, errors = sim(True)
+    t = np.arange(NUM_OF_SAMPLES) / SAMPLING_HZ
 
     plt.figure(1)
-    plt.plot(primary_output)
-    plt.plot(errors)
+    plt.plot(t, primary_output, label="x(n)")
+    plt.plot(t, errors, label="e(n)")
+    plt.xlabel("t, s")
+    plt.ylabel("y(n), e(n)")
+    plt.legend()
+    plt.grid()
 
     plt.figure(2)
     sim.lms.plot_w_history()
