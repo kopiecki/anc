@@ -3,12 +3,15 @@
  * @brief   <Provide some short description here>
  */
 
-#define __FORCE_DEBUG_SEVERITY LOGGER_DEBUG_SEVERITY_TRACE
-
 #include <errno.h>
 #include <stdlib.h>
 
+#include "utils/common.h"
+
 int main(int argc, char* argv[])
 {
+        UNUSED_PARAMETER(argc);
+        UNUSED_PARAMETER(argv);
+        
         return 0;
 }

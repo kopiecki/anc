@@ -50,6 +50,7 @@ struct sound_card_config
         uint32_t period_time_us;
 
         bool poll;
+        bool blocking;
 };
 
 struct sound_card_task
@@ -59,11 +60,11 @@ struct sound_card_task
         uint16_t num_of_periods;
 };
 
-sound_card_t* const sound_card_construct(
+sound_card_t* sound_card_construct(
         const struct sound_card_config* const config);
 void sound_card_destruct(sound_card_t* const this);
 
-size_t sound_card_get_period_size_bytes(sound_card_t* const this);
+int sound_card_get_period_size_bytes(sound_card_t* const this);
 
 int sound_card_capture(sound_card_t* const this, struct sound_card_task* const task);
 int sound_card_playback(sound_card_t* const this, struct sound_card_task* const task);

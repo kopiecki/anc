@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include "utils/assert.h"
+#include "utils/common.h"
 #include "utils/logger.h"
 
 static inline void circ_fifo_deallocate(struct circ_fifo* const self)
@@ -21,44 +22,36 @@ static inline void circ_fifo_deallocate(struct circ_fifo* const self)
                 free(self->buffer);
 }
 
-static inline bool circ_fifo_is_power_of_two(size_t capacity)
-{
-        return (capacity && !(capacity & (capacity - 1)));
-}
-
 static int circ_fifo_prepare(struct circ_fifo* const self, size_t capacity)
 {
         ASSERT(self != NULL);
 
-        if (self->dynamic)
-        {
-                self->buffer = calloc(capacity, sizeof(CIRC_FIFO_FORMAT));
+        if (self->dynamic) {
+                self->buffer = calloc(capacity, sizeof(float));
                 if (self->buffer == NULL)
                         return -ENOMEM;
 
                 return 0;
         }
 
-        memset(self->buffer, 0.0f, capacity * sizeof(CIRC_FIFO_FORMAT));
+        memset(self->buffer, 0.0f, capacity * sizeof(float));
 
         return 0;
 }
 
 int circ_fifo_construct(
-        struct circ_fifo* const self, CIRC_FIFO_FORMAT* buffer, size_t capacity)
+        struct circ_fifo* const self, float* const buffer, size_t capacity)
 {
         ASSERT(self != NULL);
 
         self->dynamic = (buffer == NULL);
-        if (!circ_fifo_is_power_of_two(capacity))
-        {
+        if (!IS_POW_2(capacity)) {
                 LOG_ERROR("Requested capacity isn't power of two");
                 return -EPERM;
         }
 
         int error = circ_fifo_prepare(self, capacity);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR("Could not set circural fifo");
                 return error;
         }
@@ -76,7 +69,7 @@ void circ_fifo_destruct(struct circ_fifo* const self)
         circ_fifo_deallocate(self);
 }
 
-void circ_fifo_write(struct circ_fifo* const self, CIRC_FIFO_FORMAT data)
+void circ_fifo_write(struct circ_fifo* const self, float data)
 {
         ASSERT(self != NULL);
 
@@ -84,12 +77,12 @@ void circ_fifo_write(struct circ_fifo* const self, CIRC_FIFO_FORMAT data)
         self->buffer[self->i] = data;
 }
 
-CIRC_FIFO_FORMAT circ_fifo_read(struct circ_fifo* const self)
+float circ_fifo_read(struct circ_fifo* const self)
 {
         ASSERT(self != NULL);
 
-        CIRC_FIFO_FORMAT newest_sample = self->buffer[self->i];
-        self->i                        = (self->i + 1u) & self->mask;
+        float newest_sample = self->buffer[self->i];
+        self->i             = (self->i + 1u) & self->mask;
 
         return newest_sample;
 }

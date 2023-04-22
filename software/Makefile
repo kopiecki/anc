@@ -5,7 +5,9 @@ CORES := $(shell nproc)
 
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 BUILD_DIR := build
-TOOLCHAIN := native
+TOOLCHAIN ?= native
+
+BUILD_PATH := $(BUILD_DIR)/$(TOOLCHAIN)
 
 DEBUG := y
 TEST_PLATFORM := dkop@192.168.0.228
@@ -22,7 +24,7 @@ CMAKE_CONF_FLAGS += -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain/$(TOOLCHAIN).cmake
 CMAKE_CONF_FLAGS += -DPROJECT_NAME=$(PROJECT_NAME)
 
 CMAKE := cmake
-CMAKE_CONFIGURE := $(CMAKE) $(CMAKE_CONF_FLAGS) ..
+CMAKE_CONFIGURE := $(CMAKE) $(CMAKE_CONF_FLAGS) ../../
 CMAKE_BUILD := $(CMAKE) --build . $(CMAKE_BUILD_FLAGS) -- -j$(NCORES)
 
 #------------------------------------------------------------------------------
@@ -33,7 +35,7 @@ default: build
 #------------------------------------------------------------------------------
 
 build: | .mk-build-dir
-	@ cd $(BUILD_DIR) && \
+	@ cd $(BUILD_PATH) && \
 	        [ -f CMakeCache.txt ] \
 	            && echo "Build project $(PROJECT_NAME)" \
 	            || $(CMAKE_CONFIGURE) && \
@@ -43,7 +45,7 @@ build: | .mk-build-dir
 #------------------------------------------------------------------------------
 
 run_app: 
-	@ ./$(BUILD_DIR)/software/app/anc/$(PROJECT_NAME)
+	@ ./$(BUILD_PATH)/software/app/anc/$(PROJECT_NAME)
 .PHONY: run
 
 #------------------------------------------------------------------------------
@@ -73,7 +75,7 @@ run_test_signal:
 #------------------------------------------------------------------------------
 
 .mk-build-dir:
-	@ mkdir -p $(BUILD_DIR)
+	@ mkdir -p $(BUILD_PATH)
 .PHONY: .mk-build-dir
 
 #------------------------------------------------------------------------------
@@ -97,5 +99,5 @@ get_captured_samples:
 #------------------------------------------------------------------------------
 
 clean:
-	@ rm -rf "$(BUILD_DIR)"
+	@ rm -rf "$(BUILD_PATH)"
 .PHONY: clean

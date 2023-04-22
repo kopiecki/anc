@@ -7,21 +7,28 @@
 
 #include "utils/assert.h"
 #include "utils/circ_fifo.h"
-
-#define CF_X ((struct circ_fifo*)(cf_x))
+#include "utils/common.h"
 
 void dsp_lms(
-        DSP_FORMAT* const w,
-        DSP_FORMAT error,
-        DSP_FORMAT step,
-        void* const cf_x,
+        float* const w,
+        float error,
+        float step,
+        struct circ_fifo* const cf,
         size_t order,
-        size_t cnt)
+        size_t offset)
 {
         ASSERT(w != NULL);
-        ASSERT(cf_x != NULL);
+        ASSERT(cf != NULL);
+        ASSERT(IS_POW_2(order));
 
-        for (size_t i = 0u; i < order; i++)
-                w[i] += step * circ_fifo_peek(CF_X, i + cnt) * error;
-        // CF_X->i = ((CF_X->i + 1u)) & CF_X->mask;
+        /**
+         * @brief Loop unrolling to optimize processing time.
+         */
+        float mult = step * error;
+        for (size_t i = 0u; i < order; i += 4u) {
+                w[i + 0] += mult * circ_fifo_peek(cf, i + offset + 0);
+                w[i + 1] += mult * circ_fifo_peek(cf, i + offset + 1);
+                w[i + 2] += mult * circ_fifo_peek(cf, i + offset + 2);
+                w[i + 3] += mult * circ_fifo_peek(cf, i + offset + 3);
+        }
 }

@@ -10,33 +10,24 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#ifndef CIRC_FIFO_FORMAT
-#define CIRC_FIFO_FORMAT float
-#endif
-
 struct circ_fifo
 {
-        CIRC_FIFO_FORMAT* buffer;
+        float* buffer;
         size_t mask;
         size_t i;
         bool dynamic;
 };
 
+#define circ_fifo_peek(cf, off) (cf->buffer[(cf->i + (off)) & cf->mask])
+
 int circ_fifo_construct(
-        struct circ_fifo* const self,
-        CIRC_FIFO_FORMAT* buffer,
-        size_t capacity);
+        struct circ_fifo* const self, float* const buffer, size_t capacity);
 void circ_fifo_destruct(struct circ_fifo* const self);
 
-void circ_fifo_write(struct circ_fifo* const self, CIRC_FIFO_FORMAT data);
-CIRC_FIFO_FORMAT circ_fifo_read(struct circ_fifo* const self);
+void circ_fifo_write(struct circ_fifo* const self, float data);
+float circ_fifo_read(struct circ_fifo* const self);
 
-CIRC_FIFO_FORMAT* circ_fifo_purge(struct circ_fifo* const self);
-
-static inline CIRC_FIFO_FORMAT circ_fifo_peek(struct circ_fifo* const self, size_t index)
-{
-        return self->buffer[(self->i + index) & self->mask];
-}
+float* circ_fifo_purge(struct circ_fifo* const self);
 
 static inline size_t circ_fifo_capacity(struct circ_fifo* const self)
 {

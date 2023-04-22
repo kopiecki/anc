@@ -43,7 +43,7 @@ BraceWrapping:
   SplitEmptyRecord:                               true
   SplitEmptyNamespace:                            true
 BreakBeforeBinaryOperators:                         NonAssignment
-BreakBeforeBraces:                                  Allman 
+BreakBeforeBraces:                                  Linux
 BreakBeforeInheritanceComma:                        false
 BreakConstructorInitializers:                       AfterColon
 BreakConstructorInitializersBeforeComma:            false

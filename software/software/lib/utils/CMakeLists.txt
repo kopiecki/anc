@@ -10,6 +10,9 @@ add_library(${target_name}
         ${target_sources}
 )
 
+include(compiler/CompilerWarningsForC)
+compiler_warnings_install(${target_name} WARNINGS_AS_ERRORS)
+
 target_include_directories(${target_name}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/inc

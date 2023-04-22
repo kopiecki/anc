@@ -15,4 +15,7 @@ target_link_libraries(${target_name}
                 utils
 )
 
+include(compiler/CompilerWarningsForC)
+compiler_warnings_install(${target_name} WARNINGS_AS_ERRORS)
+
 install(TARGETS ${target_name} RUNTIME DESTINATION bin)

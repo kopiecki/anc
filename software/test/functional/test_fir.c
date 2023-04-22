@@ -16,11 +16,11 @@
 #define IMP_RES_FILE       "test/functional/input/fir_coeffs_26.csv"
 #define FIR_ORDER          26
 
-static TEST_FORMAT test_fir_signal_buffer[NUM_OF_SAMPLES];
-static TEST_FORMAT test_fir_filtered_signal_buffer[NUM_OF_SAMPLES];
-static TEST_FORMAT test_fir_imp_res_buffer[IMP_RES_MAX_SIZE];
+static float signal_buffer[NUM_OF_SAMPLES];
+static float filtered_signal_buffer[NUM_OF_SAMPLES];
+static float fir_imp_res_buffer[IMP_RES_MAX_SIZE];
 
-static int test_fir_generate_signal(void)
+static int generate_signal(void)
 {
         struct signal sine_5_hz = {
                 .amplitude          = 1.0f,
@@ -37,17 +37,17 @@ static int test_fir_generate_signal(void)
         };
 
         struct signal* signals[] = {&sine_5_hz, &sine_100_hz};
-        signal_generate_sum(signals, 2, test_fir_signal_buffer, NUM_OF_SAMPLES);
+        signal_generate_sum(signals, 2, signal_buffer, NUM_OF_SAMPLES);
 
         return file_helpers_write_buf(
                 "test/functional/output/before_fir.csv",
                 '\n',
-                test_fir_signal_buffer,
+                signal_buffer,
                 NUM_OF_SAMPLES,
                 false);
 }
 
-static int test_dsp_fir(void)
+static int fir(void)
 {
         float* imp_res[FIR_ORDER] = {0};
         struct circ_fifo cf;
@@ -57,32 +57,32 @@ static int test_dsp_fir(void)
                 return error;
 
         int imp_res_size =
-                file_helpers_read_buf(IMP_RES_FILE, test_fir_imp_res_buffer);
+                file_helpers_read_buf(IMP_RES_FILE, fir_imp_res_buffer);
         if (imp_res_size < 0)
                 return error;
 
-        error = test_fir_generate_signal();
+        error = generate_signal();
         if (error < 0)
                 return error;
 
         for (size_t i = 0u; i < NUM_OF_SAMPLES; i++)
-                circ_fifo_write(&cf, test_fir_signal_buffer[i]);
+                circ_fifo_write(&cf, signal_buffer[i]);
         for (size_t i = 0; i < NUM_OF_SAMPLES; i++)
-                test_fir_filtered_signal_buffer[NUM_OF_SAMPLES - 1 - i] =
-                        dsp_fir(&cf, test_fir_imp_res_buffer, imp_res_size, i);
+                filtered_signal_buffer[NUM_OF_SAMPLES - 1 - i] =
+                        dsp_fir(&cf, fir_imp_res_buffer, imp_res_size, i);
 
         return file_helpers_write_buf(
                 "test/functional/output/after_fir.csv",
                 '\n',
-                test_fir_filtered_signal_buffer,
+                filtered_signal_buffer,
                 NUM_OF_SAMPLES,
                 false);
 }
 
-int main(int argc, char* argv[])
+int main(void)
 {
         LOG_INFO("Running FIR test");
-        int error = test_dsp_fir();
+        int error = fir();
         if (error < 0)
                 LOG_ERROR("FIR test failed");
         else

@@ -25,8 +25,7 @@
 #define PERIOD_SIZE_FRAMES(period_size_bytes, channels)                        \
         (period_size_bytes / (channels * sizeof(float)))
 
-struct sound_card_s
-{
+struct sound_card_s {
         const char* name;
 
         uint8_t channels;
@@ -47,10 +46,21 @@ struct sound_card_s
 
         bool poll;
         struct pollfd* poll_ufds;
-        size_t poll_count;
+        int poll_count;
 };
 
-static inline const snd_pcm_uframes_t sound_card_get_start_threshold(
+static inline void sound_card_prepare_buffer_interleaved(
+        sound_card_t* const self,
+        struct sound_card_task* const task,
+        SAMPLE_FORMAT* const buffer)
+{
+        size_t j = 0u;
+        for (size_t i = 0u; i < task->size; i++)
+                for (uint8_t channel = 0u; channel < self->channels; channel++)
+                        buffer[j++] = task->sample_buffers[channel][i];
+}
+
+static inline snd_pcm_uframes_t sound_card_get_start_threshold(
         sound_card_t* const self)
 {
         return (self->buffer_size_frames / self->period_size_frames)
@@ -64,7 +74,10 @@ static int sound_card_open(
         ASSERT(config != NULL);
 
         int error = snd_pcm_open(
-                &self->pcm_handle, self->name, config->stream, SND_PCM_NONBLOCK);
+                &self->pcm_handle,
+                self->name,
+                (snd_pcm_stream_t)config->stream,
+                config->blocking ? 0 : SND_PCM_NONBLOCK);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot open PCM device %s [%d, %s]",
@@ -76,9 +89,9 @@ static int sound_card_open(
                         "PCM device %s with %s stream opened "
                         "successfully",
                         self->name,
-                        snd_pcm_stream_name(config->stream));
+                        snd_pcm_stream_name((snd_pcm_stream_t)config->stream));
 
-        self->stream = config->stream;
+        self->stream = (snd_pcm_stream_t)config->stream;
 
         return error;
 }
@@ -88,8 +101,7 @@ static int sound_card_allocate_hw_params(sound_card_t* const self)
         ASSERT(self != NULL);
 
         int error = snd_pcm_hw_params_malloc(&self->pcm_hw_params_handle);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot allocate parameters for PCM device %s "
                         "[%s]",
@@ -100,16 +112,14 @@ static int sound_card_allocate_hw_params(sound_card_t* const self)
 
         error = snd_pcm_hw_params_any(
                 self->pcm_handle, self->pcm_hw_params_handle);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot get hardware parameters for PCM device "
                         "%s [%s]",
                         self->name,
                         snd_strerror(error));
                 snd_pcm_hw_params_free(self->pcm_hw_params_handle);
-        }
-        else
+        } else
                 LOG_DEBUG("Allocated parameters for PCM device %s", self->name);
 
         return error;
@@ -120,8 +130,7 @@ static int sound_card_allocate_sw_params(sound_card_t* const self)
         ASSERT(self != NULL);
 
         int error = snd_pcm_sw_params_malloc(&self->pcm_sw_params_handle);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot allocate software parameters for PCM "
                         "device %s "
@@ -133,16 +142,14 @@ static int sound_card_allocate_sw_params(sound_card_t* const self)
 
         error = snd_pcm_sw_params_current(
                 self->pcm_handle, self->pcm_sw_params_handle);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot get software parameters for PCM device "
                         "%s [%s]",
                         self->name,
                         snd_strerror(error));
                 snd_pcm_sw_params_free(self->pcm_sw_params_handle);
-        }
-        else
+        } else
                 LOG_DEBUG(
                         "Allocated software parameters for PCM device "
                         "%s",
@@ -153,8 +160,7 @@ static int sound_card_allocate_sw_params(sound_card_t* const self)
 
 static void sound_card_deallocate(sound_card_t* const self)
 {
-        if (self != NULL)
-        {
+        if (self != NULL) {
                 snd_pcm_drain(self->pcm_handle);
 
                 if (self->pcm_hw_params_handle != NULL)
@@ -178,7 +184,9 @@ static int sound_card_hw_set_access(
         ASSERT(self != NULL);
 
         int error = snd_pcm_hw_params_set_access(
-                self->pcm_handle, self->pcm_hw_params_handle, access);
+                self->pcm_handle,
+                self->pcm_hw_params_handle,
+                (snd_pcm_access_t)access);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot set PCM device %s access [%s]",
@@ -187,10 +195,10 @@ static int sound_card_hw_set_access(
         else
                 LOG_DEBUG(
                         "Setted access %s for PCM device %s",
-                        snd_pcm_access_name(access),
+                        snd_pcm_access_name((snd_pcm_access_t)access),
                         self->name);
 
-        self->access = access;
+        self->access = (snd_pcm_access_t)access;
 
         return error;
 }
@@ -201,15 +209,13 @@ static int sound_card_hw_set_format(sound_card_t* const self, int format)
 
         int error = snd_pcm_hw_params_set_format(
                 self->pcm_handle, self->pcm_hw_params_handle, format);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot set PCM device %s format [%s]",
                         self->name,
                         snd_strerror(error));
                 return error;
-        }
-        else
+        } else
                 LOG_DEBUG(
                         "Setted PCM device %s format %s",
                         self->name,
@@ -227,17 +233,14 @@ static int sound_card_hw_set_rate(sound_card_t* const self, uint32_t rate)
         uint32_t exact_rate = rate;
         int error           = snd_pcm_hw_params_set_rate_near(
                 self->pcm_handle, self->pcm_hw_params_handle, &exact_rate, NULL);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Can't set rate %d for PCM device %s [%s]",
                         rate,
                         self->name,
                         snd_strerror(error));
                 return error;
-        }
-        else if (exact_rate != rate)
-        {
+        } else if (exact_rate != rate) {
                 LOG_WARNING(
                         "The rate %d Hz is not supported by "
                         "hardware.\n ==> "
@@ -246,8 +249,7 @@ static int sound_card_hw_set_rate(sound_card_t* const self, uint32_t rate)
                         "Hz instead",
                         rate,
                         exact_rate);
-        }
-        else
+        } else
                 LOG_DEBUG(
                         "Setted rate %d for PCM device %s", exact_rate, self->name);
 
@@ -262,16 +264,14 @@ static int sound_card_hw_set_channels(sound_card_t* const self, uint8_t channels
 
         int error = snd_pcm_hw_params_set_channels(
                 self->pcm_handle, self->pcm_hw_params_handle, channels);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot set PCM device %s channels [%s]",
                         self->name,
                         snd_strerror(error));
 
                 return error;
-        }
-        else
+        } else
                 LOG_DEBUG(
                         "Setted channels %d for PCM device %s",
                         channels,
@@ -292,16 +292,14 @@ static int sound_card_hw_set_buffer(sound_card_t* const self, uint32_t buffer_ti
                 self->pcm_hw_params_handle,
                 &exact_buffer_time_us,
                 NULL);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot set PCM device %s buffer time %d [%s]",
                         self->name,
                         buffer_time_us,
                         snd_strerror(error));
                 return error;
-        }
-        else if (exact_buffer_time_us != buffer_time_us)
+        } else if (exact_buffer_time_us != buffer_time_us)
                 LOG_WARNING(
                         "The period size %d is not supported by "
                         "hardware.\n "
@@ -347,16 +345,14 @@ static int sound_card_hw_set_period(sound_card_t* const self, uint32_t period_ti
                 self->pcm_hw_params_handle,
                 &exact_period_time_us,
                 NULL);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot set PCM device %s period time %d [%s]",
                         self->name,
                         period_time_us,
                         snd_strerror(error));
                 return error;
-        }
-        else if (exact_period_time_us != period_time_us)
+        } else if (exact_period_time_us != period_time_us)
                 LOG_WARNING(
                         "The period time %d is not supported by "
                         "hardware.\n "
@@ -518,16 +514,15 @@ static int sound_card_sw_configure(sound_card_t* const self)
 {
         ASSERT(self != NULL);
 
-        int error = snd_pcm_sw_params_current(
-                self->pcm_handle, self->pcm_sw_params_handle);
-        if (error < 0)
-                return error;
-
-        error = sound_card_sw_set_start_threshold(self);
+        int error = sound_card_sw_set_start_threshold(self);
         if (error < 0)
                 return error;
 
         error = sound_card_sw_set_min_transfer(self);
+        if (error < 0)
+                return error;
+
+        error = sound_card_sw_write_params(self);
         if (error < 0)
                 return error;
 
@@ -540,8 +535,7 @@ static int sound_card_configure_poll(sound_card_t* const self)
                 return 0;
 
         self->poll_count = snd_pcm_poll_descriptors_count(self->pcm_handle);
-        if (self->poll_count <= 0)
-        {
+        if (self->poll_count <= 0) {
                 LOG_ERROR(
                         "Invalid poll descriptors count [%d] for PCM device %s",
                         self->poll_count,
@@ -549,17 +543,16 @@ static int sound_card_configure_poll(sound_card_t* const self)
                 return self->poll_count;
         }
 
-        self->poll_ufds = malloc(sizeof(struct pollfd) * self->poll_count);
-        if (self->poll_ufds == NULL)
-        {
+        self->poll_ufds =
+                malloc(sizeof(struct pollfd) * (size_t)self->poll_count);
+        if (self->poll_ufds == NULL) {
                 LOG_ERROR("Cannot allocate memory for ufds struct");
                 return -ENOMEM;
         }
 
         int error = snd_pcm_poll_descriptors(
-                self->pcm_handle, self->poll_ufds, self->poll_count);
-        if (error < 0)
-        {
+                self->pcm_handle, self->poll_ufds, (unsigned int)self->poll_count);
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot obtain poll descriptors for PCM device %s [%s]",
                         self->name,
@@ -567,15 +560,15 @@ static int sound_card_configure_poll(sound_card_t* const self)
                 return error;
         }
 
-        if (self->stream == SOUND_CARD_STREAM_CAPTURE)
+        if (self->stream == (snd_pcm_stream_t)SOUND_CARD_STREAM_CAPTURE)
                 error = snd_pcm_start(self->pcm_handle);
-        if (self->stream == SOUND_CARD_STREAM_PLAYBACK)
+        if (self->stream == (snd_pcm_stream_t)SOUND_CARD_STREAM_PLAYBACK)
                 error = snd_pcm_prepare(self->pcm_handle);
 
         return error;
 }
 
-sound_card_t* const sound_card_construct(const struct sound_card_config* const config)
+sound_card_t* sound_card_construct(const struct sound_card_config* const config)
 {
         ASSERT(config != NULL);
         ASSERT(config->name != NULL);
@@ -626,24 +619,13 @@ void sound_card_destruct(sound_card_t* const self)
         sound_card_deallocate(self);
 }
 
-size_t sound_card_get_period_size_bytes(sound_card_t* const self)
+int sound_card_get_period_size_bytes(sound_card_t* const self)
 {
         ASSERT(self != NULL);
 
-        const size_t frame_size_bytes =
+        const int frame_size_bytes =
                 FORMAT_SIZE_BYTES(self->format) * self->channels;
-        return frame_size_bytes * self->period_size_frames;
-}
-
-static void sound_card_prepare_buffer_interleaved(
-        sound_card_t* const self,
-        struct sound_card_task* const task,
-        SAMPLE_FORMAT* const buffer)
-{
-        size_t j = 0u;
-        for (size_t i = 0u; i < task->size; i++)
-                for (uint8_t channel = 0u; channel < self->channels; channel++)
-                        buffer[j++] = task->sample_buffers[channel][i];
+        return frame_size_bytes * (int)self->period_size_frames;
 }
 
 static int sound_card_epipe_recovery(sound_card_t* const self)
@@ -654,27 +636,25 @@ static int sound_card_epipe_recovery(sound_card_t* const self)
                 snd_pcm_stream_name(self->stream));
 
         int error = snd_pcm_prepare(self->pcm_handle);
-        if (error < 0)
-        {
+        if (error < 0) {
                 LOG_ERROR(
                         "Can't recovery from underrun [%s]", snd_strerror(error));
                 return error;
         }
+
+        return error;
 }
 
 static int sound_card_estrpipe_recovery(sound_card_t* const self)
 {
         int error = snd_pcm_resume(self->pcm_handle);
-        do
-        {
+        do {
                 error = snd_pcm_resume(self->pcm_handle);
         } while (error == -EAGAIN);
 
-        if (error < 0)
-        {
+        if (error < 0) {
                 error = snd_pcm_prepare(self->pcm_handle);
-                if (error < 0)
-                {
+                if (error < 0) {
                         LOG_ERROR(
                                 "Can't recover from suspend "
                                 "[%s]",
@@ -688,8 +668,7 @@ static int sound_card_estrpipe_recovery(sound_card_t* const self)
 
 static int sound_card_xrun_recovery(sound_card_t* const self, int error)
 {
-        switch (error)
-        {
+        switch (error) {
                 case -EPIPE:
                         error = sound_card_epipe_recovery(self);
                         break;
@@ -708,16 +687,15 @@ int sound_card_playback(sound_card_t* const self, struct sound_card_task* const 
         ASSERT(self != NULL);
         ASSERT(task != NULL);
 
-        int error = snd_pcm_writen(
+        int error                 = 0;
+        snd_pcm_sframes_t sframes = snd_pcm_writen(
                 self->pcm_handle,
                 (void**)(task->sample_buffers),
                 self->period_size_frames);
-        if (error < 0)
-        {
+        if (sframes < 0) {
                 LOG_WARNING("Write error, trying recover...");
                 error = sound_card_xrun_recovery(self, error);
-                if (error < 0)
-                {
+                if (error < 0) {
                         LOG_ERROR(
                                 "Write error for PCM device %s [%s]",
                                 self->name,
@@ -738,6 +716,11 @@ int sound_card_synchronize(sound_card_t* const playback, sound_card_t* const cap
                         playback->name,
                         capture->name,
                         snd_strerror(error));
+
+        error = snd_pcm_start(capture->pcm_handle);
+        if (error < 0)
+                LOG_WARNING("Cannot start capture device");
+
         return error;
 }
 
@@ -746,16 +729,15 @@ int sound_card_capture(sound_card_t* const self, struct sound_card_task* const t
         ASSERT(self != NULL);
         ASSERT(task != NULL);
 
-        int error = snd_pcm_readn(
+        int error                = 0;
+        snd_pcm_sframes_t rframes = snd_pcm_readn(
                 self->pcm_handle,
                 (void**)(task->sample_buffers),
                 self->period_size_frames);
-        if (error < 0)
-        {
+        if (rframes < 0) {
                 LOG_WARNING("Read error, trying recover...");
                 error = sound_card_xrun_recovery(self, error);
-                if (error < 0)
-                {
+                if (error < 0) {
                         LOG_ERROR(
                                 "Read error for PCM device %s [%s]",
                                 self->name,
@@ -770,20 +752,19 @@ int sound_card_capture(sound_card_t* const self, struct sound_card_task* const t
 static int sound_card_wait_for_poll(sound_card_t* const self)
 {
         uint16_t revents = 0;
-        while (1)
-        {
-                poll(self->poll_ufds, self->poll_count, -1);
+        while (1) {
+                poll(self->poll_ufds, (nfds_t)self->poll_count, -1);
                 snd_pcm_poll_descriptors_revents(
                         self->pcm_handle,
                         self->poll_ufds,
-                        self->poll_count,
+                        (uint8_t)self->poll_count,
                         &revents);
 
                 if (revents & POLLERR)
                         return -EIO;
-                else if ((revents & POLLOUT) && (self->stream == SOUND_CARD_STREAM_PLAYBACK))
+                else if ((revents & POLLOUT) && (self->stream == (snd_pcm_stream_t)SOUND_CARD_STREAM_PLAYBACK))
                         return 0;
-                else if ((revents & POLLIN) && (self->stream == SOUND_CARD_STREAM_CAPTURE))
+                else if ((revents & POLLIN) && (self->stream == (snd_pcm_stream_t)SOUND_CARD_STREAM_CAPTURE))
                         return 0;
                 else if ((revents & POLLIN) && (revents & POLLOUT))
                         return 0;
@@ -793,20 +774,16 @@ static int sound_card_wait_for_poll(sound_card_t* const self)
 int sound_card_poll_is_ready(sound_card_t* const self, bool* const ready)
 {
         int error = sound_card_wait_for_poll(self);
-        if (error < 0)
-        {
+        if (error < 0) {
                 snd_pcm_state_t state = snd_pcm_state(self->pcm_handle);
                 if ((state == SND_PCM_STATE_XRUN)
-                    || (state == SND_PCM_STATE_SUSPENDED))
-                {
+                    || (state == SND_PCM_STATE_SUSPENDED)) {
                         error = (state == SND_PCM_STATE_XRUN) ? -EPIPE :
                                                                 -ESTRPIPE;
                         error = sound_card_xrun_recovery(self, error);
                         if (error < 0)
                                 return error;
-                }
-                else
-                {
+                } else {
                         LOG_ERROR(
                                 "Wait for poll failed for PCM device "
                                 "%s",

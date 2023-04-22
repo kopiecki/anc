@@ -11,7 +11,15 @@
 #endif
 
 #ifndef CONCAT
-#define CONCAT(x, y) x ## y
+#define CONCAT(x, y) x##y
+#endif
+
+#ifndef IS_POW_2
+#define IS_POW_2(v) (v && !(v & (v - 1)))
+#endif
+
+#ifndef UNUSED_PARAMETER
+#define UNUSED_PARAMETER(p) (void)(p)
 #endif
 
 #endif /* COMMON_H_ */

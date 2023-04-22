@@ -8,9 +8,7 @@
 
 #include <stddef.h>
 
-#ifndef DSP_FORMAT
-#define DSP_FORMAT float
-#endif
+#include "utils/circ_fifo.h"
 
 /**
  * @brief Calculate FIR filter output.
@@ -19,6 +17,7 @@
  * @param order filter order (lenght of filter weights arrray)
  * @return Filter output
  */
-float dsp_fir(void* const cl, const DSP_FORMAT* const w, size_t order, size_t cnt);
+float dsp_fir(
+        struct circ_fifo* const cl, const float* const w, size_t order, size_t cnt);
 
 #endif /* FIR_H_ */

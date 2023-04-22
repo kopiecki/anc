@@ -8,9 +8,7 @@
 
 #include <stddef.h>
 
-#ifndef __FORMAT
-#define DSP_FORMAT float
-#endif
+#include "utils/circ_fifo.h"
 
 /**
  * @brief Calculate new filter weights estimate with least means squares
@@ -25,10 +23,10 @@
  * @return
  */
 void dsp_lms(
-        DSP_FORMAT* const w,
-        DSP_FORMAT error,
-        DSP_FORMAT step,
-        void* const cf_x,
+        float* const w,
+        float error,
+        float step,
+        struct circ_fifo* const cf_x,
         size_t order,
         size_t cnt);
 

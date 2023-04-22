@@ -13,7 +13,6 @@
 static const char* logger_get_timestamp()
 {
         time_t raw_time      = 0;
-        struct tm* time_info = NULL;
 
         time(&raw_time);
         char* time_str                 = ctime(&raw_time);

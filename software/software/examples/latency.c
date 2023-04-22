@@ -275,8 +275,6 @@ int setparams(snd_pcm_t *phandle, snd_pcm_t *chandle, int *bufsize)
 		*bufsize = c_psize;
 	snd_pcm_hw_params_get_period_time(p_params, &p_time, NULL);
 	snd_pcm_hw_params_get_period_time(c_params, &c_time, NULL);
-	if (p_time != c_time)
-		goto __again;
 
 	snd_pcm_hw_params_get_buffer_size(p_params, &p_size);
 	playback_buffer_size = p_size;
@@ -737,7 +735,10 @@ int main(int argc, char *argv[])
 	while (1) {
 		frames_in = frames_out = 0;
 		if (setparams(phandle, chandle, &latency) < 0)
+		{
+			printf("Cannot set params!");
 			break;
+		}
 		showlatency(latency);
 		if ((err = snd_pcm_link(chandle, phandle)) < 0) {
 			printf("Streams link error: %s\n", snd_strerror(err));
@@ -860,6 +861,7 @@ int main(int argc, char *argv[])
 		snd_pcm_hw_free(phandle);
 		snd_pcm_hw_free(chandle);
 	}
+
 	snd_pcm_close(phandle);
 	snd_pcm_close(chandle);
 	snd_output_close(output);

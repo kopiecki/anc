@@ -10,6 +10,10 @@ target_link_libraries(${test_signal}
                 signal
                 utils
 )
+
+include(compiler/CompilerWarningsForC)
+compiler_warnings_install(${test_signal} WARNINGS_AS_ERRORS)
+
 install(TARGETS ${test_signal} RUNTIME DESTINATION bin)
 
 set(test_sound "test_sound")
@@ -26,6 +30,10 @@ target_link_libraries(${test_sound}
                 sound_card
                 dsp
 )
+
+include(compiler/CompilerWarningsForC)
+compiler_warnings_install(${test_sound} WARNINGS_AS_ERRORS)
+
 install(TARGETS ${test_sound} RUNTIME DESTINATION bin)
 
 set(test_fir "test_fir")
@@ -41,6 +49,9 @@ target_link_libraries(${test_fir}
                 utils
                 dsp
 )
+
+include(compiler/CompilerWarningsForC)
+compiler_warnings_install(${test_sound} WARNINGS_AS_ERRORS)
 
 install(TARGETS ${test_fir} RUNTIME DESTINATION bin)
 
@@ -58,6 +69,9 @@ target_link_libraries(${test_lms}
                 dsp
 )
 
+include(compiler/CompilerWarningsForC)
+compiler_warnings_install(${test_lms} WARNINGS_AS_ERRORS)
+
 install(TARGETS ${test_lms} RUNTIME DESTINATION bin)
 
 set(test_anc "test_anc")
@@ -74,5 +88,8 @@ target_link_libraries(${test_anc}
                 utils
                 dsp
 )
+
+include(compiler/CompilerWarningsForC)
+compiler_warnings_install(${test_anc} WARNINGS_AS_ERRORS)
 
 install(TARGETS ${test_anc} RUNTIME DESTINATION bin)

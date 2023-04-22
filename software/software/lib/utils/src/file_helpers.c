@@ -14,7 +14,7 @@
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
-        const FILE_BUFFER_FORMAT* const buffer,
+        const float* const buffer,
         size_t size,
         bool append)
 {
@@ -22,28 +22,26 @@ int file_helpers_write_buf(
         ASSERT(buffer != NULL);
 
         FILE* file = fopen(name, (append) ? "a" : "w");
-        if (file == NULL)
-        {
+        if (file == NULL) {
                 LOG_ERROR("Cannot open %s file", name);
                 return -ENOENT;
         }
 
         for (size_t i = 0u; i < size; i++)
-                fprintf(file, "%f%c", buffer[i], delimiter);
+                fprintf(file, "%0.6f%c", (double)buffer[i], delimiter);
         if (delimiter != '\n')
                 fprintf(file, "%c", '\n');
 
-        fclose(file);
+        return fclose(file);
 }
 
-int file_helpers_read_buf(const char* name, FILE_BUFFER_FORMAT* const buffer)
+int file_helpers_read_buf(const char* name, float* const buffer)
 {
         ASSERT(name != NULL);
         ASSERT(buffer != NULL);
 
         FILE* file = fopen(name, "r");
-        if (file == NULL)
-        {
+        if (file == NULL) {
                 LOG_ERROR("Cannot open %s file", name);
                 return -ENOENT;
         }
@@ -52,5 +50,6 @@ int file_helpers_read_buf(const char* name, FILE_BUFFER_FORMAT* const buffer)
         size_t size, i = 0u;
         while ((getline(&line, &size, file)) > 0)
                 sscanf(line, "%f", &buffer[i++]);
-        return i;
+
+        return (int)i;
 }

@@ -13,22 +13,22 @@ DEPLOY_DIR := $(SYSTEM_DIR)/deploy
 LINUX_REPO := https://github.com/beagleboard/linux.git
 UBOOT_REPO := https://github.com/u-boot/u-boot.git
 
-ROOTFS_HTTPS := https://rcn-ee.com/rootfs/eewiki/minfs/debian-11.5-minimal-armhf-2022-10-06.tar.xz
-ROOTFS_TAR := debian-11.5-minimal-armhf-2022-10-06.tar.xz
+ROOTFS_HTTPS := https://www.rcn-ee.com/rootfs/eewiki/minfs/ubuntu-20.04.5-minimal-armhf-2022-12-20.tar.xz
+ROOTFS_TAR := ubuntu-20.04.5-minimal-armhf-2022-12-20.tar.xz
 
 UBOOT_DEFAULT_CONFIG := am335x_evm_defconfig
 LINUX_DEFAULT_CONFIG := bb.org_defconfig
 
-LINUX_TAG := 5.10.140-ti-rt-r52
-UBOOT_TAG := v2023.01-rc1
+LINUX_TAG := 5.10.162-ti-rt-r59
+UBOOT_TAG := v2023.04
 
 DEVICE_TREE := am335x-boneblack.dtb
 
 LINUX_BUILD_OUTPUT :=
 
 ARCH := arm
-TOOLCHAIN := /opt/toolchain/gcc-arm-8.2-2019.01-x86_64-arm-linux-gnueabihf/bin
-CROSS_COMPILER := $(TOOLCHAIN)/arm-linux-gnueabihf-
+TOOLCHAIN := arm-linux-gnueabihf
+CROSS_COMPILER := arm-linux-gnueabihf-
 
 #------------------------------------------------------------------------------
 
@@ -62,6 +62,16 @@ else
 			-j$(NCORES)
 endif
 .PHONY: build
+
+#------------------------------------------------------------------------------
+
+install-modules:
+	@ cd $(LINUX_DIR) && \
+		make \
+			ARCH=$(ARCH) \
+			CROSS_COMPILE=$(CROSS_COMPILER) \
+			INSTALL_MOD_PATH=/media/dkop/rootfs modules install
+.PHONY: install-modules
 
 #------------------------------------------------------------------------------
 

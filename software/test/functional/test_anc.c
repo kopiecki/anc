@@ -5,7 +5,9 @@
 
 #include <errno.h>
 #include <pthread.h>
+#include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 
 #include "dsp/fir.h"
@@ -13,77 +15,56 @@
 #include "signal/signal.h"
 #include "sound_card/sound_card.h"
 #include "utils/circ_fifo.h"
+#include "utils/common.h"
 #include "utils/file_helpers.h"
 #include "utils/logger.h"
 
-#ifndef TEST_FORMAT
-#define TEST_FORMAT float
-#endif
+#define I_CNT    100000u
+#define LMS_STEP 0.001
+#define DEC_FACTOR
 
-#define SEC_COEFFS_FILE "sec_coeffs.csv"
+#define CAPTURE_FILE_LOG_INPUT "capture_input.csv"
+#define CAPTURE_FILE_LOG_ERROR "capture_error.csv"
 
 #define SC_PLAYBACK_NAME   "plughw:1,0"
 #define SC_CAPTURE_NAME    "plughw:1,0"
-#define SAMPLING_FREQUENCY 4000
+#define SAMPLING_FREQUENCY 441000
 #define NUM_OF_SAMPLES     SAMPLING_FREQUENCY
 
-#define BUFFER_TIME_US 3000
-#define PERIOD_TIME_US 1500
+#define BUFFER_TIME_US 100000
+#define PERIOD_TIME_US 50000
 #define CHANNELS       2
-#define LMS_STEP       0.001
 
-static size_t period_size;
-bool new = false;
-
-static sound_card_t* sc_playback = NULL;
-static sound_card_t* sc_capture  = NULL;
+static sound_card_t* sc_playback;
+static sound_card_t* sc_capture;
 
 static struct sound_card_task playback_task;
 static struct sound_card_task capture_task;
 
-static TEST_FORMAT* noise_buffer;
-static TEST_FORMAT* antinoise_buffer;
-static TEST_FORMAT* fx_buffer;
+static float* noise_buffer;
+static float* antinoise_buffer;
 
-static TEST_FORMAT* input_buffer;
-static TEST_FORMAT* error_buffer;
+static float* input_buffer;
+static float* error_buffer;
 
-#define CIRC_FIFO_SIZE (1u << 20u)
-static struct circ_fifo x_fifo;
-static struct circ_fifo x_fx_fifo;
-static struct circ_fifo fx_fifo;
-static struct circ_fifo e_fifo;
+#define FIFO_SIZE 8192u
+static struct circ_fifo x;
+static struct circ_fifo fx;
 
-#define SECONDARY_ORDER 160
-static TEST_FORMAT secondary_coeff[SECONDARY_ORDER] = {0};
+#define PRIMARY_ORDER 512u
+static float primary_w[PRIMARY_ORDER];
 
-#define PRIMARY_ORDER 200
-static TEST_FORMAT primary_coeff[PRIMARY_ORDER] = {0};
+#define SECONDARY_ORDER 256u
+static float* secondary_w[SECONDARY_ORDER];
 
-static struct signal sine_100_hz = {
-        .amplitude          = 1.0f,
-        .type               = SIGNAL_TYPE_SINE,
-        .frequency          = 100.0f,
-        .sampling_frequency = SAMPLING_FREQUENCY,
+size_t period_size;
+
+enum playback_buffers {
+        NOISE_BUFFER     = 0,
+        ANTINOISE_BUFFER = 1,
 };
 
-static struct signal sine_300_hz = {
-        .amplitude          = 1.0f,
-        .type               = SIGNAL_TYPE_SINE,
-        .frequency          = 300.0f,
-        .sampling_frequency = SAMPLING_FREQUENCY,
-};
-
-static struct signal* signals[] = {&sine_100_hz, &sine_300_hz};
-
-enum playback_buffers
-{
-        NOISE_BUFFER     = 1,
-        ANTINOISE_BUFFER = 0,
-};
-
-enum capture_buffers
-{
+enum capture_buffers {
         ERROR_BUFFER = 0,
         INPUT_BUFFER = 1,
 };
@@ -98,7 +79,8 @@ static int create_cards(void)
                 .stream         = SOUND_CARD_STREAM_PLAYBACK,
                 .buffer_time_us = BUFFER_TIME_US,
                 .period_time_us = PERIOD_TIME_US,
-                .poll           = true,
+                .poll           = false,
+                .blocking       = false,
         };
 
         const struct sound_card_config sc_capture_config = {
@@ -109,7 +91,8 @@ static int create_cards(void)
                 .stream         = SOUND_CARD_STREAM_CAPTURE,
                 .buffer_time_us = BUFFER_TIME_US,
                 .period_time_us = PERIOD_TIME_US,
-                .poll           = true,
+                .poll           = false,
+                .blocking       = false,
         };
 
         sc_playback = sound_card_construct(&sc_playback_config);
@@ -120,7 +103,8 @@ static int create_cards(void)
         if (sc_capture == NULL)
                 return -ENOTSUP;
 
-        sound_card_synchronize(sc_playback, sc_capture);
+        sound_card_synchronize(sc_capture, sc_playback);
+
         LOG_INFO("Created sound cards");
 
         return 0;
@@ -129,76 +113,54 @@ static int create_cards(void)
 static int create_buffers(void)
 {
         const size_t period_size_bytes_playback =
-                sound_card_get_period_size_bytes(sc_playback);
+                (size_t)sound_card_get_period_size_bytes(sc_playback);
         const size_t period_size_bytes_capture =
-                sound_card_get_period_size_bytes(sc_capture);
+                (size_t)sound_card_get_period_size_bytes(sc_capture);
 
-        period_size =
-                period_size_bytes_playback / (sizeof(TEST_FORMAT) * CHANNELS);
+        period_size = period_size_bytes_playback / (sizeof(float) * CHANNELS);
 
-        noise_buffer =
-                calloc(period_size_bytes_playback / sizeof(TEST_FORMAT),
-                       sizeof(TEST_FORMAT));
+        noise_buffer = calloc(
+                period_size_bytes_playback / sizeof(float), sizeof(float));
         if (noise_buffer == NULL)
                 return -ENOMEM;
-
-        antinoise_buffer =
-                calloc(period_size_bytes_playback / sizeof(TEST_FORMAT),
-                       sizeof(TEST_FORMAT));
-        if (antinoise_buffer == NULL)
-                return -ENOMEM;
-
-        fx_buffer =
-                calloc(period_size_bytes_playback / sizeof(TEST_FORMAT),
-                       sizeof(TEST_FORMAT));
+        antinoise_buffer = calloc(
+                period_size_bytes_playback / sizeof(float), sizeof(float));
         if (antinoise_buffer == NULL)
                 return -ENOMEM;
 
         input_buffer =
-                calloc(period_size_bytes_capture / sizeof(TEST_FORMAT),
-                       sizeof(TEST_FORMAT));
+                calloc(period_size_bytes_capture / sizeof(float), sizeof(float));
         if (input_buffer == NULL)
                 return -ENOMEM;
-
         error_buffer =
-                calloc(period_size_bytes_capture / sizeof(TEST_FORMAT),
-                       sizeof(TEST_FORMAT));
+                calloc(period_size_bytes_capture / sizeof(float), sizeof(float));
         if (error_buffer == NULL)
                 return -ENOMEM;
 
-        int error = circ_fifo_construct(&x_fifo, NULL, CIRC_FIFO_SIZE);
+        int error = circ_fifo_construct(&x, NULL, FIFO_SIZE);
         if (error < 0)
-                return -EPERM;
+                return error;
 
-        error = circ_fifo_construct(&fx_fifo, NULL, CIRC_FIFO_SIZE);
+        int error = circ_fifo_construct(&fx, NULL, FIFO_SIZE);
         if (error < 0)
-                return -EPERM;
-
-        error = circ_fifo_construct(&x_fx_fifo, NULL, CIRC_FIFO_SIZE);
-        if (error < 0)
-                return -EPERM;
-
-        error = circ_fifo_construct(&e_fifo, NULL, CIRC_FIFO_SIZE);
-        if (error < 0)
-                return -EPERM;
-
-        error = file_helpers_read_buf(SEC_COEFFS_FILE, secondary_coeff);
-        if (error < 0)
-                return -EPERM;
+                return error;
 
         LOG_INFO("Created buffers");
 
         return 0;
 }
 
-static int create_tasks(void)
+static void create_playback_task(void)
 {
         playback_task.sample_buffers[NOISE_BUFFER]     = noise_buffer;
         playback_task.sample_buffers[ANTINOISE_BUFFER] = antinoise_buffer;
         playback_task.size                             = period_size;
 
         LOG_INFO("Created playback task");
+}
 
+static void create_capture_task(void)
+{
         capture_task.sample_buffers[INPUT_BUFFER] = input_buffer;
         capture_task.sample_buffers[ERROR_BUFFER] = error_buffer;
         capture_task.size                         = period_size;
@@ -222,162 +184,75 @@ static void cleanup(void)
                 free(antinoise_buffer);
 }
 
-void* playback_poll_loop(void*)
+static int fill_buffer(void)
 {
-        LOG_INFO("Starting playback poll");
-
-        bool ready = false;
-        while (1)
-        {
-                int error = sound_card_poll_is_ready(sc_playback, &ready);
+        int error         = 0;
+        uint8_t threshold = 2;
+        while (threshold--) {
+                error = sound_card_playback(sc_playback, &capture_task);
                 if (error < 0)
-                        return NULL;
+                        return error;
+        }
 
-                if (ready)
-                {
-                        signal_generate_sum(
-                                signals, 2, noise_buffer, period_size);
-                        for (size_t i = 0; i < period_size; i++)
-                                antinoise_buffer[period_size - i - 1] = dsp_fir(
-                                        &x_fifo, primary_coeff, PRIMARY_ORDER, i);
+        return error;
+}
 
-                        error = sound_card_playback(sc_playback, &playback_task);
-                        if (error < 0)
-                                ready = false;
-                }
+static void fill_x_fifo(void)
+{
+        for (size_t i = 0; i < period_size; i++)
+                circ_fifo_write(&x, input_buffer[i]);
+}
+
+static void fill_anitnoise(void)
+{
+        for (size_t i = 0; i < period_size; i++)
+                antinoise_buffer[period_size - i - 1] =
+                        dsp_fir(&x, primary_w, PRIMARY_ORDER, i);
+}
+
+static void filter_x(void)
+{
+        for (size_t i = 0; i < period_size; i++) {
+                float fx = dsp_fir(
+                        &x, secondary_w, SECONDARY_ORDER, input_buffer[i]);
+                circ_fifo_write(&fx, fx);
         }
 }
 
-void* capture_poll_loop(void*)
+static void update_primary(void)
 {
-        LOG_INFO("Starting capture poll");
-
-        bool ready = false;
-        int cnt    = 0;
-        while (1)
-        {
-                int error = sound_card_poll_is_ready(sc_capture, &ready);
-                if (error < 0)
-                        return NULL;
-
-                if (ready)
-                {
-                        sound_card_capture(sc_capture, &capture_task);
-                        if (error < 0)
-                                ready = false;
-
-                        for (size_t i = 0; i < period_size; i++)
-                        {
-                                circ_fifo_write(&x_fifo, input_buffer[i]);
-                                circ_fifo_write(&x_fx_fifo, input_buffer[i]);
-
-                                circ_fifo_write(&e_fifo, error_buffer[i]);
-                        }
-
-                        for (size_t i = 0; i < period_size; i++)
-                                fx_buffer[period_size - 1 - i] =
-                                        dsp_fir(&x_fx_fifo,
-                                                secondary_coeff,
-                                                SECONDARY_ORDER,
-                                                i);
-
-                        for (size_t i = 0; i < period_size; i++)
-                        {
-                                circ_fifo_write(&fx_fifo, fx_buffer[i]);
-                        }
-
-                        if (cnt > 10000)
-                        {
-                                LOG_INFO("Started!");
-                                for (size_t i = 0; i < period_size; i++)
-                                {
-                                        dsp_lms(primary_coeff,
-                                                circ_fifo_read(&e_fifo),
-                                                LMS_STEP,
-                                                &fx_fifo,
-                                                PRIMARY_ORDER,
-                                                i);
-                                }
-                        }
-                        else
-                                cnt++;
-
-                        file_helpers_write_buf(
-                                "error.csv", '\n', error_buffer, period_size, true);
-                }
+        for (size_t i = 0; i < period_size; i++) {
+                dsp_lms(primary_w, error_buffer[i], LMS_STEP, &fx, PRIMARY_ORDER, i);
         }
 }
 
-static int anc_block_loop()
+static void fxlms(void)
 {
-        while (1)
-        {
-                int error = sound_card_capture(sc_capture, &capture_task);
+        fill_x_fifo();
+        fill_anitnoise();
+        filter_x();
+        update_primary();
+}
+
+static int loop(size_t i_cnt)
+{
+        int error = 0;
+        while (i_cnt--) {
+                error = sound_card_capture(sc_capture, &capture_task);
                 if (error < 0)
                         return error;
 
-                for (size_t i = 0; i < period_size; i++)
-                {
-                        circ_fifo_write(&x_fifo, input_buffer[i]);
-                        circ_fifo_write(&x_fx_fifo, input_buffer[i]);
+                fxlms();
 
-                        circ_fifo_write(&e_fifo, error_buffer[i]);
-                }
-
-                signal_generate(&sine_100_hz, noise_buffer, period_size);
-                for (size_t i = 0; i < period_size; i++)
-                        antinoise_buffer[period_size - i - 1] = dsp_fir(
-                                &x_fifo, primary_coeff, PRIMARY_ORDER, i);
-
-                error = sound_card_playback(sc_playback, &playback_task);
+                error = sound_card_playback(sc_playback, &capture_task);
                 if (error < 0)
                         return error;
-
-                for (size_t i = 0; i < period_size; i++)
-                        fx_buffer[period_size - 1 - i] = dsp_fir(
-                                &x_fx_fifo, secondary_coeff, SECONDARY_ORDER, i);
-
-                for (size_t i = 0; i < period_size; i++)
-                {
-                        circ_fifo_write(&fx_fifo, fx_buffer[i]);
-                }
-
-                for (size_t i = 0; i < period_size; i++)
-                {
-                        dsp_lms(primary_coeff,
-                                circ_fifo_read(&e_fifo),
-                                LMS_STEP,
-                                &fx_fifo,
-                                PRIMARY_ORDER,
-                                i);
-                }
         }
 
-        return 0;
+        return error;
 }
 
-void* error_loop(void*)
-{
-        while (1)
-        {
-                LOG_INFO("error = %f", error_buffer[period_size - 1]);
-                sleep(1);
-        }
-}
-
-static int anc_loop_pool(void)
-{
-        pthread_t capture_thread;
-        pthread_t playback_thread;
-
-        pthread_create(&playback_thread, NULL, playback_poll_loop, NULL);
-        pthread_create(&capture_thread, NULL, capture_poll_loop, NULL);
-
-        pthread_join(playback_thread, NULL);
-        pthread_join(capture_thread, NULL);
-}
-
-static int test_anc(void)
+static int loopback(void)
 {
         int error = create_cards();
         if (error < 0)
@@ -387,19 +262,25 @@ static int test_anc(void)
         if (error < 0)
                 return error;
 
-        create_tasks();
+        create_playback_task();
+        create_capture_task();
 
-        return anc_loop_pool();
+        fill_buffer();
+        loop(I_CNT);
+
+        return 0;
 }
 
-int main(int argc, char* argv[])
+int main(void)
 {
-        LOG_INFO("Running ANC test");
-        int error = test_anc();
+        LOG_INFO("Running sound test");
+        int error = loopback();
         if (error < 0)
-                LOG_ERROR("ANC test failed");
+                LOG_ERROR("Sound test failed");
         else
-                LOG_INFO("ANC test ended with success");
+                LOG_INFO("Sound test ended with success");
+
+        cleanup();
 
         return error;
 }

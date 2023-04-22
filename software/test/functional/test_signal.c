@@ -10,9 +10,9 @@
 #define SAMPLING_FREQUENCY 44100
 #define NUM_OF_SAMPLES     SAMPLING_FREQUENCY
 
-static TEST_FORMAT test_signal_buffer[NUM_OF_SAMPLES] = {0};
+static float signal_buffer[NUM_OF_SAMPLES] = {0};
 
-static int __test_signal_dump_sine(void)
+static int dump_sine(void)
 {
         struct signal sine_5_hz = {
                 .amplitude          = 1,
@@ -22,16 +22,16 @@ static int __test_signal_dump_sine(void)
                 .phase              = 0,
         };
 
-        signal_generate(&sine_5_hz, test_signal_buffer, NUM_OF_SAMPLES);
+        signal_generate(&sine_5_hz, signal_buffer, NUM_OF_SAMPLES);
         return file_helpers_write_buf(
                 "test/functional/output/sine_5_hz.csv",
                 '\n',
-                test_signal_buffer,
+                signal_buffer,
                 NUM_OF_SAMPLES,
                 false);
 }
 
-static int __test_signal_dump_triangle(void)
+static int dump_triangle(void)
 {
         struct signal triangle_10_hz = {
                 .amplitude          = 1,
@@ -41,16 +41,16 @@ static int __test_signal_dump_triangle(void)
                 .phase              = 0,
         };
 
-        signal_generate(&triangle_10_hz, test_signal_buffer, NUM_OF_SAMPLES);
+        signal_generate(&triangle_10_hz, signal_buffer, NUM_OF_SAMPLES);
         return file_helpers_write_buf(
                 "test/functional/output/triangle_10_hz.csv",
                 '\n',
-                test_signal_buffer,
+                signal_buffer,
                 NUM_OF_SAMPLES,
                 false);
 }
 
-static int __test_signal_dump_noise(void)
+static int dump_noise(void)
 {
         struct signal noise = {
                 .amplitude          = 2,
@@ -59,16 +59,16 @@ static int __test_signal_dump_noise(void)
                 .phase              = 0,
         };
 
-        signal_generate(&noise, test_signal_buffer, NUM_OF_SAMPLES);
+        signal_generate(&noise, signal_buffer, NUM_OF_SAMPLES);
         return file_helpers_write_buf(
                 "test/functional/output/noise.csv",
                 '\n',
-                test_signal_buffer,
+                signal_buffer,
                 NUM_OF_SAMPLES,
                 false);
 }
 
-static int __test_signal_dump_sum(void)
+static int dump_sum(void)
 {
         struct signal sine_5_hz = {
                 .amplitude          = 2,
@@ -88,32 +88,32 @@ static int __test_signal_dump_sum(void)
 
         struct signal* signals[] = {&sine_5_hz, &sine_10_hz};
 
-        signal_generate_sum(signals, 2, test_signal_buffer, NUM_OF_SAMPLES);
+        signal_generate_sum(signals, 2, signal_buffer, NUM_OF_SAMPLES);
         return file_helpers_write_buf(
                 "test/functional/output/sum.csv",
                 '\n',
-                test_signal_buffer,
+                signal_buffer,
                 NUM_OF_SAMPLES,
                 false);
 }
 
-int main(int argc, char* argv[])
+int main(void)
 {
         LOG_INFO("Running signal test");
 
-        int error = __test_signal_dump_sine();
+        int error = dump_sine();
         if (error < 0)
                 return error;
 
-        error = __test_signal_dump_triangle();
+        error = dump_triangle();
         if (error < 0)
                 return error;
 
-        error = __test_signal_dump_noise();
+        error = dump_noise();
         if (error < 0)
                 return error;
 
-        error = __test_signal_dump_sum();
+        error = dump_sum();
         if (error < 0)
                 return error;
 
