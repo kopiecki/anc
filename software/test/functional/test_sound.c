@@ -24,8 +24,8 @@
 #define CAPTURE_FILE_LOG_INPUT "capture_input.csv"
 #define CAPTURE_FILE_LOG_ERROR "capture_error.csv"
 
-#define SC_PLAYBACK_NAME   "plughw:1,0"
-#define SC_CAPTURE_NAME    "plughw:1,0"
+#define SC_PLAYBACK_NAME   "hw:0,0"
+#define SC_CAPTURE_NAME    "hw:0,0"
 #define SAMPLING_FREQUENCY 4000
 #define NUM_OF_SAMPLES     SAMPLING_FREQUENCY
 

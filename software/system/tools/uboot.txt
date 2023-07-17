@@ -1,0 +1,3 @@
+setenv bootargs ”console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p3 rw rootwait”
+setenv bootcmd ”ext4load mmc 0:2 0x82000000 zImage; ext4load mmc 0:2 0x88000000 am335x-boneblack.dtb; bootz 0x82000000 – 0x88000000”
+saveenv

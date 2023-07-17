@@ -112,10 +112,10 @@ def __generate_x(sampling_hz, num_of_samples):
         return sine_100_hz + sine_250_hz
 
 if __name__ == "__main__":
-    SAMPLING_HZ = 4000
+    SAMPLING_HZ = 10.0
     NUM_OF_SAMPLES = SAMPLING_HZ
     filter = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
-                       cutoff_hz=200, trans_band_width_hz=250)
+                       cutoff_hz=0.1, trans_band_width_hz=2)
     
     x = __generate_x(SAMPLING_HZ, NUM_OF_SAMPLES)
 

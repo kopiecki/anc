@@ -20,7 +20,7 @@
 #include "utils/logger.h"
 
 #define I_CNT    100000u
-#define LMS_STEP 0.001
+#define LMS_STEP 0.001f
 #define DEC_FACTOR
 
 #define CAPTURE_FILE_LOG_INPUT "capture_input.csv"
@@ -55,7 +55,7 @@ static struct circ_fifo fx;
 static float primary_w[PRIMARY_ORDER];
 
 #define SECONDARY_ORDER 256u
-static float* secondary_w[SECONDARY_ORDER];
+static float secondary_w[SECONDARY_ORDER];
 
 size_t period_size;
 
@@ -141,7 +141,7 @@ static int create_buffers(void)
         if (error < 0)
                 return error;
 
-        int error = circ_fifo_construct(&fx, NULL, FIFO_SIZE);
+        error = circ_fifo_construct(&fx, NULL, FIFO_SIZE);
         if (error < 0)
                 return error;
 
@@ -213,9 +213,8 @@ static void fill_anitnoise(void)
 static void filter_x(void)
 {
         for (size_t i = 0; i < period_size; i++) {
-                float fx = dsp_fir(
-                        &x, secondary_w, SECONDARY_ORDER, input_buffer[i]);
-                circ_fifo_write(&fx, fx);
+                float _fx = dsp_fir(&x, secondary_w, SECONDARY_ORDER, i);
+                circ_fifo_write(&fx, _fx);
         }
 }
 

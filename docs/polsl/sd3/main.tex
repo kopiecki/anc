@@ -1,0 +1,435 @@
+\documentclass{beamer}
+
+\usetheme{Boadilla}
+\usepackage{polski}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{subcaption}
+\usefonttheme{serif}
+
+\title{Seminarium dyplomowe, 3}
+\subtitle{Układ aktywnego tłumienia hałasu pod nadzorem jądra systemu Linux z rozszerzeniami real-time}
+
+\author{Daniel Kopiecki}
+\institute{Politechnika Śląska}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Słowem wstępu - system operacyjny}
+\begin{itemize}
+\item System operacyjny w najprostszej definicji to oprogramowanie zarządzające systemem komputerowym.
+\item Z punktu widzenia użytkownika, stanowi środowisko, pozwalające na interakcję z komputerem
+bez zrozumienia i znajomości działania urządzenia na poziomie sprzętowym.
+\item W uogólnieniu system operacyjny zajmuje się:
+\begin{enumerate}
+    \item Planowanie i przydziałem czasu procesora na wykonanie poszczególnych zadań (programów).
+    \item Kontrolą i przydziałem pamięci na zadania (programy).
+    \item Synchronizacją zadań (programów).
+    \item Obsługą zasobów sprzętowych, zapewnieniem jednolitego interfejsu kontroli nad nim.
+\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Słowem wstępu - system operacyjny}
+\begin{itemize}
+    \item Przyjęto, że system operacyjny dzieli się na trzy elementy:
+    \begin{itemize}
+        \item \textbf{Jądro} - kontrola zadań i zasobów (sprzęt, pamięć, czas procesora).
+        \item \textbf{Powłoka} - interakcja użytkownika z jądrem.
+        \item \textbf{System plików} - sposób strukturyzacji danych na nośniku.
+    \end{itemize}
+\end{itemize}
+\begin{figure}[H]
+    \begin{minipage}{.3\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{../images/user.png}
+    \end{minipage}%
+    \begin{minipage}{.3\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{../images/os.png}
+    \end{minipage}
+    \caption{System operacyjny}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Jądro systemu operacyjnego}
+\begin{itemize}
+    \item Jądro systemu operacyjnego to program, który posiada pełną kontrolę
+    nad wszystkim co dzieje się w systemie komputerowym.
+    \item Kod tego programu jest umiejscowiony w odpowiednim, chronionym przed zapisem
+    obszarze pamięci, a ładowany jest przy uruchomieniu systemu z użyciem \textbf{bootloader'a}.
+    \item Istnieją różne architektury jądra, z których wyróżnić można:
+    \begin{itemize}
+        \item \textbf{Monolityczne} - jądro stanowi jeden, duży program (systemy uniksopodobne, lecz nie tylko) pracujący w \textbf{trybie jądra}.
+        \item Mikrojądro - monolit zostaje podzielony na mniejsze moduły, z których część pracuje w \textbf{trybie użytkownika} komunikujac się z serwerami (pośrednikami).
+        \item Nanojądro - jeszcze większe podzielenie na moduły.
+        \item Hybrydowe - kompromis pomiędzy monolitem, a modularyzacją. 
+    \end{itemize}
+
+    
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Jądro systemu operacyjnego}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{../images/kernels.png}
+    \caption{Schematy interakcji}
+\end{figure}
+\begin{itemize}
+    \item Monolit - jądro UNIX (np. BSD), \textbf{Linux}, MS-DOS
+    \item Mikro/nano - QNX, Mach
+    \item Hybryda - Windows NT/2000/XP/Vista/7/8/10/11
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Jądro monolityczne}
+\begin{itemize}
+    \item Cechuje się wysoką wydajnością, ponieważ jedynym pośrednikiem między zasobami,
+    a aplikacjami, jest właśnie jądro.
+    \item Jądro zapewnia względnie wysokopoziomowe API do interakcji z zasobami (właściwie samoistnie je definiuje).
+    \item Interakcje z jądrem odbywają się poprzez wywoływania systemowe (ang. \textit{system call}).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\linewidth]{../images/kernel.png}
+    \caption{Schemat interakcji - jądro monolityczne}
+\end{figure}
+\item Dodatkową możliwością w tego typu architekturze jest dodawanie sterowników jądra jako ładowalnych modułów (ang. \textit{loadable kernel modules}).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Łamanie trybu użytkownika (\textit{breaking user's space})}
+\begin{itemize}
+    \item Rozwiązaniem krytykowanym przez dużą rzeszę programistów jest 
+    oddzielanie kwestii systemowych do pracy w trybie użytkownika (jądra hybrydowe).
+    \item Tego typu rozwiązanie nie dość, że powoduje przeogromne problemy z zachowaniem 
+    kompatybilności wstecznej, to jeszcze całkowicie uzależnia programistów pracujących pod
+    danym systemem operacyjnym od jego wersji.
+    \item W słowach Linusa Torvaldsa (LKML)
+    \\
+    \par \textit{Breaking user programs simply isn't acceptable. (…) We know that people use old binaries for years and years, and that making a new release doesn't mean that you can just throw that out. You can trust us.}
+    \item Przykładem może być stara gra komputerowa (zazwyczaj zaprojektowana do działania pod pewnym systemem operacyjnym), której uruchomienie dzisiaj jest wyjątkowo trudne z powodu braku kompatybilności.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{POSIX}
+\begin{itemize}
+\item POSIX (ang. \textit{Portable Operating System Interface for UNIX}, IEEE 1003) to standard oprogramowania systemu operacyjnego, w który skład wchodzi:
+\begin{itemize}
+    \item Interfejs programistyczny (\textit{<unistd.h>}, read, write, fork, pipe...).
+    \item Interfejs użytkownika, przykładowo polecenia powłoki \textit{echo, cat, grep}.
+    \item Właściwości powłoki.
+\end{itemize}
+\item Pojęcie powstało na wskutek prób standaryzacji różnych odmian systemu operacyjnego UNIX. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/unix.jpg}
+\end{figure}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Jądro Linux}
+\begin{itemize}
+    \item Linux to jądro systemu operacyjnego stworzone początkowo przez Linusa Torvaldsa w 1991 roku.
+    \item Jest oparte na licencji GNU General Public License v2 i początkowo stanowiło wolny odpowiednik
+    systemu UNIX.
+    \item Jest jądrem monolitycznym i uniksopodobnym (jest w większości zgodne ze standardem POSIX).
+\begin{figure}[H]
+    \begin{minipage}{.2\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{../images/tux.png}
+    \end{minipage}%
+    \begin{minipage}{.4\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{../images/linux.png}
+    \end{minipage}
+    \caption{Jądro systemu Linux}
+\end{figure}
+    \item W połączeniu z narzędziami i bibliotekami systemowymi z projektu GNU, otrzymuje się
+    kompletny system operacyjny \textbf{GNU/Linux}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Wbudowany GNU/Linux}
+\begin{itemize}
+    \item Z powodu wszechstronności i otwartych kodów źródłowych, system operacyjny
+    GNU/Linux jest szeroko wykorzystywany w systemach wbudowanych.
+    \item Kod źródłowy może być portowany na różne architektury.
+    \item Z racji wszechostronności systemu system
+    można modyfikować usuwając i dodawając moduły.
+    \item Pozwala to na tworzenie dedykowanych systemów operacyjnych stworzonych
+    na potrzeby tworzonych urządzeń.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/embedded_tux.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Wbudowany GNU/Linux - ograniczenia}
+\begin{itemize}
+    \item System GNU/Linux nie jest systemem czasu rzeczywistego.
+    \item Jest to znaczące ograniczenie, przeszkadzające w wykorzystaniu systemu
+    do urządzeń realizujących zadania krytyczne, gdzie wymagany jest w pełni
+    deterministyczny czas realizacji.
+    \item Powstało jednak sporo projektów skupiających się na przybliżeniu/dostosowaniu systemu GNU/Linux
+    do systemu czasu rzeczywistego.
+    \item Jednym z najczęściej wykorzystywanych rozwiązań jest projekt \textbf{Real-Time Linux}, znany
+    ściślej jako zestaw łatek (ang. \textit{patch}) jądra o nazwie \textbf{PREEMPT\_RT}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\linewidth]{../images/rt-linux.png}
+\end{figure}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{System czasu rzeczywistego, RTC (ang. \textit{Real-time computing})}
+\begin{itemize}
+    \item Aby można stwierdzić było, że system jest systemem czasu rzeczywistego, poza logiczną prawidłowością 
+    wykonanych akcji, musi on również gwarantować określony czas ich realizacji.
+    \item Zważając na określony czas realzacji, systemy czasu rzeczywistego przyjęło się dzielić na:
+    \begin{itemize}
+        \item Hard real-time - przekroczenie limitu czasowego traktowane jest jak awaria systemu.
+        \item Firm real-time - przekroczenie limitu czasowego skutkuje dyskredytacją wykonywanego zadania.
+        \item Soft real-time - przekroczenie limitu czasowego skutkuje obniżeniem priorytetu wykonywanego zadania (ang. \textit{usefulness of a result degrades}).
+    \end{itemize}
+    \item W przypadku systemów jednozadaniowych sprawa jest trywialna, jednak komplikuje się, 
+    kiedy w grę wchodzi wielozadaniowość.
+    \item Systemy operacyjne są wielozadaniowe.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Planowanie i wywłaszczenie}
+\begin{itemize}
+    \item Jądro systemu Linux implementuje \textbf{planistę} (ang. \textit{scheduler}), którego zadaniem jest
+    szeregowanie zadań w systemie (procesy, wątki).
+    \item Tryb pracy planisty w jądrze Linux może być wybrany przez użytkownika. Domyślnym jest CFS (ang. \textit{Completely Fair Scheduler})
+    i jego wybranie wynika z deklaracji zadania jako SCHED\_NORMAL.
+    \item Zadania są uruchamiane na podstawie ich priorytetu. Planista iteruje po obsługiwanych zadaniach i
+    w pierwszej kolejności uruchamia te z największym priorytetem.
+    \item Jądro systemu Linux zapewnia \textbf{wywłaszczenie zadania} z poziomu przestrzeni użytkownika.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Wywłaszczenie}
+\begin{itemize}
+    \item \textbf{Wywłaszczenie} (ang. \textit{preemption}) to akcja tymczasowego zatrzymania aktualnie wykonywanego zadania, mająca na celu
+    wykonanie innego, zazwyczaj o większym priorytecie. 
+    \item Po wykonaniu zadania przerywającego, następuje powrót do wczesniej
+    wykonanywanego. Akcję zatrzymania nazywa się \textbf{przerwaniem}.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{../images/preempt.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Wywłaszczenie}
+\begin{itemize}
+    \item W jądrze systemu Linux domyślnie wywłaszczone mogą zostać jedynie zadania pochodzące z przestrzeni
+    użytkownika. 
+    \item Oznacza to, że jeżeli przerwanie nadejdzie w trakcie wykonywania przez zadanie wywołania
+    systemowego, to takie przerwanie nie zostanie obsłużone do momentu zakończenia zawołania systemowego.
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{../images/preempt_1.png}
+\end{figure}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Wywłaszczenie}
+\begin{itemize}
+\item Dodatkowo, każde zadanie z przestrzeni użytkownika może zostać wywłaszczone przez
+przerwanie sprzętowe. W trakcie obsługi takiego przerwania zablokowana jest obsługa innych.
+\item Oznacza to, że mało ważne przerwania sprzętowe mogą wywłaszczyć ważne, krytyczne czasowo
+zadania czasu rzeczywistego.
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{../images/hard_irq.png}
+    \end{figure}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Wywłaszczenie}
+\begin{itemize}
+\item Jakby tego było mało, istnieje jeszcze szereg problemów z synchronicznym dostępem do zasobów.
+\item Może zaistnieć sytuacja, kiedy niekrytyczne zadanie blokuje (ang. \textit{mutex}) dostęp do zasobów zadaniu krytycznemu.
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{../images/tasks.png}
+    \end{figure}
+\item Krytyczne zadanie A musi uzyskać dostęp do zasobów blokowanych przez zadanie C (niski priorytet).
+\item Planista więc uruchamia zadanie C, aby odblokować dostęp.
+\item W tym czasie zadanie C zostaje wywłaszczone przez zadanie B o wyższym priorytecie, ale niekrytyczne.
+\item Taki problem nosi nazwę \textbf{inwersji priorytetów} (ang. \textit{priority inversion}).
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Projekt PREEMPT\_RT}
+\begin{itemize}
+    \item Zestaw łatek PREEMPT\_RT celuje w możliwości wywłaszczenia wszystkich zadań realizowanych w systemie,
+    nawet tych wykonywanych z przestrzeni jądra.
+    \item Jako, że jądro Linux umożliwia korzystania z innych planistów niż domyślne, istnieje możliwość zastąpienia domyślnych
+    wytycznych planisty na wspieranie rozszerzeń czasu rzeczywistego.
+    \item Jako, że projekt PREEMPT\_RT oferuje jedynie zestaw łatek, interfejs programistyczny POSIX/Linux pozostaje 
+    niezmienny.
+    \item Umożliwa to korzystanie z systemu w tradycyjny sposób jak i wykonywanie krytycznych zadań równolegle w opraciu o 
+    planistę z rozszerzeniami czasu rzeczywistego.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Projekt PREEMPT\_RT}
+\begin{itemize}
+    \item Kilka funkcji łatkek PREEMPT\_RT:
+    \begin{itemize}
+        \item Wywłaszczenie zadań z przestrzeni jądra.
+        \item Liczniki wysokiej rozdzielczości (ang. \textit{High resolution timers}).
+        \item Wątkową realizację przerwań sprzętowych.
+        \item Implementację blokad w trybie czasu rzeczywistego (do synchronizacji zadań).
+        \item Planistę opartego o algorytm Earliest-Deadline First.
+        \item Rozwiązanie problemu inwersji priorytetów poprzez zastosowanie \textbf{dziedziczenia priorytetu}.
+    \end{itemize}
+    \item Jako, że czas wykonania zadania jest bardzo trudny do predykcji, celem jest minimalizacja latencji pomiędzy reakcją na wykonanie zadania.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../images/latency.png}
+    \end{figure}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Projekt PREEMPT\_RT}
+\begin{itemize}
+\item Wątkowa realizacja przerwań sprzętowych.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/threaded_irq.png}
+    \end{figure}
+\item Dziedziczenie priorytetu.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\linewidth]{../images/prio_inh.png}
+\end{figure}
+\end{itemize}
+Krytyczne zadanie A musi uzyskać dostęp do zasobów blokowanych przez zadanie C. W związku z tym,
+priorytet zadania C jest zwiększany do priorytetu zadania A.
+\end{frame}
+
+\begin{frame}
+\frametitle{Embedded GNU/Linux, PREEMPT\_RT - Proces uruchamiania, kolejność}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{../images/boot.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Embedded GNU/Linux - przygotowywanie nośnika}
+\begin{lstlisting}
+sudo parted --script /dev/kartaSD mklabel msdos \
+    mkpart primary fat32 0% 100MiB \
+    mkpart primary ext4 100MiB 1100MiB \
+    mkpart primary ext4 1100MiB 100% \
+    set 1 boot on
+
+sudo mkfs.vfat /dev/kartaSD1 -n uboot
+sudo mkfs.ext4 /dev/kartaSD2 -L kernel
+sudo mkfs.ext4 /dev/kartaSD3 -L rootfs
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Embedded GNU/Linux, PREEMPT\_RT - bootloader}
+\begin{itemize}
+\item Das U-Boot (ang. \textit{the Universal Boot Loader}) - główny, otwartoźródłowy bootloader używany
+w zastosowaniach embedded GNU/Linux.
+\begin{figure}[H]
+    \begin{minipage}{.3\textwidth}
+      \centering
+      \includegraphics[width=0.6\linewidth]{../images/uboot.png}
+    \end{minipage}%
+    \begin{minipage}{.3\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{../images/uboot_view.png}
+    \end{minipage}
+\end{figure}
+\item Kompilacja i kofiguracja bootloader'a:
+\begin{lstlisting}[basicstyle=\tiny]
+$ git clone --depth 1 https://github.com/u-boot/u-boot.git
+$ cd u-boot
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- am335x-evm-defconfig -j5
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j5
+$ cp MLO /media/user/uboot/
+$ cp u-boot.img /media/user/uboot/
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Embedded GNU/Linux, PREEMPT\_RT - jądro i system plików}
+\begin{itemize}
+\item Kompilacja i konfiguracja jądra:
+\begin{lstlisting}[basicstyle=\tiny]
+    $ git clone --depth 1 https://github.com/beagleboard/linux.git 5.10.162-ti-rt-r59
+    $ cd linux
+    $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bb.org_defconfig -j5
+    $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j5
+    $ cp arch/arm/boot/zImage /media/user/kernel
+    $ cp arch/arm/boot/dts/ am335x-boneblack.dtb /media/user/kernel
+\end{lstlisting}
+\item Rozpakowanie gotowego systemu plików:
+\begin{lstlisting}[basicstyle=\tiny]
+    $ mkdir -p rootfs
+    $ cd rootfs
+    $ wget https://www.rcn-ee.com/rootfs/eewiki/minfs/ubuntu-20.04.5.tar.xz
+    $ tar -xf ubuntu-20.04.5-minimal-armhf-2022-12-20.tar.xz
+    $ rm ubuntu-20.04.5-minimal-armhf-2022-12-20.tar.xz
+    $ cp -r * /media/user/rootfs
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Materiały źródłowe}
+    \begin{itemize}
+        \item https://www.linux.org/
+        \item https://bootlin.com/
+        \item https://archive.kernel.org/oldwiki/rt.wiki.kernel.org/
+        \item https://wiki.linuxfoundation.org/realtime/start
+    \end{itemize}
+\vfill
+    \large{Dziękuję za uwagę}
+\end{frame}
+
+
+\end{document}

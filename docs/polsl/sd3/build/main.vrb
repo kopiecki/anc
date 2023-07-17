@@ -1,0 +1,21 @@
+\frametitle{Embedded GNU/Linux, PREEMPT\_RT - jądro i system plików}
+\begin{itemize}
+\item Kompilacja i konfiguracja jądra:
+\begin{lstlisting}[basicstyle=\tiny]
+    $ git clone --depth 1 https://github.com/beagleboard/linux.git 5.10.162-ti-rt-r59
+    $ cd linux
+    $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bb.org_defconfig -j5
+    $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j5
+    $ cp arch/arm/boot/zImage /media/user/kernel
+    $ cp arch/arm/boot/dts/ am335x-boneblack.dtb /media/user/kernel
+\end{lstlisting}
+\item Rozpakowanie gotowego systemu plików:
+\begin{lstlisting}[basicstyle=\tiny]
+    $ mkdir -p rootfs
+    $ cd rootfs
+    $ wget https://www.rcn-ee.com/rootfs/eewiki/minfs/ubuntu-20.04.5.tar.xz
+    $ tar -xf ubuntu-20.04.5-minimal-armhf-2022-12-20.tar.xz
+    $ rm ubuntu-20.04.5-minimal-armhf-2022-12-20.tar.xz
+    $ cp -r * /media/user/rootfs
+\end{lstlisting}
+\end{itemize}
