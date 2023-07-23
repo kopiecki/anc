@@ -11,12 +11,12 @@
 #include <string.h>
 #include <sys/time.h>
 
-#include "../include/asoundlib.h"
+#include <alsa/asoundlib.h>
 
-static char* device             = "plughw:1,0";       /* playback device */
-static snd_pcm_format_t format  = SND_PCM_FORMAT_S16; /* sample format */
-static unsigned int rate        = 44100;              /* stream rate */
-static unsigned int channels    = 2;                  /* count of channels */
+static char* device             = "hw:0,0";       /* playback device */
+static snd_pcm_format_t format  = SND_PCM_FORMAT_S24; /* sample format */
+static unsigned int rate        = 16000;              /* stream rate */
+static unsigned int channels    = 4;                  /* count of channels */
 static unsigned int buffer_time = 500000; /* ring buffer length in us */
 static unsigned int period_time = 100000; /* period time in us */
 static double freq              = 440;    /* sinusoidal wave frequency in Hz */
@@ -1140,7 +1140,7 @@ int main(int argc, char* argv[])
         printf("Sine wave rate is %.4fHz\n", freq);
         printf("Using transfer method: %s\n", transfer_methods[method].name);
 
-        if ((err = snd_pcm_open(&handle, device, SND_PCM_STREAM_PLAYBACK, 0)) < 0)
+        if ((err = snd_pcm_open(&handle, device, SND_PCM_STREAM_CAPTURE, 0)) < 0)
         {
                 printf("Playback open error: %s\n", snd_strerror(err));
                 return 0;
@@ -1152,44 +1152,9 @@ int main(int argc, char* argv[])
                 printf("Setting of hwparams failed: %s\n", snd_strerror(err));
                 exit(EXIT_FAILURE);
         }
-        if ((err = set_swparams(handle, swparams)) < 0)
-        {
-                printf("Setting of swparams failed: %s\n", snd_strerror(err));
-                exit(EXIT_FAILURE);
-        }
 
-        if (verbose > 0)
-                snd_pcm_dump(handle, output);
+        printf("Opened and setted! %s\n", device);
 
-        samples = malloc(
-                (period_size * channels * snd_pcm_format_physical_width(format))
-                / 8);
-        if (samples == NULL)
-        {
-                printf("No enough memory\n");
-                exit(EXIT_FAILURE);
-        }
-
-        areas = calloc(channels, sizeof(snd_pcm_channel_area_t));
-        if (areas == NULL)
-        {
-                printf("No enough memory\n");
-                exit(EXIT_FAILURE);
-        }
-        for (chn = 0; chn < channels; chn++)
-        {
-                areas[chn].addr  = samples;
-                areas[chn].first = chn * snd_pcm_format_physical_width(format);
-                areas[chn].step =
-                        channels * snd_pcm_format_physical_width(format);
-        }
-
-        err = transfer_methods[method].transfer_loop(handle, samples, areas);
-        if (err < 0)
-                printf("Transfer failed: %s\n", snd_strerror(err));
-
-        free(areas);
-        free(samples);
         snd_pcm_close(handle);
         return 0;
 }

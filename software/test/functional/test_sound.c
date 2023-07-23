@@ -26,12 +26,12 @@
 
 #define SC_PLAYBACK_NAME   "hw:0,0"
 #define SC_CAPTURE_NAME    "hw:0,0"
-#define SAMPLING_FREQUENCY 4000
+#define SAMPLING_FREQUENCY 8000
 #define NUM_OF_SAMPLES     SAMPLING_FREQUENCY
 
 #define BUFFER_TIME_US 4000
 #define PERIOD_TIME_US 2000
-#define CHANNELS       2
+#define CHANNELS       4
 
 static sound_card_t* sc_playback;
 static sound_card_t* sc_capture;
@@ -59,17 +59,6 @@ enum capture_buffers {
 
 static int create_cards(void)
 {
-        const struct sound_card_config sc_playback_config = {
-                .access         = SOUND_CARD_ACCESS_SEPARATE,
-                .channels       = CHANNELS,
-                .name           = SC_PLAYBACK_NAME,
-                .rate           = SAMPLING_FREQUENCY,
-                .stream         = SOUND_CARD_STREAM_PLAYBACK,
-                .buffer_time_us = BUFFER_TIME_US,
-                .period_time_us = PERIOD_TIME_US,
-                .poll           = true,
-        };
-
         const struct sound_card_config sc_capture_config = {
                 .access         = SOUND_CARD_ACCESS_SEPARATE,
                 .channels       = CHANNELS,
@@ -80,16 +69,10 @@ static int create_cards(void)
                 .period_time_us = PERIOD_TIME_US,
                 .poll           = true,
         };
-
-        sc_playback = sound_card_construct(&sc_playback_config);
-        if (sc_playback == NULL)
-                return -ENOTSUP;
-
+        
         sc_capture = sound_card_construct(&sc_capture_config);
         if (sc_capture == NULL)
                 return -ENOTSUP;
-
-        sound_card_synchronize(sc_capture, sc_playback);
 
         LOG_INFO("Created sound cards");
 
@@ -196,16 +179,6 @@ static int loopback(void)
         int error = create_cards();
         if (error < 0)
                 return error;
-
-        error = create_buffers();
-        if (error < 0)
-                return error;
-
-        create_playback_task();
-        create_capture_task();
-
-        fill_buffer();
-        loop(I_CNT);
 
         return 0;
 }

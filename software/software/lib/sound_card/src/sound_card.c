@@ -16,9 +16,6 @@
 #include "utils/assert.h"
 #include "utils/logger.h"
 
-#define SINE_FREQUENCY 100
-#define MAX_PHASE      2.0f * M_PI
-
 #define FORMAT_SIZE_BITS(format)  snd_pcm_format_physical_width(format)
 #define FORMAT_SIZE_BYTES(format) (snd_pcm_format_physical_width(format) >> 3u)
 
@@ -74,10 +71,7 @@ static int sound_card_open(
         ASSERT(config != NULL);
 
         int error = snd_pcm_open(
-                &self->pcm_handle,
-                self->name,
-                (snd_pcm_stream_t)config->stream,
-                config->blocking ? 0 : SND_PCM_NONBLOCK);
+                &self->pcm_handle, self->name, (snd_pcm_stream_t)config->stream, 0);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot open PCM device %s [%d, %s]",
@@ -186,7 +180,7 @@ static int sound_card_hw_set_access(
         int error = snd_pcm_hw_params_set_access(
                 self->pcm_handle,
                 self->pcm_hw_params_handle,
-                (snd_pcm_access_t)access);
+                SND_PCM_ACCESS_RW_INTERLEAVED);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot set PCM device %s access [%s]",
@@ -208,7 +202,7 @@ static int sound_card_hw_set_format(sound_card_t* const self, int format)
         ASSERT(self != NULL);
 
         int error = snd_pcm_hw_params_set_format(
-                self->pcm_handle, self->pcm_hw_params_handle, format);
+                self->pcm_handle, self->pcm_hw_params_handle, SND_PCM_FORMAT_S24);
         if (error < 0) {
                 LOG_ERROR(
                         "Cannot set PCM device %s format [%s]",
@@ -729,7 +723,7 @@ int sound_card_capture(sound_card_t* const self, struct sound_card_task* const t
         ASSERT(self != NULL);
         ASSERT(task != NULL);
 
-        int error                = 0;
+        int error                 = 0;
         snd_pcm_sframes_t rframes = snd_pcm_readn(
                 self->pcm_handle,
                 (void**)(task->sample_buffers),

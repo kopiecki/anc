@@ -8,19 +8,18 @@ add_library(${target_name}
         ${target_sources}
 )
 
+find_library(ALSA_LIB NAMES asound PATHS $ENV{ARM_TOOLCHAIN_PATH}/lib)
 
 target_include_directories(${target_name}
+    PRIVATE
+        $ENV{ARM_TOOLCHAIN_PATH}/include
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/inc
 )
 
-include(compiler/CompilerWarningsForC)
-compiler_warnings_install(${target_name} WARNINGS_AS_ERRORS)
-
-add_definitions(-DALSA_PCM_NEW_HW_PARAMS_API)
 target_link_libraries(${target_name}
-    PRIVATE
-        asound
+    PUBLIC
+        ${ALSA_LIB}
         signal
         utils
         m

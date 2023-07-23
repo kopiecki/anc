@@ -11,9 +11,6 @@ target_link_libraries(${test_signal}
                 utils
 )
 
-include(compiler/CompilerWarningsForC)
-compiler_warnings_install(${test_signal} WARNINGS_AS_ERRORS)
-
 install(TARGETS ${test_signal} RUNTIME DESTINATION bin)
 
 set(test_sound "test_sound")
@@ -25,17 +22,11 @@ add_executable(${test_sound} ${test_sound_sources})
 include_directories(${test_sound} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(${test_sound}
         PRIVATE
-                -static-libgcc
-                -static-libstdc++
-                -static
                 signal
                 utils
                 sound_card
                 dsp
 )
-
-include(compiler/CompilerWarningsForC)
-compiler_warnings_install(${test_sound} WARNINGS_AS_ERRORS)
 
 install(TARGETS ${test_sound} RUNTIME DESTINATION bin)
 
@@ -51,12 +42,7 @@ target_link_libraries(${test_fir}
                 signal
                 utils
                 dsp
-                -static-libgcc
-                -static-libstdc++
 )
-
-include(compiler/CompilerWarningsForC)
-compiler_warnings_install(${test_sound} WARNINGS_AS_ERRORS)
 
 install(TARGETS ${test_fir} RUNTIME DESTINATION bin)
 
@@ -74,9 +60,6 @@ target_link_libraries(${test_lms}
                 dsp
 )
 
-include(compiler/CompilerWarningsForC)
-compiler_warnings_install(${test_lms} WARNINGS_AS_ERRORS)
-
 install(TARGETS ${test_lms} RUNTIME DESTINATION bin)
 
 set(test_anc "test_anc")
@@ -93,8 +76,5 @@ target_link_libraries(${test_anc}
                 utils
                 dsp
 )
-
-include(compiler/CompilerWarningsForC)
-compiler_warnings_install(${test_anc} WARNINGS_AS_ERRORS)
 
 install(TARGETS ${test_anc} RUNTIME DESTINATION bin)

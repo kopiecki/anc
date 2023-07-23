@@ -1,0 +1,20 @@
+# Common
+esbonio
+loguru
+pre-commit
+numpy
+matplotlib
+scipy
+argparse
+
+# Tests
+pytest
+pytest-cov
+
+# Style
+autopep8
+black
+mypy
+pycodestyle
+pydocstyle
+pylint
