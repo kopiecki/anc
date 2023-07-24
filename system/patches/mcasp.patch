@@ -1,0 +1,12 @@
+--- davinci-mcasp_mod.c	2023-07-24 21:53:30.489030148 +0000
++++ davinci-mcasp.c	2023-07-24 21:52:31.628767275 +0000
+@@ -470,8 +470,7 @@
+ 		mcasp_set_bits(mcasp, DAVINCI_MCASP_TXFMCTL_REG, FSXDUR);
+ 		mcasp_set_bits(mcasp, DAVINCI_MCASP_RXFMCTL_REG, FSRDUR);
+ 		/* 1st data bit occur one ACLK cycle after the frame sync */
+-        // DK: This doesn't apply to SPI controlled AD5541
+-		data_delay = 0;
++		data_delay = 1;
+ 		/* FS need to be inverted */
+ 		inv_fs = true;
+ 		break;

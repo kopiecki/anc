@@ -1,0 +1,70 @@
+&am33xx_pinmux {
+	mcasp0_pins: mcasp0_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKX, PIN_INPUT_PULLUP, MUX_MODE0) /* mcasp0_ahcklx.mcasp0_ahclkx */
+			/* AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKR, PIN_OUTPUT_PULLDOWN, MUX_MODE2) mcasp0_ahclkr.mcasp0_axr2*/
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_FSX, PIN_OUTPUT_PULLUP, MUX_MODE0)
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_ACLKX, PIN_OUTPUT_PULLDOWN, MUX_MODE0)
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR0, PIN_INPUT_PULLDOWN, MUX_MODE0)
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR1, PIN_INPUT_PULLDOWN, MUX_MODE0)
+            AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR2, PIN_OUTPUT_PULLUP, MUX_MODE2)
+
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A11, PIN_OUTPUT_PULLDOWN, MUX_MODE7) /* gpmc_a11.GPIO1_27 */
+		>;
+	};
+};
+
+&mcasp0 {
+    #sound-dai-cells = <0>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&mcasp0_pins>;
+    status = "okay";
+    op-mode = <0>; /* MCASP_IIS_MODE */
+    tdm-slots = <2>;
+    num-serializer = <4>;
+    serial-dir = < /* 1 TX 2 RX 0 unused */
+        2 2 1 1
+    >;
+    rx-num-evt = <1>;
+    tx-num-evt = <1>;
+};
+
+/ {
+	clk_mcasp0_fixed: clk_mcasp0_fixed {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <24576000>;
+	};
+
+    clk_mcasp0: clk_mcasp0 {
+		#clock-cells = <0>;
+		compatible = "gpio-gate-clock";
+		clocks = <&clk_mcasp0_fixed>;
+		enable-gpios = <&gpio1 27 0>; /* BeagleBone Black Clk enable on GPIO1_27 */
+	};
+
+    pcm5102a: pcm5102a {
+        #sound-dai-cells = <0>;
+        compatible = "ti,pcm5102a";
+        status = "okay";
+    };
+
+    sound0: sound@0 {
+        compatible = "simple-audio-card";
+        simple-audio-card,name = "anc-db";
+        simple-audio-card,format = "i2s";
+        simple-audio-card,bitclock-master = <&sound_master>;
+        simple-audio-card,frame-master = <&sound_master>;
+        simple-audio-card,bitclock-inversion;
+
+        sound_master: simple-audio-card,cpu {
+            sound-dai = <&mcasp0>;
+            clocks = <&clk_mcasp0>;
+            system-clock-direction-out;
+        };
+
+        simple-audio-card,codec {
+            sound-dai = <&pcm5102a>;
+        };
+    };
+};
