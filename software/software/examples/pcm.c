@@ -80,13 +80,13 @@ static void generate_sine(const snd_pcm_channel_area_t *areas,
             res ^= 1U << (format_bits - 1);
         for (chn = 0; chn < channels; chn++) {
             /* Generate data in native endian format */
-            if (big_endian) {
-                for (i = 0; i < bps; i++)
-                    *(samples[chn] + phys_bps - 1 - i) = (res >> i * 8) & 0xff;
-            } else {
-                for (i = 0; i < bps; i++)
-                    *(samples[chn] + i) = (res >>  i * 8) & 0xff;
-            }
+
+                    *(samples[chn] + 0) = 0x00;
+                    *(samples[chn] + 1) = (res >> 8u) & 0xFF;
+                    *(samples[chn] + 2) = (res) & 0xFF;
+                    *(samples[chn] + 3) = (res) & 0xFF;
+
+
             samples[chn] += steps[chn];
         }
         phase += step;

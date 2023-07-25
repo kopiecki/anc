@@ -1,0 +1,403 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{bib:figwer}{book}{}
+    \name{author}{6}{}{%
+      {{hash=BE}{%
+         family={Bielińska},
+         familyi={B\bibinitperiod},
+         given={Ewa},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=FJ}{%
+         family={Figwer},
+         familyi={F\bibinitperiod},
+         given={Jarosław},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=KJ}{%
+         family={Kasprzyk},
+         familyi={K\bibinitperiod},
+         given={Jerzy},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=LT}{%
+         family={Legierski},
+         familyi={L\bibinitperiod},
+         given={Tadeusz},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=OZ}{%
+         family={Ogonowski},
+         familyi={O\bibinitperiod},
+         given={Zbigniew},
+         giveni={Z\bibinitperiod},
+      }}%
+      {{hash=PM}{%
+         family={Pawełczyk},
+         familyi={P\bibinitperiod},
+         given={Marek},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwo Politechniki Śląskiej}%
+    }
+    \strng{namehash}{BE+1}
+    \strng{fullhash}{BEFJKJLTOZPM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{isbn}{83-7335-077-2}
+    \field{title}{Identyfikacja procesów}
+    \list{location}{1}{%
+      {Gliwice}%
+    }
+    \field{year}{2002}
+  \endentry
+
+  \entry{bib:krk}{online}{}
+    \list{publisher}{1}{%
+      {KRK}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{title}{KRK Classic 8 Professional Studio Monitor}
+    \verb{url}
+    \verb https://www.krkmusic.com/Studio-Monitors/CLASSIC-8
+    \endverb
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:kuo_morgan}{book}{}
+    \name{author}{2}{}{%
+      {{hash=KSM}{%
+         family={Kuo},
+         familyi={K\bibinitperiod},
+         given={Sen\bibnamedelima Maw},
+         giveni={S\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+      {{hash=MDR}{%
+         family={Morgan},
+         familyi={M\bibinitperiod},
+         given={Dennis\bibnamedelima R.},
+         giveni={D\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {John Wiley \& Sons, Inc.}%
+    }
+    \strng{namehash}{KSMMDR1}
+    \strng{fullhash}{KSMMDR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{isbn}{0471134244}
+    \field{title}{Active Noise Control Systems: Algorithms and DSP
+  Implementations}
+    \list{location}{1}{%
+      {USA}%
+    }
+    \field{year}{1995}
+  \endentry
+
+  \entry{bib:mic}{online}{}
+    \name{author}{1}{}{%
+      {{hash=LJ}{%
+         family={Lewis},
+         familyi={L\bibinitperiod},
+         given={Jared},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Analog Devices}%
+    }
+    \strng{namehash}{LJ1}
+    \strng{fullhash}{LJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{46-05}
+    \field{title}{Understanding Microphone Sensitivity}
+    \verb{url}
+    \verb https://www.analog.com/media/en/analog-dialogue/volume-46/number-2/ar
+    \verb ticles/understanding_microphone_sensitivity.pdf
+    \endverb
+    \field{year}{2012}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:behringer}{online}{}
+    \list{publisher}{1}{%
+      {Behringer}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{title}{MEASUREMENT CONDENSER MICROPHONE ECM8000 Technical
+  Specifications}
+    \verb{url}
+    \verb https://mediadl.musictribe.com/media/PLM/data/docs/P0118/S_BE_P0118_E
+    \verb CM8000_A4_WW.pdf
+    \endverb
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:lc}{online}{}
+    \name{author}{1}{}{%
+      {{hash=ME}{%
+         family={Michael},
+         familyi={M\bibinitperiod},
+         given={Erdahl},
+         giveni={E\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Texas Instruments}%
+    }
+    \strng{namehash}{ME1}
+    \strng{fullhash}{ME1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{SPRAC97}
+    \field{title}{LC filter design}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/sprac97/sprac97.pdf
+    \endverb
+    \field{year}{2017}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:oppenheim}{book}{}
+    \name{author}{2}{}{%
+      {{hash=OAV}{%
+         family={Oppenheim},
+         familyi={O\bibinitperiod},
+         given={Alan\bibnamedelima V},
+         giveni={A\bibinitperiod\bibinitdelim V\bibinitperiod},
+      }}%
+      {{hash=SRW}{%
+         family={Schafer},
+         familyi={S\bibinitperiod},
+         given={Ronald\bibnamedelima W.},
+         giveni={R\bibinitperiod\bibinitdelim W\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwa Komunikacji i Łączności}%
+    }
+    \strng{namehash}{OAVSRW1}
+    \strng{fullhash}{OAVSRW1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{title}{Cyfrowe przetwarzanie sygnałów}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{1979}
+  \endentry
+
+  \entry{bib:ott}{book}{}
+    \name{author}{1}{}{%
+      {{hash=OHW}{%
+         family={Ott},
+         familyi={O\bibinitperiod},
+         given={Henry\bibnamedelima W.},
+         giveni={H\bibinitperiod\bibinitdelim W\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {John Wiley \& Sons, Inc.}%
+    }
+    \strng{namehash}{OHW1}
+    \strng{fullhash}{OHW1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{isbn}{9780470189306}
+    \field{title}{Electromagnetic Compatibility Engineering}
+    \list{location}{1}{%
+      {USA}%
+    }
+    \field{year}{2009}
+  \endentry
+
+  \entry{bib:sitara}{online}{}
+    \list{publisher}{1}{%
+      {Texas Instruments}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{SLAA701}
+    \field{title}{Sitara\textsuperscript{TM} Linux ALSA DSP Microphone Array
+  Voice Recognition}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/slaa701a/slaa701a.pdf
+    \endverb
+    \field{year}{2016}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:stoica}{book}{}
+    \name{author}{2}{}{%
+      {{hash=ST}{%
+         family={S{\"o}derstr{\"o}m},
+         familyi={S\bibinitperiod},
+         given={Torsten},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=SP}{%
+         family={Stoica},
+         familyi={S\bibinitperiod},
+         given={Petre},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwo Naukowe PWN}%
+    }
+    \strng{namehash}{STSP1}
+    \strng{fullhash}{STSP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{isbn}{83-01-12158-0}
+    \field{title}{Identyfikacja systemów}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{1997}
+  \endentry
+
+  \entry{bib:art}{book}{}
+    \name{author}{2}{}{%
+      {{hash=TU}{%
+         family={Tietze},
+         familyi={T\bibinitperiod},
+         given={Ulrich},
+         giveni={U\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Schenk},
+         familyi={S\bibinitperiod},
+         given={Christoph},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwa Naukowo-Techniczne}%
+    }
+    \strng{namehash}{TUSC1}
+    \strng{fullhash}{TUSC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{isbn}{83-204-2123-3}
+    \field{title}{Sztuka elektroniki}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{1997}
+  \endentry
+
+  \entry{bib:tietze}{book}{}
+    \name{author}{2}{}{%
+      {{hash=TU}{%
+         family={Tietze},
+         familyi={T\bibinitperiod},
+         given={Ulrich},
+         giveni={U\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Schenk},
+         familyi={S\bibinitperiod},
+         given={Christoph},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwa Naukowo-Techniczne}%
+    }
+    \strng{namehash}{TUSC1}
+    \strng{fullhash}{TUSC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{isbn}{83-204-2123-3}
+    \field{title}{Układy półprzewodnikowe}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{1997}
+  \endentry
+
+  \entry{bib:mcasp}{online}{}
+    \name{author}{1}{}{%
+      {{hash=TB}{%
+         family={Tufino},
+         familyi={T\bibinitperiod},
+         given={Bobby},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TB1}
+    \strng{fullhash}{TB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{number}{SPRACK0}
+    \field{title}{McASP Design Guide - Tips, Tricks and Practical Examples}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/sprack0/sprack0.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Texas Instruments}%
+    }
+    \field{year}{2019}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+\enddatalist
+\endinput
