@@ -189,11 +189,11 @@ staje się układem RLC. Rezystor w takim układzie wprowadza tłumienie, z czeg
 współczynnik tłumienia oraz dobroć. 
 Wielkości te odpowiednio określone są następującymi zależnościami:
 \begin{equation}
-    Q = \frac{1}{R}\sqrt{\frac{L}{C}}
-\end{equation}
-\begin{equation}
     \zeta = \frac{1}{2Q} = \frac{1}{2R\sqrt{\frac{C}{L}}}
     \label{eq:zeta}
+\end{equation}
+\begin{equation}
+    Q = \frac{1}{R}\sqrt{\frac{L}{C}}
 \end{equation}
 
 Współczynnik tłumienia może znajdować się w czterech typach zakresów:
@@ -221,7 +221,7 @@ z czego wynika $f_c \approx 2.47$ kHz oraz warunek na rezystancję cewki:
 \begin{equation}
     R = \sqrt{\frac{L}{2C}} = \sqrt{\frac{4.7}{2160}} \approx 46.6 \text{ m}\Omega
 \end{equation}
-W układzie dobrano dostępną wartość najbliższą obliczeniom i wynosi ona $74.8 \text{ }\mu$H. 
+W układzie dobrano dostępną wartość najbliższą obliczeniom i wynosi ona $74.8 \text{ m}\Omega$. 
 Warto wspomnieć, że w przypadku doboru rzeczywistych wartości elementów, w tym przypadku 
 lepiej wybrać element o wartości zawyżonej niż zaniżonej, ponieważ bardziej oczekiwane
 jest uzyskanie lepszego tłumienia, niż wzmocnienia pasma rezonansowego.
@@ -238,14 +238,16 @@ buforowanie i filtrację średnich częstotliwości przedstawiono na rysunku \re
 \subsection{Symetryzacja szyn zasilających}
 
 Przetwarzany sygnał dźwiękowy jest symetryczny wokół zera, więc wymagane jest,
-aby wzmacniacze operacyjne pracujące w sekcjach torów analogowych posiadały 
-również symetryczne zasilanie, odpowiednio wysokie, aby nie doporowadzać do 
-saturacji ich wyjść. Wybranym zasilaniem jest $\pm$12 V, a szczegóły dotyczące
+również symetryczne zasilanie dla wzmacniaczy w sekcji torów analogowych, 
+odpowiednio wysokie, aby nie doporowadzać do saturacji ich wyjść. 
+Wybranym zasilaniem jest $\pm$12 V, a szczegóły dotyczące
 tego wyboru będą dokładniej opisywane w sekcji torów analogowych.
+
 \par Autor stosunkowo sporo czasu poświęcił kwesti generacji ujemnego zasilania.
-W literaturze \cite{bib:art} opisanych jest wiele sposobów implementacji tego typu 
+W literaturze \cite{bib:art} \cite{bib:tietze} opisanych jest wiele sposobów implementacji tego typu 
 układów, z czego najbardziej popularnymi są inwertery napięciowe zaimplementowane w oparciu o 
 wzmacniacze operacyjne lub dedykowane przetwornice (ang. \textit{buck-boost}).
+
 \par Rozwiązanie oparte o skonstruowanie układu inwerterów zostało odrzucone z 
 powodu dodatkowego nakładu pracy. Taki system, poza układem 
 odwracającym napięcie (ang. \textit{rail splitter}) wymagałby dodatkowego 
@@ -256,15 +258,23 @@ kanałów jest cztery, to wymaganiem jest, aby wydajność prądowa wykorzystane
 generatora ujemnego napięcia wynosiła maksymalnie 100 mA. Opcja wyboru
 dedykowanej przetwornicy została odrzuca z powodu niskiej dostępności układów 
 zgodnych z założoną specyfikacją na rynku.
+
 \par Wynikowo zdecydowano się na wykorzystanie układu 
 odwracającej pompy ładunków. Układ spełnia wszystkie założenia projektowe i 
 jest wydajny prądowo (maksymalny pobierany prąd równy 100 mA), minusem
-jednak jest mała dokładność napięcia wyjściowego, wynosząca
-95\% napięcia wejściowego, jak i duże fluktuacje na wyjściu (ang. \textit{ripple}),
-o amplitudzie 200 mV p-p i częstotliwości 500 kHz dla wykorzystywanego trybu pracy. 
-Dopuszczenie takiego napięcia na wzmacniacze w sekcji analogowej jest niedopuszczalne, 
+jednak jest mała dokładność napięcia wyjściowego z dużymi fluktuacjami, 
+opisanymi zależnością:
+\begin{equation}
+    U_{r,p-p} \approx \frac{I_{out}}{C_{out}}(\frac{1}{f_{osc}} - t_{on})
+\end{equation}
+W wykorzystywanym trybie pracy $t_{on} = 1 \text{ }\mu$s, $f_{osc} = 500$ kHz,
+$I_{out} = 100$ mA i $C_{out} = 10 \text{ }\mu$ F, więc przewidywana aplituda
+wyjściowych fluktuacji wyniesie 10 mV.
+
+\par Dopuszczenie takiego napięcia na wzmacniacze w sekcji analogowej jest niedopuszczalne, 
 między innymi zważając na wskaźnik PSRR, który dla wybranych wzmacniaczy wynosi
 około 40 dB dla częstotliwości 500 kHz oraz niską dokładność.
+
 \par W związku z powyższymi kwestiami, napięcie wyjściowe pompy ładunków należy
 filtrować i stabilizować. Jako filtr zastosowano ponownie układ LC 
 (rzeczywisty RLC) o niższej częstotliwości rezonansowej, ponieważ celem jest
@@ -272,6 +282,7 @@ filtracja fluktuacji wprowadzanych przez pompę ładunków. Dla dobranego
 $L = 3.3 \text{ }\mu$H i $C = 57 \text{ }\mu$F uzyskano $f_c \approx 12.18$ kHz 
 oraz warunek na rezystancję cewki $R \approx 170 \text{ m}\Omega$, który 
 spełniono wybierając najbliższą dostepną wartość równą 250 m$\Omega$.
+
 \par Przefiltrowane ujemne napięcie trafia następnie wraz z jego dodatnim
 odpowiednikim na układy liniowych regulatorów napięcia o małym spadku 
 (LDO, ang. \textit{Low-dropout}), których celem jest stabilizacja oraz 
@@ -279,6 +290,7 @@ zwiększenie dokładności. Wykorzystane układy według specyfikacji dla zakres
 pracy od 12 do 15 V posiadają dokładność równą 2.5\%, wydajność prądową równą 
 maksymalnie 1 A oraz średni stosunek tłumienia zakłóceń równy 66 dB dla częstotliwości
 powyżej 100 kHz i prądu wyjściowego równego 10 mA.
+
 \par Omawiany układ wraz z dołożonymi kondensatorami odsprzęgającym, których
 wartości dobierane były według not aplikacyjnych producenta przedstawiono na rysunku
 \ref{hw::split}.
@@ -292,9 +304,104 @@ wartości dobierane były według not aplikacyjnych producenta przedstawiono na 
 
 
 \subsection{Zasilanie domeny cyfrowej}
-\subsection{Referencja domeny analogowej}
+
+Celem sekcji jest wygenerowanie napięcia równego 5 V, będącego zasilaniem
+przetworników cyfrowo-analogowych oraz wybranej platformy rozwojowej.
+Maksymalne zapotrzebowanie prądowe tych elementów wynosi odpowiednio 100 $\mu$A 
+oraz około 2 A.
+\par Wykorzystywana platformowa rozwojowa posiada własną sekcję stabilizacji i 
+filtracji napięcia wejściowego, a wybrane przetworniki cyfrowe-analogowe, w przeciwieństwie 
+do analogowo-cyfrowych, generują wyjście na podstawie dodatkowego sygnału 
+referencyjnego, więc wymagania nałożone na dokładność wygenerowanego zasilania
+są zdecydowanie mniej rygorystyczne niż w przypadku zasilań i referencji 
+domeny analogowej.
+\par Zważając na powyższe, w celu generacji napięcia wykorzystano układ 
+impulsowej przetwornicy napięcia (\textbf{SMPS}, ang. \textit{Switched mode power supply}),
+który jest tani, prosty w implementacji oraz zapewnia wysoką wydajność prądową, która
+według dokumentacji wynosi do 3 A.
+\par Zależność opisująca napięcie wyjściowe wykorzystanego układu podana jest 
+przez producenta i zdefiniowana jest poniższym równaniem:
+\begin{equation} 
+    U_{out} = 0.765 \cdot (1 + \frac{R_1}{R_2})
+    \label{eq::smps}
+\end{equation}
+Jak opisywano w sekcji dotyczącej filtracji i stabilizacji zasilania wejściowego,
+przetwornice generują fluktuacje na wyjściu, które należy filtrować. W przypadku
+tego układu, producent w nocie aplikacyjnej przedstawił zalecane parametry
+wyjściowego filtru LC, z których skorzystano.
+\par Napięcie z przetwornicy trafia końcowo na regulator napięcia w celu
+stabilizacji oraz zostaje wyprowadzone na pozostałe sekcje. Omowiany układ
+przedstawiono na rysunku \ref{hw::smps}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{graf/hw/smps.png}
+    \caption{Zasilanie domeny cyfrowej}
+    \label{hw::smps}
+\end{figure}
+
+Napięcie wyjściowe przetwornicy zgodnie z zależnością \ref{eq::smps} wynosi
+5.97 V, co pozwala poprawną stabilazację z wykorzystaniem regulatora 
+niskiego spadku. Do wygenerowanego zasilania równolegle wraz z rezystorem
+ograniczającym prąd dodatkowo podłączono diodę LED, działającą jako indykator
+informujący o włączonym układzie.
+
+\subsection{Referencja domeny analogowo-cyfrowej}
+
+Wykorzystane przetworniki wymagają zasilania referencyjnego, na bazie 
+którego przeprowadzane sa konwersje. W przypadku przetworników cyfrowo-analogowych,
+zależność wynosi:
+\begin{equation}
+    U_{out} = \frac{U_{ref} \cdot D}{2^{N}}
+\end{equation}
+gdzie $D$ to dane załadowane do rejestru przetwornika, a $N$
+to rozdzielczość. W przypadku przetwornika analogowo-cyfrowego, referencja wpływa
+bezpośrednio na rozmiar kwantu:
+\begin{equation}
+    q = \frac{U_{ref}}{2^{N}}
+\end{equation}
+
+Z powyższych równań wynika, że sygnał referencyjny musi być bardzo dokładny.
+Aby to uzyskać, zastosowano precyzyjny regulator napięcia niskiego spadku, zdolny
+do generacji napięcia wyjściowego z maksymalnym błędem równym 2 mV i maksymalnym
+obciążeniem równym 30 mA, wystarczającym dla wykorzystanych przetworników.
+Zakres wejściowych napięć układu zawiera się w przedziale od -0.3 do +18 V,
+więc wejściowe napięcie (równe +12 V) jest również odpowiednie. Omawiany
+układ wraz z kondensatorami odsprzęgającymi przedstawiono na rysunku
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{graf/hw/ref.png}
+    \caption{Referencja domeny analogowo-cyfrowej}
+    \label{hw::smps}
+\end{figure}
+
+Warto dodać, że napięcie referencje, prócz przetworników, trafia również na
+ograniczniki diodowe zastosowane w sekcji wejściowych torów analogowych.
+
 \subsection{Generacja składowej stałej}
-\subsection{Sekcje dodatkowe}
+
+Jak dokładniej będzie opisywane w sekcji torów analogowych, w celu zapewnienia 
+pełnego zakresu dynamicznego przetworników analogowo-cyfrowych, niezbędny
+jest dokładny i stabilny sygnał referencyjny zapewniający odpowiednią 
+składową stałą w przetworzonym sygnale dźwiękowym trafiającym na wejście
+przetwornika. Od układu generującego taki sygnał nie jest wymagana obsługa 
+dużych obciążeń, ponieważ sygnał na jego wyjściu w zaimplementowanym
+rozwiązaniu trafia na wejście nieodwracające wzmiacniaczy operacyjnych 
+w sekcji analogowej, których impedancja wejściowa jest liczona w M$\Omega$ 
+(teoretycznie impedancja wejściowa wzmacniacza operacyjnego jest nieskończona 
+\cite{bib:art}).
+\par W celu generacji takiego sygnału posłużono się układem napięcia odniesienia, 
+który wraz z niezbędnymi kondensatorami odsprzęgającymi przedstawiono na rysunku
+\ref{hw::off}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{graf/hw/off.png}
+    \caption{Układ napięcia odniesienia}
+    \label{hw::off}
+\end{figure}
+
 \section{Wejściowe tory analogowe}
 \subsection{Zasilanie Phantom}
 \subsection{Wejściowa filtracja zakłóceń dużej częstotliwości}
