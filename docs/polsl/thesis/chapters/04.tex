@@ -3,7 +3,7 @@
 Diagram, opisujący zaimplementowaną architekturę sprzętową przedstawiono na 
 rysunku \ref{hw::arch}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/top.png}
     \caption{Architektura sprzętowa - najwyższy poziom}
@@ -85,7 +85,8 @@ pracującego w przedziale -2.5 do 2.5 V, 20 mV z mikrofonu powinno odpowiadać m
 zakresowi 2.5 V, co pozwala na obliczenie wzmocnienia.
 
 \begin{equation}
-        k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{0.02} = 125 \approx 42 \text{ dB} 
+        k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{0.02} = 125 \approx 42 \text{ dB}
+        \label{eq::k_preamp}
 \end{equation}
 
 Biorąc pod uwagę powyższe kwestie, autor zdecydował się na wykorzystanie 
@@ -148,7 +149,7 @@ techniczne szczegóły, z najbardziej znaczących parametrów można wyróżnić
 
 Diagram dystrybucji zasilania przedstawiono na rysunku \ref{hw::power_dist}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/power_dist.png}
     \caption{Diagram dystrybucji zasilania}
@@ -185,7 +186,15 @@ Częstotliwość rezonansowa takiego układu wynosi:
 
 Należy mieć na uwadze, że zależność \ref{eq:lc_lp} przedstawia idealny model układu LC.
 W rzeczywistości każdy element pasywny posiada swoją rezystancję, przez co układ LC 
-staje się układem RLC. Rezystor w takim układzie wprowadza tłumienie, z czego wynika
+staje się układem RLC, określonym zależnością:
+\begin{equation}
+    U_{wy}(s) = U_{we}(s) \frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{R + Ls + \frac{1}{Cs}}
+        \implies K_{LP}(s) = \frac{1}{LCs^2 + RCs + 1}
+    \label{eq:lc_lp}
+\end{equation}
+
+
+Rezystor w takim układzie wprowadza tłumienie, z czego wynika
 współczynnik tłumienia oraz dobroć. 
 Wielkości te odpowiednio określone są następującymi zależnościami:
 \begin{equation}
@@ -209,7 +218,6 @@ Przy projektowaniu tego typu układów oczekuje się, że będą tłumione kryty
 Oznacza to, że układ jest na granicy oscylacji, a pik rezonansowy na charakterystyce
 częstotliwościowej jest nabliższy zakresowi pasma przenoszenia, 
 które nie jest tłumione (możliwe płaskie) \cite{bib:lc}.
-\\
 \par W związku z tym, podstawiając $\zeta = 1$ w równaniu \ref{eq:zeta} otrzymuje się:
 \begin{equation}
     L = \frac{R\sqrt{2}}{\omega_0}, \quad C = \frac{1}{\omega_0 R\sqrt{2}}
@@ -228,12 +236,15 @@ jest uzyskanie lepszego tłumienia, niż wzmocnienia pasma rezonansowego.
 Omawiany schemat układu wraz z dołożonymi kondensatorami zapewniającymi dodatkowe
 buforowanie i filtrację średnich częstotliwości przedstawiono na rysunku \ref{hw::input}:
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/input.png}
     \caption{Sekcja wejściowa}
     \label{hw::input}
 \end{figure}
+
+Tak przygotowanie napięcie 15 V jest podstawą do generacji pozostałych zasilań
+w układzie, jak i również wykorzystywane jest jako zasilanie phantomowe mikrofonów.
 
 \subsection{Symetryzacja szyn zasilających}
 
@@ -258,7 +269,6 @@ kanałów jest cztery, to wymaganiem jest, aby wydajność prądowa wykorzystane
 generatora ujemnego napięcia wynosiła maksymalnie 100 mA. Opcja wyboru
 dedykowanej przetwornicy została odrzuca z powodu niskiej dostępności układów 
 zgodnych z założoną specyfikacją na rynku.
-
 \par Wynikowo zdecydowano się na wykorzystanie układu 
 odwracającej pompy ładunków. Układ spełnia wszystkie założenia projektowe i 
 jest wydajny prądowo (maksymalny pobierany prąd równy 100 mA), minusem
@@ -295,9 +305,9 @@ powyżej 100 kHz i prądu wyjściowego równego 10 mA.
 wartości dobierane były według not aplikacyjnych producenta przedstawiono na rysunku
 \ref{hw::split}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/hw/split.png}
+    \includegraphics[width=0.75\textwidth]{graf/hw/split.png}
     \caption{Symetryzacja szyn zasilających}
     \label{hw::split}
 \end{figure}
@@ -333,7 +343,7 @@ wyjściowego filtru LC, z których skorzystano.
 stabilizacji oraz zostaje wyprowadzone na pozostałe sekcje. Omowiany układ
 przedstawiono na rysunku \ref{hw::smps}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/smps.png}
     \caption{Zasilanie domeny cyfrowej}
@@ -352,7 +362,7 @@ Wykorzystane przetworniki wymagają zasilania referencyjnego, na bazie
 którego przeprowadzane sa konwersje. W przypadku przetworników cyfrowo-analogowych,
 zależność wynosi:
 \begin{equation}
-    U_{out} = \frac{U_{ref} \cdot D}{2^{N}}
+    U_{out} = \frac{DU_{ref}}{2^{N}}
 \end{equation}
 gdzie $D$ to dane załadowane do rejestru przetwornika, a $N$
 to rozdzielczość. W przypadku przetwornika analogowo-cyfrowego, referencja wpływa
@@ -366,17 +376,17 @@ Aby to uzyskać, zastosowano precyzyjny regulator napięcia niskiego spadku, zdo
 do generacji napięcia wyjściowego z maksymalnym błędem równym 2 mV i maksymalnym
 obciążeniem równym 30 mA, wystarczającym dla wykorzystanych przetworników.
 Zakres wejściowych napięć układu zawiera się w przedziale od -0.3 do +18 V,
-więc wejściowe napięcie (równe +12 V) jest również odpowiednie. Omawiany
-układ wraz z kondensatorami odsprzęgającymi przedstawiono na rysunku
+więc wejściowe napięcie (równe +12 V) jest odpowiednie. Omawiany
+układ wraz z kondensatorami odsprzęgającymi przedstawiono na rysunku \ref{hw::smps}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/ref.png}
     \caption{Referencja domeny analogowo-cyfrowej}
     \label{hw::smps}
 \end{figure}
 
-Warto dodać, że napięcie referencje, prócz przetworników, trafia również na
+Warto dodać, że napięcie referencjyjne, prócz przetworników, trafia również na
 ograniczniki diodowe zastosowane w sekcji wejściowych torów analogowych.
 
 \subsection{Generacja składowej stałej}
@@ -395,17 +405,152 @@ w sekcji analogowej, których impedancja wejściowa jest liczona w M$\Omega$
 który wraz z niezbędnymi kondensatorami odsprzęgającymi przedstawiono na rysunku
 \ref{hw::off}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/hw/off.png}
+    \includegraphics[width=0.75\textwidth]{graf/hw/off.png}
     \caption{Układ napięcia odniesienia}
     \label{hw::off}
 \end{figure}
 
 \section{Wejściowe tory analogowe}
-\subsection{Zasilanie Phantom}
+
+Schemat blokowy wejściowego toru analogowego przedstawiono na rysunku 
+\ref{hw::analog}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graf/hw/analog_in.png}
+    \caption{Schemat blokowy wejściowego toru analogowego}
+    \label{hw::analog}
+\end{figure}
+
+\subsection{Wejście zbalansowane}
+
+Dźwięk trafia na sekcję torów analogowych poprzez trzy-pinowe złącze XLR. 
+Oprócz masy, ze złącza odprowadzane są dwa sygnały,
+z czego drugi jest przesunięty o 90 stopni w fazie względem pierwszego. Tak 
+zrealizowane połączenia, wraz z odpowiednim ekranowaniem w przewodzie,
+pozwalają na minimalizację zakłóceń oraz strat.
+\par Bezpośrednio po doprowadzeniu sygnałów na układ, poprzez rezystory
+podciągające (ang. \textit{pull-up resistors}) do sygnałów doprowadzone 
+jest zasilanie phantomowe o wartości +15 V. 
+Standard IEC 61938 definiuje wartości rezystancji dla poszczególnych wartości
+napięc zasilania phantomowego i wynoszą one 6.81 k$\Omega$ dla zasilania +48 V,
+1.2 k$\Omega$ dla zasilania +24 V i 680 $\Omega$ dla zasilania +12 V. Jako,
+że wybrana wartość zasilania jest niestandardowa ze względu na specyfikację 
+mikrofonów, to rezystancje dobrano te, dla których 
+wartości napięcia w standardzie jest najbliższa, czyli 680 $\Omega$.
+\par Po doprowadzenia zasilania sygnały trafiają na kondensatory odcinające
+składową stałą. Omawianą część schematu przedstawiono na rysunku \ref{hw::xlr}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{graf/hw/xlr.png}
+    \caption{Wejście zbalansowane}
+    \label{hw::xlr}
+\end{figure}
+
 \subsection{Wejściowa filtracja zakłóceń dużej częstotliwości}
+
+W celu zabezpieczenia się przed wysokoczęstotliwościowymi zakłóceniami
+z zewnętrznych źródeł, następnym etapem przetwarzania jest zastosowanie
+dolnoprzepustowego filtru EMI (ang. \textit{Electromagnetic-interference filtering}).
+Obecność wysokoczęstotliwościowych szumów w przetwarzanym sygnale wchodzącym
+na wejście przedwzmacniacza różnicowego może doprowadzić do niekorzystnych
+zmian sygnału na wyjściowego. Takie zachowanie opisywane jest przez
+wskaźnik CMRR (ang. \textit{Common-mode rejection ratio}), który zdefiniowany
+jest jako stosunek wzmocnienia różnicowego do wzmocnienia sygnału zgodnego 
+\cite{bib:art}. Dla wykorzystywanych wzmacniaczy, powyżej częstotliwości 100 kHz,
+wskaźnik ten osiąga wartość około 80 dB.
+\par Zaprojektowany filtr jest dolnoprzepustowym filtrem RC pierwszego rzędu, którego
+opisuje następująca zależność \cite{bib:tietze}:
+\begin{equation}
+    U_{wy}(s) = U_{we}(s)\frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{R + \frac{1}{Cs}}
+        \implies K(s) = \frac{1}{RCs + 1}
+\end{equation}
+Stała czasowa $\tau$ oraz częstotliwość odcięcia 3 dB dane są zależnościami:
+\begin{equation}
+    \tau = RC, \quad f_c = \frac{1}{2\pi RC}
+\end{equation}
+Dobierając $R = 2$ k$\Omega$ i $C = 10$ nF uzyskano $f_c \approx 7.957$ kHz.
+
+\par Poza filtrem, w sekcji zaimplementowano zabezpieczenie w postaci
+ogranicznika diodowego zamykającego amplitudy wejściowego sygnału do 
+limitu +12 V. Omawiany układ wraz z poprzednio opisaną sekcją przedstawiono
+na rysunku \ref{hw::emif}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/hw/emif.png}
+    \caption{Filtr EMI wraz z ogranicznikiem diodowym}
+    \label{hw::emif}
+\end{figure}
+
 \subsection{Wzmocnienie różnicowe}
+
+Symetryczny sygnał z mikrofonów w kolejnym etapie należy przekonwertować
+do pojedynczej, odpowiednio wzmocnionej sumy. Układem wykorzystywanym do tego
+typu zastosowań jest wzmacniacz różnicowy, a jego topologię przedstawiono 
+na rysunku \ref{hw::op_diff}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{graf/hw/op_diff.png}
+    \caption{Wzmacniacz różnicowy}
+    \label{hw::op_diff}
+\end{figure}
+
+\par Zależność opisująca układ opiera się na wykorzystaniu zasady superpozycji.
+Równanie opisujące wyjście w układu w stosunku do wejścia odwracającego przy
+wirtualnie wyzerowanym wejściu nieodwracającym jest zależnością opisującją
+wzmocnienie wzmacniacza w topologi odwracającej, opisaną jako \cite{bib:tietze}:
+\begin{equation}
+    U_{-,wy} = -U_{-,we}\left(\frac{R_f}{R_{1}}\right)
+\end{equation}
+gdzie $R_f$ jest rezystorem w ujemnym sprzężeniu zwrotnym, a $R_{in}$ przy 
+wejściu odwracającym.
+\par Natomiast wyjście wzmacniacza w stosunku do wejścia nieodwracającego
+przy wirtualnie wyzerowanym wejściu odwracającym jest zależnościa opisującą 
+wzmacniacz w topologi nieodwracającej w połączeniu z dzielnikiem występującym
+na wejściu nieodwracającym:
+\begin{equation}
+    U_{+,wy} = U_{+,we}\left(\frac{R_3}{R_2 + R_3}\right)\left(1 + \frac{R_f}{R_1}\right)
+\end{equation}
+Korzystając z zasady superpozycji otrzymuje się:
+\begin{equation}
+    U_{wy} = U_{+, we} - U_{-,wy} = U_{+,we}\left(\frac{R_3}{R_2 + R_3}\right)\left(1 + \frac{R_f}{R_1}\right)
+    - U_{-,we}\left(\frac{R_f}{R_{1}}\right)
+    \label{eq:op_diff}
+\end{equation}
+Dla $R_1 = R_2$ i $R_3 = R_f$ równanie \ref{eq:op_diff} upraszcza się do postaci:
+\begin{equation}
+    U_{wy} = \frac{R_f}{R_1}(U_{+,we} - U_{-,we})
+\end{equation}
+
+Jak opisywano w sekcji dotyczącej wybranych mikrofonów, wzmocnienie
+przedwzmacniacza dobiera się na podstawie ich czułości. Wykorzystywane
+mikrofony posiadają czułość na poziomie 15 $\frac{\text{mV}}{\text{Pa}}$, 
+a zakres wybrany zakres SPL dla analizowanego hałasu z zapasem wynosi od 85 do 105 dB SPL, 
+co odpowiada około 3.5 Pa dla górnego limitu. Wybrany przetwornik ma zakres od 0 do +5 V, więc chcąc uzyskać 
+pełen zakres dynamiczny dla wybranego zakresu hałasów ($U_{max}$ = 2.5 V amplitudy 
+przy składowej stałej 2.5 V) korzystając z zależności \ref{eq::k_preamp} otrzymano:
+\begin{equation}
+    k = \frac{U_{max}}{U_{mic}} = \frac{2.5}{(3.5 \cdot 0.015)} = 46.9483 \approx 33.4 \text{ dB} 
+\end{equation}
+
+Finalnie, zważając na powyższe, wzmocnienie wzmacniacza zaokrąglono
+w górę przyjmując $k = 50$, oraz $R_f = 100$ k$\Omega$ i $R_1 = 2$ k$\Omega$ w 
+symobolach schematu \ref{hw::op_diff}. Omawiany układ wraz z poprzednio opisywanymi przedstawiono
+na rysunku \ref{hw::preamp}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/hw/preamp.png}
+    \caption{Przedwzmacniacz}
+    \label{hw::preamp}
+\end{figure}
+
+
 \subsection{Filtracja antystroboskopowa}
 \subsection{Pozycjonowanie}
 \subsection{Zabezpieczenia}
