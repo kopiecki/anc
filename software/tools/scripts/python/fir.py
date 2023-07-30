@@ -100,7 +100,7 @@ class FIR(object):
                                      self._nyquist_hz, window=('kaiser', beta))
 
 
-def __generate_x(sampling_hz, num_of_samples):
+def _generate_x(sampling_hz, num_of_samples):
         t = np.arange(num_of_samples) / sampling_hz
 
         def omega(freq: int) -> float:
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     filter = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
                        cutoff_hz=0.1, trans_band_width_hz=2)
     
-    x = __generate_x(SAMPLING_HZ, NUM_OF_SAMPLES)
+    x = _generate_x(SAMPLING_HZ, NUM_OF_SAMPLES)
 
     filter.plot()
     filter.export()

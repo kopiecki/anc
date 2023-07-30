@@ -152,6 +152,32 @@
     \field{urlyear}{2023}
   \endentry
 
+  \entry{bib:lyons}{book}{}
+    \name{author}{1}{}{%
+      {{hash=LRG}{%
+         family={Lyons},
+         familyi={L\bibinitperiod},
+         given={Richard\bibnamedelima G.},
+         giveni={R\bibinitperiod\bibinitdelim G\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwa Komunikacji i Łączności}%
+    }
+    \strng{namehash}{LRG1}
+    \strng{fullhash}{LRG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{isbn}{978-83-206-1764-1}
+    \field{title}{Wprowadzenie do cyfrowego przetwarzania sygnałów}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{2010}
+  \endentry
+
   \entry{bib:behringer}{online}{}
     \list{publisher}{1}{%
       {Behringer}%

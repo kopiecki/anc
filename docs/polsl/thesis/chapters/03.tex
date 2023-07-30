@@ -1,12 +1,180 @@
 \chapter{Założenia projektowe}
-\section{Wymagania części sprzętowej}
-\subsection{Mikrofony i głośniki}
-\subsection{Zasilanie}
-\subsection{Tory analogowe}
-\subsection{Przetworniki}
-\subsection{Protokół cyfrowy}
-\subsection{Narzędzia}
-\section{Wymagania części programowej}
-\subsection{Środowisko pracy}
-\subsection{System operacyjny}
-\subsection{Oprogramowanie}
+
+Głównym założeniem stawianym całemu projektowi jest wykonanie prostego i 
+wygodnego w obsłudze środowiska, pozwalającego na wykonywanie badań i
+eksperymentów związanych z omawianą tematyką. Poprzez pojęcie środowiska, 
+autor ma na myśli nie tylko platformę sprzętową, ale również strukturę
+oprogramowania. Sprzęt ma być prosty w obsłudze i możliwe odporny 
+na błędy użytkownika, a struktura oprogramowania powinna udostępniać
+zestaw narzędzi pozwalających na łatwy proces prototypowania, symulacji, 
+komplilacji i ostatecznie wdrożenia zaimplementowanego rozwiązania.
+
+\par Autorowi pracy zależy, żeby wykonany projekt miał jak najszersze 
+horyzonty edukacyjne. W związku z tym, platforma sprzętowa, poza wykorzystaną
+jednostką obliczeniową, zostanie zaprojektowana i sporządzona samodzielnie w 
+postaci płytki drukowanej. Oprogramowanie napisane na docelową 
+platformę nie będzie korzystało z bibliotek udostępniających gotowe funkcje
+realizujące algorytmy będącymi znaczącymi elementami pracy.
+Wykorzystanie zewnętrznych bibliotek zostanie zamknięte na poziomie 
+prototypowania i symulacji.
+
+\par Dodatkowo postanowiono, że wykorzystane narzędzie wspomagające
+proces projektowania sprzętu jak i implementacji oprogramowania będą 
+na licencjach wolnego oprogramowania.
+
+\section{Wymagania stawiane części sprzętowej}
+
+Z ogólnych zadań zaprojektowanego i sporządzonego układu elektronicznego 
+można wyróżnić:
+\begin{enumerate}
+
+    \item Obsłużenie i odpowiednie przetworzenie wejściowych sygnałów analogowych 
+    z mikrofonów pomiarowych pod kowersję do domeny cyfrowej z użyciem 
+    osadzonych na płytce przetworników analogowo-cyfrowych.
+
+    \item Obsłużenie i odpowiednie przetworzenie wyjściowych sygnałów analogowych
+    pochodzących z osadzonych na płytce przetworników cyfrowo-analogowych pod
+    poprawne dostarczenie ich na głośniki.
+
+    \item Zapewnienie działającej komunikacji z wybraną platformą obliczeniową 
+    poprzez wybrany protokół cyfrowy, przez który przesyłane będą przekonwertowane
+    z użyciem osadzonych na płytce przetworników analogowo-cyfrowych 
+    do domeny cyfrowej wejściowe, pochodzące z mikrofonów, sygnały analogowe, 
+    oraz końcowo trafiające na głośniki dane wyjściowe do przetworników 
+    cyfrowo-analogowych.
+
+    \item Zapewnienie odpowiednich zasilań dla sekcji analogowych oraz cyfrowych.
+    Możliwość zasilania wybranej platformy obliczeniowej z poziomu płytki.
+
+\end{enumerate}
+
+Aby powyższe zadania wykonać, układ musi spełnić następujące wymagania:
+\begin{enumerate}
+
+    \item Dla wejściowych sekcji analogowych: 
+    \begin{enumerate}
+
+        \item Konwersję symetrycznego sygnału z mikrofonów 
+        do odpowiednio wzmocnionej sumy.
+
+        \item Filtrację dolnoprzepustową ograniczającą pasmo sygnału wejściowego
+        do mieszczącego się w zakresie od 50 do 500 Hz.
+
+        \item Odpowiednie wyskalowanie przetworzonego sygnału, aby mieścił się
+        w pełnym zakresie dynamicznym przetwornika, jak i nie przekraczał
+        dopuszczalnej granicy.
+
+    \end{enumerate}
+
+    \item Dla wyjściowych sekcji analogowych:
+    \begin{enumerate}
+
+        \item Odpowiednie przetworzenie sygnału wyjściowego przetworników
+        cyfrowo-analogowych, opierające się na skalowaniu i filtracji
+        rekonstrukcyjnej.
+
+        \item Przekształcenie wyjściowego sygnału na symetryczną parę,
+        zdefiniowaną przez standard złącza XLR.
+
+    \end{enumerate}
+
+    \item Dla wybranego protokołu cyfrowego:
+    \begin{enumerate}
+        
+        \item Synchronizację wszystkich przetworników poprzez wystawienie
+        wspólnego sygnału zegarowego o konfigurowalnej częstotliwości.
+
+        \item Jednoczesną obsługę dwóch kanałów wejściowych (RX) i 
+        dwóch kanałów wyjściowych (TX). Oznacza to, że protokół 
+        musi wspierać multipleksowanie kanałów, jeżeli wykorzystane
+        zostaną pojedyncze linie danych na odpowiednim kierunku transmisji,
+        lub odpowiednią konfigurację selektorów (CS), ewentulanie selektora (FS), 
+        jeżeli zostaną wykorzystane pojedyncze linie danych na kanał.
+
+    \end{enumerate}
+
+    \item Dla wybranych przetworników:
+    \begin{enumerate}
+
+        \item Relatywnie wysoka rozdzielczość, wynosząca minimalnie 12 bitów.
+        
+        \item Wsparcie dla identycznego protokołu cyfrowego.
+
+    \end{enumerate}
+
+    \item Dla sekcji zasilania:
+    \begin{enumerate}
+
+        \item Generację wszystkich potrzebnych zasilań na podstawie jednego,
+        dodatniego doprowadzonego z zewnątrz.
+
+        \item Generację symetrycznych zasilań dla wzmacniaczy pracujących
+        w sekcjach analogowych o względnie wysokiej dokładności.
+
+        \item W przypadku wyboru mikrofonów pojemnościowych, generację
+        odpowiedniego zasilania phantomowego, typowo mieszczącego się w zakresie
+        od +12 do +15 V.
+
+        \item Generację zasilań dla przetworników i zewnętrznej platformy
+        obliczeniowej.
+
+        \item Generację dokładnych napięć referencyjnych dla przetworników
+        (jeżeli będą potrzebne).
+
+    \end{enumerate}
+
+\end{enumerate}
+
+W przypadku urządzeń zewnętrznych wymagania są następujące:
+\begin{enumerate}
+    
+    \item Dla wykorzystanych mikrofonów:
+    \begin{enumerate}
+
+        \item Stosunkowo niska cena i wysoka dostępność.
+
+        \item Typ - standardem w omawianej tematyce są mikrofony \textbf{pojemnościowe}.
+        Znane są z wysokiej czułości i płaskiej charakterystki częstotliwościowej, jednak
+        wymagają dodatkowego zasilania, zwanego zasilaniem phantom.
+    
+        \item Charakterystyka kierunkowa - superkardoidalne lub hiperkardoidalne 
+        mogą lepiej skupić się na kierunkowym źródle dźwięku, lecz w przypadku hałasu 
+        w otwartej przestrzenii odbierany dźwięk będzie słabszy, jeżeli jego źródło 
+        znajdzie się poza docelowym obszarem działania. Tematyka 
+        projektu skupia się na hałasie w przestrzeni, a źródła dźwięku ustawione są
+        względem siebie pod pewnym kątem, więc docelową charakterystyką jest 
+        \textbf{charakterystyka kulista}.
+    
+        \item Odpowiedź częstotliwościowa - ideowo \textbf{płaska}. Zakres nie odgrywa
+        znaczącej roli, bo analizowane sygnały są wolnozmienne (pasmo od 50 do 500 Hz, 
+        gdzie typowe zakresy posiadają górną granicę definiowaną w dziesiątkach kiloherców).
+    
+        \item Czułość - informuje o wartości napięcia dla danego ciśnienia aktustycznego.
+        Wynika z następującej zależności:
+        \begin{equation} 
+                S_{\text{dBV}} = 20 \text{log}_{10} \frac{S_{\text{mV/Pa}}}{U_{\text{ref}}}
+        \end{equation}
+        gdzie $U_{ref} = 1000 \text{ }\frac{\text{mV}}{\text{Pa}}$. 
+
+    \end{enumerate}
+
+    \item Dla wykorzystanych zestawów głośnikowych:
+    \begin{enumerate}
+
+        \item Z racji, że zrezygnowano z projektowania końcówki mocy, wymagany 
+        jest wbudowany wzmacniacz. Innymi słowy, zestawy muszą być \textbf{aktywne}.
+    
+        \item Analizowane sygnały są wolnozmienne (pasmo 100 do 500 Hz), więc 
+        wymagane jest wsparcie dla tonów niskich. Innymi słowy na wyposażeniu zestawu
+        musi być głośnik niskotonowy (ang. \textit{woofer}), zdolny do emisji
+        sygnałów akustycznych o niskiej częstotliwości.
+    
+        \item Z uwagi na zakres poziomu akustycznego analizowanych sygnałów, 
+        zestaw musi być zdolny do osiągnięcia jego górnego limitu, czyli użytecznego 
+        90 dB SPL.
+
+    \end{enumerate}
+\end{enumerate}
+
+
+\section{Wymagania stawiane części programowej}
