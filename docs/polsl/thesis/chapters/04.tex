@@ -1,7 +1,7 @@
 \chapter{Implementacja części sprzętowej}
 
 Diagram opisujący zaimplementowaną architekturę sprzętową przedstawiono na 
-rysunku \ref{hw::arch}.
+rysunku \ref{hw::arch}:
 
 \begin{figure}[H]
     \centering
@@ -42,7 +42,10 @@ z których można wyróżnić:
     \item $y_{an}(t)$ - sygnał reperezentujący obliczony antyhałas.
 \end{enumerate}
 
-Pogrubionymi konektorami zaznaczono szyny zasilania i są to odpowiednio:
+Każdy z wyszczególnionych wyżej sygnałów analogowych posiada swoje przetworzone
+odpowiedniki, które na schemacie zaznaczono z apostrofem.
+\\
+\par Pogrubionymi konektorami zaznaczono szyny zasilania i są to odpowiednio:
 \begin{enumerate}
     \item \textbf{AP} (ang. \textit{Analog power}) - zasilanie sekcji analogowych.
     \item \textbf{DP} (ang. \textit{Digital power}) - zasilanie sekcji cyfrowych.
@@ -55,62 +58,15 @@ McASP (ang. \textit{Multi-channel serial port}).
 
 \subsection{Mikrofony}
 
-Przy wyborze mikrofonów do badań i testów implementacji kierowano się głównie
-ceną i dostępnością. Nakierunkowane na pomiary modele czołowych marek są w 
-zwyczaju relatywnie drogie, a jako, że w ramach pracy implementowane są dwa
-kanały wejściowe, to kwestia ceny jest tutaj najbardziej decydującym wskaźnikiem.
-\par Poza ceną i dostępnością, w omawianej tematyce uwagę należy zwrócić na
-następujące parametry:
-
-\begin{enumerate}
-
-    \item Typ - standardem w omawianej tematyce są mikrofony \textbf{pojemnościowe}.
-    Znane są z wysokiej czułości i płaskiej charakterystki częstotliwościowej, jednak
-    wymagają dodatkowego zasilania, zwanego zasilaniem phantom.
-
-    \item Charakterystyka kierunkowa - superkardoidalne lub hiperkardoidalne 
-    mogą lepiej skupić się na kierunkowym źródle dźwięku, lecz w przypadku hałasu 
-    w otwartej przestrzenii odbierany dźwięk będzie słabszy, jeżeli jego źródło 
-    znajdzie się poza docelowym obszarem działania. Tematyka 
-    projektu skupia się na hałasie w przestrzeni, a źródła dźwięku ustawione są
-    względem siebie pod pewnym kątem, więc docelową charakterystyką jest 
-    \textbf{charakterystyka kulista}.
-
-    \item Odpowiedź częstotliwościowa - ideowo \textbf{płaska}. Zakres nie odgrywa
-    znaczącej roli, bo analizowane sygnały są wolnozmienne (pasmo od 50 do 500 Hz, 
-    gdzie typowe zakresy posiadają górną granicę definiowaną w dziesiątkach kiloherców).
-
-    \item Czułość - informuje o wartości napięcia dla danego ciśnienia aktustycznego.
-    Wynika z następującej zależności:
-    \begin{equation} 
-            S_{\text{dBV}} = 20 \text{log}_{10} \frac{S_{\text{mV/Pa}}}{U_{\text{ref}}}
-    \end{equation}
-    gdzie $U_{ref} = 1000 \text{ }\frac{\text{mV}}{\text{Pa}}$.  
-
-\end{enumerate}
-
-Na podstawie czułości mikrofonu dobiera się wzmocnienie przedwzmacniacza \cite{bib:mic}. 
-Przykładowo, posiadając mikrofon z czułością na poziomie $10 \text{ }\frac{\text{mV}}{{\text{Pa}}}$,
-uzyskuje się 10 mV dla 1 Pa, co jest równe 94 dB SPL.
-Pracując na hałasach w zakresie 80 do 100 dB SPL, dla górnej granicy otrzymuje 
-się 2 Pa, czyli odpowiednio 20 mV. W przypadku przetwornika analogowo-cyfrowego 
-pracującego w przedziale -2.5 do 2.5 V, 20 mV z mikrofonu powinno odpowiadać maksymalnemu 
-zakresowi 2.5 V, co pozwala na obliczenie wzmocnienia.
-
-\begin{equation}
-        k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{0.02} = 125 \approx 42 \text{ dB}
-        \label{eq::k_preamp}
-\end{equation}
-
-Biorąc pod uwagę powyższe kwestie, autor zdecydował się na wykorzystanie 
-mikrofonów Behringer ECM8000. Są one bardzo często wybierane przez amatorów
+Zważając na kwestie projektowe, autor zdecydował się na wykorzystanie 
+modelu Behringer ECM8000. Są one bardzo często wybierane przez amatorów
 jak i profesjonalistów w zastosowaniach pomiarowych oraz cieszą się dobrymi 
 opiniami. Ich droższym odpowiednikiem jest flagowy Beyerdynamic MM1, a najbardziej 
 znaczące parametry są następujące \cite{bib:behringer}:
 
 \begin{enumerate}
 
-    \item Typ - pojemnościowy, phantom +15 do +48 V, akceptowalny przez sprzęt.
+    \item Typ - pojemnościowy, phantom +15 do +48 V.
 
     \item Charakterystyka kierunkowa - kulista.
 
@@ -121,38 +77,44 @@ znaczące parametry są następujące \cite{bib:behringer}:
 
 \end{enumerate}
 
+Czułość mikrofonów informuje o wartości napięcia dla danego ciśnienia aktustycznego.
+Wynika z następującej zależności:
+\begin{equation} 
+        S_{\text{dBV}} = 20 \text{log}_{10} \frac{S_{\text{mV/Pa}}}{U_{\text{ref}}}
+\end{equation}
+gdzie $U_{ref} = 1000 \text{ }\frac{\text{mV}}{\text{Pa}}$.
+
+Na podstawie tego parametru dobiera się wzmocnienie przedwzmacniacza \cite{bib:mic}. 
+Dla wybranych mikrofonów z czułością na poziomie $15 \text{ }\frac{\text{mV}}{{\text{Pa}}}$,
+uzyskuje się 15 mV dla 1 Pa, co jest równe 94 dB SPL.
+Pracując na hałasach w zakresie 85 do 105 dB SPL, dla górnej granicy otrzymuje 
+się około 3.5 Pa, czyli odpowiednio około 52.5 mV. W przypadku przetwornika analogowo-cyfrowego 
+pracującego w przedziale 0 do 5 V ($U_{max}$ = 2.5 V amplitudy sygnału przy
+nałożonej składowej stałej równej $U_c = 2.5$ V), 
+52.5 mV z mikrofonu powinno odpowiadać maksymalnemu 
+zakresowi 2.5 V, co pozwala na obliczenie wzmocnienia.
+
+\begin{equation}
+        k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{52.5} = 47.6190 \approx 42 \text{ dB}
+        \label{eq::k_preamp}
+\end{equation}
+
 \subsection{Zestaw głośnikowy}
 
-Nie wchodząc w nadmierne i niepotrzebne w ramach pracy technikalia dotyczące 
-typów i charakterystyk głośników, wybrane zestawy muszą spełnić trzy główne wymagania:
-
-\begin{enumerate}
-
-    \item Z racji, że zrezygnowano z projektowania końcówki mocy, wymagany 
-    jest wbudowany wzmacniacz. Innymi słowy, zestawy muszą być \textbf{aktywne}.
-
-    \item Analizowane sygnały są wolnozmienne (pasmo 100 do 500 Hz), więc 
-    wymagane jest wsparcie dla tonów niskich. Innymi słowy na wyposażeniu zestawu
-    musi być głośnik niskotonowy (ang. \textit{woofer}), zdolny do emisji
-    sygnałów akustycznych o niskiej częstotliwości.
-
-    \item Z uwagi na zakres poziomu akustycznego analizowanych sygnałów, 
-    zestaw musi być zdolny do osiągnięcia jego górnego limitu, czyli użytecznego 
-    90 dB SPL.
-
-\end{enumerate}
-
 Na użytek prywatny, autor posiada parę monitorów studyjnych 
-KRK Classic 8, spełniających wszystkie powyższe wymagania. Nie wchodząc w 
-techniczne szczegóły, z najbardziej znaczących parametrów można wyróżnić \cite{bib:krk}:
+KRK Classic 8, spełniających wszystkie wyszczególnione dla 
+zestawu głośników wymagania. Nie wchodząc w techniczne szczegóły, 
+z najbardziej znaczących parametrów można wyróżnić \cite{bib:krk}:
 
 \begin{enumerate}
 
-    \item Typ i konfiguracja - aktywny, głośnik wysoko i nisko tonowy (ang. \textit{woofer, tweeter}).
+    \item Typ i konfiguracja - aktywny, głośnik wysoko i nisko tonowy 
+    (ang. \textit{woofer, tweeter}).
 
     \item Maksymalny zakres poziomu akustycznego - 103 dB SPL, 106 dB SPL w piku.
 
-    \item Charakterystyka częstotliwościowa do $\pm 3$ dB - 42.5 do 35000 Hz, płaska.
+    \item Charakterystyka częstotliwościowa do $\pm 3$ dB - 
+    42.5 do 35000 Hz, płaska.
 
     \item SNR - poniżej 100 dB.
 
@@ -541,19 +503,8 @@ Dla $R_1 = R_2$ i $R_3 = R_f$ równanie \ref{eq::op_diff} upraszcza się do post
     U_{wy} = \frac{R_f}{R_1}(U_{+,we} - U_{-,we})
 \end{equation}
 
-Jak opisywano w sekcji dotyczącej wybranych mikrofonów, wzmocnienie
-przedwzmacniacza dobiera się na podstawie ich czułości. Wykorzystywane
-mikrofony posiadają czułość na poziomie 15 $\frac{\text{mV}}{\text{Pa}}$, 
-a zakres wybrany zakres SPL dla analizowanego hałasu z zapasem wynosi od 85 do 105 dB SPL, 
-co odpowiada około 3.5 Pa dla górnego limitu. Wybrany przetwornik ma zakres od 0 do +5 V, 
-więc chcąc uzyskać pełen zakres dynamiczny dla wybranego zakresu hałasów ($U_{max}$ = 2.5 V amplitudy 
-przy składowej stałej 2.5 V) korzystając z zależności \ref{eq::k_preamp} otrzymano:
-\begin{equation}
-    k = \frac{U_{max}}{U_{mic}} = \frac{2.5}{(3.5 \cdot 0.015)} = 46.9483 \approx 33.4 \text{ dB} 
-\end{equation}
-
-Finalnie, zważając na powyższe, wzmocnienie wzmacniacza zaokrąglono
-w górę przyjmując $k = 50$, oraz $R_f = 100$ k$\Omega$ i $R_1 = 2$ k$\Omega$ w 
+Jako wzmocnienie wybrano obliczone wcześniej \ref{eq::k_preamp} 
+z zaokrągleniem w górę, przyjmując $k = 50$, oraz $R_f = 100$ k$\Omega$ i $R_1 = 2$ k$\Omega$ w 
 symobolach schematu \ref{hw::op_diff}. Omawiany układ przedstawiono
 na rysunku \ref{hw::preamp}.
 

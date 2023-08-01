@@ -1,10 +1,10 @@
-<mxfile host="app.diagrams.net" modified="2023-07-30T21:31:28.960Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36" etag="Zb4NatBnrnr8n8xULFwG" version="21.6.6" type="device">
+<mxfile host="app.diagrams.net" modified="2023-08-01T00:07:18.820Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36" etag="b--XdbRgqXaq0GSJShH8" version="21.6.6" type="device">
   <diagram name="Page-1" id="wWEFV23uHYG0tpS79XU2">
     <mxGraphModel dx="793" dy="492" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="J7kF7rG_Ez3Zw7svhTNY-5" value="Płytka drukowana" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
+        <mxCell id="J7kF7rG_Ez3Zw7svhTNY-5" value="Płytka drukowana" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="290" y="220" width="280" height="310" as="geometry" />
         </mxCell>
         <mxCell id="J7kF7rG_Ez3Zw7svhTNY-6" value="Zasilanie&lt;br&gt;(&lt;b&gt;PSU&lt;/b&gt;&lt;i&gt;)&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;" parent="J7kF7rG_Ez3Zw7svhTNY-5" vertex="1">
@@ -100,7 +100,7 @@
         <mxCell id="J7kF7rG_Ez3Zw7svhTNY-61" value="+15V" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="240" y="359.5" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="J7kF7rG_Ez3Zw7svhTNY-17" value="BeagleBone Black&lt;br&gt;(Sitara AM3358)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
+        <mxCell id="J7kF7rG_Ez3Zw7svhTNY-17" value="Linux PREEMPT_RT&lt;br&gt;(Sitara AM3358)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
           <mxGeometry x="640" y="350" width="158" height="49" as="geometry" />
         </mxCell>
         <mxCell id="J7kF7rG_Ez3Zw7svhTNY-89" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;shape=flexArrow;fillColor=default;" parent="1" source="J7kF7rG_Ez3Zw7svhTNY-9" target="J7kF7rG_Ez3Zw7svhTNY-17" edge="1">

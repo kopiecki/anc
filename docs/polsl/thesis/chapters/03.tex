@@ -18,23 +18,24 @@ realizujące algorytmy będącymi znaczącymi elementami pracy.
 Wykorzystanie zewnętrznych bibliotek zostanie zamknięte na poziomie 
 prototypowania i symulacji.
 
-\par Dodatkowo postanowiono, że wykorzystane narzędzie wspomagające
+\par Dodatkowo postanowiono, że wykorzystane narzędzia wspomagające
 proces projektowania sprzętu jak i implementacji oprogramowania będą 
 na licencjach wolnego oprogramowania.
 
-\section{Wymagania stawiane części sprzętowej}
+\section{Zadania i wymagania części sprzętowej}
 
-Z ogólnych zadań zaprojektowanego i sporządzonego układu elektronicznego 
-można wyróżnić:
+Projektowany układ elektroniczny musi realizować następujące zadania:
 \begin{enumerate}
 
-    \item Obsłużenie i odpowiednie przetworzenie wejściowych sygnałów analogowych 
+    \item Obsłużenie i przetworzenie wejściowych sygnałów analogowych 
     z mikrofonów pomiarowych pod kowersję do domeny cyfrowej z użyciem 
     osadzonych na płytce przetworników analogowo-cyfrowych.
+    Wykorzystywane będą dwa kanały wejściowe.
 
-    \item Obsłużenie i odpowiednie przetworzenie wyjściowych sygnałów analogowych
+    \item Obsłużenie i przetworzenie wyjściowych sygnałów analogowych
     pochodzących z osadzonych na płytce przetworników cyfrowo-analogowych pod
     poprawne dostarczenie ich na głośniki.
+    Wykorzystywane będą dwa kanały wyjściowe.
 
     \item Zapewnienie działającej komunikacji z wybraną platformą obliczeniową 
     poprzez wybrany protokół cyfrowy, przez który przesyłane będą przekonwertowane
@@ -43,97 +44,135 @@ można wyróżnić:
     oraz końcowo trafiające na głośniki dane wyjściowe do przetworników 
     cyfrowo-analogowych.
 
-    \item Zapewnienie odpowiednich zasilań dla sekcji analogowych oraz cyfrowych.
-    Możliwość zasilania wybranej platformy obliczeniowej z poziomu płytki.
+    \item Zapewnienie odpowiednich zasilań dla sekcji analogowych oraz cyfrowych
+    jak i możliwość zasilania wybranej platformy obliczeniowej z poziomu płytki.
 
 \end{enumerate}
 
-Aby powyższe zadania wykonać, układ musi spełnić następujące wymagania:
+Analizując wyszczególnione wyżej zadania można łatwo dojść do wniosku,
+że w skład projektowanego układu elektronicznego wchodzić będą cztery sekcje,
+z których wyróżniono:
+
 \begin{enumerate}
 
-    \item Dla wejściowych sekcji analogowych: 
-    \begin{enumerate}
+    \item Sekcję zasilania, dystrybuujacą energię na cały układ.
 
-        \item Konwersję symetrycznego sygnału z mikrofonów 
-        do odpowiednio wzmocnionej sumy.
+    \item Wejściową sekcję analogową, obsługującą kanały mikrofonowe.
 
-        \item Filtrację dolnoprzepustową ograniczającą pasmo sygnału wejściowego
-        do mieszczącego się w zakresie od 50 do 500 Hz.
+    \item Wyjściową sekcję analogową, obsługującą kanały głośnikowe.
 
-        \item Odpowiednie wyskalowanie przetworzonego sygnału, aby mieścił się
-        w pełnym zakresie dynamicznym przetwornika, jak i nie przekraczał
-        dopuszczalnej granicy.
-
-    \end{enumerate}
-
-    \item Dla wyjściowych sekcji analogowych:
-    \begin{enumerate}
-
-        \item Odpowiednie przetworzenie sygnału wyjściowego przetworników
-        cyfrowo-analogowych, opierające się na skalowaniu i filtracji
-        rekonstrukcyjnej.
-
-        \item Przekształcenie wyjściowego sygnału na symetryczną parę,
-        zdefiniowaną przez standard złącza XLR.
-
-    \end{enumerate}
-
-    \item Dla wybranego protokołu cyfrowego:
-    \begin{enumerate}
-        
-        \item Synchronizację wszystkich przetworników poprzez wystawienie
-        wspólnego sygnału zegarowego o konfigurowalnej częstotliwości.
-
-        \item Jednoczesną obsługę dwóch kanałów wejściowych (RX) i 
-        dwóch kanałów wyjściowych (TX). Oznacza to, że protokół 
-        musi wspierać multipleksowanie kanałów, jeżeli wykorzystane
-        zostaną pojedyncze linie danych na odpowiednim kierunku transmisji,
-        lub odpowiednią konfigurację selektorów (CS), ewentulanie selektora (FS), 
-        jeżeli zostaną wykorzystane pojedyncze linie danych na kanał.
-
-    \end{enumerate}
-
-    \item Dla wybranych przetworników:
-    \begin{enumerate}
-
-        \item Relatywnie wysoka rozdzielczość, wynosząca minimalnie 12 bitów.
-        
-        \item Wsparcie dla identycznego protokołu cyfrowego.
-
-    \end{enumerate}
-
-    \item Dla sekcji zasilania:
-    \begin{enumerate}
-
-        \item Generację wszystkich potrzebnych zasilań na podstawie jednego,
-        dodatniego doprowadzonego z zewnątrz.
-
-        \item Generację symetrycznych zasilań dla wzmacniaczy pracujących
-        w sekcjach analogowych o względnie wysokiej dokładności.
-
-        \item W przypadku wyboru mikrofonów pojemnościowych, generację
-        odpowiedniego zasilania phantomowego, typowo mieszczącego się w zakresie
-        od +12 do +15 V.
-
-        \item Generację zasilań dla przetworników i zewnętrznej platformy
-        obliczeniowej.
-
-        \item Generację dokładnych napięć referencyjnych dla przetworników
-        (jeżeli będą potrzebne).
-
-    \end{enumerate}
+    \item Sekcję przetworników, komunikujacą się z sekcjami analogowymi
+    oraz z wybraną platformą obliczeniową.
 
 \end{enumerate}
 
-W przypadku urządzeń zewnętrznych wymagania są następujące:
+Poza sekcjami znajdującymi się na projektowanej płytce drukowanej, 
+w skład wykorzystywanego sprzętu wchodzić będą urządzenia zewnętrzne, czyli
+dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
+
+\subsection{Wymagania sekcji zasilania}
+
+Sekcja zasilania, dystrybująca energię do pozostałych elementów układu
+musi spełniać wymagania, z których wyróżniono:
+\begin{enumerate}
+
+    \item Generację wszystkich potrzebnych zasilań na podstawie jednego,
+    dodatniego doprowadzonego z zewnątrz.
+
+    \item Generację symetrycznych zasilań dla wzmacniaczy operacyjnych
+    pracujących w sekcjach analogowych o względnie wysokiej dokładności.
+
+    \item W przypadku wyboru mikrofonów pojemnościowych, generację
+    odpowiedniego zasilania phantomowego, typowo mieszczącego się w zakresie
+    od +12 do +15 V.
+
+    \item Generację zasilań dla przetworników i zewnętrznej platformy
+    obliczeniowej.
+
+    \item Generację dokładnych napięć referencyjnych dla przetworników
+    (jeżeli będą potrzebne).
+
+\end{enumerate}
+
+\subsection{Wymagania sekcji analogowych}
+
+Wejściowa sekcja analogowa, obsługująca dwa kanały mikrofonowe musi 
+spełniać wymagania, z których wyróżniono: 
+\begin{enumerate}
+
+    \item Obsłużenie symetrycznych wejść sygnałowych z mikrofonów
+    oraz ich konwersję do odpowiednio wzmocnionej sumy. 
+
+    \item Filtrację dolnoprzepustową, ograniczającą pasmo sygnału wejściowego
+    do przedziału zainteresowań, mieszczącego się w zakresie od 50 do 500 Hz.
+
+    \item Odpowiednie wyskalowanie przetworzonego sygnału, aby mieścił się
+    w pełnym zakresie dynamicznym przetworników analogowo-cyfrowych.
+
+    \item Zabezpieczenie przetworników analogowo-cyfrowych 
+    przed uszkodzeniem, poprzez zastosowanie odpowiednich układów 
+    ograniczających napięcie wejściowe.
+
+\end{enumerate}
+
+Wyjściowa sekcja analogowa, obsługująca dwa kanały głośnikowe musi spełniać
+wymagania, z których wyróżniono:
+\begin{enumerate}
+
+    \item Odpowiednie przetworzenie sygnału wyjściowego pochodzącego
+    z przetworników cyfrowo-analogwych, opierające się na skalowaniu i filtracji
+    rekonstrukcyjnej.
+
+    \item Przekształcenie wyjściowego sygnału na symetryczną parę,
+    zdefiniowaną przez standard złącza XLR.
+
+    \item Finalne dostarczenie przygotowanego sygnału wyjściowego
+    na wykorzystany zestaw głośnikowy.
+
+\end{enumerate}
+
+W wyjściowej sekcji analogowej zrezygnowano z projektowania
+układu wzmacniacza mocy. Oznacza to, że na wykorzystywany 
+zestaw głośnikowy zostaje nałożone dodatkowe wymaganie w postaci
+wbudowanego wzmacniacza, ideowo z regulacją wzmocnienia.
+
+\subsection{Wymagania protokołu cyfrowego i sekcji przetworników}
+
+Wybrane przetworniki analogowo-cyfrowe i cyfrowo-analogowe muszą
+spełniać wymagania, z których wyróżniono:
+\begin{enumerate}
+
+    \item Relatywnie wysoka rozdzielczość, wynosząca minimalnie 12 bitów.
+    
+    \item Wsparcie dla identycznego protokołu cyfrowego.
+
+    \item Jak najmniejsze opóźnienia wynikające z konwersji.
+
+\end{enumerate}
+
+W przypadku wybranego protokołu cyfrowego, wymagania są następujące:
 \begin{enumerate}
     
-    \item Dla wykorzystanych mikrofonów:
-    \begin{enumerate}
+    \item Synchronizacja wszystkich przetworników poprzez wystawienie
+    wspólnego sygnału zegarowego o konfigurowalnej częstotliwości.
 
+    \item Jednoczesna obsługa dwóch kanałów wejściowych (RX) i 
+    dwóch kanałów wyjściowych (TX). Oznacza to, że protokół 
+    musi wspierać multipleksowanie kanałów, jeżeli wykorzystane
+    zostaną pojedyncze linie danych na odpowiednim kierunku transmisji,
+    lub odpowiednią konfigurację selektorów (CS), ewentulanie selektora (FS), 
+    jeżeli zostaną wykorzystane pojedyncze linie danych na kanał.
+
+\end{enumerate}
+
+\subsection{Wymagania urządzeń zewnętrznych}
+
+Wybrane mikrofony muszą spełniać wymagania, z których wyróżniono:
+\begin{enumerate}
+    
         \item Stosunkowo niska cena i wysoka dostępność.
 
-        \item Typ - standardem w omawianej tematyce są mikrofony \textbf{pojemnościowe}.
+        \item Typ - standardem w omawianej tematyce są mikrofony pojemnościowe.
         Znane są z wysokiej czułości i płaskiej charakterystki częstotliwościowej, jednak
         wymagają dodatkowego zasilania, zwanego zasilaniem phantom.
     
@@ -143,28 +182,21 @@ W przypadku urządzeń zewnętrznych wymagania są następujące:
         znajdzie się poza docelowym obszarem działania. Tematyka 
         projektu skupia się na hałasie w przestrzeni, a źródła dźwięku ustawione są
         względem siebie pod pewnym kątem, więc docelową charakterystyką jest 
-        \textbf{charakterystyka kulista}.
+        charakterystyka kulista.
     
-        \item Odpowiedź częstotliwościowa - ideowo \textbf{płaska}. Zakres nie odgrywa
+        \item Odpowiedź częstotliwościowa - ideowo płaska. Zakres nie odgrywa
         znaczącej roli, bo analizowane sygnały są wolnozmienne (pasmo od 50 do 500 Hz, 
         gdzie typowe zakresy posiadają górną granicę definiowaną w dziesiątkach kiloherców).
-    
-        \item Czułość - informuje o wartości napięcia dla danego ciśnienia aktustycznego.
-        Wynika z następującej zależności:
-        \begin{equation} 
-                S_{\text{dBV}} = 20 \text{log}_{10} \frac{S_{\text{mV/Pa}}}{U_{\text{ref}}}
-        \end{equation}
-        gdzie $U_{ref} = 1000 \text{ }\frac{\text{mV}}{\text{Pa}}$. 
 
-    \end{enumerate}
+\end{enumerate}
 
-    \item Dla wykorzystanych zestawów głośnikowych:
-    \begin{enumerate}
+Dla wybranych zestawów głośnikowych, wymagania są następujące: 
+\begin{enumerate}
 
         \item Z racji, że zrezygnowano z projektowania końcówki mocy, wymagany 
-        jest wbudowany wzmacniacz. Innymi słowy, zestawy muszą być \textbf{aktywne}.
+        jest wbudowany wzmacniacz. Innymi słowy, zestawy muszą być aktywne.
     
-        \item Analizowane sygnały są wolnozmienne (pasmo 100 do 500 Hz), więc 
+        \item Analizowane sygnały są wolnozmienne (pasmo 50 do 500 Hz), więc 
         wymagane jest wsparcie dla tonów niskich. Innymi słowy na wyposażeniu zestawu
         musi być głośnik niskotonowy (ang. \textit{woofer}), zdolny do emisji
         sygnałów akustycznych o niskiej częstotliwości.
@@ -173,8 +205,41 @@ W przypadku urządzeń zewnętrznych wymagania są następujące:
         zestaw musi być zdolny do osiągnięcia jego górnego limitu, czyli użytecznego 
         90 dB SPL.
 
-    \end{enumerate}
 \end{enumerate}
 
+Dla wybranej platformowy obliczeniowej, wymagania są następujące:
+\begin{enumerate}
+
+    \item Duża dostępność i stosunkowo niska cena.
+
+    \item Dostępny kompilator języka C.
+
+    \item Możliwość instalacji dystrybucji systemu operacyjnego GNU/Linux.
+
+    \item Wsparcie sprzętowe dla wybranego protokołu cyfrowego.
+
+\end{enumerate}
+
+Poza opisanymi wyżej wymaganiami, porządane jest (lecz nie wymagane),
+aby wykorzystana platforma posiadała sprzętową realizację działań
+zmiennoprzecikowych (FPU), wsparcie dla architektury SIMD (ang. \textit{Single 
+Instruction, Multiple Data}) wspomagającą obliczenia wektorowe, 
+port szeregowy oraz złącze Ethernet.
 
 \section{Wymagania stawiane części programowej}
+
+\section{Wykorzystane narzędzia}
+
+Tak jak opisywano w głównych założeniach projektowych, wykorzystane narzędzia
+programowe oparte są na licencjach wolnego oprogramowania. 
+Spośród nich można wyróżnić:
+
+\begin{itemize}
+    \item KiCAD - wykorzystane EDA (ang. \textit{Electronic Design Automation}).
+    \item Język programowania Python - wykorzystywany do prototypowania i symulacji.
+    \item Język programowania C - wykorzystany do implementacji.
+    \item GCC - jako zestaw kompilatorów.
+    \item CMake i GNU Make - jako systemy budowania.
+    \item Docker - jako narzędzie do wirtualizacji środowiska pracy
+    \item Git - jako system kontroli wersji.
+\end{itemize}
