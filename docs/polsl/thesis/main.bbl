@@ -17,60 +17,42 @@
 \endgroup
 
 \datalist[entry]{nty/global//global/global}
-  \entry{bib:figwer}{book}{}
-    \name{author}{6}{}{%
-      {{hash=BE}{%
-         family={Bielińska},
-         familyi={B\bibinitperiod},
-         given={Ewa},
-         giveni={E\bibinitperiod},
+  \entry{bib:resnick}{book}{}
+    \name{author}{3}{}{%
+      {{hash=HD}{%
+         family={Halliday},
+         familyi={H\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
       }}%
-      {{hash=FJ}{%
-         family={Figwer},
-         familyi={F\bibinitperiod},
-         given={Jarosław},
+      {{hash=RR}{%
+         family={Resnick},
+         familyi={R\bibinitperiod},
+         given={Robert},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=WJ}{%
+         family={Walker},
+         familyi={W\bibinitperiod},
+         given={Jearl},
          giveni={J\bibinitperiod},
-      }}%
-      {{hash=KJ}{%
-         family={Kasprzyk},
-         familyi={K\bibinitperiod},
-         given={Jerzy},
-         giveni={J\bibinitperiod},
-      }}%
-      {{hash=LT}{%
-         family={Legierski},
-         familyi={L\bibinitperiod},
-         given={Tadeusz},
-         giveni={T\bibinitperiod},
-      }}%
-      {{hash=OZ}{%
-         family={Ogonowski},
-         familyi={O\bibinitperiod},
-         given={Zbigniew},
-         giveni={Z\bibinitperiod},
-      }}%
-      {{hash=PM}{%
-         family={Pawełczyk},
-         familyi={P\bibinitperiod},
-         given={Marek},
-         giveni={M\bibinitperiod},
       }}%
     }
     \list{publisher}{1}{%
-      {Wydawnictwo Politechniki Śląskiej}%
+      {Wydawnictwo naukowe PWN}%
     }
-    \strng{namehash}{BE+1}
-    \strng{fullhash}{BEFJKJLTOZPM1}
+    \strng{namehash}{HDRRWJ1}
+    \strng{fullhash}{HDRRWJ1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{sortinit}{B}
-    \field{sortinithash}{B}
-    \field{isbn}{83-7335-077-2}
-    \field{title}{Identyfikacja procesów}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{isbn}{9788301181147}
+    \field{title}{Podstawy fizyki}
     \list{location}{1}{%
-      {Gliwice}%
+      {Warszawa}%
     }
-    \field{year}{2002}
+    \field{year}{2015}
   \endentry
 
   \entry{bib:krk}{online}{}
@@ -225,114 +207,6 @@
     \field{urlyear}{2023}
   \endentry
 
-  \entry{bib:oppenheim}{book}{}
-    \name{author}{2}{}{%
-      {{hash=OAV}{%
-         family={Oppenheim},
-         familyi={O\bibinitperiod},
-         given={Alan\bibnamedelima V},
-         giveni={A\bibinitperiod\bibinitdelim V\bibinitperiod},
-      }}%
-      {{hash=SRW}{%
-         family={Schafer},
-         familyi={S\bibinitperiod},
-         given={Ronald\bibnamedelima W.},
-         giveni={R\bibinitperiod\bibinitdelim W\bibinitperiod},
-      }}%
-    }
-    \list{publisher}{1}{%
-      {Wydawnictwa Komunikacji i Łączności}%
-    }
-    \strng{namehash}{OAVSRW1}
-    \strng{fullhash}{OAVSRW1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{O}
-    \field{sortinithash}{O}
-    \field{title}{Cyfrowe przetwarzanie sygnałów}
-    \list{location}{1}{%
-      {Warszawa}%
-    }
-    \field{year}{1979}
-  \endentry
-
-  \entry{bib:ott}{book}{}
-    \name{author}{1}{}{%
-      {{hash=OHW}{%
-         family={Ott},
-         familyi={O\bibinitperiod},
-         given={Henry\bibnamedelima W.},
-         giveni={H\bibinitperiod\bibinitdelim W\bibinitperiod},
-      }}%
-    }
-    \list{publisher}{1}{%
-      {John Wiley \& Sons, Inc.}%
-    }
-    \strng{namehash}{OHW1}
-    \strng{fullhash}{OHW1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{O}
-    \field{sortinithash}{O}
-    \field{isbn}{9780470189306}
-    \field{title}{Electromagnetic Compatibility Engineering}
-    \list{location}{1}{%
-      {USA}%
-    }
-    \field{year}{2009}
-  \endentry
-
-  \entry{bib:sitara}{online}{}
-    \list{publisher}{1}{%
-      {Texas Instruments}%
-    }
-    \field{labeltitlesource}{title}
-    \field{sortinit}{S}
-    \field{sortinithash}{S}
-    \field{number}{SLAA701}
-    \field{title}{Sitara\textsuperscript{TM} Linux ALSA DSP Microphone Array
-  Voice Recognition}
-    \verb{url}
-    \verb https://www.ti.com/lit/an/slaa701a/slaa701a.pdf
-    \endverb
-    \field{year}{2016}
-    \field{urlday}{23}
-    \field{urlmonth}{07}
-    \field{urlyear}{2023}
-  \endentry
-
-  \entry{bib:stoica}{book}{}
-    \name{author}{2}{}{%
-      {{hash=ST}{%
-         family={S{\"o}derstr{\"o}m},
-         familyi={S\bibinitperiod},
-         given={Torsten},
-         giveni={T\bibinitperiod},
-      }}%
-      {{hash=SP}{%
-         family={Stoica},
-         familyi={S\bibinitperiod},
-         given={Petre},
-         giveni={P\bibinitperiod},
-      }}%
-    }
-    \list{publisher}{1}{%
-      {Wydawnictwo Naukowe PWN}%
-    }
-    \strng{namehash}{STSP1}
-    \strng{fullhash}{STSP1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{S}
-    \field{sortinithash}{S}
-    \field{isbn}{83-01-12158-0}
-    \field{title}{Identyfikacja systemów}
-    \list{location}{1}{%
-      {Warszawa}%
-    }
-    \field{year}{1997}
-  \endentry
-
   \entry{bib:art}{book}{}
     \name{author}{2}{}{%
       {{hash=TU}{%
@@ -395,35 +269,6 @@
       {Warszawa}%
     }
     \field{year}{1997}
-  \endentry
-
-  \entry{bib:mcasp}{online}{}
-    \name{author}{1}{}{%
-      {{hash=TB}{%
-         family={Tufino},
-         familyi={T\bibinitperiod},
-         given={Bobby},
-         giveni={B\bibinitperiod},
-      }}%
-    }
-    \strng{namehash}{TB1}
-    \strng{fullhash}{TB1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{T}
-    \field{sortinithash}{T}
-    \field{number}{SPRACK0}
-    \field{title}{McASP Design Guide - Tips, Tricks and Practical Examples}
-    \verb{url}
-    \verb https://www.ti.com/lit/an/sprack0/sprack0.pdf
-    \endverb
-    \list{institution}{1}{%
-      {Texas Instruments}%
-    }
-    \field{year}{2019}
-    \field{urlday}{23}
-    \field{urlmonth}{07}
-    \field{urlyear}{2023}
   \endentry
 \enddatalist
 \endinput

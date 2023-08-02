@@ -2,29 +2,32 @@
 \section{Część sprzętowa}
 \subsection{Zasilania}
 
-\begin{center}
-\begin{tabular}{|| c | c ||} 
-    \hline
-    Nazwa szyny & Pomiar, V \\ [0.5ex] 
-    \hline\hline
-    +15V & 15.255 \\ 
-    \hline
-    -15V & -13.784 \\
-    \hline
-    +12VA & 11.993 \\
-    \hline
-    -12VA & -11.971 \\
-    \hline
-    +6V & 6.006 \\
-    \hline
-    +5VD & 5.037 \\
-    \hline
-    +5VA & 4.998 \\
-    \hline
-    +1.25\_OFFSET & 1.252 \\
-    \hline\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|| c | c | c ||} 
+        \hline
+        \textbf{Nazwa} & \textbf{Spodziewany wynik} [V] & \textbf{Pomiar} [V] \\ [0.5ex] 
+        \hline\hline
+        +15V & 15 $\pm$ 0.75 (5\%) & 15.255 \\ 
+        \hline
+        -15V & -15 $\pm$ 0.75 (5\%) & -13.784 \\
+        \hline
+        +12VA & 12 $\pm$ 0.24 (2\%) & 11.993 \\
+        \hline
+        -12VA & -12 $\pm$ 0.36 (3\%) & -11.971 \\
+        \hline
+        +5VD & 5 $\pm$ 0.1 (2\%) & 5.037 \\
+        \hline
+        +5VA & 5 $\pm$ 0.002 & 4.998 \\
+        \hline
+        +1.25\_OFFSET & 1.25 $\pm$ 0.0125 (1\%) & 1.252 \\
+        \hline\hline
+    \end{tabular}
+
+    \caption{Pomiary sekcji zasilania}
+    \label{tab::psu}
+
+\end{table}
 
 \subsection{Domena analogowa}
 \subsection{Domena cyfrowa}
