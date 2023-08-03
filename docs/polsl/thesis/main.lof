@@ -7,34 +7,36 @@
 \babel@toc {polish}{}\relax 
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Graficzna wizualizacja idei aktywnej redukcji hałasu\relax }}{2}{figure.caption.8}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Typowy tor przetwarzania\relax }}{3}{figure.caption.9}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Porównanie struktur systemów\relax }}{7}{figure.caption.10}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Architektura systemu - najwyższy poziom\relax }}{15}{figure.caption.11}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Architektura systemu - najwyższy poziom\relax }}{13}{figure.caption.9}%
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Architektura sprzętowa - najwyższy poziom\relax }}{15}{figure.caption.10}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagram dystrybucji zasilania\relax }}{18}{figure.caption.11}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Sekcja wejściowa\relax }}{20}{figure.caption.12}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Symetryzacja szyn zasilających\relax }}{21}{figure.caption.13}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Zasilanie domeny cyfrowej\relax }}{22}{figure.caption.14}%
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Referencja domeny analogowo-cyfrowej\relax }}{23}{figure.caption.15}%
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Układ napięcia odniesienia\relax }}{24}{figure.caption.16}%
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Schemat blokowy wejściowego toru analogowego\relax }}{24}{figure.caption.17}%
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Wejście zbalansowane\relax }}{25}{figure.caption.18}%
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Filtr EMI wraz z ogranicznikiem diodowym\relax }}{26}{figure.caption.19}%
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Wzmacniacz różnicowy\relax }}{26}{figure.caption.20}%
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Przedwzmacniacz\relax }}{27}{figure.caption.21}%
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Topologia Sellena-Keya\relax }}{28}{figure.caption.22}%
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Charakterystyka aplitudowa i fazowa układu filtra\relax }}{29}{figure.caption.23}%
-\contentsline {figure}{\numberline {5.15}{\ignorespaces Filtr antystroboskopowy\relax }}{30}{figure.caption.24}%
-\contentsline {figure}{\numberline {5.16}{\ignorespaces Układ pozycjonujący\relax }}{31}{figure.caption.25}%
-\contentsline {figure}{\numberline {5.17}{\ignorespaces Filtr dolnoprzepustowy i limiter\relax }}{31}{figure.caption.26}%
-\contentsline {figure}{\numberline {5.18}{\ignorespaces Pełen schemat wejściowej sekcji analogowej\relax }}{32}{figure.caption.27}%
-\contentsline {figure}{\numberline {5.19}{\ignorespaces Schemat blokowy wyjściowego toru analogowego\relax }}{32}{figure.caption.28}%
-\contentsline {figure}{\numberline {5.20}{\ignorespaces Wejściowy filtr pasmowoprzepustowy\relax }}{33}{figure.caption.29}%
-\contentsline {figure}{\numberline {5.21}{\ignorespaces Układy sterujące wyjściem analogowym\relax }}{34}{figure.caption.30}%
-\contentsline {figure}{\numberline {5.22}{\ignorespaces Filtracja końcowa toru analogowego\relax }}{35}{figure.caption.31}%
-\contentsline {figure}{\numberline {5.23}{\ignorespaces Pełen schemat wyjściowej sekcji analogowej\relax }}{35}{figure.caption.32}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Architektura sprzętowa - najwyższy poziom\relax }}{17}{figure.caption.12}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagram dystrybucji zasilania\relax }}{20}{figure.caption.13}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Sekcja wejściowa\relax }}{22}{figure.caption.14}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Symetryzacja szyn zasilających\relax }}{23}{figure.caption.15}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Zasilanie domeny cyfrowej\relax }}{24}{figure.caption.16}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Referencja domeny analogowo-cyfrowej\relax }}{25}{figure.caption.17}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Układ napięcia odniesienia\relax }}{26}{figure.caption.18}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Schemat blokowy wejściowego toru analogowego\relax }}{26}{figure.caption.19}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Wejście zbalansowane\relax }}{27}{figure.caption.20}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Filtr EMI wraz z ogranicznikiem diodowym\relax }}{28}{figure.caption.21}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Wzmacniacz różnicowy\relax }}{28}{figure.caption.22}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Przedwzmacniacz\relax }}{29}{figure.caption.23}%
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Topologia Sellena-Keya\relax }}{30}{figure.caption.24}%
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Charakterystyka aplitudowa i fazowa układu filtra\relax }}{31}{figure.caption.25}%
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Filtr antystroboskopowy\relax }}{32}{figure.caption.26}%
+\contentsline {figure}{\numberline {5.16}{\ignorespaces Układ pozycjonujący\relax }}{33}{figure.caption.27}%
+\contentsline {figure}{\numberline {5.17}{\ignorespaces Filtr dolnoprzepustowy i limiter\relax }}{33}{figure.caption.28}%
+\contentsline {figure}{\numberline {5.18}{\ignorespaces Pełen schemat wejściowej sekcji analogowej\relax }}{34}{figure.caption.29}%
+\contentsline {figure}{\numberline {5.19}{\ignorespaces Schemat blokowy wyjściowego toru analogowego\relax }}{34}{figure.caption.30}%
+\contentsline {figure}{\numberline {5.20}{\ignorespaces Wejściowy filtr pasmowoprzepustowy\relax }}{35}{figure.caption.31}%
+\contentsline {figure}{\numberline {5.21}{\ignorespaces Układy sterujące wyjściem analogowym\relax }}{36}{figure.caption.32}%
+\contentsline {figure}{\numberline {5.22}{\ignorespaces Filtracja końcowa toru analogowego\relax }}{37}{figure.caption.33}%
+\contentsline {figure}{\numberline {5.23}{\ignorespaces Pełen schemat wyjściowej sekcji analogowej\relax }}{37}{figure.caption.34}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

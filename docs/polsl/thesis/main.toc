@@ -11,80 +11,78 @@
 \contentsline {section}{\numberline {1.2}Uogólniona koncepcja}{2}{section.1.2}%
 \contentsline {subsection}{\numberline {1.2.1}Obszar stosowania}{2}{subsection.1.2.1}%
 \contentsline {subsection}{\numberline {1.2.2}Zasada działania}{2}{subsection.1.2.2}%
-\contentsline {section}{\numberline {1.3}Zastosowania}{3}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Wymagania, ograniczenia i ocena wydajności}{3}{section.1.4}%
-\contentsline {subsection}{\numberline {1.4.1}Określenie problematyki}{3}{subsection.1.4.1}%
-\contentsline {subsection}{\numberline {1.4.2}Zakres projektu}{3}{subsection.1.4.2}%
-\contentsline {section}{\numberline {1.5}Zwięzła charakterystyka rozdziałów}{3}{section.1.5}%
-\contentsline {chapter}{\numberline {2}Analiza tematu}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Przegląd wykorzystywanych rozwiązań}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Proponowane rozwiązanie}{5}{section.2.2}%
-\contentsline {chapter}{\numberline {3}Założenia projektowe}{7}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Zadania i wymagania części sprzętowej}{7}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Wymagania sekcji zasilania}{8}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Wymagania sekcji analogowych}{9}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}Wymagania protokołu cyfrowego i sekcji przetworników}{9}{subsection.3.1.3}%
-\contentsline {subsection}{\numberline {3.1.4}Wymagania urządzeń zewnętrznych}{10}{subsection.3.1.4}%
-\contentsline {section}{\numberline {3.2}Wymagania stawiane części programowej}{11}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Wykorzystane narzędzia}{11}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Zaimplementowane rozwiązanie}{13}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Implementacja części sprzętowej}{15}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Urządzenia zewnętrzne}{16}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Mikrofony}{16}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Zestaw głośnikowy}{17}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Platforma obliczeniowa}{17}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Zasilanie}{17}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Sekcja wejściowa}{18}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Symetryzacja szyn zasilających}{20}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Zasilanie domeny cyfrowej}{22}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Referencja domeny analogowo-cyfrowej}{23}{subsection.5.2.4}%
-\contentsline {subsection}{\numberline {5.2.5}Generacja składowej stałej}{23}{subsection.5.2.5}%
-\contentsline {subsection}{\numberline {5.2.6}Dodatkowe kwestie sprzętowe}{24}{subsection.5.2.6}%
-\contentsline {section}{\numberline {5.3}Wejściowe tory analogowe}{24}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Wejście zbalansowane}{24}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Początkowa filtracja i saturacja}{25}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Wzmocnienie różnicowe}{26}{subsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.3.4}Filtracja antyaliasingowa}{27}{subsection.5.3.4}%
-\contentsline {subsection}{\numberline {5.3.5}Pozycjonowanie}{30}{subsection.5.3.5}%
-\contentsline {subsection}{\numberline {5.3.6}Filtr końcowy i saturacja}{31}{subsection.5.3.6}%
-\contentsline {subsection}{\numberline {5.3.7}Pełen schemat sekcji}{32}{subsection.5.3.7}%
-\contentsline {section}{\numberline {5.4}Wyjściowe tory analogowe}{32}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Filtracja początkowa}{32}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Wzmocnienie}{33}{subsection.5.4.2}%
-\contentsline {subsection}{\numberline {5.4.3}Filtracja rekonstrukcyjna}{33}{subsection.5.4.3}%
-\contentsline {subsection}{\numberline {5.4.4}Symetryzacja}{33}{subsection.5.4.4}%
-\contentsline {subsection}{\numberline {5.4.5}Filtracja końcowa}{34}{subsection.5.4.5}%
-\contentsline {subsection}{\numberline {5.4.6}Pełen schemat sekcji}{35}{subsection.5.4.6}%
-\contentsline {section}{\numberline {5.5}Przetworniki}{36}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}Analogowo-cyfrowe}{36}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}Cyfrowo-analogowe}{36}{subsection.5.5.2}%
-\contentsline {section}{\numberline {5.6}Protokół cyfrowy}{36}{section.5.6}%
-\contentsline {chapter}{\numberline {6}Implementacja części programowej}{37}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Środowisko pracy}{37}{section.6.1}%
-\contentsline {section}{\numberline {6.2}System operacyjny}{37}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Proces uruchamiania}{37}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Konfiguracja}{37}{subsection.6.2.2}%
-\contentsline {section}{\numberline {6.3}Oprogramowanie}{37}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Wykorzystanie rozszerzeń czasu rzeczywistego}{37}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Akwizycja danych i warunkowanie początkowe}{37}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}Generacja hałasu}{37}{subsection.6.3.3}%
-\contentsline {subsection}{\numberline {6.3.4}Filtracja cyfrowa}{37}{subsection.6.3.4}%
-\contentsline {subsection}{\numberline {6.3.5}Identyfikacja toru wtórnego}{37}{subsection.6.3.5}%
-\contentsline {subsection}{\numberline {6.3.6}Adaptacja toru głównego}{37}{subsection.6.3.6}%
-\contentsline {chapter}{\numberline {7}Weryfikacja}{39}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Część sprzętowa}{39}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}Zasilania}{39}{subsection.7.1.1}%
-\contentsline {subsection}{\numberline {7.1.2}Domena analogowa}{39}{subsection.7.1.2}%
-\contentsline {subsection}{\numberline {7.1.3}Domena cyfrowa}{39}{subsection.7.1.3}%
-\contentsline {section}{\numberline {7.2}Część programowa}{39}{section.7.2}%
-\contentsline {chapter}{\numberline {8}Testy i badania}{41}{chapter.8}%
-\contentsline {chapter}{\numberline {9}Podsumowanie}{43}{chapter.9}%
-\contentsline {chapter}{Bibliografia}{45}{chapter*.34}%
-\contentsline {chapter}{Spis skrótów i symboli}{49}{appendix*.35}%
+\contentsline {section}{\numberline {1.3}Określenie problematyki}{3}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Cel projektu}{4}{subsection.1.3.1}%
+\contentsline {section}{\numberline {1.4}Zwięzła charakterystyka rozdziałów}{5}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Analiza tematu}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Struktury systemów}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Proponowane rozwiązanie}{8}{section.2.2}%
+\contentsline {chapter}{\numberline {3}Założenia projektowe}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Zadania i wymagania części sprzętowej}{9}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Wymagania sekcji zasilania}{10}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Wymagania sekcji analogowych}{11}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Wymagania protokołu cyfrowego i sekcji przetworników}{11}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Wymagania urządzeń zewnętrznych}{12}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}Wymagania stawiane części programowej}{13}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Wykorzystane narzędzia}{13}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Zaimplementowane rozwiązanie}{15}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Implementacja części sprzętowej}{17}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Urządzenia zewnętrzne}{18}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Mikrofony}{18}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Zestaw głośnikowy}{19}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Platforma obliczeniowa}{19}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Zasilanie}{19}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Sekcja wejściowa}{20}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Symetryzacja szyn zasilających}{22}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Zasilanie domeny cyfrowej}{24}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Referencja domeny analogowo-cyfrowej}{25}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Generacja składowej stałej}{25}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}Dodatkowe kwestie sprzętowe}{26}{subsection.5.2.6}%
+\contentsline {section}{\numberline {5.3}Wejściowe tory analogowe}{26}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Wejście zbalansowane}{26}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Początkowa filtracja i saturacja}{27}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Wzmocnienie różnicowe}{28}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Filtracja antyaliasingowa}{29}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.5}Pozycjonowanie}{32}{subsection.5.3.5}%
+\contentsline {subsection}{\numberline {5.3.6}Filtr końcowy i saturacja}{33}{subsection.5.3.6}%
+\contentsline {subsection}{\numberline {5.3.7}Pełen schemat sekcji}{34}{subsection.5.3.7}%
+\contentsline {section}{\numberline {5.4}Wyjściowe tory analogowe}{34}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Filtracja początkowa}{34}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Wzmocnienie}{35}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Filtracja rekonstrukcyjna}{35}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Symetryzacja}{35}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.5}Filtracja końcowa}{36}{subsection.5.4.5}%
+\contentsline {subsection}{\numberline {5.4.6}Pełen schemat sekcji}{37}{subsection.5.4.6}%
+\contentsline {section}{\numberline {5.5}Przetworniki}{38}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Analogowo-cyfrowe}{38}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Cyfrowo-analogowe}{38}{subsection.5.5.2}%
+\contentsline {section}{\numberline {5.6}Protokół cyfrowy}{38}{section.5.6}%
+\contentsline {chapter}{\numberline {6}Implementacja części programowej}{39}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Środowisko pracy}{39}{section.6.1}%
+\contentsline {section}{\numberline {6.2}System operacyjny}{39}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Proces uruchamiania}{39}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Konfiguracja}{39}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Oprogramowanie}{39}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Wykorzystanie rozszerzeń czasu rzeczywistego}{39}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Akwizycja danych i warunkowanie początkowe}{39}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Generacja hałasu}{39}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Filtracja cyfrowa}{39}{subsection.6.3.4}%
+\contentsline {subsection}{\numberline {6.3.5}Identyfikacja toru wtórnego}{39}{subsection.6.3.5}%
+\contentsline {subsection}{\numberline {6.3.6}Adaptacja toru głównego}{39}{subsection.6.3.6}%
+\contentsline {chapter}{\numberline {7}Weryfikacja}{41}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Część sprzętowa}{41}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Zasilania}{41}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Domena analogowa}{41}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}Domena cyfrowa}{41}{subsection.7.1.3}%
+\contentsline {section}{\numberline {7.2}Część programowa}{41}{section.7.2}%
+\contentsline {chapter}{\numberline {8}Testy i badania}{43}{chapter.8}%
+\contentsline {chapter}{\numberline {9}Podsumowanie}{45}{chapter.9}%
+\contentsline {chapter}{Bibliografia}{47}{chapter*.36}%
+\contentsline {chapter}{Spis skrótów i symboli}{51}{appendix*.37}%
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
-\contentsline {chapter}{Pliki uzupełniające}{51}{appendix*.36}%
-\contentsline {chapter}{Spis rysunków}{53}{appendix*.37}%
-\contentsline {chapter}{Spis tabel}{55}{appendix*.38}%
+\contentsline {chapter}{Pliki uzupełniające}{53}{appendix*.38}%
+\contentsline {chapter}{Spis rysunków}{55}{appendix*.39}%
+\contentsline {chapter}{Spis tabel}{57}{appendix*.40}%
