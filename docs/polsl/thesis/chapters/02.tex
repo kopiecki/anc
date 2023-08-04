@@ -19,16 +19,21 @@ rodzaj wykorzystywanego sterowania, z którego wyróżniamy:
 Hałas występujący przed aktuatorem nazywamy hałasem pierwotnym i w 
 nomenklaturze automatyki traktowany jako wejście systemu, gdzie 
 ten mierzony za aktuatorem, nazywany hałasem resztkowym, traktowany jest jak błąd (uchyb).
-W związku z przyjęciem takiego nazewnictwa, można napisać,
+Mikrofon mierzący hałas pierwotny nazywany jest mikrofonem referencyjnym,
+a ten mierzący hałas resztkowy, mikrofonem błędu.
+\par W związku z przyjęciem takiego nazewnictwa, można napisać,
 że systemy ANC ze sprzężeniem w przód opierają swoje działanie na pomiarze
 wejścia i błędu, a system ze sprzężeniem w tył tylko na pomiarze błędu.
+Omawiane struktury w postaci schematów ideowych przedstawiono na rysunkach
+\ref{analysis::structs}.
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{graf/analysis/bb_fw_anc.png}
+        \includegraphics[width=0.9\textwidth]{graf/analysis/bb_fw_anc.png}
         \caption{ANC ze sprzężeniem w przód}
+        \label{analysis::structs_a}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.49\textwidth}
@@ -49,9 +54,9 @@ co zwiększa koszta oraz komplikuje strukturę.
 Dodatkowy pomiar jest też nie zawsze możliwy, więc wybór struktury często
 jest kompromisem.
 
-\par Projektujac układ ze sprzężeniem w przód można dokonać dodatkowych
-założeń, które implikują dwa podtypy struktur. Założenia opierają
-się na charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować: 
+\par Projektujac układ ze sprzężeniem w przód można dokonać dodatkowego
+założenia, które implikują modyfikację struktury. Opiera się one
+charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować: 
 
 \begin{enumerate}
 
@@ -74,7 +79,173 @@ z mikrofonu można zrezygonować na rzecz czujnika nieakustycznego,
 takiego jak tachometr lub enkoder, kiedy mamy do czynienia z hałasami wygenerowanymi 
 przez obracający się mechanizm.
 
+\par Z wykorzystaniem mikrofonu jako czujnika mierzącego hałas pierwotny
+często napotyka się na problem, że generowany antyhałas wpływa na pomiar
+hałasu pierwotnego, tworząc w układzie dodatkową pętlę sprzeżenia zwrotnego.
+Problem ten można łagodzić poprzez odpowiednie ustawienia kierunków mikrofonów i 
+głośników, tak, aby jak najmniej na siebie wpływały, lub, co jest typowym rozwiązaniem,
+poprzez rozszerzenie systemu o dodatkową pętlę i neutralizacja jej wpływu
+w sposób programowy lub sprzętowy.
 
+\par Podsumowując, klasyfikację struktur systemów ANC można przedstawić
+jak na rysunku \ref{analysis::systems}:
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/analysis/systems.png}
+    \caption{Podział struktur systemów ANC}
+    \label{analysis::systems}
+\end{figure}
 
-\section{Proponowane rozwiązanie}
+Każda z przedstawionych struktur różni się od siebie znacząco na poziomie sprzętowym 
+jak i programowym. Grubszą czcionką na diagramie \ref{analysis::systems} zaznaczono 
+strukturę, którą zdecydowano się wybrać do dalszej analizy z myślą o finalnej implementacji,
+głównie ze względu na źródło i charakterystykę hałasu, która w tym przypadku
+może być łatwo symulowana.
+
+\section{Zasada działania}
+
+Diagram \ref{analysis::structs_a} można przedstawić za pomocą 
+uogólnionego schematu blokowego \ref{analysis::scheme_0}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{graf/analysis/scheme_0.png}
+    \caption{Wyprowadzenie schematu systemu ANC, 0}
+    \label{analysis::scheme_0}
+\end{figure}
+
+Transmitancja $P(z^{-1})$ opisuje dynamikę toru, którym porusza się 
+hałas pierwotny i przyjeło się go nazywać torem pierwotnym. 
+Blok \textbf{ANC} na ten moment jest uogólnionym układem elektronicznym,
+a sygnały występujące na schemacie  można opisać
+następująco:
+\begin{itemize}
+
+    \item $x(n)$ - hałas pierwotny trafiający na wejście systemu, mierzony
+    przez mikrofon referencyjny.
+
+    \item $d(n)$ - hałas pierwotny przefiltrowany przez transmitancję
+    toru podstawowego.
+
+    \item $y(n)$ - sterowanie głośnika, antyhałas mający wynikowo wytłumić 
+    sygnał $d(n)$.
+
+    \item $e(n)$ - hałas resztkowy, mierzony przez mikrofon błedu.
+
+\end{itemize}
+
+Modelowanie dynamiczne w analizowanej tematyce uogólnione zostaje
+do filtrów SOI (filtr o skończonej odpowiedzi impulsowej, ang. 
+\textit{Finite impulse filter, FIR filter}). Tego typu modele
+bardzo często stosowane są w zagadanieniach związanych z systemami ANC,
+ze względu na wygodę ich stosowania. Są zawsze stabilne, łatwe w implementacji
+jak i posiadają liniową odpowiedź fazową.
+
+\par Transmitancja filtru SOI (odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
+\begin{equation}
+    K(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L - 1} w_lz^{-l}
+    \label{eq::fir}
+\end{equation}
+gdzie:
+\begin{itemize}
+    \item $w_l$ to współczynnik filtra o numerze $l$ (ang. \textit{tap}),
+    \item $L$ to rząd filtra (ilość współczynników, długość odpowiedzi impulsowej), a
+    \item $z^{-l}$ oznacza operator opóźnienia o $l$ próbek.
+\end{itemize}
+
+W związku z \ref{eq::fir}, wyjście filtra SOI $y(n)$ dane jest:
+\begin{equation}
+        y(n) = \sum_{l = 0}^{L - 1}w_lx(n - l) \implies y(n) = \textbf{w}^T\textbf{x}(n)
+\end{equation}
+
+gdzie \textbf{w} to wektor współczynników filtra:
+\begin{equation}
+        \textbf{w} = \begin{bmatrix}
+            w_0 \quad
+            w_1 \quad
+            \cdots \quad
+            w_{L - 1} 
+        \end{bmatrix}^T
+\end{equation}
+
+a \textbf{x}(n) to wektor wejść w chwili $n$:
+\begin{equation}
+        \textbf{x}(n) = \begin{bmatrix}
+            x(n) \quad
+            x(n - 1) \quad
+            \cdots \quad
+            x(n - L + 1)
+        \end{bmatrix}^T
+\end{equation}
+
+Analizując schemat \ref{analysis::scheme_0} można dojść do logicznego wniosku,
+że jedyną rolą układu \textbf{ANC} jest zidentyfikowanie transmitancji $P(z^{-1})$,
+przefiltrowanie przez nią sygnału $x(n)$ oraz odwórcenie znaku wyjścia.
+Nie jest to jednak proste zadanie, ponieważ tak jak opisywano wcześniej,
+charakterystyka toru pierwotnego, czyli drogi, po którym docelowo
+tłumiony hałas się porusza, jest silnie niestacjonarna. W celu identyfikacji takiego 
+obiektu niezbędny jest mechanizm pozwalający na bieżącą estymację parametrów, 
+czyli innymi słowy, układ musi się adaptować do aktualnych zmian toru pierwotnego.
+\par Mając to na uwadze, zaktualizowany o filtr $W(z^{-1})$, będący bieżącą 
+estymacją obiektu $P(z^{-1})$, schemat blokowy przedstawiono na rysunku
+\ref{analysis::scheme_1}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.78\textwidth]{graf/analysis/scheme_1.png}
+    \caption{Wyprowadzenie schematu systemu ANC, 1}
+    \label{analysis::scheme_1}
+\end{figure}
+
+Algorytmem najczęściej wykorzystywanym do bieżącej estymacji 
+parametrów obiektu w systemach ANC jest algorytm LMS (ang. \textit{Least mean squares}).
+Jego działanie opiera się na zastosowaniu gradientowej metody najniższego
+spadku do minimalizacji błędu średniokwadratowego.
+
+\par Błąd w analizowanym przypadku dany jest zależnością:
+\begin{equation}
+    e(n) = d(n) - y(n) = d(n) - \textbf{w}^T\textbf{x}(n)
+\end{equation}
+
+Minimalizując wartość oczekiwaną kwadratu błędu $E[e^2(n)]$
+metodą najniższego spadku, otrzymuje się równanie aktualizacji
+parametrów:
+
+\begin{equation}
+    \textbf{w}(n + 1) = \textbf{w}(n) + \mu\textbf{x}(n)e(n)
+\end{equation}
+
+gdzie \textbf{w}(n) to wektor obliczonych współczynników filtra w chwili $n$:
+\begin{equation}
+        \textbf{w} = \begin{bmatrix}
+            w_0 \quad
+            w_1 \quad
+            \cdots \quad
+            w_{L - 1} 
+        \end{bmatrix}^T
+\end{equation}
+
+a \textbf{x}(n) to wektor wejść w chwili $n$:
+\begin{equation}
+        \textbf{x}(n) = \begin{bmatrix}
+            x(n) \quad
+            x(n - 1) \quad
+            \cdots \quad
+            x(n - L + 1)
+        \end{bmatrix}^T
+\end{equation}
+
+Parametr $\mu$ nazywamy krokiem algorytmu LMS. Jego wartość decyduje
+o szybkość zbiegania się algorytmu. Praktyczne kryterium stabilności algorytmu 
+definiowane jest następującą zależnością:
+\begin{equation}
+    0 < \mu < \frac{2}{LP_{x}}
+\end{equation}
+
+gdzie $L$ to ilość estymowanych współczynników, a $P_{x}$ to moc 
+sygnału wejściowego określana jako:
+\begin{equation}
+    P_{x} = R_{xx}(0) = E[x^2{n}]
+\end{equation}
+

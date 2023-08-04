@@ -63,7 +63,7 @@ hałasów niskoczęstotliwościowych (zazwyczaj z zakresu 50 do 500 Hz),
 górując w tym przypadku, zważając na stosunek ceny i jakości tłumienia, 
 nad rozwiązaniami pasywnymi.
 
-\subsection{Zasada działania}
+\subsection{Idea przewodnia}
 
 Idea, na której swoje działanie opierają systemy ANC, jest bardzo prosta
 w zrozumieniu, jednak problematyczna w implementacji. W oparciu o pomiar
@@ -81,19 +81,19 @@ W wyniku interferencji fal (superpozycji), hałas zostaje wyciszony.
     \label{intro::anc}
 \end{figure}
 
-\par Charakerystyka źródła hałasu w omawianej tematyce jest w większości 
-przypadków zmienna w czasie, co powoduje, że częstotliwość, amplituda, faza
+\par Hałas w omawianej tematyce jest w większości 
+przypadków zmienny w czasie, co powoduje, że częstotliwość, amplituda, faza
 jak i prędkość rozchodzenia się drgań w ośrodku jest niestacjonarna.
 Takie zachowanie wymaga, żeby projektowany system był adaptacyjny, co oznacza,
 że jego zachowanie będzie odpowiednio korygowane, w zależności od zaobserwowanych
-zmian charakterystyki źródła. Adaptacja realizowana jedynie w sposób analogowy, 
+zmian. Adaptacja realizowana jedynie w sposób analogowy, 
 pomimo że możliwa, posiada duże ograniczenia w zakresie elastyczności i precyzyjności, 
 dlatego pożądane jest, aby w systemach tego typu wykorzystać układy cyfrowe,
 próbkujące sygnały z czujników oraz przetwarzające je z wykorzystaniem 
 odpowiednich algorytmów przetwarzania. Układy cyfrowe przyznaczonego do tego
 celu muszą być odpowiednio szybkie i precyzjne, aby wszystkie potrzebne 
 obliczenia i przekształcenia wykonać w czasie rzeczywistym. 
-Aby uzyskać wysoki stopień tłumienia, niezbędne jest, 
+W celu uzyskania wysokiego stopinia tłumienia, niezbędne jest, 
 aby amplituda hałasu i antyhałasu była do siebie zbliżona z dużą precyzją, 
 a faza dokładnie odwrócona. W przeciwnym wypadku wysoce prawdopodobne jest,
 że system będzie tylko pogarszał sprawę, poprzez wprowadzenie dodatkowego
