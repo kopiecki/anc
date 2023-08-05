@@ -1,4 +1,8 @@
-\chapter{Założenia projektowe}
+\chapter{Realizowane rozwiązanie i założenia}
+
+\section{Architektura systemu}
+
+\section{Założenia projektowe}
 
 Głównym założeniem stawianym całemu projektowi jest wykonanie prostego i 
 wygodnego w obsłudze środowiska, pozwalającego na wykonywanie badań i
@@ -16,9 +20,7 @@ postaci płytki drukowanej. Oprogramowanie napisane na docelową
 platformę nie będzie korzystało z bibliotek udostępniających gotowe funkcje
 realizujące algorytmy będącymi znaczącymi elementami pracy.
 Wykorzystanie zewnętrznych bibliotek zostanie zamknięte na poziomie 
-prototypowania i symulacji.
-
-\par Dodatkowo postanowiono, że wykorzystane narzędzia wspomagające
+prototypowania i symulacji. Dodatkowo postanowiono, że wykorzystane narzędzia wspomagające
 proces projektowania sprzętu jak i implementacji oprogramowania będą 
 na licencjach wolnego oprogramowania.
 
@@ -51,7 +53,7 @@ Projektowany układ elektroniczny musi realizować następujące zadania:
 
 Analizując wyszczególnione wyżej zadania można łatwo dojść do wniosku,
 że w skład projektowanego układu elektronicznego wchodzić będą cztery sekcje,
-z których wyróżniono:
+z których można wyróżnić:
 
 \begin{enumerate}
 
@@ -185,8 +187,8 @@ Wybrane mikrofony muszą spełniać wymagania, z których wyróżniono:
         charakterystyka kulista.
     
         \item Odpowiedź częstotliwościowa - ideowo płaska. Zakres nie odgrywa
-        znaczącej roli, bo analizowane sygnały są wolnozmienne (pasmo od 50 do 500 Hz, 
-        gdzie typowe zakresy posiadają górną granicę definiowaną w dziesiątkach kiloherców).
+        znaczącej roli, bo analizowane sygnały są wolnozmienne (typowe zakresy 
+        posiadają górną granicę definiowaną w dziesiątkach kiloherców).
 
 \end{enumerate}
 
@@ -197,7 +199,7 @@ Dla wybranych zestawów głośnikowych, wymagania są następujące:
         jest wbudowany wzmacniacz. Innymi słowy, zestawy muszą być aktywne.
     
         \item Analizowane sygnały są wolnozmienne (pasmo 50 do 500 Hz), więc 
-        wymagane jest wsparcie dla tonów niskich. Innymi słowy na wyposażeniu zestawu
+        wymagane jest wsparcie dla tonów niskich. Innymi słowy, na wyposażeniu zestawu
         musi być głośnik niskotonowy (ang. \textit{woofer}), zdolny do emisji
         sygnałów akustycznych o niskiej częstotliwości.
     

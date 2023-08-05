@@ -139,13 +139,13 @@ Układ zasilany jest z zewnętrznego zasilacza impulsowego o napięciu wyjściow
 15 V. Zasilacze impulsowe znane są wysokiej, wynikającej z przełączania wewnętrznego
 klucza tranzystorowego, fluktuacji napięcia wyjściowego (ang. \textit{ripple}), które w przypadku dobranego 
 zasilacza wynosi maksymalnie 240 mV p-p.
-Na uwadze należy również mieć zakłócenia pochodzące z sieci, wraz z przeregulowaniami powstającymi 
+Na uwadze należy również mieć zakłócenia pochodzące z sieci wraz z przeregulowaniami powstającymi 
 w momentach włączenia i wyłączenia układu.
 \par Typowym rozwiązaniem stosowanym w sekcjach wejściowych układów elektronicznych
 jest zastosowanie dolnoprzepustowego filtru LC, mającego za zadanie 
 wygładzenie zewnętrznego zasilania jak i zapewnienie bufora do dalszych
 konwersji. Taki filtr opisany jest następującą zależnością, wynikającą z uogólnionego 
-równania dzielnika napięciowego \cite{bib:tietze}:
+równania dzielnika napięciowego \cite{bib:tietze}
 \begin{equation}
     U_{wy}(s) = U_{we}(s) \frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{Ls + \frac{1}{Cs}}
         \implies K_{LP}(s) = \frac{1}{LCs^2 + 1}
@@ -156,14 +156,14 @@ W dziedzinie symbolicznej natomiast ($s = j\omega$):
     K_{LP}(j\omega) = \frac{1}{1 - \omega^2LC}
 \end{equation}
 
-Częstotliwość rezonansowa takiego układu wynosi:
+Częstotliwość rezonansowa takiego układu wynosi
 \begin{equation}
     \omega_c = 2\pi f_c \implies f_c = \frac{1}{2\pi\sqrt{LC}}
 \end{equation}
 
-Należy mieć na uwadze, że zależność \ref{eq:lc_lp} przedstawia idealny model układu LC.
+Zależność \ref{eq:lc_lp} przedstawia idealny model układu LC.
 W rzeczywistości każdy element pasywny posiada swoją rezystancję, przez co układ LC 
-staje się układem RLC, określonym zależnością:
+staje się układem RLC, określonym zależnością
 \begin{equation}
     U_{wy}(s) = U_{we}(s) \frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{R + Ls + \frac{1}{Cs}}
         \implies K_{LP}(s) = \frac{1}{LCs^2 + RCs + 1}
@@ -200,14 +200,14 @@ które nie jest tłumione (możliwe płaskie) \cite{bib:lc}.
 
 Jako rezystancję przyjmuje się rezystancję wewnętrzną cewki.
 W zaprojektowanym układzie $L = 4.7 \text{ }\mu$H i $C = 1080 \text{ }\mu$F,
-z czego wynika $f_c \approx 2.47$ kHz oraz warunek na rezystancję cewki:
+z czego wynika $f_c \approx 2.47$ kHz oraz warunek na rezystancję cewki
 \begin{equation}
     R = \sqrt{\frac{L}{2C}} = \sqrt{\frac{4.7}{2160}} \approx 46.6 \text{ m}\Omega
 \end{equation}
 W układzie dobrano dostępną wartość najbliższą obliczeniom i wynosi ona $74.8 \text{ m}\Omega$. 
 Warto wspomnieć, że w przypadku doboru rzeczywistych wartości elementów, w tym przypadku 
 lepiej wybrać element o wartości zawyżonej niż zaniżonej, ponieważ bardziej oczekiwane
-jest uzyskanie lepszego tłumienia, niż wzmocnienia pasma rezonansowego.
+jest uzyskanie większego tłumienia, niż wzmocnienia pasma rezonansowego.
 Omawiany schemat układu wraz z dołożonymi kondensatorami zapewniającymi dodatkowe
 buforowanie i filtrację średnich częstotliwości przedstawiono na rysunku \ref{hw::input}:
 
@@ -223,8 +223,8 @@ w układzie, jak i również wykorzystywane jest jako zasilanie phantomowe mikro
 
 \subsection{Symetryzacja szyn zasilających}
 
-Przetwarzany sygnał dźwiękowy jest symetryczny wokół zera, więc wymagane jest,
-również symetryczne zasilanie dla wzmacniaczy w sekcji torów analogowych, 
+Przetwarzany sygnał akustyczny jest symetryczny wokół zera, więc wymagane jest
+symetryczne zasilanie dla wzmacniaczy w sekcji torów analogowych, 
 odpowiednio wysokie, aby nie doporowadzać do saturacji ich wyjść. 
 Wybranym zasilaniem jest $\pm$12 V, a szczegóły dotyczące
 tego wyboru będą dokładniej opisywane w sekcji torów analogowych.
@@ -248,7 +248,7 @@ zgodnych z założoną specyfikacją na rynku.
 odwracającej pompy ładunków. Układ spełnia wszystkie założenia projektowe i 
 jest wydajny prądowo (maksymalny pobierany prąd równy 100 mA), minusem
 jednak jest mała dokładność napięcia wyjściowego z dużymi fluktuacjami, 
-opisanymi zależnością:
+opisanymi zależnością
 \begin{equation}
     U_{r,p-p} \approx \frac{I_{out}}{C_{out}}(\frac{1}{f_{osc}} - t_{on})
 \end{equation}
@@ -290,9 +290,9 @@ wartości dobierane były według not aplikacyjnych producenta przedstawiono na 
 \subsection{Zasilanie domeny cyfrowej}
 
 Celem sekcji jest wygenerowanie napięcia równego 5 V, będącego zasilaniem
-przetworników cyfrowo-analogowych oraz wybranej platformy rozwojowej.
-Maksymalne zapotrzebowanie prądowe tych elementów wynosi odpowiednio 100 $\mu$A 
-oraz około 2 A.
+przetworników cyfrowo-analogowych oraz wybranej platformy obliczeniowej.
+Maksymalne zapotrzebowanie prądowe tych elementów wynosi odpowiednio 200 $\mu$A 
+(100 $\mu$A na układ) oraz około 2 A.
 \par Wykorzystywana platformowa rozwojowa posiada własną sekcję stabilizacji i 
 filtracji napięcia wejściowego, a wybrane przetworniki cyfrowe-analogowe, w przeciwieństwie 
 do analogowo-cyfrowych, generują wyjście na podstawie dodatkowego sygnału 
@@ -301,10 +301,10 @@ są zdecydowanie mniej rygorystyczne niż w przypadku zasilań i referencji
 domeny analogowej.
 \par Zważając na powyższe, w celu generacji napięcia wykorzystano układ 
 impulsowej przetwornicy napięcia (\textbf{SMPS}, ang. \textit{Switched mode power supply}),
-który jest tani, prosty w implementacji oraz zapewnia wysoką wydajność prądową, która
-według dokumentacji wynosi do 3 A.
+który jest tani, prosty w implementacji oraz zapewnia wysoką wydajność prądową,
+według dokumentacji wynoszącą do 3 A.
 \par Zależność opisująca napięcie wyjściowe wykorzystanego układu podana jest 
-przez producenta i zdefiniowana jest poniższym równaniem:
+przez producenta i zdefiniowana jest poniższym równaniem
 \begin{equation} 
     U_{out} = 0.765 \cdot (1 + \frac{R_1}{R_2})
     \label{eq::smps}
@@ -324,7 +324,8 @@ przedstawiono na rysunku \ref{hw::smps}.
     \label{hw::smps}
 \end{figure}
 
-Napięcie wyjściowe przetwornicy zgodnie z zależnością \ref{eq::smps} wynosi
+Napięcie wyjściowe przetwornicy zgodnie z zależnością \ref{eq::smps} dla 
+wykorzystanych rezystorów wynosi
 5.97 V, co pozwala poprawną stabilazację z wykorzystaniem regulatora 
 niskiego spadku. Do wygenerowanego zasilania równolegle wraz z rezystorem
 ograniczającym prąd dodatkowo podłączono diodę LED, działającą jako indykator
@@ -334,13 +335,13 @@ informujący o włączonym układzie.
 
 Wykorzystane przetworniki wymagają zasilania referencyjnego, na bazie 
 którego przeprowadzane sa konwersje. W przypadku przetworników cyfrowo-analogowych,
-zależność wynosi:
+zależność wynosi
 \begin{equation}
     U_{out} = \frac{DU_{ref}}{2^{N}}
 \end{equation}
 gdzie $D$ to dane załadowane do rejestru przetwornika, a $N$
 to rozdzielczość. W przypadku przetwornika analogowo-cyfrowego, referencja wpływa
-bezpośrednio na rozmiar kwantu:
+bezpośrednio na rozmiar kwantu
 \begin{equation}
     q = \frac{U_{ref}}{2^{N}}
 \end{equation}
@@ -404,7 +405,7 @@ Schemat blokowy wejściowego toru analogowego przedstawiono na rysunku
 
 Dźwięk trafia na sekcję torów analogowych poprzez trzy-pinowe złącze XLR. 
 Oprócz masy, ze złącza odprowadzane są dwa sygnały,
-z czego drugi jest przesunięty o 180 stopni w fazie względem pierwszego. Tak 
+z czego drugi jest odwrócony w fazie względem pierwszego. Tak 
 zrealizowane połączenia, wraz z odpowiednim ekranowaniem w przewodzie,
 pozwalają na minimalizację zakłóceń oraz strat.
 \par Bezpośrednio po doprowadzeniu sygnałów na układ, poprzez rezystory
@@ -414,9 +415,9 @@ Standard IEC 61938 definiuje wartości rezystancji dla poszczególnych wartości
 napięc zasilania phantomowego i wynoszą one 6.81 k$\Omega$ dla zasilania +48 V,
 1.2 k$\Omega$ dla zasilania +24 V i 680 $\Omega$ dla zasilania +12 V. Jako,
 że wybrana wartość zasilania jest niestandardowa ze względu na specyfikację 
-mikrofonów, to rezystancje dobrano te, dla których 
+mikrofonów, to jako rezystancje dobrano te, dla których 
 wartości napięcia w standardzie jest najbliższa, czyli 680 $\Omega$.
-\par Po doprowadzenia zasilania sygnały trafiają na kondensatory odcinające
+\par Po doprowadzeniu zasilania sygnały trafiają na kondensatory odcinające
 składową stałą. Omawianą część schematu przedstawiono na rysunku \ref{hw::xlr}.
 
 \begin{figure}[H]
@@ -430,7 +431,7 @@ składową stałą. Omawianą część schematu przedstawiono na rysunku \ref{hw
 
 W celu zabezpieczenia się przed wysokoczęstotliwościowymi zakłóceniami
 z zewnętrznych źródeł, następnym etapem przetwarzania jest zastosowanie
-dolnoprzepustowego filtru EMI (ang. \textit{Electromagnetic-interference filtering}).
+dolnoprzepustowych filtrów EMI (ang. \textit{Electromagnetic-interference filtering}).
 Obecność wysokoczęstotliwościowych szumów w przetwarzanym sygnale wchodzącym
 na wejście wzmacniacza różnicowego może doprowadzić do niekorzystnych
 zmian sygnału wyjściowego. Takie zachowanie opisywane jest przez
@@ -510,7 +511,7 @@ na rysunku \ref{hw::preamp}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.35\textwidth]{graf/hw/preamp.png}
+    \includegraphics[width=0.5\textwidth]{graf/hw/preamp.png}
     \caption{Przedwzmacniacz}
     \label{hw::preamp}
 \end{figure}
@@ -534,7 +535,7 @@ wzmocnieniem, którą przedstawiono na rysunku \ref{hw::sellen_key}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{graf/hw/sellen_key.png}
-    \caption{Topologia Sellena-Keya}
+    \caption{Topologia Sellena-Keya z jednostkowym wzmocnieniem}
     \label{hw::sellen_key}
 \end{figure}
 
@@ -618,13 +619,13 @@ Charakterystykę amplitudową i fazową układu przedstawiono na rysunku
     \label{hw::freqs}
 \end{figure}
 
-Po wybraniu rzeczywistch wartości rezystancji, najbliższych teoretycznym,
+Po wybraniu rzeczywistch wartości rezystancji najbliższych teoretycznym,
 omawiany układ przedstawiono na rysunku \ref{hw::filt}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/filter.png}
-    \caption{Filtr antystroboskopowy}
+    \caption{Filtr antyaliasingowy}
     \label{hw::filt}
 \end{figure}
 
@@ -666,13 +667,13 @@ przetwornika $U_c = 2.5$ V uzyskuje się warunek na pierwszy składnik równania
 \end{equation}
 
 Jak można zauważyć z równiania \ref{eq::offset} sygnał $U_{-, we}$ zostaje 
-w tym etapie odwrócony (zanegowany). Omawiany układ wraz z kondensatorem
-pełniącym rolę lokalnego bufora sygnału składowej stałej przedstawiono
+w tym etapie odwrócony. Omawiany układ wraz z kondensatorem
+pełniącym rolę lokalnego bufora składowej stałej przedstawiono
 na rysunku \ref{hw::offset}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.55\textwidth]{graf/hw/offset.png}
+    \includegraphics[width=0.5\textwidth]{graf/hw/offset.png}
     \caption{Układ pozycjonujący}
     \label{hw::offset}
 \end{figure}
@@ -682,12 +683,12 @@ na rysunku \ref{hw::offset}:
 \par Bezpośrednio przed wejściem przetwornika dołączono
 dodatkowy filtr dolnoprzepustowy RC pierwszego rzędu \label{eq::rc}, odcinający
 możliwe szumy powstałe w wyniku zastosowanych wzmacniaczy operacyjnych oraz
-zapewniający bufor energii dla kondensatora próbkującego 
+zapewniający lokalny bufor energii dla kondensatora próbkującego 
 wewnątrz przetwornika. Wymagania na taki filtr nie są surowe, ponieważ
-niechciane pasmo zostało odfiltorwane przez wcześniejszy filtr antystroboskopowy,
+niechciane pasmo zostało odfiltorwane przez wcześniejszy filtr antyaliasingowy,
 dlatego zdecydowano się na wartości $R = 1$ k$\Omega$ i $C = 10$ nF, uzyskując
 w ten sposób $f_c \approx 15.91$ kHz.
-\par Dodatkowo, wejście przetwornika analogowo-cyfrowego należy zabezpieczyć przed 
+\par Wejście przetwornika analogowo-cyfrowego należy zabezpieczyć przed 
 napięciami przekraczającymi jego zakres. O układzie realizującym to zadanie
 wspominano już w sekcji wejścia zbalansowanego, lecz w tym przypadku,
 limiter ogranicza amplitudy sygnału wejściowego do zakresu przetwornika.
@@ -713,7 +714,7 @@ Pełen schemat omawianej sekcji przedstawiono na rysunku \ref{hw::analog_in_full
 \end{figure}
 
 Do symetrycznych linii zasilających wzmacniaczy operacyjnych dołączono kondensatory
-odsprzęgające filtrujące szumy zasilania. Jako wartości dobrano typowe $100$ nF
+odsprzęgające, filtrujące szumy zasilania. Jako wartości dobrano typowe $100$ nF
 na każdy pin zasilający wzmacniacza.
 
 \section{Wyjściowe tory analogowe}
@@ -732,7 +733,7 @@ Schemat blokowy wyjściowego toru analogowego przedstawiono na rysunku
 
 Sygnał wychodzący bezpośrednio z przetwornika cyfrowo-analogowego
 wymaga wstępnej filtracji, mającej na celu usunięcie 
-wysokoczęstotliwościowych artefaktów kowersji jak i składowej stałej
+wysokoczęstotliwościowych artefaktów kowersji jak i składowej stałej +2.5 V
 wynikającej z zakresu od 0 do +5 V. Jako, że późniejszym etapem 
 przetwarzania jest stromy dolnoprzepustowy filtr rekonstukcyjny, 
 to wymagania stawiane omawianemu układowi nie są surowe.
@@ -812,7 +813,7 @@ destrukcyjna dla głośnika.
 \par Przyjęte parametry są podobne do filtra na wejściu sekcji,
 jednak w tym przypadku zmniejszono rezystancję opornika w układzie 
 dolnoprzepustowym, aby nie zwiększać impedancji wyjściowej toru. Skutkuje
-to przemnożeniem się częstotliwości granicznej filtru przez 10, co daje
+to przemnożeniem częstotliwości granicznej filtru przez 10, co daje
 $f_c \approx 159.1$ kHz. Dodatkowo, zmieniono kolejność elementów w układzie, 
 starając się umieścić kondensator równolegle jak najbliżej złącza.
 \par Omawianą część schematu przedstawiono na rysunku \ref{hw::out_filter}:

@@ -55,7 +55,7 @@ Dodatkowy pomiar jest też nie zawsze możliwy, więc wybór struktury często
 jest kompromisem.
 
 \par Projektujac układ ze sprzężeniem w przód można dokonać dodatkowego
-założenia, które implikują modyfikację struktury. Opiera się one
+założenia, które implikuje modyfikację struktury. Opiera się one
 charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować: 
 
 \begin{enumerate}
@@ -71,11 +71,11 @@ charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować:
 
 \end{enumerate}
 
-W każdym przypadku wymagane jest, że element pomiarowy mierzący
-hałas na wejściu systemu będzie zdolny zapewnić odpowiednią ilość informacji
+W każdym przypadku wymagane jest, żeby element pomiarowy mierzący
+hałas na wejściu systemu był zdolny do zapewnienia odpowiedniej ilość informacji
 do wytworzenia adekwatnego sterowania. W przypadku hałasów szerokopasmowych
-wybór pada na mikrofon referencyjny, w przypadku hałasów wąskopasmowych 
-z mikrofonu można zrezygonować na rzecz czujnika nieakustycznego,
+wybór pada na mikrofon referencyjny, w przypadku hałasów wąskopasmowych,
+wybór czujnika można zaoptymalizować na rzecz nieakustycznego,
 takiego jak tachometr lub enkoder, kiedy mamy do czynienia z hałasami wygenerowanymi 
 przez obracający się mechanizm.
 
@@ -87,7 +87,7 @@ głośników, tak, aby jak najmniej na siebie wpływały, lub, co jest typowym r
 poprzez rozszerzenie systemu o dodatkową pętlę i neutralizacja jej wpływu
 w sposób programowy lub sprzętowy.
 
-\par Podsumowując, klasyfikację struktur systemów ANC można przedstawić
+\par Klasyfikację struktur systemów ANC można przedstawić
 jak na rysunku \ref{analysis::systems}:
 
 \begin{figure}[H]
@@ -110,7 +110,7 @@ uogólnionego schematu blokowego \ref{analysis::scheme_0}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/analysis/scheme_0.png}
+    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_0.png}
     \caption{Wyprowadzenie schematu systemu ANC, 0}
     \label{analysis::scheme_0}
 \end{figure}
@@ -135,33 +135,34 @@ następująco:
 
 \end{itemize}
 
-Modelowanie dynamiczne w analizowanej tematyce uogólnione zostaje
+\subsection{Identyfikacja toru pierwotnego}
+
+Modelowanie obiektów dynamicznych w treści pracy uogólnione zostaje
 do filtrów SOI (filtr o skończonej odpowiedzi impulsowej, ang. 
 \textit{Finite impulse filter, FIR filter}). Tego typu modele
 bardzo często stosowane są w zagadanieniach związanych z systemami ANC,
-ze względu na wygodę ich stosowania. Są zawsze stabilne, łatwe w implementacji
-jak i posiadają liniową odpowiedź fazową.
-
-\par Transmitancja filtru SOI (odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
+głównie ze względu na wygodę. Są zawsze stabilne, łatwe w implementacji
+jak i posiadają liniową odpowiedź fazową. Transmitancja takiego 
+modelu (odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
 \begin{equation}
     K(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L - 1} w_lz^{-l}
     \label{eq::fir}
 \end{equation}
 gdzie:
 \begin{itemize}
-    \item $w_l$ to współczynnik filtra o numerze $l$ (ang. \textit{tap}),
-    \item $L$ to rząd filtra (ilość współczynników, długość odpowiedzi impulsowej), a
-    \item $z^{-l}$ oznacza operator opóźnienia o $l$ próbek.
+    \item $w_l$ - współczynnik filtra o numerze $l$ (ang. \textit{tap}),
+    \item $L$ - rząd filtra (ilość współczynników, długość odpowiedzi impulsowej), a
+    \item $z^{-l}$ - operator opóźnienia o $l$ próbek.
 \end{itemize}
 
-W związku z \ref{eq::fir}, wyjście filtra SOI $y(n)$ dane jest:
+W związku z \ref{eq::fir}, wyjście filtra SOI $y(n)$ dane jest
 \begin{equation}
         y(n) = \sum_{l = 0}^{L - 1}w_lx(n - l) \implies y(n) = \textbf{w}^T\textbf{x}(n)
 \end{equation}
 
-gdzie \textbf{w} to wektor współczynników filtra:
+gdzie \textbf{w} to wektor współczynników filtra
 \begin{equation}
-        \textbf{w} = \begin{bmatrix}
+        \textbf{w} \equiv \begin{bmatrix}
             w_0 \quad
             w_1 \quad
             \cdots \quad
@@ -169,9 +170,9 @@ gdzie \textbf{w} to wektor współczynników filtra:
         \end{bmatrix}^T
 \end{equation}
 
-a \textbf{x}(n) to wektor wejść w chwili $n$:
+a \textbf{x}(n) to wektor wejść w chwili $n$
 \begin{equation}
-        \textbf{x}(n) = \begin{bmatrix}
+        \textbf{x}(n) \equiv \begin{bmatrix}
             x(n) \quad
             x(n - 1) \quad
             \cdots \quad
@@ -183,52 +184,84 @@ Analizując schemat \ref{analysis::scheme_0} można dojść do logicznego wniosk
 że jedyną rolą układu \textbf{ANC} jest zidentyfikowanie transmitancji $P(z^{-1})$,
 przefiltrowanie przez nią sygnału $x(n)$ oraz odwórcenie znaku wyjścia.
 Nie jest to jednak proste zadanie, ponieważ tak jak opisywano wcześniej,
-charakterystyka toru pierwotnego, czyli drogi, po którym docelowo
-tłumiony hałas się porusza, jest silnie niestacjonarna. W celu identyfikacji takiego 
+charakterystyka toru pierwotnego, czyli drogi, którą propaguje się
+docelowo tłumiony hałas, jest silnie niestacjonarna. W celu identyfikacji takiego 
 obiektu niezbędny jest mechanizm pozwalający na bieżącą estymację parametrów, 
-czyli innymi słowy, układ musi się adaptować do aktualnych zmian toru pierwotnego.
+czyli innymi słowy, układ musi się adaptować do zmian toru pierwotnego.
 \par Mając to na uwadze, zaktualizowany o filtr $W(z^{-1})$, będący bieżącą 
 estymacją obiektu $P(z^{-1})$, schemat blokowy przedstawiono na rysunku
 \ref{analysis::scheme_1}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.78\textwidth]{graf/analysis/scheme_1.png}
+    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_1.png}
     \caption{Wyprowadzenie schematu systemu ANC, 1}
     \label{analysis::scheme_1}
 \end{figure}
 
-Algorytmem najczęściej wykorzystywanym do bieżącej estymacji 
-parametrów obiektu w systemach ANC jest algorytm LMS (ang. \textit{Least mean squares}).
-Jego działanie opiera się na zastosowaniu gradientowej metody najniższego
-spadku do minimalizacji błędu średniokwadratowego.
+\subsection{Algorytm LMS}
 
-\par Błąd w analizowanym przypadku dany jest zależnością:
+Techniką najczęściej wykorzystywaną do bieżącej estymacji 
+parametrów obieków niestacjonarnych w systemach ANC jest algorytm LMS 
+(ang. \textit{Least mean squares}).
+Jego działanie opiera się na zastosowaniu gradientowej metody najniższego
+spadku do minimalizacji błędu średniokwadratowego 
+
+\par Błąd w analizowanym przypadku dany jest zależnością
 \begin{equation}
-    e(n) = d(n) - y(n) = d(n) - \textbf{w}^T\textbf{x}(n)
+    e(n) = d(n) - y(n) = d(n) - \textbf{w}^T(n)\textbf{x}(n)
 \end{equation}
 
-Minimalizując wartość oczekiwaną kwadratu błędu $E[e^2(n)]$
+Minimalizując wartość oczekiwaną kwadratu błędu
+\begin{equation}
+    E[e^2(n)] = E[d(n)] - 2\textbf{p}^T\textbf{w}(n) + \textbf{w}^T(n)\textbf{R}\textbf{w}(n)
+\end{equation}
+
+gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej
+\begin{equation}
+    \textbf{p} \equiv E[d(n)\textbf{x}(n)] = \begin{bmatrix}
+        r_{dx}(0) & r_{dx}(1) & \cdots & r_{dx}(L - 1)
+    \end{bmatrix}^T
+\end{equation}
+\begin{equation}
+    r_{dx}(k) \equiv E[d(n)x(n - k)]
+\end{equation}
+
+a \textbf{R} jest macierzą autokorelacji sygnału wejściowego $x(n)$
+\begin{equation}
+    \textbf{R} \equiv E[\textbf{x}(n)\textbf{x}^T(n)] = 
+    \begin{bmatrix}
+        r_{xx}(0) & r_{xx}(1) & \cdots & r_{xx}(L - 1) \\
+        r_{xx}(1) & r_{xx}(0) & \cdots & r_{xx}(L - 2) \\
+        \hdots & \vdots & \ddots & \vdots \\
+        r_{xx}(L - 1) & r_{xx}(L - 2) & \cdots & r_{xx}(0)
+    \end{bmatrix}
+    \label{eq::auto_corr_mat}
+\end{equation}
+\begin{equation}
+    r_{xx}(k) \equiv E[x(n)x(n - k)]
+\end{equation}
+
 metodą najniższego spadku, otrzymuje się równanie aktualizacji
-parametrów:
+parametrów
 
 \begin{equation}
     \textbf{w}(n + 1) = \textbf{w}(n) + \mu\textbf{x}(n)e(n)
 \end{equation}
 
-gdzie \textbf{w}(n) to wektor obliczonych współczynników filtra w chwili $n$:
+gdzie \textbf{w}(n) to wektor obliczonych współczynników filtra w chwili $n$
 \begin{equation}
-        \textbf{w} = \begin{bmatrix}
-            w_0 \quad
-            w_1 \quad
+        \textbf{w}(n) \equiv \begin{bmatrix}
+            w(n)_0 \quad
+            w(n)_1 \quad
             \cdots \quad
-            w_{L - 1} 
+            w(n)_{L - 1} 
         \end{bmatrix}^T
 \end{equation}
 
 a \textbf{x}(n) to wektor wejść w chwili $n$:
 \begin{equation}
-        \textbf{x}(n) = \begin{bmatrix}
+        \textbf{x}(n) \equiv \begin{bmatrix}
             x(n) \quad
             x(n - 1) \quad
             \cdots \quad
@@ -237,15 +270,322 @@ a \textbf{x}(n) to wektor wejść w chwili $n$:
 \end{equation}
 
 Parametr $\mu$ nazywamy krokiem algorytmu LMS. Jego wartość decyduje
-o szybkość zbiegania się algorytmu. Praktyczne kryterium stabilności algorytmu 
-definiowane jest następującą zależnością:
+o szybkości adaptacji algorytmu i ograniczona jest kryterium stabilności 
+zdefiniowanym zależnością
 \begin{equation}
-    0 < \mu < \frac{2}{LP_{x}}
+    0 < \mu < \frac{2}{\lambda_{max}}
+    \label{eq::lms_const}
 \end{equation}
 
-gdzie $L$ to ilość estymowanych współczynników, a $P_{x}$ to moc 
-sygnału wejściowego określana jako:
+gdzie $\lambda_{max}$ zdefiniowana jest jako maksymalna wartość własna 
+macierzy \textbf{R} \ref{eq::auto_corr_mat}.
+\\
+\\
+Zastosowanie warunku stabilności w formie \ref{eq::lms_const} jest 
+niepraktyczne z powodu problematycznych obliczeń $\lambda_{max}$ dla dużych
+rzędów filtra $W(z^{-1})$. W związku z tym, w praktycznym kryterium stabilności
+algorytmu LMS przyjęło się stosować estymację $\lambda_{max}$ na podstawie 
+śladu macierzy \textbf{R}
 \begin{equation}
-    P_{x} = R_{xx}(0) = E[x^2{n}]
+    \lambda_{max} \leq \sum_{l = 0}^{L - 1}\lambda_l = Lr_{xx}(0) = LP_x
+\end{equation}
+\begin{equation}
+    P_x \equiv r_{xx}(0) = E[x^2(n)]
 \end{equation}
 
+w związku z czym
+\begin{equation}
+    0 < \mu < \frac{2}{LP_x}
+\end{equation}
+
+i dla sygnałów o rozkładzie normalnym
+\begin{equation}
+    0 < \mu < \frac{2}{3LP_x}
+\end{equation}
+
+Posiadając zdefiniowany aparat obliczeniowy bieżącej estymacji parametrów filtra 
+$W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_2.png}
+    \caption{Wyprowadzenie schematu systemu ANC, 2}
+    \label{analysis::scheme_2}
+\end{figure}
+
+Bezpośrednio z \ref{analysis::scheme_2} można zapisać
+\begin{equation}
+    E(z^{-1}) = D(z^{-1}) - Y(z^{-1}) = P(z^{-1})W(z^{-1}) - W(z^{-1})X(z^{-1})
+\end{equation}
+Ideowo, jeżeli $W(z^{-1})$ będzie zbieżny
+\begin{equation}
+    E(z^{-1}) = 0 \implies P(z^{-1}) = W(z^{-1})
+\end{equation}
+to gdy $X(z^{-1}) \neq 0$
+\begin{equation}
+    y(n) = d(n) \implies e(n) = d(n) - y(n) = 0
+\end{equation}
+
+Zerowy błąd świadczy o idealnym tłumieniu hałasu.
+
+\subsection{Wpływ toru wtórnego}
+
+Podejście realizowane do tej pory można określić jako naiwne, ponieważ
+nie uwzględniono w nim wpływu dodatkowych obiektów dynamicznych
+występujących w systemie. Sygnały $x(n)$ i $e(n)$ mierzone są za pomocą
+mikrofonów i sygnał akustyczny, docierając do nich, musi przebyć pewną drogę.
+Dodatkowo, w domenie elektronicznej występuje szereg układów
+przetwarzających, takich jak filtry, wzmacniacze i przetworniki.
+Finalnie, wygenerowane wyjście układu musi wysterować głośnik i końcowo trafić
+w tor propagującego się hałasu.
+\par Wszystkie wyszczególnione wyżej elementy posiadają swoją dynamikę i 
+zaniechanie ich opisów w przypadku rzeczywistego układu powoduje
+gorszą zbieżność realizowanej adaptacji, a co za tym idzie, gorsze tłumienie
+(lub jego całkowity brak). Schemat po uwzględnieniu dodatkowych obiektów
+dynamicznych przedstawiono na rysunku \ref{analysis::scheme_3}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_3.png}
+    \caption{Wyprowadzenie schematu systemu ANC, 3}
+    \label{analysis::scheme_3}
+\end{figure}
+
+Nowe transmitancje na schemacie \ref{analysis::scheme_3} można opisać następująco:
+\begin{itemize}
+
+\item $S'(z^{-1})$ - reprezentuje dynamikę toru 
+od wyjścia filtru adaptacyjnego $W(z^{-1})$ do węzła sumacyjnego w domenie akustycznej. 
+Z elementów wchodzących w jego skład można wyróżnić przetwornik cyfrowo-analogowy,
+filtr rekonstrukcjny, wzmacniacz mocy, głośnik i tor od głośnika do punktu
+interferencji. Jako, że tor składa się z elementów elektronicznych jak i 
+akustycznych, jego obecność na schemacie zaznaczono na pograniczu domen.
+
+\item $R(z^{-1})$ - reprezentuje dynamikę toru od węzła sumacyjnego w domenie akustycznej
+do wejścia algorymu adaptacyjnego. W jego skład wchodzi
+tor dźwięku od węzła sumacyjnego do mikrofonu błędu, mikrofon błędu,
+przedwzmacniacz, filtr antyaliasingowy oraz przetwornik analogowo-cyfrowy.
+Analogicznie jak w przypadku transmitancji $S'(z^{-1})$, tor jest kompozycją
+elementów akustycznych i elektronicznych.
+
+\end{itemize}
+
+Po dodaniu dodatkowych obiektów z układu wyłaniają się dwa, znaczące z perspektywy
+ANC tory przetwarzania. Pierwszym z nich jest dokładniej zdefiniowany tor podstawowy,
+tym razem określony jako
+\begin{equation}
+    P(z^{-1}) = P'(z^{-1})R(z^{-1})
+    \label{eq::p}
+\end{equation}
+
+natomiast drugim jest tak zwany tor wtórny, zdefiniowany jako
+\begin{equation}
+    S(z^{-1}) = S'(z^{-1})R(z^{-1})
+    \label{eq::s}
+\end{equation}
+
+Mając na uwadze \ref{eq::p} i \ref{eq::s}, zależność definiująca błąd $E(z^{-1})$ 
+zostaje zmodyfikowana do postaci
+\begin{equation}
+    E(z^{-1}) = R(z^{-1})\left[P'(z^{-1}) - S'(z^{-1})W(z^{-1})\right]X(z^{-1})
+\end{equation}
+
+Jeżeli $W(z^{-1})$ jest zbieżne, to w tym przypadku
+\begin{equation}
+    E(z^{-1}) = 0 \implies W(z^{-1}) = \frac{P'(z^{-1})}{S'(z^{-1})}
+    \label{eq::adapt}
+\end{equation}
+
+Bezpośrednio z zależności \ref{eq::adapt} można wywnioskować, że zadaniem filtru
+adaptacyjnego $W(z^{-1})$ w takiej sytuacji jest nie tylko bieżąca estymacja 
+parametrów toru $P(z^{-1})$, ale również biężąca estymacja parametrów 
+toru $S'(z^{-1})$ wraz z jego odwróceniem. 
+Jest to mocno problematyczne, ponieważ
+\begin{enumerate} 
+
+    \item Niemożliwym jest kompensować opóźnienia $S'(z^{-1})$, jeżeli
+    $P(z^{-1})$ nie zawiera takiego samego lub mniejszego.
+
+    \item Jeżeli istnieje częstotliwoś, dla której $S'(\omega) = 0$, to 
+    filtr staje się niestabilny. Taką częstotliwość nazywa się niesterowalną.
+
+\end{enumerate}
+
+Dodatkową obserwacją jest kwestia, że jeżeli istnieje taka częstotliwość,
+dla której $R(\omega) = 0$, to system również staje się całkowicie nieefektywny. Taką
+częstotliwość nazywa się nieobserwowalną, błąd jest wtedy (błędnie) zerowy i nie sposób 
+wypracować odpowiedniego sterowania przy braku wiedzy o jego efektach.
+
+\par Schemat \ref{analysis::scheme_3} może zostać uproszczony, bazując na informacji,
+że transmitancje \ref{eq::p} i \ref{eq::s} mają wspólny składnik w postaci
+transmitancji $R(z^{-1})$. Tak zmodyfikowany schemat przedstawiono na rysunku
+\ref{analysis::scheme_4}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_4.png}
+    \caption{Wyprowadzenie schematu systemu ANC, 4}
+    \label{analysis::scheme_4}
+\end{figure}
+
+Dla schematu \ref{analysis::scheme_4} filtr adaptacyjny $W(z^{-1})$
+określony jest zależnością
+\begin{equation}
+    E(z^{-1}) = \left[P(z^{-1}) - S(z^{-1})W(z^{-1})\right]X(z^{-1}) = 0 \implies
+    W(z^{-1}) = \frac{P(z^{-1})}{S(z^{-1})}
+\end{equation}
+
+Czyli sytuacja, mimo że uproszczona, jest analogiczna jak w \ref{eq::adapt}.
+Wykorzystanie standardowego algorytmu LMS, ze względu na transmitancję
+$S(z^{-1})$, jest znacząco utrudnione, dlatego aby układ ANC działał prawidłowo,
+wymagane jest wprowadzenie zmian w jego strukturze.
+
+\subsection{Algorytm FXLMS}
+
+Transmitancja toru wtórnego $S(z^{-1})$ wprowadza dodatkową filtrację wyjścia 
+filtru adaptacyjnego $W(z^{-1})$. Błąd w takim przypadku można zdefiniować jako
+\begin{equation}
+    e(n) = d(n) - y'(n) = d(n) - s(n) \ast y(n) = 
+    d(n) - s(n) \ast [\textbf{w}^T(n)\textbf{x}(n)]
+    \label{eq::fxlms_error}
+\end{equation}
+
+gdzie $\textbf{w}(n)$ to wektor współczynników filtra $W(z^{-1})$ w chwili $n$:
+\begin{equation}
+    \textbf{w} \equiv \begin{bmatrix}
+        w_0(n) \quad
+        w_1(n) \quad
+        \cdots \quad
+        w_{L - 1}(n)
+    \end{bmatrix}^T
+\end{equation}
+
+\textbf{x}(n) to wektor wejść w chwili $n$:
+\begin{equation}
+    \textbf{x}(n) \equiv \begin{bmatrix}
+        x(n) \quad
+        x(n - 1) \quad
+        \cdots \quad
+        x(n - L + 1)
+    \end{bmatrix}^T
+\end{equation}
+
+a $s(n)$ to odpowiedź impulsowa toru wtórnego $S(n^{-1})$ w chwili $n$.
+Operator $\ast$ oznacza konwolucję liniową, czyli filtrację.
+\\
+\par Jeżeli dla błędu \ref{eq::fxlms_error} zostanie wyprowadzony algorytm
+LMS, otrzymane zostanie zmodyfikowane równanie aktualizacji współczynników
+\begin{equation}
+    \textbf{w}(n + 1) = \textbf{w}(n) + \mu \textbf{x'}(n)e(n)
+    \label{eq::fxlms_a}
+\end{equation}
+\begin{equation}
+    \textbf{x'}(n) = s(n) \ast \textbf{x}(n)
+    \label{eq::fxlms_b}
+\end{equation}
+
+Z równań \ref{eq::fxlms_a} i \ref{eq::fxlms_b} bezpośrednio wynika, że 
+jeżeli za filtrem adaptacyjnym znajduje się dodatkowa transmitancja,
+to musi ona pojawić się w torze wejściowym algorytmu. Innymi słowy,
+wektor wejściowy $x(n)$ musi być filtrowany przez transmitancję na wyjściu
+filtra, skąd bierze się nazwa algorytmu (ang. \textit{FXLMS, Filtered x least mean square}).
+\par Aby wykorzystać \ref{eq::fxlms_a} niezbędna jest
+wiedza o postaci transmitancji $S(z^{-1})$. Bazując na założeniu, że tor wtórny jest stacjonarny i mniej skomplikowany niż
+tor podstawowy, estymację jego transmitancji można wyznaczyć korzystając z technik 
+identyfikacji dla obiektów stacjonarnych. Posiadając estymację toru wtórnego $S(z^{-1})$, równanie
+\ref{eq::fxlms_b} można zmodyfikować do postaci
+\begin{equation}
+    \textbf{x'}(n) = \hat{s}(n) \ast \textbf{x}(n)
+\end{equation}
+
+Schemat systemu z wykorzystaniem algorytmu FXLMS przedstawiono na rysunku
+\ref{analysis::scheme_5}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_5.png}
+    \caption{Schemat systemu ANC}
+    \label{analysis::scheme_5}
+\end{figure}
+
+Jeżeli $W(z^{-1})$ zmienia się wolno, to filtry $W(z^{-1})$ i $S(z^{-1})$
+można ze sobą połączyć. Wtedy, jeżeli $\hat{S}(z^{-1}) = S(z^{-1})$, to schemat
+\ref{analysis::scheme_5} można znacząco uprościć, usuwając filtr $S(z^{-1})$
+z toru wyjścia filtru $W(z^{-1})$ i podstawiając $S(z^{-1})$ za $\hat{S}(z^{-1})$.
+Przy takim układzie można stosować metody analizy określone dla 
+tradycyjnego algorytmu LMS, które będą dokładniejsze, im wolniejsza adaptacja
+(im mniejsze $\mu$).
+\par W praktyce algorytm FXLMS jest stabilny nawet jeżeli współczynniki 
+filtra $W(z^{-1})$ zmieniają się znacznie w odniesieniu do skali czasowej
+toru wtórnego. Maksymalny krok ograniczony jest przez
+\begin{equation}
+    \mu_{max} = \frac{1}{P_{x'}(L + \Delta)}
+    \label{eq::fxlms_stab}
+\end{equation}
+
+gdzie $P_{x'} = E[x'^2(n)]$, a $\Delta$ to opóźnienie występujące
+w torze wtórnym mierzone w ilości próbek. Jak można wnioskować z \ref{eq::fxlms_stab},
+największym ograniczeniem szybkości adaptacji algorytmu jest opóźnienie 
+występujące w torze wtórnym.
+
+\subsection{Metody identyfikacji toru wtórnego}
+
+Z metod stosowanych do identyfikacji toru wtórnego 
+można wyróżnić:
+
+\begin{enumerate}
+
+    \item Identyfikację odpowiedzi impulsowej metoda korelacyjną \cite{bib:figwer}
+    \begin{equation}
+        \hat{s}(n) = \frac{R_{xy}(n)}{\lambda^2}
+    \end{equation}
+
+    Na wejście identyfikowanego procesu podaje się szum losowy o wariancji
+    $\lambda^2$, przez który dzielona jest funkcja korelacji wzajemnej $R_{xy}(n)$
+    wejścia obiektu $x(n)$ i wyjścia $y(n)$.
+    Uzyskaną w ten sposób odpowiedź impulsową ogarnicza się do
+    długości, której wartość można określić wizualnie na podstawie przebiegu
+    funkcji $\hat{s}(n)$ i jest to typowo moment, w którym osiąga ona małe 
+    wartości (wygasza się).
+
+    \item Wykorzystanie doświadczalnego estymatora transmitancji \cite{bib:stoica}:
+    \begin{equation}
+        \hat{S}(j\omega) = \frac{\hat{Y}(j\omega)}{\hat{X}(j\omega)}
+    \end{equation}
+
+    Liczone są transformacje Fouriera wejścia $x(n)$ i wyjścia $y(n)$, a 
+    następnie przez siebie dzielone. Zależność na $\hat{s}(n)$ otrzymuje się
+    poprzez zastosowanie odwrotnej transformacji na $\hat{S}(j\omega)$.
+
+    \item Zastosowanie algorytmu LMS, obserwowanie aktualizowanych 
+    współczynników transmitancji i zatrzymanie obliczeń w przypadku,
+    kiedy osiągną one odpowiedni poziom zbieżności.
+
+\end{enumerate}
+
+Identyfikacja toru wtórnego w systemie ANC opiera się więc na wprowadzeniu 
+określonego sygnału identyfikującego $v(n)$ poprzez głośnik emitujący anthałas 
+i zebranie pomiaru mikrofonem błędu. Sygnał, poprzednio definiowany jako błąd $e(n)$
+w tym przypadku jest wynikiem filtracji sygnału $v(n)$ przez transmitancję
+toru wtórnego $S(z^{-1})$. W przypadku stosowania metod 1 i 2 zalecane jest,
+aby przeprowadzić kilka eksperymentów identyfikacyjnych i końcową
+odpowiedź impulsową $\hat{s}(n)$ uzyskać poprzez uśrednienie 
+rezultatów uzyskanych w poszczególnych eksperymentach.
+
+\par Należy mieć na uwadze, że na charakterystykę torów akustycznych
+wpływa wiele czynników, które w trakcie pracy systemu mogły ulec zmianie.
+Przykładowo, na tor akustyczny znaczący wpływ mają następujące kwestie:
+\begin{enumerate}
+
+    \item Wilgotność, temperatura i cieśnienie powietrza.
+
+    \item Obiekty zlokalizowane w okolicach toru, odpowiednio absorbujące lub/i odbijające 
+    fale akustyczne.
+
+    \item Odległość między źródłem dźwięku, a odbiornikiem.
+
+\end{enumerate}
+Jeżeli istnieje szansa, że któraś z wyczególnionych wyżej kwestii
+w trakcie pracy systemu uległa znaczącej zmianie, to proces identyfikacji
+toru wtórnego należy powtórzyć. Inaczej, adaptacja będzie przebiegała gorzej, 
+a system spełniał swoje zadanie mniej efektywnie.

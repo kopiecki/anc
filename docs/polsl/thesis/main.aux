@@ -71,207 +71,238 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Zasada działania}{9}{section.2.2}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Wyprowadzenie schematu systemu ANC, 0\relax }}{9}{figure.caption.12}\protected@file@percent }
 \newlabel{analysis::scheme_0}{{2.3}{9}{Wyprowadzenie schematu systemu ANC, 0\relax }{figure.caption.12}{}}
-\newlabel{eq::fir}{{2.1}{9}{Zasada działania}{equation.2.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Identyfikacja toru pierwotnego}{9}{subsection.2.2.1}\protected@file@percent }
+\newlabel{eq::fir}{{2.1}{9}{Identyfikacja toru pierwotnego}{equation.2.2.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Wyprowadzenie schematu systemu ANC, 1\relax }}{10}{figure.caption.13}\protected@file@percent }
 \newlabel{analysis::scheme_1}{{2.4}{10}{Wyprowadzenie schematu systemu ANC, 1\relax }{figure.caption.13}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Założenia projektowe}{13}{chapter.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Algorytm LMS}{11}{subsection.2.2.2}\protected@file@percent }
+\newlabel{eq::auto_corr_mat}{{2.9}{11}{Algorytm LMS}{equation.2.2.9}{}}
+\newlabel{eq::lms_const}{{2.14}{12}{Algorytm LMS}{equation.2.2.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.5}{\ignorespaces Wyprowadzenie schematu systemu ANC, 2\relax }}{12}{figure.caption.14}\protected@file@percent }
+\newlabel{analysis::scheme_2}{{2.5}{12}{Wyprowadzenie schematu systemu ANC, 2\relax }{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Wpływ toru wtórnego}{13}{subsection.2.2.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.6}{\ignorespaces Wyprowadzenie schematu systemu ANC, 3\relax }}{13}{figure.caption.15}\protected@file@percent }
+\newlabel{analysis::scheme_3}{{2.6}{13}{Wyprowadzenie schematu systemu ANC, 3\relax }{figure.caption.15}{}}
+\newlabel{eq::p}{{2.22}{14}{Wpływ toru wtórnego}{equation.2.2.22}{}}
+\newlabel{eq::s}{{2.23}{14}{Wpływ toru wtórnego}{equation.2.2.23}{}}
+\newlabel{eq::adapt}{{2.25}{14}{Wpływ toru wtórnego}{equation.2.2.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces Wyprowadzenie schematu systemu ANC, 4\relax }}{15}{figure.caption.16}\protected@file@percent }
+\newlabel{analysis::scheme_4}{{2.7}{15}{Wyprowadzenie schematu systemu ANC, 4\relax }{figure.caption.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.4}Algorytm FXLMS}{15}{subsection.2.2.4}\protected@file@percent }
+\newlabel{eq::fxlms_error}{{2.27}{15}{Algorytm FXLMS}{equation.2.2.27}{}}
+\newlabel{eq::fxlms_a}{{2.30}{16}{Algorytm FXLMS}{equation.2.2.30}{}}
+\newlabel{eq::fxlms_b}{{2.31}{16}{Algorytm FXLMS}{equation.2.2.31}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.8}{\ignorespaces Schemat systemu ANC\relax }}{16}{figure.caption.17}\protected@file@percent }
+\newlabel{analysis::scheme_5}{{2.8}{16}{Schemat systemu ANC\relax }{figure.caption.17}{}}
+\citation{bib:figwer}
+\abx@aux@cite{0}{bib:figwer}
+\abx@aux@segm{0}{0}{bib:figwer}
+\citation{bib:stoica}
+\abx@aux@cite{0}{bib:stoica}
+\abx@aux@segm{0}{0}{bib:stoica}
+\newlabel{eq::fxlms_stab}{{2.33}{17}{Algorytm FXLMS}{equation.2.2.33}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.5}Metody identyfikacji toru wtórnego}{17}{subsection.2.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Realizowane rozwiązanie i założenia}{19}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Zadania i wymagania części sprzętowej}{13}{section.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Wymagania sekcji zasilania}{14}{subsection.3.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Wymagania sekcji analogowych}{15}{subsection.3.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Wymagania protokołu cyfrowego i sekcji przetworników}{15}{subsection.3.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Wymagania urządzeń zewnętrznych}{16}{subsection.3.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Wymagania stawiane części programowej}{17}{section.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Wykorzystane narzędzia}{17}{section.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Zaimplementowane rozwiązanie}{19}{chapter.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Architektura systemu}{19}{section.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Założenia projektowe}{19}{section.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Zadania i wymagania części sprzętowej}{19}{section.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Wymagania sekcji zasilania}{20}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Wymagania sekcji analogowych}{21}{subsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Wymagania protokołu cyfrowego i sekcji przetworników}{21}{subsection.3.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.4}Wymagania urządzeń zewnętrznych}{22}{subsection.3.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Wymagania stawiane części programowej}{23}{section.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Wykorzystane narzędzia}{23}{section.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Zaimplementowane rozwiązanie}{25}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Architektura systemu - najwyższy poziom\relax }}{19}{figure.caption.14}\protected@file@percent }
-\newlabel{impl::top}{{4.1}{19}{Architektura systemu - najwyższy poziom\relax }{figure.caption.14}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Implementacja części sprzętowej}{21}{chapter.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Architektura systemu - najwyższy poziom\relax }}{25}{figure.caption.18}\protected@file@percent }
+\newlabel{impl::top}{{4.1}{25}{Architektura systemu - najwyższy poziom\relax }{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Implementacja części sprzętowej}{27}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Architektura sprzętowa - najwyższy poziom\relax }}{21}{figure.caption.15}\protected@file@percent }
-\newlabel{hw::arch}{{5.1}{21}{Architektura sprzętowa - najwyższy poziom\relax }{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Architektura sprzętowa - najwyższy poziom\relax }}{27}{figure.caption.19}\protected@file@percent }
+\newlabel{hw::arch}{{5.1}{27}{Architektura sprzętowa - najwyższy poziom\relax }{figure.caption.19}{}}
 \citation{bib:behringer}
 \abx@aux@cite{0}{bib:behringer}
 \abx@aux@segm{0}{0}{bib:behringer}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Urządzenia zewnętrzne}{22}{section.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Mikrofony}{22}{subsection.5.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Urządzenia zewnętrzne}{28}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Mikrofony}{28}{subsection.5.1.1}\protected@file@percent }
 \citation{bib:mic}
 \abx@aux@cite{0}{bib:mic}
 \abx@aux@segm{0}{0}{bib:mic}
 \citation{bib:krk}
 \abx@aux@cite{0}{bib:krk}
 \abx@aux@segm{0}{0}{bib:krk}
-\newlabel{eq::k_preamp}{{5.2}{23}{Mikrofony}{equation.5.1.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Zestaw głośnikowy}{23}{subsection.5.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Platforma obliczeniowa}{23}{subsection.5.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Zasilanie}{23}{section.5.2}\protected@file@percent }
+\newlabel{eq::k_preamp}{{5.2}{29}{Mikrofony}{equation.5.1.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Zestaw głośnikowy}{29}{subsection.5.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Platforma obliczeniowa}{29}{subsection.5.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Zasilanie}{29}{section.5.2}\protected@file@percent }
 \citation{bib:tietze}
 \abx@aux@cite{0}{bib:tietze}
 \abx@aux@segm{0}{0}{bib:tietze}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagram dystrybucji zasilania\relax }}{24}{figure.caption.16}\protected@file@percent }
-\newlabel{hw::power_dist}{{5.2}{24}{Diagram dystrybucji zasilania\relax }{figure.caption.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}Sekcja wejściowa}{24}{subsection.5.2.1}\protected@file@percent }
-\newlabel{eq:lc_lp}{{5.3}{24}{Sekcja wejściowa}{equation.5.2.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagram dystrybucji zasilania\relax }}{30}{figure.caption.20}\protected@file@percent }
+\newlabel{hw::power_dist}{{5.2}{30}{Diagram dystrybucji zasilania\relax }{figure.caption.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}Sekcja wejściowa}{30}{subsection.5.2.1}\protected@file@percent }
+\newlabel{eq:lc_lp}{{5.3}{30}{Sekcja wejściowa}{equation.5.2.3}{}}
 \citation{bib:lc}
 \abx@aux@cite{0}{bib:lc}
 \abx@aux@segm{0}{0}{bib:lc}
-\newlabel{eq:lc_lp}{{5.6}{25}{Sekcja wejściowa}{equation.5.2.6}{}}
-\newlabel{eq:zeta}{{5.7}{25}{Sekcja wejściowa}{equation.5.2.7}{}}
+\newlabel{eq:lc_lp}{{5.6}{31}{Sekcja wejściowa}{equation.5.2.6}{}}
+\newlabel{eq:zeta}{{5.7}{31}{Sekcja wejściowa}{equation.5.2.7}{}}
 \citation{bib:art}
 \abx@aux@cite{0}{bib:art}
 \abx@aux@segm{0}{0}{bib:art}
 \citation{bib:tietze}
 \abx@aux@cite{0}{bib:tietze}
 \abx@aux@segm{0}{0}{bib:tietze}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Sekcja wejściowa\relax }}{26}{figure.caption.17}\protected@file@percent }
-\newlabel{hw::input}{{5.3}{26}{Sekcja wejściowa\relax }{figure.caption.17}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Symetryzacja szyn zasilających}{26}{subsection.5.2.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Symetryzacja szyn zasilających\relax }}{27}{figure.caption.18}\protected@file@percent }
-\newlabel{hw::split}{{5.4}{27}{Symetryzacja szyn zasilających\relax }{figure.caption.18}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}Zasilanie domeny cyfrowej}{28}{subsection.5.2.3}\protected@file@percent }
-\newlabel{eq::smps}{{5.12}{28}{Zasilanie domeny cyfrowej}{equation.5.2.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Zasilanie domeny cyfrowej\relax }}{28}{figure.caption.19}\protected@file@percent }
-\newlabel{hw::smps}{{5.5}{28}{Zasilanie domeny cyfrowej\relax }{figure.caption.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Sekcja wejściowa\relax }}{32}{figure.caption.21}\protected@file@percent }
+\newlabel{hw::input}{{5.3}{32}{Sekcja wejściowa\relax }{figure.caption.21}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Symetryzacja szyn zasilających}{32}{subsection.5.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Symetryzacja szyn zasilających\relax }}{33}{figure.caption.22}\protected@file@percent }
+\newlabel{hw::split}{{5.4}{33}{Symetryzacja szyn zasilających\relax }{figure.caption.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}Zasilanie domeny cyfrowej}{33}{subsection.5.2.3}\protected@file@percent }
+\newlabel{eq::smps}{{5.12}{34}{Zasilanie domeny cyfrowej}{equation.5.2.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Zasilanie domeny cyfrowej\relax }}{34}{figure.caption.23}\protected@file@percent }
+\newlabel{hw::smps}{{5.5}{34}{Zasilanie domeny cyfrowej\relax }{figure.caption.23}{}}
 \citation{bib:art}
 \abx@aux@cite{0}{bib:art}
 \abx@aux@segm{0}{0}{bib:art}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Referencja domeny analogowo-cyfrowej}{29}{subsection.5.2.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Referencja domeny analogowo-cyfrowej\relax }}{29}{figure.caption.20}\protected@file@percent }
-\newlabel{hw::smps}{{5.6}{29}{Referencja domeny analogowo-cyfrowej\relax }{figure.caption.20}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.5}Generacja składowej stałej}{29}{subsection.5.2.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Układ napięcia odniesienia\relax }}{30}{figure.caption.21}\protected@file@percent }
-\newlabel{hw::off}{{5.7}{30}{Układ napięcia odniesienia\relax }{figure.caption.21}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.6}Dodatkowe kwestie sprzętowe}{30}{subsection.5.2.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}Wejściowe tory analogowe}{30}{section.5.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Schemat blokowy wejściowego toru analogowego\relax }}{30}{figure.caption.22}\protected@file@percent }
-\newlabel{hw::analog}{{5.8}{30}{Schemat blokowy wejściowego toru analogowego\relax }{figure.caption.22}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Wejście zbalansowane}{30}{subsection.5.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Referencja domeny analogowo-cyfrowej}{35}{subsection.5.2.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Referencja domeny analogowo-cyfrowej\relax }}{35}{figure.caption.24}\protected@file@percent }
+\newlabel{hw::smps}{{5.6}{35}{Referencja domeny analogowo-cyfrowej\relax }{figure.caption.24}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.5}Generacja składowej stałej}{35}{subsection.5.2.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Układ napięcia odniesienia\relax }}{36}{figure.caption.25}\protected@file@percent }
+\newlabel{hw::off}{{5.7}{36}{Układ napięcia odniesienia\relax }{figure.caption.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.6}Dodatkowe kwestie sprzętowe}{36}{subsection.5.2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Wejściowe tory analogowe}{36}{section.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Schemat blokowy wejściowego toru analogowego\relax }}{36}{figure.caption.26}\protected@file@percent }
+\newlabel{hw::analog}{{5.8}{36}{Schemat blokowy wejściowego toru analogowego\relax }{figure.caption.26}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Wejście zbalansowane}{36}{subsection.5.3.1}\protected@file@percent }
 \citation{bib:art}
 \abx@aux@cite{0}{bib:art}
 \abx@aux@segm{0}{0}{bib:art}
 \citation{bib:tietze}
 \abx@aux@cite{0}{bib:tietze}
 \abx@aux@segm{0}{0}{bib:tietze}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Wejście zbalansowane\relax }}{31}{figure.caption.23}\protected@file@percent }
-\newlabel{hw::xlr}{{5.9}{31}{Wejście zbalansowane\relax }{figure.caption.23}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Początkowa filtracja i saturacja}{31}{subsection.5.3.2}\protected@file@percent }
-\newlabel{eq::rc}{{5.15}{31}{Początkowa filtracja i saturacja}{equation.5.3.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Wejście zbalansowane\relax }}{37}{figure.caption.27}\protected@file@percent }
+\newlabel{hw::xlr}{{5.9}{37}{Wejście zbalansowane\relax }{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Początkowa filtracja i saturacja}{37}{subsection.5.3.2}\protected@file@percent }
+\newlabel{eq::rc}{{5.15}{37}{Początkowa filtracja i saturacja}{equation.5.3.15}{}}
 \citation{bib:tietze}
 \abx@aux@cite{0}{bib:tietze}
 \abx@aux@segm{0}{0}{bib:tietze}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Filtr EMI wraz z ogranicznikiem diodowym\relax }}{32}{figure.caption.24}\protected@file@percent }
-\newlabel{hw::emif}{{5.10}{32}{Filtr EMI wraz z ogranicznikiem diodowym\relax }{figure.caption.24}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.3}Wzmocnienie różnicowe}{32}{subsection.5.3.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Wzmacniacz różnicowy\relax }}{32}{figure.caption.25}\protected@file@percent }
-\newlabel{hw::op_diff}{{5.11}{32}{Wzmacniacz różnicowy\relax }{figure.caption.25}{}}
-\newlabel{eq::op_diff_inv}{{5.17}{32}{Wzmocnienie różnicowe}{equation.5.3.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Filtr EMI wraz z ogranicznikiem diodowym\relax }}{38}{figure.caption.28}\protected@file@percent }
+\newlabel{hw::emif}{{5.10}{38}{Filtr EMI wraz z ogranicznikiem diodowym\relax }{figure.caption.28}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.3}Wzmocnienie różnicowe}{38}{subsection.5.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Wzmacniacz różnicowy\relax }}{38}{figure.caption.29}\protected@file@percent }
+\newlabel{hw::op_diff}{{5.11}{38}{Wzmacniacz różnicowy\relax }{figure.caption.29}{}}
+\newlabel{eq::op_diff_inv}{{5.17}{38}{Wzmocnienie różnicowe}{equation.5.3.17}{}}
 \citation{bib:lyons}
 \abx@aux@cite{0}{bib:lyons}
 \abx@aux@segm{0}{0}{bib:lyons}
-\newlabel{eq::op_diff_ninv}{{5.18}{33}{Wzmocnienie różnicowe}{equation.5.3.18}{}}
-\newlabel{eq::op_diff}{{5.19}{33}{Wzmocnienie różnicowe}{equation.5.3.19}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Przedwzmacniacz\relax }}{33}{figure.caption.26}\protected@file@percent }
-\newlabel{hw::preamp}{{5.12}{33}{Przedwzmacniacz\relax }{figure.caption.26}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.4}Filtracja antyaliasingowa}{33}{subsection.5.3.4}\protected@file@percent }
+\newlabel{eq::op_diff_ninv}{{5.18}{39}{Wzmocnienie różnicowe}{equation.5.3.18}{}}
+\newlabel{eq::op_diff}{{5.19}{39}{Wzmocnienie różnicowe}{equation.5.3.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Przedwzmacniacz\relax }}{39}{figure.caption.30}\protected@file@percent }
+\newlabel{hw::preamp}{{5.12}{39}{Przedwzmacniacz\relax }{figure.caption.30}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.4}Filtracja antyaliasingowa}{39}{subsection.5.3.4}\protected@file@percent }
 \citation{bib:tietze}
 \abx@aux@cite{0}{bib:tietze}
 \abx@aux@segm{0}{0}{bib:tietze}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Topologia Sellena-Keya\relax }}{34}{figure.caption.27}\protected@file@percent }
-\newlabel{hw::sellen_key}{{5.13}{34}{Topologia Sellena-Keya\relax }{figure.caption.27}{}}
-\newlabel{eq::filter}{{5.22}{34}{Filtracja antyaliasingowa}{equation.5.3.22}{}}
-\newlabel{eq::ba}{{5.23}{34}{Filtracja antyaliasingowa}{equation.5.3.23}{}}
-\newlabel{eq::ffilter}{{5.24}{34}{Filtracja antyaliasingowa}{equation.5.3.24}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.14}{\ignorespaces Charakterystyka aplitudowa i fazowa układu filtra\relax }}{35}{figure.caption.28}\protected@file@percent }
-\newlabel{hw::freqs}{{5.14}{35}{Charakterystyka aplitudowa i fazowa układu filtra\relax }{figure.caption.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Topologia Sellena-Keya z jednostkowym wzmocnieniem\relax }}{40}{figure.caption.31}\protected@file@percent }
+\newlabel{hw::sellen_key}{{5.13}{40}{Topologia Sellena-Keya z jednostkowym wzmocnieniem\relax }{figure.caption.31}{}}
+\newlabel{eq::filter}{{5.22}{40}{Filtracja antyaliasingowa}{equation.5.3.22}{}}
+\newlabel{eq::ba}{{5.23}{40}{Filtracja antyaliasingowa}{equation.5.3.23}{}}
+\newlabel{eq::ffilter}{{5.24}{40}{Filtracja antyaliasingowa}{equation.5.3.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.14}{\ignorespaces Charakterystyka aplitudowa i fazowa układu filtra\relax }}{41}{figure.caption.32}\protected@file@percent }
+\newlabel{hw::freqs}{{5.14}{41}{Charakterystyka aplitudowa i fazowa układu filtra\relax }{figure.caption.32}{}}
 \citation{bib:tietze}
 \abx@aux@cite{0}{bib:tietze}
 \abx@aux@segm{0}{0}{bib:tietze}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.15}{\ignorespaces Filtr antystroboskopowy\relax }}{36}{figure.caption.29}\protected@file@percent }
-\newlabel{hw::filt}{{5.15}{36}{Filtr antystroboskopowy\relax }{figure.caption.29}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.5}Pozycjonowanie}{36}{subsection.5.3.5}\protected@file@percent }
-\newlabel{eq::op_ninv}{{5.30}{36}{Pozycjonowanie}{equation.5.3.30}{}}
-\newlabel{eq::offset}{{5.32}{36}{Pozycjonowanie}{equation.5.3.32}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.16}{\ignorespaces Układ pozycjonujący\relax }}{37}{figure.caption.30}\protected@file@percent }
-\newlabel{hw::offset}{{5.16}{37}{Układ pozycjonujący\relax }{figure.caption.30}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.6}Filtr końcowy i saturacja}{37}{subsection.5.3.6}\protected@file@percent }
-\newlabel{eq::rc}{{5.3.6}{37}{Filtr końcowy i saturacja}{subsection.5.3.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.17}{\ignorespaces Filtr dolnoprzepustowy i limiter\relax }}{37}{figure.caption.31}\protected@file@percent }
-\newlabel{hw::safe}{{5.17}{37}{Filtr dolnoprzepustowy i limiter\relax }{figure.caption.31}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.7}Pełen schemat sekcji}{38}{subsection.5.3.7}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.18}{\ignorespaces Pełen schemat wejściowej sekcji analogowej\relax }}{38}{figure.caption.32}\protected@file@percent }
-\newlabel{hw::analog_in_full}{{5.18}{38}{Pełen schemat wejściowej sekcji analogowej\relax }{figure.caption.32}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}Wyjściowe tory analogowe}{38}{section.5.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.19}{\ignorespaces Schemat blokowy wyjściowego toru analogowego\relax }}{38}{figure.caption.33}\protected@file@percent }
-\newlabel{hw::analog_out}{{5.19}{38}{Schemat blokowy wyjściowego toru analogowego\relax }{figure.caption.33}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}Filtracja początkowa}{38}{subsection.5.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.15}{\ignorespaces Filtr antyaliasingowy\relax }}{42}{figure.caption.33}\protected@file@percent }
+\newlabel{hw::filt}{{5.15}{42}{Filtr antyaliasingowy\relax }{figure.caption.33}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.5}Pozycjonowanie}{42}{subsection.5.3.5}\protected@file@percent }
+\newlabel{eq::op_ninv}{{5.30}{42}{Pozycjonowanie}{equation.5.3.30}{}}
+\newlabel{eq::offset}{{5.32}{42}{Pozycjonowanie}{equation.5.3.32}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.16}{\ignorespaces Układ pozycjonujący\relax }}{43}{figure.caption.34}\protected@file@percent }
+\newlabel{hw::offset}{{5.16}{43}{Układ pozycjonujący\relax }{figure.caption.34}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.6}Filtr końcowy i saturacja}{43}{subsection.5.3.6}\protected@file@percent }
+\newlabel{eq::rc}{{5.3.6}{43}{Filtr końcowy i saturacja}{subsection.5.3.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.17}{\ignorespaces Filtr dolnoprzepustowy i limiter\relax }}{43}{figure.caption.35}\protected@file@percent }
+\newlabel{hw::safe}{{5.17}{43}{Filtr dolnoprzepustowy i limiter\relax }{figure.caption.35}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.7}Pełen schemat sekcji}{44}{subsection.5.3.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.18}{\ignorespaces Pełen schemat wejściowej sekcji analogowej\relax }}{44}{figure.caption.36}\protected@file@percent }
+\newlabel{hw::analog_in_full}{{5.18}{44}{Pełen schemat wejściowej sekcji analogowej\relax }{figure.caption.36}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Wyjściowe tory analogowe}{44}{section.5.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.19}{\ignorespaces Schemat blokowy wyjściowego toru analogowego\relax }}{44}{figure.caption.37}\protected@file@percent }
+\newlabel{hw::analog_out}{{5.19}{44}{Schemat blokowy wyjściowego toru analogowego\relax }{figure.caption.37}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}Filtracja początkowa}{44}{subsection.5.4.1}\protected@file@percent }
 \citation{bib:art}
 \abx@aux@cite{0}{bib:art}
 \abx@aux@segm{0}{0}{bib:art}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.20}{\ignorespaces Wejściowy filtr pasmowoprzepustowy\relax }}{39}{figure.caption.34}\protected@file@percent }
-\newlabel{hw::in_bandpass}{{5.20}{39}{Wejściowy filtr pasmowoprzepustowy\relax }{figure.caption.34}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.2}Wzmocnienie}{39}{subsection.5.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.3}Filtracja rekonstrukcyjna}{39}{subsection.5.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.4}Symetryzacja}{39}{subsection.5.4.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.21}{\ignorespaces Układy sterujące wyjściem analogowym\relax }}{40}{figure.caption.35}\protected@file@percent }
-\newlabel{hw::synch}{{5.21}{40}{Układy sterujące wyjściem analogowym\relax }{figure.caption.35}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.5}Filtracja końcowa}{40}{subsection.5.4.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.22}{\ignorespaces Filtracja końcowa toru analogowego\relax }}{41}{figure.caption.36}\protected@file@percent }
-\newlabel{hw::out_filter}{{5.22}{41}{Filtracja końcowa toru analogowego\relax }{figure.caption.36}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.6}Pełen schemat sekcji}{41}{subsection.5.4.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.23}{\ignorespaces Pełen schemat wyjściowej sekcji analogowej\relax }}{41}{figure.caption.37}\protected@file@percent }
-\newlabel{hw::analog_out_full}{{5.23}{41}{Pełen schemat wyjściowej sekcji analogowej\relax }{figure.caption.37}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}Przetworniki}{42}{section.5.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.1}Analogowo-cyfrowe}{42}{subsection.5.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.2}Cyfrowo-analogowe}{42}{subsection.5.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.6}Protokół cyfrowy}{42}{section.5.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Implementacja części programowej}{43}{chapter.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.20}{\ignorespaces Wejściowy filtr pasmowoprzepustowy\relax }}{45}{figure.caption.38}\protected@file@percent }
+\newlabel{hw::in_bandpass}{{5.20}{45}{Wejściowy filtr pasmowoprzepustowy\relax }{figure.caption.38}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.2}Wzmocnienie}{45}{subsection.5.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.3}Filtracja rekonstrukcyjna}{45}{subsection.5.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.4}Symetryzacja}{45}{subsection.5.4.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.21}{\ignorespaces Układy sterujące wyjściem analogowym\relax }}{46}{figure.caption.39}\protected@file@percent }
+\newlabel{hw::synch}{{5.21}{46}{Układy sterujące wyjściem analogowym\relax }{figure.caption.39}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.5}Filtracja końcowa}{46}{subsection.5.4.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.22}{\ignorespaces Filtracja końcowa toru analogowego\relax }}{47}{figure.caption.40}\protected@file@percent }
+\newlabel{hw::out_filter}{{5.22}{47}{Filtracja końcowa toru analogowego\relax }{figure.caption.40}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.6}Pełen schemat sekcji}{47}{subsection.5.4.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.23}{\ignorespaces Pełen schemat wyjściowej sekcji analogowej\relax }}{47}{figure.caption.41}\protected@file@percent }
+\newlabel{hw::analog_out_full}{{5.23}{47}{Pełen schemat wyjściowej sekcji analogowej\relax }{figure.caption.41}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Przetworniki}{48}{section.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.1}Analogowo-cyfrowe}{48}{subsection.5.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.2}Cyfrowo-analogowe}{48}{subsection.5.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.6}Protokół cyfrowy}{48}{section.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Implementacja części programowej}{49}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}Środowisko pracy}{43}{section.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}System operacyjny}{43}{section.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}Proces uruchamiania}{43}{subsection.6.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.2}Konfiguracja}{43}{subsection.6.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.3}Oprogramowanie}{43}{section.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Wykorzystanie rozszerzeń czasu rzeczywistego}{43}{subsection.6.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.2}Akwizycja danych i warunkowanie początkowe}{43}{subsection.6.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.3}Generacja hałasu}{43}{subsection.6.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.4}Filtracja cyfrowa}{43}{subsection.6.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.5}Identyfikacja toru wtórnego}{43}{subsection.6.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.6}Adaptacja toru głównego}{43}{subsection.6.3.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {7}Weryfikacja}{45}{chapter.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Środowisko pracy}{49}{section.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}System operacyjny}{49}{section.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}Proces uruchamiania}{49}{subsection.6.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.2}Konfiguracja}{49}{subsection.6.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Oprogramowanie}{49}{section.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Wykorzystanie rozszerzeń czasu rzeczywistego}{49}{subsection.6.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.2}Akwizycja danych i warunkowanie początkowe}{49}{subsection.6.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.3}Generacja hałasu}{49}{subsection.6.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.4}Filtracja cyfrowa}{49}{subsection.6.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.5}Identyfikacja toru wtórnego}{49}{subsection.6.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.6}Adaptacja toru głównego}{49}{subsection.6.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Weryfikacja}{51}{chapter.7}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {7.1}Część sprzętowa}{45}{section.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.1}Zasilania}{45}{subsection.7.1.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces Pomiary sekcji zasilania\relax }}{45}{table.caption.38}\protected@file@percent }
-\newlabel{tab::psu}{{7.1}{45}{Pomiary sekcji zasilania\relax }{table.caption.38}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.2}Domena analogowa}{45}{subsection.7.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.3}Domena cyfrowa}{45}{subsection.7.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.2}Część programowa}{45}{section.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {8}Testy i badania}{47}{chapter.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}Część sprzętowa}{51}{section.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.1}Zasilania}{51}{subsection.7.1.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces Pomiary sekcji zasilania\relax }}{51}{table.caption.42}\protected@file@percent }
+\newlabel{tab::psu}{{7.1}{51}{Pomiary sekcji zasilania\relax }{table.caption.42}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.2}Domena analogowa}{51}{subsection.7.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.3}Domena cyfrowa}{51}{subsection.7.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}Część programowa}{51}{section.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Testy i badania}{53}{chapter.8}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{\numberline {9}Podsumowanie}{49}{chapter.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Podsumowanie}{55}{chapter.9}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{Bibliografia}{51}{chapter*.39}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Spis skrótów i symboli}{55}{appendix*.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliografia}{57}{chapter*.43}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Spis skrótów i symboli}{61}{appendix*.44}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \babel@aux{british}{}
 \babel@aux{polish}{}
 \babel@aux{british}{}
 \babel@aux{polish}{}
-\@writefile{toc}{\contentsline {chapter}{Pliki uzupełniające}{57}{appendix*.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Pliki uzupełniające}{63}{appendix*.45}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{Spis rysunków}{60}{appendix*.42}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Spis tabel}{61}{appendix*.43}\protected@file@percent }
-\abx@aux@read@bbl@mdfivesum{C22F6C1DB719121C7FFF255830F68172}
+\@writefile{toc}{\contentsline {chapter}{Spis rysunków}{66}{appendix*.46}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Spis tabel}{67}{appendix*.47}\protected@file@percent }
+\abx@aux@read@bbl@mdfivesum{7E70366C354A93E2ACE41B0F12C5A512}
+\abx@aux@defaultrefcontext{0}{bib:figwer}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{bib:resnick}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{bib:krk}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{bib:kuo_morgan}{nty/global//global/global}
@@ -279,8 +310,10 @@
 \abx@aux@defaultrefcontext{0}{bib:lyons}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{bib:behringer}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{bib:lc}{nty/global//global/global}
+\abx@aux@defaultrefcontext{0}{bib:stoica}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{bib:art}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{bib:tietze}{nty/global//global/global}
+\abx@aux@defaultlabelprefix{0}{bib:figwer}{}
 \abx@aux@defaultlabelprefix{0}{bib:resnick}{}
 \abx@aux@defaultlabelprefix{0}{bib:krk}{}
 \abx@aux@defaultlabelprefix{0}{bib:kuo_morgan}{}
@@ -288,6 +321,7 @@
 \abx@aux@defaultlabelprefix{0}{bib:lyons}{}
 \abx@aux@defaultlabelprefix{0}{bib:behringer}{}
 \abx@aux@defaultlabelprefix{0}{bib:lc}{}
+\abx@aux@defaultlabelprefix{0}{bib:stoica}{}
 \abx@aux@defaultlabelprefix{0}{bib:art}{}
 \abx@aux@defaultlabelprefix{0}{bib:tietze}{}
-\gdef \@abspage@last{69}
+\gdef \@abspage@last{75}
