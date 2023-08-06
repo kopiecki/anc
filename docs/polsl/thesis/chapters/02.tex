@@ -92,7 +92,7 @@ jak na rysunku \ref{analysis::systems}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/analysis/systems.png}
+    \includegraphics[width=0.7\textwidth]{graf/analysis/systems.png}
     \caption{Podział struktur systemów ANC}
     \label{analysis::systems}
 \end{figure}
@@ -106,11 +106,15 @@ może być łatwo symulowana.
 \section{Zasada działania}
 
 Diagram \ref{analysis::structs_a} można przedstawić za pomocą 
-uogólnionego schematu blokowego \ref{analysis::scheme_0}:
+uogólnionego schematu blokowego \ref{analysis::scheme_0}. W celu
+łatwiejszej analizy, wszystkie sygnały i układy w systemie potraktowano
+jako dyskretne, jednak należy mieć na uwadze, że postaci sygnałów
+są zmieniane na ich napięciowe lub akustyczne odpowiedniki w trakcie przekraczania
+domen lub na cyfrowe w bloku \textbf{ANC}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_0.png}
+    \includegraphics[width=0.6\textwidth]{graf/analysis/scheme_0.png}
     \caption{Wyprowadzenie schematu systemu ANC, 0}
     \label{analysis::scheme_0}
 \end{figure}
@@ -194,7 +198,7 @@ estymacją obiektu $P(z^{-1})$, schemat blokowy przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_1.png}
+    \includegraphics[width=0.55\textwidth]{graf/analysis/scheme_1.png}
     \caption{Wyprowadzenie schematu systemu ANC, 1}
     \label{analysis::scheme_1}
 \end{figure}

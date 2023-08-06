@@ -263,6 +263,25 @@
     \field{urlyear}{2023}
   \endentry
 
+  \entry{bib:sitara}{online}{}
+    \list{publisher}{1}{%
+      {Texas Instruments}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{SLAA701}
+    \field{title}{Sitara\textsuperscript{TM} Linux ALSA DSP Microphone Array
+  Voice Recognition}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/slaa701a/slaa701a.pdf
+    \endverb
+    \field{year}{2016}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
   \entry{bib:stoica}{book}{}
     \name{author}{2}{}{%
       {{hash=ST}{%

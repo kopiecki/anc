@@ -1,10 +1,8 @@
-\chapter{Realizowane rozwiązanie i założenia}
+\chapter{Założenia i proponowane rozwiązanie}
 
-\section{Architektura systemu}
+\section{Wymagania projektowe}
 
-\section{Założenia projektowe}
-
-Głównym założeniem stawianym całemu projektowi jest wykonanie prostego i 
+Głównym wymaganiem stawianym całemu projektowi jest wykonanie prostego i 
 wygodnego w obsłudze środowiska, pozwalającego na wykonywanie badań i
 eksperymentów związanych z omawianą tematyką. Poprzez pojęcie środowiska, 
 autor ma na myśli nie tylko platformę sprzętową, ale również strukturę
@@ -24,9 +22,9 @@ prototypowania i symulacji. Dodatkowo postanowiono, że wykorzystane narzędzia 
 proces projektowania sprzętu jak i implementacji oprogramowania będą 
 na licencjach wolnego oprogramowania.
 
-\section{Zadania i wymagania części sprzętowej}
+\subsection{Część sprzętowa}
 
-Projektowany układ elektroniczny musi realizować następujące zadania:
+\subsubsection{Cele projektowe}
 \begin{enumerate}
 
     \item Obsłużenie i przetworzenie wejściowych sygnałów analogowych 
@@ -51,8 +49,7 @@ Projektowany układ elektroniczny musi realizować następujące zadania:
 
 \end{enumerate}
 
-Analizując wyszczególnione wyżej zadania można łatwo dojść do wniosku,
-że w skład projektowanego układu elektronicznego wchodzić będą cztery sekcje,
+W skład projektowanego układu elektronicznego wchodzą cztery sekcje,
 z których można wyróżnić:
 
 \begin{enumerate}
@@ -72,34 +69,30 @@ Poza sekcjami znajdującymi się na projektowanej płytce drukowanej,
 w skład wykorzystywanego sprzętu wchodzić będą urządzenia zewnętrzne, czyli
 dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
 
-\subsection{Wymagania sekcji zasilania}
+\subsubsection{Wymagania sekcji zasilania}
 
-Sekcja zasilania, dystrybująca energię do pozostałych elementów układu
-musi spełniać wymagania, z których wyróżniono:
 \begin{enumerate}
 
-    \item Generację wszystkich potrzebnych zasilań na podstawie jednego,
+    \item Generacja wszystkich potrzebnych zasilań na podstawie jednego,
     dodatniego doprowadzonego z zewnątrz.
 
-    \item Generację symetrycznych zasilań dla wzmacniaczy operacyjnych
+    \item Generacja symetrycznych zasilań dla wzmacniaczy operacyjnych
     pracujących w sekcjach analogowych o względnie wysokiej dokładności.
 
-    \item W przypadku wyboru mikrofonów pojemnościowych, generację
+    \item W przypadku wyboru mikrofonów pojemnościowych, generacja
     odpowiedniego zasilania phantomowego, typowo mieszczącego się w zakresie
     od +12 do +15 V.
 
-    \item Generację zasilań dla przetworników i zewnętrznej platformy
+    \item Generacja zasilań dla przetworników i zewnętrznej platformy
     obliczeniowej.
 
-    \item Generację dokładnych napięć referencyjnych dla przetworników
+    \item Generacja dokładnych napięć referencyjnych dla przetworników
     (jeżeli będą potrzebne).
 
 \end{enumerate}
 
-\subsection{Wymagania sekcji analogowych}
+\subsubsection{Wymagania wejściowych sekcji analogowych}
 
-Wejściowa sekcja analogowa, obsługująca dwa kanały mikrofonowe musi 
-spełniać wymagania, z których wyróżniono: 
 \begin{enumerate}
 
     \item Obsłużenie symetrycznych wejść sygnałowych z mikrofonów
@@ -117,8 +110,8 @@ spełniać wymagania, z których wyróżniono:
 
 \end{enumerate}
 
-Wyjściowa sekcja analogowa, obsługująca dwa kanały głośnikowe musi spełniać
-wymagania, z których wyróżniono:
+\subsubsection{Wymagania wyjściowych sekcji analogowych}
+
 \begin{enumerate}
 
     \item Odpowiednie przetworzenie sygnału wyjściowego pochodzącego
@@ -133,15 +126,8 @@ wymagania, z których wyróżniono:
 
 \end{enumerate}
 
-W wyjściowej sekcji analogowej zrezygnowano z projektowania
-układu wzmacniacza mocy. Oznacza to, że na wykorzystywany 
-zestaw głośnikowy zostaje nałożone dodatkowe wymaganie w postaci
-wbudowanego wzmacniacza, ideowo z regulacją wzmocnienia.
+\subsubsection{Wymagania sekcji przetworników}
 
-\subsection{Wymagania protokołu cyfrowego i sekcji przetworników}
-
-Wybrane przetworniki analogowo-cyfrowe i cyfrowo-analogowe muszą
-spełniać wymagania, z których wyróżniono:
 \begin{enumerate}
 
     \item Relatywnie wysoka rozdzielczość, wynosząca minimalnie 12 bitów.
@@ -152,7 +138,8 @@ spełniać wymagania, z których wyróżniono:
 
 \end{enumerate}
 
-W przypadku wybranego protokołu cyfrowego, wymagania są następujące:
+\subsubsection{Wymagania protokołu cyfrowego}
+
 \begin{enumerate}
     
     \item Synchronizacja wszystkich przetworników poprzez wystawienie
@@ -167,11 +154,10 @@ W przypadku wybranego protokołu cyfrowego, wymagania są następujące:
 
 \end{enumerate}
 
-\subsection{Wymagania urządzeń zewnętrznych}
+\subsubsection{Wymagania mikrofonów}
 
-Wybrane mikrofony muszą spełniać wymagania, z których wyróżniono:
 \begin{enumerate}
-    
+
         \item Stosunkowo niska cena i wysoka dostępność.
 
         \item Typ - standardem w omawianej tematyce są mikrofony pojemnościowe.
@@ -192,7 +178,8 @@ Wybrane mikrofony muszą spełniać wymagania, z których wyróżniono:
 
 \end{enumerate}
 
-Dla wybranych zestawów głośnikowych, wymagania są następujące: 
+\subsubsection{Wymagania zestawów głośnikowych}
+
 \begin{enumerate}
 
         \item Z racji, że zrezygnowano z projektowania końcówki mocy, wymagany 
@@ -209,7 +196,8 @@ Dla wybranych zestawów głośnikowych, wymagania są następujące:
 
 \end{enumerate}
 
-Dla wybranej platformowy obliczeniowej, wymagania są następujące:
+\subsubsection{Wymagania platformy obliczeniowej}
+
 \begin{enumerate}
 
     \item Duża dostępność i stosunkowo niska cena.
@@ -228,7 +216,115 @@ zmiennoprzecikowych (FPU), wsparcie dla architektury SIMD (ang. \textit{Single
 Instruction, Multiple Data}) wspomagającą obliczenia wektorowe, 
 port szeregowy oraz złącze Ethernet.
 
-\section{Wymagania stawiane części programowej}
+\subsection{Część programowa}
+
+\subsubsection{Cele projektowe}
+
+\begin{enumerate}
+
+    \item Pełna kontrola nad wykorzystywanym protokołem cyfrowym.
+    Możliwość jednoczesnego odczytu z dwóch kanałów wejściowych,
+    zapisu do dwóch kanałów wyjściowych, konfiguracji częstotliwości 
+    głównego zegara (MCLK) oraz zachowania selektorów/selektora (CS/FS).
+
+    \item Realizacja filtracji cyfrowej oraz algorytmu FXLMS.
+
+    \item Symulacyjna generacja hałasu w postaci typowych sygnałów okresowych
+    (sinus, cosinus, prostokąt, trójkąt, piła i szum) o konfigurowalnych parametrach.
+
+    \item Generacja odpowiedniego sygnału identyfikującego (biały szum, PRBS),
+    pozwalającego na identyfikację toru wtórnego.
+
+    \item Możliwość rejestracji i zapisu określonych sygnałów do pliku w celu
+    dalszej analizy i wizualizacji.
+
+    \item Udostępnienie środowiska pozwalającego no prosty proces
+    kompilacji krzyżowej oraz symulacji prototypowanych rozwiązań.
+
+\end{enumerate}
+
+W skład projektowanego oprogramowania wchodzi aplikacja działająca w trybie 
+użytkownika oraz odpowiednio skonfigurowany system operacyjny.
+
+\subsubsection{Wymagania systemu operacyjnego}
+
+\begin{enumerate}
+
+    \item Wsparcie dla wybranego interfejsu cyfrowego w postaci
+    sterownika jądra.
+
+    \item Zapewnienie zestawu bibliotek pozwalających na komunikację 
+    wybranym interfejsem cyfrowym przez sterownik jądra z poziomu 
+    aplikacji działającej w trybie użytkownika.
+
+    \item Minimalizacja opóźnień wynikających z synchronizacji procesów
+    oraz buforowania danych.
+
+    \item Obecność narzędzi ułatwiających ogólną prace w systemie
+    (edytor tekstowy, obsługa internetu, debugger) oraz pozwalających na 
+    określenie wydajności zaimplementowanej aplikacji.
+
+\end{enumerate}
+
+Jako, że GNU/Linux nie jest systemem operacyjnym czasu rzeczywistego, do 
+realizacji trzeciego punktu wymagań niezbędnie będzie wykorzystanie rozszerzeń,
+umożliwiających lepszą kontrolę nad przydziałem priorytetów, planowaniem i 
+czasem wykonywania zadań. Rozszerzenia, o których mowa przyjęło się 
+nazywać rozszerzeniami czasu rzeczywistego, jednak należy mieć na uwadze,
+że wykorzystywany system operacyjny nigdy taki nie będzie bez wykorzystania
+zewnętrznych lub dodatkowych rozszerzeń sprzętowych, które nie są tematem pracy.
+
+\subsubsection{Wymagania aplikacji}
+
+\begin{enumerate}
+
+    \item Odpowiednio szybkie przetwarzanie danych, zapobiegające 
+    nieciągłościom transferów.
+
+    \item Wykorzystanie możliwych realizacji sprzętowych określonych operacji
+    (FPU, SIMD).
+
+\end{enumerate}
+
+\section{Architektura systemu}
+
+Bazując na założeniach projektowych, diagram architektury zaprojektowanego 
+systemu przedstawiono na rysunku \ref{impl::top}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/impl/top.png}
+    \caption{Architektura zaprojektowanego systemu}
+    \label{impl::top}
+\end{figure}
+
+Tak jak opisywano w sekcji dotyczącej teoretycznej analizy tematu, 
+wybraną strukturą jest ANC ze sprzężeniem w przód
+dla hałasów szerokopasmowych 
+(ang. \textit{broadband feedforward active noise control}).
+Układ elektroniczny został podzielony na dwie części, stale 
+komunikujące się ze sobą po określonym interfejsie cyfrowym, zapewniającym
+synchronizację przetworników oraz przesyłającym i odbierającym
+cyfrowe odpowiedniki sygnałów analogowych występujących w systemie.
+Sporządzona płytka drukowana, będąca częścią sprzętową projektu, traktowana 
+jest przez platformę obliczeniową jak zewnętrzna karta pomiarowa obsługująca
+dwa kanały wejściowe i dwa kanały wyjściowe. Dodatkowy kanał wyjściowy 
+umożliwia generację hałasu, co pozwala na przeprowadzenie testów i badań
+bez obecności rzeczywistego źródła. 
+
+\par Aplikacja działająca w trybie użytkownika komunikuje się z jądrem 
+poprzez biblioteki systemowe, komunikujące się z odpowiednimi sterownikami
+wspierającymi obsługę wybranego protokołu cyfrowego
+oraz bezpośrednie wywołania (ang. \textit{syscall}). 
+Jądro, poprzez wykorzystanie planisty (ang. \textit{scheduler}) 
+zarządza i kontroluje alokację zasobów procesora platformy obliczeniowej 
+potrzebnych do wykonywania procesów, wśród których wyróżniony jest proces
+zaimplementowanej aplikacji. Dzięki wykorzystanym rozszerzeniom czasu 
+rzeczywistego aplikacja, ma bezpośredni wpływ na przydzielone zasoby, 
+głównie priorytet, sposób wywłaszczania i realizacji przerwań.
+Wpływ aplikacji na sposób zarządzania jądra może zostać wykorzystany
+do minimalizacji opóźnień występujących w torze cyfrowym, wynikających
+z zastosowania systemu operacyjnego, nie będącego systemem czasu rzeczywistego.
 
 \section{Wykorzystane narzędzia}
 
@@ -245,3 +341,5 @@ Spośród nich można wyróżnić:
     \item Docker - jako narzędzie do wirtualizacji środowiska pracy
     \item Git - jako system kontroli wersji.
 \end{itemize}
+
+

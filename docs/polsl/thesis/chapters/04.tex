@@ -62,7 +62,7 @@ Zważając na kwestie projektowe, autor zdecydował się na wykorzystanie
 modelu Behringer ECM8000. Są one bardzo często wybierane przez amatorów
 jak i profesjonalistów w zastosowaniach pomiarowych oraz cieszą się dobrymi 
 opiniami. Ich droższym odpowiednikiem jest flagowy Beyerdynamic MM1, a najbardziej 
-znaczące parametry są następujące \cite{bib:behringer}:
+znaczące parametry przedstawiono poniżej \cite{bib:behringer}:
 
 \begin{enumerate}
 
@@ -122,6 +122,24 @@ z najbardziej znaczących parametrów można wyróżnić \cite{bib:krk}:
 
 \subsection{Platforma obliczeniowa}
 
+Analizując rynek w poszukiwaniu tanich i popularnych 
+układów spełniających założone wymagania wyboru można dokonać tak właściwie 
+spośród dwóch platform. Jest to oparte na procesorze BCM2837B0 firmy Broadcom
+Raspberry Pi oraz oparty na procesorze Sitara AM3358 firmy Texas Instruments
+BeagleBone Black. Platformy są w podobnych cenach i wykorzystuje się je w 
+równie podobnych zastosowaniach.
+\par Argumentem przemawiającym za wyborem jednej z nich
+były wspierane interfejsy cyfrowe, których przeglądu i analizy dokonano na 
+podstawie założeń projektowych. W trakcie tego przeglądu, przeanalizowana została
+nota aplikacyjna \cite{bib:sitara}, opisująca akwizycję danych z macierzy 
+mikrofonowej w oparciu o interfejs McASP 
+(ang. \textit{Multi-channel audio serial port}) z wykorzystaniem procesora 
+sygnałowego oraz układu BeagleBone Black. Opisywany interfejs jest dedykowanym
+mechanizmem komunikacji w wielokanałowych systemach audio realizowanych 
+na układach firmy Texas Instruments i nie posiada 
+swojego odpowiednika na platformach Raspberry Pi. Z tego powodu wybór okazał się prosty
+i jako wykorzystaną platformą obliczeniową wykorzystano płytkę BeagleBone Black.
+
 \section{Zasilanie}
 
 Diagram dystrybucji zasilania przedstawiono na rysunku \ref{hw::power_dist}.
@@ -132,6 +150,17 @@ Diagram dystrybucji zasilania przedstawiono na rysunku \ref{hw::power_dist}.
     \caption{Diagram dystrybucji zasilania}
     \label{hw::power_dist}
 \end{figure}
+
+Wykorzystane akronimy zostały wyjaśnione poniżej:
+\begin{itemize}
+    \item \textbf{EXT} (ang. \textit{External}) - zasilanie zewnętrzne
+    \item \textbf{LDO} (ang. \textit{Low dropout regulator}) - linowy regulator
+    napięcia niskiego spadku
+    \item \textbf{REF} (ang. \textit{Reference voltage}) - generator napięcia
+    referencyjnego
+    \item \textbf{SMPS} (ang. \textit{Switching-mode power supply}) -
+    zasilacz impulsowy
+\end{itemize}
 
 \subsection{Sekcja wejściowa}
 
