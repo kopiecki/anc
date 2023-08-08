@@ -916,26 +916,43 @@ pozostałych.
 
 \subsection{Sposób transmisji}
 
-Transfery z wykorzystaniem trybu I$^2$S i jego pochodnych realizowane są z wykorzystaniem linii zegarowej (\textbf{BCLK}), selektora (\textbf{FS}) oraz danych (\textbf{SDATA}).
+Transfery z wykorzystaniem trybu I$^2$S i jego pochodnych realizowane są z wykorzystaniem linii zegarowej 
+(ang. \textit{Bit clock}, \textbf{BCLK}), selektora kanału (ang. \textit{Frame select}, \textbf{FS}) oraz 
+danych (ang. \textit{Serial data}, \textbf{SDATA}).
 Dane przesyłane są w formacie definującym najbardziej znaczący bit na początku
-transmisji (ang. \textit{MSB first}), której rozpoczęcie definiowane jest przez określony stan selektora 
+transmisji (ang. \textit{MSB first}), której rozpoczęcie definiowane jest przez określony stan selektora kanału 
 (\textbf{FS}). Typowo zbocze opadające selektora definuje transmisję kanału lewego, 
 a narastające prawego, lecz możliwe są inne konfiguracje.
 
-\par Zapis może odbywać na zboczu narastającym lub opadającym zegara (\textbf{BCLK}), jednak wymagane jest, aby odbiornik czytał dane na zboczu narastającym,
+\par Zapis może odbywać na zboczu narastającym lub opadającym zegara (\textbf{BCLK}), 
+jednak wymagane jest, aby odbiornik czytał dane na zboczu narastającym,
 co powoduje pewne komplikacje, kiedy zapis odbywa się w identyczny sposób.
-Domyślnie, zmiany selektora (\textbf{FS}) odbywają się na zboczach opadających. Standardowy tryb posiada charakterystyczne,
+Domyślnie, zmiany selektora kanału (\textbf{FS}) odbywają się na zboczach opadających. 
+Standardowy tryb posiada charakterystyczne,
 zdefiniowane w standardzie opóźnienie o jeden cylk zegara (\textbf{BCLK}),
 powodujące, że najbardziej znaczący bit jest odczytywany dopiero na jego drugim zboczu
 narastającym, liczonym od momentu rozpoczęcia transmisji dla określonego kanału.
-Diagram czasowy transmisji z wykorzystaniem trybu I$^2$S w domyślnej konfiguracji przedstawiono na rysunku \ref{hw::i2s}.
+Diagram czasowy transmisji z wykorzystaniem trybu I$^2$S w domyślnej konfiguracji przedstawiono na 
+rysunku \ref{hw::i2s}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{graf/hw/i2s.png}
-    \caption{Diagram czasowy komunikacji }
+    \caption{Diagram czasowy komunikacji I$^2$S}
     \label{hw::i2s}
 \end{figure}
+
+Zależność opisująca częstotliwość zegara bitowego (\textbf{BCLK}) zdefiniowana jest
+\begin{equation}
+    f_{\text{BCLK}} = NLf_{s}
+\end{equation}
+gdzie $N$ to ilość kanałów (od 1 do 2 dla jednej linii), 
+$L$ to bitowa długość transferu (typowo od 16 do 32 bitów)
+a $f_{s}$ to częstotliwość próbkowania, za którą bezpośrednio odpowiada częstotliwość 
+selektora kanałów
+\begin{equation}
+    f_s = f_{FS}
+\end{equation}
 
 W przypadku, kiedy komunikacja odbywa się z peryferiami, dla których 
 opóźnienie standardowego trybu  jest problematyczne,
@@ -952,30 +969,37 @@ Diagram czasu z wykorzystaniem omawianego trybu pochodnego przedstawiono na rysu
     \label{hw::l_j}
 \end{figure}
 
-\subsection{Wykorzystana konfiguracja}
+\subsection{Interakcja z przetwornikami}
 
 Wykorzystanie interfejsu McASP jest niezwykle elastyczne, głównie 
 ze względu na dostępne opcje zegarowe i ilość możliwych linii danych.
-Nota \cite{bib:mcasp} specyfikuje 16 serializatorów, co umożliwia uzyskanie aż 32 kanałów, jeżeli wykorzystywany jest tryb . Główny
+Nota \cite{bib:mcasp} specyfikuje 16 serializatorów, co umożliwia uzyskanie aż 32 kanałów, 
+jeżeli wykorzystywany jest tryb. Główny
 zegar (\textbf{AHCLK}), na podstawie którego generowane są pozostałe, pozwala na 
 pełną synchronizację wszystkich podpiętych urządzeń w systemie, co jest 
 niezbędne dla systemu wymagającego stałej częstotliwości próbkowania.
 
-\par Posiadając spełniony warunek synchronizacji peryferiów, kwestią o którą 
+\par Kwestią o którą 
 należy zadbać, jest sposób realizacji transferów. W przypadku przetworników
 analogowo-cyfrowych i cyfrowo-analogowych, 
 najcześniej wykorzystywanym interfejsem jest SPI (ang. \textit{Serial 
 Peripheral Interface}). Transmisja z użyciem takiego interfejsu odbywa się 
-synchronicznie w sposób dwukierunkowy z wykorzystaniem linii danych wyjściowych (ang. \textit{Master output, slave input}, \textbf{MOSI}), danych wejściowych (ang. \textit{Master input, slave output}, \textbf{MISO}), zegarowej (ang. \textit{Serial clock}, \textbf{SCLK}),
-oraz selektora (ang. \textit{Chip select}, \textbf{CS}).
+synchronicznie w sposób dwukierunkowy z wykorzystaniem linii danych wyjściowych 
+(ang. \textit{Master output, slave input}, \textbf{MOSI}), 
+danych wejściowych (ang. \textit{Master input, slave output}, \textbf{MISO}), 
+zegarowej (ang. \textit{Serial clock}, \textbf{SCLK}),
+oraz selektora układu (ang. \textit{Chip select}, \textbf{CS}).
 
 Interfejs SPI nie posiada ściśle zdefiniowanego standardu działania.
 Charakterystykę transmisji typowo definiuje peryferium podrzędne (\textit{slave}),
 do której układ nadrzędny (\textit{master}) musi się przystosować.
 Charakterystyki transmisji przyjęto definiować w postaci czterech trybów, 
-które zależą od wartości parametrów opisujących polaryzację zegara
-(\textbf{CPOL}) oraz fazę zegara (\textbf{CPHA}). Wpływ parametrów 
-na charakterystykę transmisji przedstawiono w tabelach \ref{tab::cpol} i 
+które zależą od wartości parametrów opisujących polaryzację zegara w stanie
+bezczynności (\textit {idle state}, parametr \textbf{CPOL}),
+oraz fazy zegara (parameter \textbf{CPHA}), czyli rodzaju zbocza, na którym 
+odbywa się zapis/odczyt. 
+
+Wpływ parametrów na charakterystykę transmisji przedstawiono w tabelach \ref{tab::cpol} i 
 \ref{tab::cpha}:
 
 \begin{table}[H]
@@ -984,9 +1008,9 @@ na charakterystykę transmisji przedstawiono w tabelach \ref{tab::cpol} i
         \hline
         \textbf{Wartość CPOL} & \textbf{Wpływ} \\ [0.5ex] 
         \hline\hline
-        0 & Odczyt na zboczu narastającym \\
+        0 & Zegar w stanie niskim (stan bezczynności) \\
         \hline
-        1 & Odczyt na zboczu opadającym \\
+        1 & Zegar w stanie wysokim (stan bezczynności) \\
         \hline\hline
     \end{tabular}
     \caption{Wpływ wartości CPOL na charakterystyke transmisji}
@@ -999,9 +1023,9 @@ na charakterystykę transmisji przedstawiono w tabelach \ref{tab::cpol} i
         \hline
         \textbf{Wartość CPHA} & \textbf{Wpływ} \\ [0.5ex] 
         \hline\hline
-        0 & Zapis na zboczu opadającym \\
+        0 & Zapis na zboczu opadającym, odczyt na narastającym \\
         \hline
-        1 & Zapis na zboczu narastającym \\
+        1 & Zapis na zboczu narastającym, odczyt na opadającym \\
         \hline\hline
     \end{tabular}
     \caption{Wpływ wartości CPHA na charakterystyke transmisji}
@@ -1009,12 +1033,78 @@ na charakterystykę transmisji przedstawiono w tabelach \ref{tab::cpol} i
 \end{table}
 
 Numer trybu otrzymywany jest poprzez połączenie wartości \textbf{CPOL} i 
-\textbf{CPHA} w postać dwubitową, gdzie wartość \textbf{CPOL} definuje najbardziej znaczący bit, a \textbf{CPHA} najmniej. Przykładowo, ustawienie $\textbf{CPOL} = 1$ i $\textbf{CPHA} = 0$ da wynikowo tryb 2.
+\textbf{CPHA} w postać dwubitową, gdzie wartość \textbf{CPOL} definuje najbardziej 
+znaczący bit, a \textbf{CPHA} najmniej. 
+Przykładowo, ustawienie $\textbf{CPOL} = 1$ i $\textbf{CPHA} = 0$ da wynikowo tryb 2.
 
-\par Opisane wyżej tryby definują charakterystkę transmisji
-w przypadku pełnej transmisji dwukierunkowej (ang, \textit{full-duplex}).
+\par Transmisja SPI rozpoczyna się typowo od wyboru układu 
+linią selektora (\textbf{CS}), który schodząc na stan niski,
+inicjalizuje komunikację. Niezależne selektory, których może być więcej niż jeden,
+pozwalają na wykorzystanie pozostałych linii do komunikacji z wieloma układami.
+Przykładowy diagram czasowy komunikacji SPI w trybie 3 przedstawiono na rysunku
+\ref{hw::spi}:
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/hw/spi.png}
+    \caption{Ideowy diagram transmisji SPI w trybie 3}
+    \label{hw::spi}
+\end{figure}
+
+\par Bazując na powyższym opisie można stwierdzić, że transfer I$^2$S 
+(w trybie \textit{Left justified } I$^2$S).
+jest tak właściwie szczególnym, jednokierunkowym transferem SPI realizowanym
+w trybie 3 (odczyt na zbocze narastające, zapis na opadające, domyślnie 
+wysoki stan zegara). W związku z tym, interakcja układów komunikujących się 
+po interfejsie SPI w systemie bazującym na transferach I$^2$S nie powinna być
+problematyczna. Realizację połączeń po stronie dwóch interfejsów przedstawiono
+w tabeli \ref{tab::spi_to_i2s}:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|| c | c ||} 
+        \hline
+        \textbf{Domena SPI} & \textbf{Domena I$^2$S} \\ [0.5ex] 
+        \hline\hline
+        SCLK & BCLK \\
+        \hline
+        CS & FS \\
+        \hline
+        MISO/MOSI & SDATA \\
+        \hline\hline
+    \end{tabular}
+    \caption{Realizacja połączeń SPI do I$^2$S}
+    \label{tab::spi_to_i2s}
+\end{table}
+
+Rolę selektora układu (\textbf{CS}) w tak zrealizowanym połączeniu
+pełni selektor kanału (\textbf{FS}) co powoduje, że dane otrzymywane są 
+periodycznie i interpretowane jako jeden kanał (domyślnie lewy). 
+Obligatoryjne jest, żeby wykorzystane w ten sposób układy nie wymagały 
+dwukierunkowych transferów. W przypadku zapisywania/odczytywania danych,
+układy nie mogą wymagać dodatkowych odczytów/zapisów. Podpinając jeden zegar (\textbf{BCLK}) 
+i selektor kanału (\textbf{FS})
+do wielu układów uzyskuje się synchroniczną transmisję wielokanałową,
+gdzie jeden układ odpowiada jednemu kanałowi, wejściowemu, jeżeli jest
+przetwornikiem analogowo-cyfrowym, lub wyjściowemu, jeżeli jest przetwornikem
+cyfrowo-analogowym.
+
+\par Przy doborze należy zwrócić szczególną uwagę
+na zgodność transferów. Tryb I$^2$S jest konfigurowany globalnie dla całego
+interfejsu McASP, co oznacza, że konwencja zapisu na zbocze narastające, odczytu
+na opadające oraz ilości bitów na transfer 
+zostaje przyjęta przez wszystkie linie danych.
 
 \section{Przetworniki}
+
+Diagram połączeń sekcji przetworników przedstawiono na rysunku \ref{hw::adc_dac}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graf/hw/adc_dac.png}
+    \caption{Diagram połączeń sekcji przetworników}
+    \label{hw::adc_dac}
+\end{figure}
+
 \subsection{Analogowo-cyfrowe}
 \subsection{Cyfrowo-analogowe}

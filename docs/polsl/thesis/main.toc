@@ -69,32 +69,32 @@
 \contentsline {subsection}{\numberline {4.4.6}Pełen schemat sekcji}{48}{subsection.4.4.6}%
 \contentsline {section}{\numberline {4.5}Protokół cyfrowy}{48}{section.4.5}%
 \contentsline {subsection}{\numberline {4.5.1}Sposób transmisji}{49}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Wykorzystana konfiguracja}{50}{subsection.4.5.2}%
-\contentsline {section}{\numberline {4.6}Przetworniki}{51}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Analogowo-cyfrowe}{51}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Cyfrowo-analogowe}{51}{subsection.4.6.2}%
-\contentsline {chapter}{\numberline {5}Implementacja części programowej}{53}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Środowisko pracy}{53}{section.5.1}%
-\contentsline {section}{\numberline {5.2}System operacyjny}{53}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Proces uruchamiania}{53}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Konfiguracja}{53}{subsection.5.2.2}%
-\contentsline {section}{\numberline {5.3}Oprogramowanie}{53}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Wykorzystanie rozszerzeń czasu rzeczywistego}{53}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Akwizycja danych i warunkowanie początkowe}{53}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Generacja hałasu}{53}{subsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.3.4}Filtracja cyfrowa}{53}{subsection.5.3.4}%
-\contentsline {subsection}{\numberline {5.3.5}Identyfikacja toru wtórnego}{53}{subsection.5.3.5}%
-\contentsline {subsection}{\numberline {5.3.6}Adaptacja toru głównego}{53}{subsection.5.3.6}%
-\contentsline {chapter}{\numberline {6}Weryfikacja}{55}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Część sprzętowa}{55}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Zasilania}{55}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Domena analogowa}{55}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Domena cyfrowa}{55}{subsection.6.1.3}%
-\contentsline {section}{\numberline {6.2}Część programowa}{55}{section.6.2}%
-\contentsline {chapter}{\numberline {7}Testy i badania}{57}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Podsumowanie}{59}{chapter.8}%
-\contentsline {chapter}{Bibliografia}{62}{chapter*.59}%
-\contentsline {chapter}{Spis skrótów i symboli}{65}{appendix*.60}%
+\contentsline {subsection}{\numberline {4.5.2}Interakcja z przetwornikami}{51}{subsection.4.5.2}%
+\contentsline {section}{\numberline {4.6}Przetworniki}{53}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Analogowo-cyfrowe}{53}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Cyfrowo-analogowe}{53}{subsection.4.6.2}%
+\contentsline {chapter}{\numberline {5}Implementacja części programowej}{55}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Środowisko pracy}{55}{section.5.1}%
+\contentsline {section}{\numberline {5.2}System operacyjny}{55}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Proces uruchamiania}{55}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Konfiguracja}{55}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Oprogramowanie}{55}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Wykorzystanie rozszerzeń czasu rzeczywistego}{55}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Akwizycja danych i warunkowanie początkowe}{55}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Generacja hałasu}{55}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Filtracja cyfrowa}{55}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.5}Identyfikacja toru wtórnego}{55}{subsection.5.3.5}%
+\contentsline {subsection}{\numberline {5.3.6}Adaptacja toru głównego}{55}{subsection.5.3.6}%
+\contentsline {chapter}{\numberline {6}Weryfikacja}{57}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Część sprzętowa}{57}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Zasilania}{57}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Domena analogowa}{57}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Domena cyfrowa}{57}{subsection.6.1.3}%
+\contentsline {section}{\numberline {6.2}Część programowa}{57}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Testy i badania}{59}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Podsumowanie}{61}{chapter.8}%
+\contentsline {chapter}{Bibliografia}{64}{chapter*.62}%
+\contentsline {chapter}{Spis skrótów i symboli}{67}{appendix*.63}%
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
@@ -127,6 +127,6 @@
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
-\contentsline {chapter}{Pliki uzupełniające}{67}{appendix*.61}%
-\contentsline {chapter}{Spis rysunków}{70}{appendix*.62}%
-\contentsline {chapter}{Spis tabel}{71}{appendix*.63}%
+\contentsline {chapter}{Pliki uzupełniające}{69}{appendix*.64}%
+\contentsline {chapter}{Spis rysunków}{72}{appendix*.65}%
+\contentsline {chapter}{Spis tabel}{73}{appendix*.66}%
