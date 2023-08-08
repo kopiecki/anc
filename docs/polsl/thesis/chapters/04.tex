@@ -868,7 +868,153 @@ Analogicznie jak w wejściowej sekcji analogowej, na każdy pin
 zasilania wzmacniaczy zastosowano kondensator odsprzęgający o typowej
 wartości $100$ nF.
 
+\section{Protokół cyfrowy}
+
+McASP (ang. \textit{Multi-channel audio serial port}) jest cyfrowym interfejsem 
+komunikacyjnym opracowanym przez firmę Texas Instruments w celu obsługi
+wielokanałowych systemów audio. W zależności od aplikacji, 
+interfejs wykorzystywany jest do realizacji transferów
+multipleksowanych metodą TDM (ang. \textit{Time-division multiplexing}) z 
+wyszczególnieniem konfiguracji I$^2$S (ang. \textit{Inter-IC sound}), będących standardowym protokołem komunikacyjnym z urządzeniami wysyłającymi 
+dane cyfrowe reprezentujące dźwięk w formacie PCM (ang. \textit{Pulse code modulation}).
+Piny obsługiwane przez interfejs McASP można podzielić na trzy grupy \cite{bib:mcasp}:
+\begin{enumerate}
+
+    \item Piny zegarowe - dzielone na trzy podgrupy:
+    \begin{enumerate}
+
+        \item Wysokoczęstotliwościowe (\textbf{AHCLK}) - wykorzystywane 
+        do generacji zegarów bitowych (\textbf{ACLK}) i selektorów (\textbf{AFS})
+        poprzez wykorzystanie odpowiednio skonfigurowanych dzielników częstotliwości.
+
+        \item Bitowe (\textbf{ACLK}) - wykorzystywane do taktowania danych wejściowych
+        i wyjściowych względem odpowiednich zboczy.
+
+        \item Selektory (\textbf{AFS}) - definują aktualnie wysyłany kanał.
+        W terminologii  dla trybu stereo (dwukanałowego),
+        w stanie niskim przesyłane jest lewy, a w wysokim prawy kanał. 
+        Oznacza to, że na jednej linii danych można wysłać dane pochodzące 
+        z dwóch kanałów audio.
+
+    \end{enumerate}
+
+    \item Piny resetujące - umożliwiają wyłączanie (w kontekście audio wyciszanie) 
+    peryferiów w zależności od zdefiniowanej logiki. Sygnały zazwyczaj podpinane
+    są do wejść resetujących dane cyfrowe układy audio.
+
+    \item Piny danych (\textbf{ARX}) - nazwa jest samo wyjaśniająca. 
+
+\end{enumerate}
+
+Każdy pin z przedstawionych wyżej grup może zostać skonfigurowany w trybie 
+wejściowym lub wyjściowym. Dla trybu wejściowego, terminologia McASP
+definuje nazwę z postfiksem R, a dla wyjściowego z postfiksem X (przykładowo
+\textbf{ACLKX} jako wyjściowy zegar bitowy, \textbf{AFSR} jako wejściowy selektor).
+Interfejs pracuje na bazie modelu \textit{master-slave}, gdzie \textit{master}
+jest urządzeniem zapewniający główny zegar (\textbf{AHCLK}) służący do generacji
+pozostałych.
+
+\subsection{Sposób transmisji}
+
+Transfery z wykorzystaniem trybu I$^2$S i jego pochodnych realizowane są z wykorzystaniem linii zegarowej (\textbf{BCLK}), selektora (\textbf{FS}) oraz danych (\textbf{SDATA}).
+Dane przesyłane są w formacie definującym najbardziej znaczący bit na początku
+transmisji (ang. \textit{MSB first}), której rozpoczęcie definiowane jest przez określony stan selektora 
+(\textbf{FS}). Typowo zbocze opadające selektora definuje transmisję kanału lewego, 
+a narastające prawego, lecz możliwe są inne konfiguracje.
+
+\par Zapis może odbywać na zboczu narastającym lub opadającym zegara (\textbf{BCLK}), jednak wymagane jest, aby odbiornik czytał dane na zboczu narastającym,
+co powoduje pewne komplikacje, kiedy zapis odbywa się w identyczny sposób.
+Domyślnie, zmiany selektora (\textbf{FS}) odbywają się na zboczach opadających. Standardowy tryb posiada charakterystyczne,
+zdefiniowane w standardzie opóźnienie o jeden cylk zegara (\textbf{BCLK}),
+powodujące, że najbardziej znaczący bit jest odczytywany dopiero na jego drugim zboczu
+narastającym, liczonym od momentu rozpoczęcia transmisji dla określonego kanału.
+Diagram czasowy transmisji z wykorzystaniem trybu I$^2$S w domyślnej konfiguracji przedstawiono na rysunku \ref{hw::i2s}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/hw/i2s.png}
+    \caption{Diagram czasowy komunikacji }
+    \label{hw::i2s}
+\end{figure}
+
+W przypadku, kiedy komunikacja odbywa się z peryferiami, dla których 
+opóźnienie standardowego trybu  jest problematyczne,
+istnieje możliwość skorzystania z trybu pochodnego (ang. \textit{Left justified} I$^2$S), który 
+umożliwa odczyt danych na pierwszym wystąpieniu zbocza
+narastającego liczonego od momentu zmiany selektora. Elimiuje to opóźnienie jednego cyklu, gdzie pozostała charakterystyka komunikacji pozostaje taka sama.
+Diagram czasu z wykorzystaniem omawianego trybu pochodnego przedstawiono na rysunku
+\ref{hw::l_j}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/hw/l_j.png}
+    \caption{Diagram czasowy komunikacji \textit{Left justified} I$^2$S}
+    \label{hw::l_j}
+\end{figure}
+
+\subsection{Wykorzystana konfiguracja}
+
+Wykorzystanie interfejsu McASP jest niezwykle elastyczne, głównie 
+ze względu na dostępne opcje zegarowe i ilość możliwych linii danych.
+Nota \cite{bib:mcasp} specyfikuje 16 serializatorów, co umożliwia uzyskanie aż 32 kanałów, jeżeli wykorzystywany jest tryb . Główny
+zegar (\textbf{AHCLK}), na podstawie którego generowane są pozostałe, pozwala na 
+pełną synchronizację wszystkich podpiętych urządzeń w systemie, co jest 
+niezbędne dla systemu wymagającego stałej częstotliwości próbkowania.
+
+\par Posiadając spełniony warunek synchronizacji peryferiów, kwestią o którą 
+należy zadbać, jest sposób realizacji transferów. W przypadku przetworników
+analogowo-cyfrowych i cyfrowo-analogowych, 
+najcześniej wykorzystywanym interfejsem jest SPI (ang. \textit{Serial 
+Peripheral Interface}). Transmisja z użyciem takiego interfejsu odbywa się 
+synchronicznie w sposób dwukierunkowy z wykorzystaniem linii danych wyjściowych (ang. \textit{Master output, slave input}, \textbf{MOSI}), danych wejściowych (ang. \textit{Master input, slave output}, \textbf{MISO}), zegarowej (ang. \textit{Serial clock}, \textbf{SCLK}),
+oraz selektora (ang. \textit{Chip select}, \textbf{CS}).
+
+Interfejs SPI nie posiada ściśle zdefiniowanego standardu działania.
+Charakterystykę transmisji typowo definiuje peryferium podrzędne (\textit{slave}),
+do której układ nadrzędny (\textit{master}) musi się przystosować.
+Charakterystyki transmisji przyjęto definiować w postaci czterech trybów, 
+które zależą od wartości parametrów opisujących polaryzację zegara
+(\textbf{CPOL}) oraz fazę zegara (\textbf{CPHA}). Wpływ parametrów 
+na charakterystykę transmisji przedstawiono w tabelach \ref{tab::cpol} i 
+\ref{tab::cpha}:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|| c | c ||} 
+        \hline
+        \textbf{Wartość CPOL} & \textbf{Wpływ} \\ [0.5ex] 
+        \hline\hline
+        0 & Odczyt na zboczu narastającym \\
+        \hline
+        1 & Odczyt na zboczu opadającym \\
+        \hline\hline
+    \end{tabular}
+    \caption{Wpływ wartości CPOL na charakterystyke transmisji}
+    \label{tab::cpol}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|| c | c ||} 
+        \hline
+        \textbf{Wartość CPHA} & \textbf{Wpływ} \\ [0.5ex] 
+        \hline\hline
+        0 & Zapis na zboczu opadającym \\
+        \hline
+        1 & Zapis na zboczu narastającym \\
+        \hline\hline
+    \end{tabular}
+    \caption{Wpływ wartości CPHA na charakterystyke transmisji}
+    \label{tab::cpha}
+\end{table}
+
+Numer trybu otrzymywany jest poprzez połączenie wartości \textbf{CPOL} i 
+\textbf{CPHA} w postać dwubitową, gdzie wartość \textbf{CPOL} definuje najbardziej znaczący bit, a \textbf{CPHA} najmniej. Przykładowo, ustawienie $\textbf{CPOL} = 1$ i $\textbf{CPHA} = 0$ da wynikowo tryb 2.
+
+\par Opisane wyżej tryby definują charakterystkę transmisji
+w przypadku pełnej transmisji dwukierunkowej (ang, \textit{full-duplex}).
+
+
 \section{Przetworniki}
 \subsection{Analogowo-cyfrowe}
 \subsection{Cyfrowo-analogowe}
-\section{Protokół cyfrowy}

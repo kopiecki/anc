@@ -21,7 +21,7 @@ umożliwiło zatem ich szersze wykorzystanie w praktyce. Zaskutkowało to
 gwałtownym rozwojem omawianej tematyki. ANC znalazło swoje 
 zastosowanie w redukcji hałasów akustycznych, rozchodzących się w powietrzu w 
 zamkniętej lub otwartej przestrzeni, redukcji hałasów hydroakustycznych,
-czyli tych rozchodzących się w płynach oraz redukcji hałasów wibracyjnych,
+rozchodzących się w płynach oraz redukcji hałasów wibracyjnych,
 czyli aktywnym tłumieniu drgań \cite{bib:kuo_morgan}. 
 Jak opisuje prawo Moore'a, moc obliczeniowa układów cyfrowych w kolejnych latach
 zwiększa się z zgodnie z trendem wykładniczym i takie zachowanie można było
@@ -37,7 +37,7 @@ ogólny hałas wokół nas.
 
 \section{Uogólniona koncepcja}
 
-Tak jak opisywano wcześniej, hałas w systemach ANC może rozchodzić się w różnych
+Hałas w systemach ANC może rozchodzić się w różnych
 ośrodkach i w zależności od nich definiowany jest obszar zastosowania systemu.
 Od tego momementu, autor używając zwrotów ANC i hałas, będzie miał na myśli
 jednokanałowe systemy aktywnej redukcji hałasu w ujęciu akustycznym i wokół 
@@ -53,7 +53,8 @@ wymagają instalacji dużych rozmiarów.
 \par Największą wadą pasywnych rozwiązań jest jednak problem z tłumieniem
 hałasów o niskich częstotliwościach. Z racji, że układy pasywne 
 zachowują się jak filtry dolnoprzepustowe dla sygnałów akustycznych,
-trudno zrealizować mechaniczyny system zdolny wytłumiać hałasy w pasmach
+trudno zrealizować mechaniczyny system zdolny wytłumiać hałasy
+o największej energii w pasmach
 niskich. Długość fali jest odwrotnie proporcjonalna do jej częstotliwości 
 \cite{bib:resnick},
 więc wolnozmienna fala akustyczna będzie długa, co
@@ -66,17 +67,16 @@ nad rozwiązaniami pasywnymi.
 \subsection{Idea przewodnia}
 
 Idea, na której swoje działanie opierają systemy ANC, jest bardzo prosta
-w zrozumieniu, jednak problematyczna w implementacji. W oparciu o pomiar
-sygnału wejściowego (hałasu), który system ma za zadanie wytłumić, 
-należy wygenerować sygnał o identycznej amplitudzie i częstotliwości co mierzony,
-jednak odwrócony w fazie. Tak wygenerowany sygnał, nazywany antyhałasem,
-zostaje następnie wyprowadzony przez aktuator (głośnik) w tor, 
+w zrozumieniu, jednak problematyczna w implementacji. 
+System ma za zadanie wygenerować sygnał o identycznej amplitudzie oraz częstotliwości co 
+wejściowy hałas, jednak odwrócony w fazie i tak wygenerowany sygnał, nazywany antyhałasem,
+zostaje wyprowadzony przez aktuator (głośnik) w tor, 
 którym porusza się sygnał mierzony (hałas). 
 W wyniku interferencji fal (superpozycji), hałas zostaje wyciszony.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.63\textwidth]{graf/intro/anc.png}
+    \includegraphics[width=0.65\textwidth]{graf/intro/anc.png}
     \caption{Graficzna wizualizacja idei aktywnej redukcji hałasu}
     \label{intro::anc}
 \end{figure}

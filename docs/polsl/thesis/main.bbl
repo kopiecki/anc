@@ -377,5 +377,34 @@
     }
     \field{year}{1997}
   \endentry
+
+  \entry{bib:mcasp}{online}{}
+    \name{author}{1}{}{%
+      {{hash=TB}{%
+         family={Tufino},
+         familyi={T\bibinitperiod},
+         given={Bobby},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TB1}
+    \strng{fullhash}{TB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{number}{SPRACK0}
+    \field{title}{McASP Design Guide - Tips, Tricks and Practical Examples}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/sprack0/sprack0.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Texas Instruments}%
+    }
+    \field{year}{2019}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
 \enddatalist
 \endinput
