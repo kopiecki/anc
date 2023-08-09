@@ -416,8 +416,6 @@ który wraz z niezbędnymi kondensatorami odsprzęgającymi przedstawiono na rys
     \label{hw::off}
 \end{figure}
 
-\subsection{Dodatkowe kwestie sprzętowe}
-
 \section{Wejściowe tory analogowe}
 
 Schemat blokowy wejściowego toru analogowego przedstawiono na rysunku 
@@ -451,7 +449,7 @@ składową stałą. Omawianą część schematu przedstawiono na rysunku \ref{hw
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.35\textwidth]{graf/hw/xlr.png}
+    \includegraphics[width=0.5\textwidth]{graf/hw/xlr.png}
     \caption{Wejście zbalansowane}
     \label{hw::xlr}
 \end{figure}
@@ -540,7 +538,7 @@ na rysunku \ref{hw::preamp}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{graf/hw/preamp.png}
+    \includegraphics[width=0.3\textwidth]{graf/hw/preamp.png}
     \caption{Przedwzmacniacz}
     \label{hw::preamp}
 \end{figure}
@@ -868,7 +866,9 @@ Analogicznie jak w wejściowej sekcji analogowej, na każdy pin
 zasilania wzmacniaczy zastosowano kondensator odsprzęgający o typowej
 wartości $100$ nF.
 
-\section{Protokół cyfrowy}
+\section{Sekcja cyfrowa}
+
+\subsection{Interfejs cyfrowy}
 
 McASP (ang. \textit{Multi-channel audio serial port}) jest cyfrowym interfejsem 
 komunikacyjnym opracowanym przez firmę Texas Instruments w celu obsługi
@@ -914,7 +914,7 @@ Interfejs pracuje na bazie modelu \textit{master-slave}, gdzie \textit{master}
 jest urządzeniem zapewniający główny zegar (\textbf{AHCLK}) służący do generacji
 pozostałych.
 
-\subsection{Sposób transmisji}
+\subsubsection{Metody komunikacji}
 
 Transfery z wykorzystaniem trybu I$^2$S i jego pochodnych realizowane są z wykorzystaniem linii zegarowej 
 (ang. \textit{Bit clock}, \textbf{BCLK}), selektora kanału (ang. \textit{Frame select}, \textbf{FS}) oraz 
@@ -1089,22 +1089,87 @@ gdzie jeden układ odpowiada jednemu kanałowi, wejściowemu, jeżeli jest
 przetwornikiem analogowo-cyfrowym, lub wyjściowemu, jeżeli jest przetwornikem
 cyfrowo-analogowym.
 
-\par Przy doborze należy zwrócić szczególną uwagę
+\par Przy doborze przetworników należy zwrócić szczególną uwagę
 na zgodność transferów. Tryb I$^2$S jest konfigurowany globalnie dla całego
 interfejsu McASP, co oznacza, że konwencja zapisu na zbocze narastające, odczytu
 na opadające oraz ilości bitów na transfer 
 zostaje przyjęta przez wszystkie linie danych.
 
-\section{Przetworniki}
-
 Diagram połączeń sekcji przetworników przedstawiono na rysunku \ref{hw::adc_dac}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/hw/adc_dac.png}
+    \includegraphics[width=0.8\textwidth]{graf/hw/adc_dac.png}
     \caption{Diagram połączeń sekcji przetworników}
     \label{hw::adc_dac}
 \end{figure}
 
-\subsection{Analogowo-cyfrowe}
-\subsection{Cyfrowo-analogowe}
+Wykorzystane w systemie przetworniki w obydwu przypadkach posiadają rozdzielczość
+16 bitów, co zapewnia zgodność formatu danych wejściowych i wyjściowych.
+
+\subsubsection{Przetworniki analogowo-cyfrowe}
+
+W celu minimalizacji opóźnień w torze przetwarzania, wybrane przetworniki
+analogowo-cyfrowe zrealizowane są w architekturze SAR i posiadają
+niski czas konwersji, wynoszący 8 $\mu$s dla transferu
+24 bitowego. Ich specyfikacja komunikacji określa, że każdy transfer
+rozpoczynany jest czterami bitami zerowymi liczonymi od momentu pojawienia się 
+zbocza opadającego na selektorze, po których następuje zapisanie
+wyniku konwersji. Jeżeli transmisja jest dłuższa niż optymalne 20 bitów,
+to w dodatkowe miejsca wpisywane są zera. Wykorzystywany przez przetwornik
+sposób transmisji wprowadza zatem wymaganie transferów równych lub dłuższych
+niż 20 bitów.
+
+Zapis odbywa się na zboczu opadającym, a dane przesyłane są w formacie najbardziej
+znaczącego bitu na początku (ang. \textit{MSB first}).
+Maksymalna prędkość transmisji wynosi 100 kSPS, a układ 
+zasilany jest napięciem +5 V, które pełni rolę referencji i określa
+zakres dynamiczny.
+
+\subsubsection{Przetworniki cyfrowo-analogowe}
+
+Komunikacja z wybranymi przetwornikami cyfrowo-analogowymi odbywa się poprzez
+transfery o długości 16 bitów w formacie najbardziej znaczącego bitu na
+początku, gdzie ładowanie do wewnętrznego rejestru przetwornika 
+odbywa się na zboczach narastających,
+licząc od momentu wystąpienia zbocza opadającego na selektorze. Wartość 
+wyjściowa wystawiana jest w momencie wystąpienia zbocza narastającego na selektorze i 
+jeżeli transfer jest dłuższy niż 16 bitów, dodatkowe wartości są ignorowane.
+Umożliwia to komunikację z przetwornikiem transferami dłuższymi niż 16 bitów,
+co jest wymaganiem przy wykorzystaniu wcześniej opisanych przetworników analogowo-cyfrowych.
+Przetwornik poza zasilaniem o wartości +5 V wymaga napięcia referencyjnego, 
+które defniniuje wartości wyjściowe i zakres. Jako napięcie referencyjne 
+wykorzystano również +5 V. 
+
+\section{Dodatkowe kwestie sprzętowe}
+
+Projektując płytkę drukowaną autor starał
+podążać się szeregiem zasad projektowych \cite{bib:ott} które opisano
+poniżej:
+\begin{enumerate}
+
+    \item Minimalizacja długości scieżek - elementy powinny być umieszczone
+    jak najbliżej siebie. Im dłuższa ścieżka, tym wpływ pojemności i 
+    indukcyjności pasożytniczych większy, co powoduje niechciane efekty
+    filtracji. Szczególną uwagę należy zwrócić na sekcje krytyczne, takie 
+    jak sprzężenia zwrotne wzmacniaczy operacyjnych i wyjście przełączające 
+    przetwornic impulsowych.
+
+    \item Grubości ścieżek - im grubsza scieżka, tym jej impedancja mniejsza.
+    Przyjęto stosować zasadę, że ścieżki, którymi prowadzone są zasilania, 
+    powinny być dwa razy grubsze niż te, którymi prowadzone są sygnały.
+    W projekcie zastosowano 0.5 mm grubości na ścieżki sygnałowe i 1 mm
+    grubości na ścieżki zasilania.
+
+    \item Kondensatory odsprzęgające
+
+    \item Rozmieszczenie warstw
+
+    \item Płaszczyzny masy i zasilań
+
+    \item Terminatory sygnałów cyfrowych
+
+    \item Powroty sygnałów
+    
+
+\end{enumerate}

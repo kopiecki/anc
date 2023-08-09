@@ -263,6 +263,32 @@
     \field{urlyear}{2023}
   \endentry
 
+  \entry{bib:ott}{book}{}
+    \name{author}{1}{}{%
+      {{hash=OHW}{%
+         family={Ott},
+         familyi={O\bibinitperiod},
+         given={Henry\bibnamedelima W.},
+         giveni={H\bibinitperiod\bibinitdelim W\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {John Wiley \& Sons, Inc.}%
+    }
+    \strng{namehash}{OHW1}
+    \strng{fullhash}{OHW1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{isbn}{9780470189306}
+    \field{title}{Electromagnetic Compatibility Engineering}
+    \list{location}{1}{%
+      {USA}%
+    }
+    \field{year}{2009}
+  \endentry
+
   \entry{bib:sitara}{online}{}
     \list{publisher}{1}{%
       {Texas Instruments}%

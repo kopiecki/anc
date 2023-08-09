@@ -51,7 +51,6 @@
 \contentsline {subsection}{\numberline {4.2.3}Zasilanie domeny cyfrowej}{34}{subsection.4.2.3}%
 \contentsline {subsection}{\numberline {4.2.4}Referencja domeny analogowo-cyfrowej}{35}{subsection.4.2.4}%
 \contentsline {subsection}{\numberline {4.2.5}Generacja składowej stałej}{36}{subsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.2.6}Dodatkowe kwestie sprzętowe}{37}{subsection.4.2.6}%
 \contentsline {section}{\numberline {4.3}Wejściowe tory analogowe}{37}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Wejście zbalansowane}{37}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Początkowa filtracja i saturacja}{38}{subsection.4.3.2}%
@@ -67,12 +66,13 @@
 \contentsline {subsection}{\numberline {4.4.4}Symetryzacja}{46}{subsection.4.4.4}%
 \contentsline {subsection}{\numberline {4.4.5}Filtracja końcowa}{47}{subsection.4.4.5}%
 \contentsline {subsection}{\numberline {4.4.6}Pełen schemat sekcji}{48}{subsection.4.4.6}%
-\contentsline {section}{\numberline {4.5}Protokół cyfrowy}{48}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Sposób transmisji}{49}{subsection.4.5.1}%
+\contentsline {section}{\numberline {4.5}Sekcja cyfrowa}{48}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Interfejs cyfrowy}{48}{subsection.4.5.1}%
+\contentsline {subsubsection}{Metody komunikacji}{49}{section*.54}%
 \contentsline {subsection}{\numberline {4.5.2}Interakcja z przetwornikami}{51}{subsection.4.5.2}%
-\contentsline {section}{\numberline {4.6}Przetworniki}{53}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Analogowo-cyfrowe}{53}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Cyfrowo-analogowe}{53}{subsection.4.6.2}%
+\contentsline {subsubsection}{Przetworniki analogowo-cyfrowe}{53}{section*.62}%
+\contentsline {subsubsection}{Przetworniki cyfrowo-analogowe}{53}{section*.63}%
+\contentsline {section}{\numberline {4.6}Dodatkowe kwestie sprzętowe}{54}{section.4.6}%
 \contentsline {chapter}{\numberline {5}Implementacja części programowej}{55}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Środowisko pracy}{55}{section.5.1}%
 \contentsline {section}{\numberline {5.2}System operacyjny}{55}{section.5.2}%
@@ -93,8 +93,8 @@
 \contentsline {section}{\numberline {6.2}Część programowa}{57}{section.6.2}%
 \contentsline {chapter}{\numberline {7}Testy i badania}{59}{chapter.7}%
 \contentsline {chapter}{\numberline {8}Podsumowanie}{61}{chapter.8}%
-\contentsline {chapter}{Bibliografia}{64}{chapter*.62}%
-\contentsline {chapter}{Spis skrótów i symboli}{67}{appendix*.63}%
+\contentsline {chapter}{Bibliografia}{64}{chapter*.65}%
+\contentsline {chapter}{Spis skrótów i symboli}{67}{appendix*.66}%
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
@@ -127,6 +127,6 @@
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
-\contentsline {chapter}{Pliki uzupełniające}{69}{appendix*.64}%
-\contentsline {chapter}{Spis rysunków}{72}{appendix*.65}%
-\contentsline {chapter}{Spis tabel}{73}{appendix*.66}%
+\contentsline {chapter}{Pliki uzupełniające}{69}{appendix*.67}%
+\contentsline {chapter}{Spis rysunków}{72}{appendix*.68}%
+\contentsline {chapter}{Spis tabel}{73}{appendix*.69}%
