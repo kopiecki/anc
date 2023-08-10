@@ -1144,8 +1144,7 @@ wykorzystano również +5 V.
 \section{Dodatkowe kwestie sprzętowe}
 
 Projektując płytkę drukowaną autor starał
-podążać się szeregiem zasad projektowych \cite{bib:ott} które opisano
-poniżej:
+podążać się szeregiem zasad projektowych \cite{bib:ott} które opisano poniżej:
 \begin{enumerate}
 
     \item Minimalizacja długości scieżek - elementy powinny być umieszczone
@@ -1156,20 +1155,58 @@ poniżej:
     przetwornic impulsowych.
 
     \item Grubości ścieżek - im grubsza scieżka, tym jej impedancja mniejsza.
-    Przyjęto stosować zasadę, że ścieżki, którymi prowadzone są zasilania, 
-    powinny być dwa razy grubsze niż te, którymi prowadzone są sygnały.
+    Grubość należy dobierać na podstawie płynącego prądu, który zwykle
+    większy jest dla ścieżek którymi poprowadzone jest zasilanie.
     W projekcie zastosowano 0.5 mm grubości na ścieżki sygnałowe i 1 mm
     grubości na ścieżki zasilania.
 
-    \item Kondensatory odsprzęgające
+    \item Kondensatory odsprzęgające - powinny być możliwie najbliżej
+    docelowych układów. Jako, że mają zapewnić filtrację zasilania i lokalny
+    bufor energii, im dalej od docelowego układu, tym swoje zadanie spełniają 
+    gorzej.
 
-    \item Rozmieszczenie warstw
+    \item Rozmieszczenie warstw (ang. \textit{stackup}) - dla płytek wielowarstwowych
+    powinno być realizowane z myślą o optymalnych powrotach sygnałów. 
+    Warstwa odniesienia, czyli masa lub zasilanie,
+    powinna być bezpośrednio pod lub nad warstwą sygnałów, gdzie połączenia
+    realizowane są przez przelotki. 
+    W projekcie warstwy rozmieszczono następująco (pierwsza jest warstwą górną):
+    \begin{enumerate}
+        \item Warstwa sygnałów analogowych
+        \item Warstwa masy
+        \item Warstwa zasilań
+        \item Warstwa sygnałów cyfrowych
+    \end{enumerate}
 
-    \item Płaszczyzny masy i zasilań
+    Sygnały analogowe są odniesione do masy, a sygnały cyfrowe 
+    do zasilania.
 
-    \item Terminatory sygnałów cyfrowych
+    \item Terminatory -  należy stosować 
+    w celu kontroli impedancji ścieżek transmisyjnych.
+    Dla szybkozmiennych sygnałów i długich ścieżek z powodu
+    pojemności i idukcyjności pasożytniczych w torze mogą wystąpić
+    niechcianie oscylacje, które należy wytłumić.
+    Terminatory docelowo dobiera się na podstawie impedancji charakterystycznej 
+    ścieżki. Wykorzystane sygnały cyfrowe w projekcie, mimo że wolnozmienne 
+    częstotliwościowo, posiadają bardzo szybkie zbocze, więc wykorzystano
+    terminatory szeregowe w postaci rezystorów o rezystancji 100 $\Omega$ bezpośrednio
+    przy ich źródle.
 
-    \item Powroty sygnałów
+    \item Pola masowe - puste powierzchnie na warstwach sygnałowych należy wypełniać
+    masą i łączyć przelotkami z warstwą masy (jeżeli jest). Przy układaniu
+    przelotek należy uważać, żeby nie stworzyć odciętych od reszty wypełnioniej
+    powierzchni sekcji (ang. \textit{slot}). Wypełnienie masą tworzy ekran jak
+    i również mogą zapewniać powroty dla sygnałów.
+
+    \item Powroty sygnałów - jest kwestią znacząco wpływającą na rozmieszczenie
+    elementów. Sygnały najczęściej, jeżeli pod lub nad jest warstwa odniesienia,
+    jako drogę powrotną wybiorą tą bezpośrednio pod lub nad ścieżką sygnałową \cite{bib:ott}.
+    Mając to na uwadze, elementy należy ustawiać w sposób zapewniający 
+    unikanie warstwowego krzyżowania się sygnałów różnych sekcji i domen.
+    Układając sekcje cyfrową należy zwrócić uwagę, czy sygnały powrotne,
+    jeżeli odniesione są do tej samej płaszczyzny co sygnały analogowe, 
+    nie będą przechodzić bezpośrednio pod lub nad ścieżkami oraz układami
+    analogowymi i odwrotnie. Szybkozmienne sygnały cyfrowe w powrocie mogą 
+    zakłócać sygnały analogowe.
     
-
 \end{enumerate}

@@ -11,39 +11,40 @@ znaczące postępy zaczęto obserwować dopiero w latach 80.
 i 90. XX wieku, kiedy raptowny rozwój technologiczny
 umożliwił projektowane coraz to dokładniejszych i stabilniejszych układów 
 automatyki \cite{bib:kuo_morgan}. Powodem takiego przebiegu wydarzeń był wyłaniający 
-się zza horyzontu początek epoki cyfrowej, potwierdzającej prorocze słowa 
-Claude'a Shannona o potędze kodu binarnego, z użyciem którego można opisać i 
-wpływać na otaczający nas świat z dużą precyzją i elastycznością, nieosiągalną 
-wcześniej w rozwiązaniach opartych jedynie na technice analogowej.
-
-\par Zastosowanie układów cyfrowych w systemach ANC
-umożliwiło zatem ich szersze wykorzystanie w praktyce. Zaskutkowało to 
-gwałtownym rozwojem omawianej tematyki. ANC znalazło swoje 
+się zza horyzontu początek epoki cyfrowej, która udowodniła, że z użyciem kodu binarnego
+można opisać i wpływać na otaczający nas świat z dużą precyzją i elastycznością, 
+nieosiągalną wcześniej w rozwiązaniach opartych jedynie na technice analogowej.
+Zastosowanie układów cyfrowych w systemach ANC
+umożliwiło ich szersze wykorzystanie w praktyce. Znalazły one swoje 
 zastosowanie w redukcji hałasów akustycznych, rozchodzących się w powietrzu w 
 zamkniętej lub otwartej przestrzeni, redukcji hałasów hydroakustycznych,
 rozchodzących się w płynach oraz redukcji hałasów wibracyjnych,
-czyli aktywnym tłumieniu drgań \cite{bib:kuo_morgan}. 
-Jak opisuje prawo Moore'a, moc obliczeniowa układów cyfrowych w kolejnych latach
-zwiększa się z zgodnie z trendem wykładniczym i takie zachowanie można było
+czyli aktywnym tłumieniu drgań. Jak to zazwyczaj bywa z nowymi technologiami,
+pierwsze praktyczne realizacje ANC zaobserwowano w militariach, między innymi
+w tłumieniu hałasu akustycznego propagującego się wewnątrz odrzutowca.
+
+\par Jak opisuje prawo Moore'a, moc obliczeniowa układów cyfrowych w kolejnych latach
+zwiększa się z zgodnie z trendem wykładniczym i takie zachowanie można
 zaobserwować do czasów teraźniejszych. Ekstremalna miniaturyzacja, 
 optymalizacja zapotrzebowania energetycznego jak i niskie koszta układów
-cyfrowych spowodowały ich globalizację, co również zaowocowało w omawianej tematyce. 
-Obecnie wykorzystanie ANC można zaobserwować na rynku konsumenckim, w postaci słuchawek 
+cyfrowych spowodowały ich globalizację.
+Obecnie ANC można zaobserwować na rynku konsumenckim, w postaci słuchawek 
 redukujących hałas z otoczenia, wytłumiaczy otwartych pomieszczeń biurowych
-(ang. \textit{open-space}) czy systemów tworzących przestrzenną strefę ciszy
-w środku pojazdu (samolotu, samochodu). Na tego typu systemy rośnie popyt, 
+czy systemów tworzących przestrzenną strefę ciszy
+w środku pojazdu. Na tego typu systemy rośnie popyt, 
 spowodowany między innymi wzrostem populacji oraz industrializacji, zwiększajcej
 ogólny hałas wokół nas.
 
 \section{Uogólniona koncepcja}
 
 Hałas w systemach ANC może rozchodzić się w różnych
-ośrodkach i w zależności od nich definiowany jest obszar zastosowania systemu.
+ośrodkach i w zależności od nich definiowany jest obszar zastosowania 
+(akustyczny, hydroakustyczny, wibracyjny).
 Od tego momementu, autor używając zwrotów ANC i hałas, będzie miał na myśli
 jednokanałowe systemy aktywnej redukcji hałasu w ujęciu akustycznym i wokół 
 tej tematyki skupia się dalsza część pracy.
 
-\subsection{Obszar stosowania}
+\subsection{Obszar zastosowania}
 
 Tradycyjne podejście do redukcji hałasu można uogólnić do wykorzystania
 pasywnych wytłumiaczy, takich jak szczelne bariery odgradzające, tłumiki czy
@@ -52,7 +53,7 @@ w szerokim paśmie częstotliwości, w większości przypadków są drogie oraz
 wymagają instalacji dużych rozmiarów.
 \par Największą wadą pasywnych rozwiązań jest jednak problem z tłumieniem
 hałasów o niskich częstotliwościach. Z racji, że układy pasywne 
-zachowują się jak filtry dolnoprzepustowe dla sygnałów akustycznych,
+zachowują się jak filtry dolnoprzepustowe dla sygnałów akustycznych, to
 trudno zrealizować mechaniczyny system zdolny wytłumiać hałasy
 o największej energii w pasmach
 niskich. Długość fali jest odwrotnie proporcjonalna do jej częstotliwości 
@@ -69,19 +70,19 @@ nad rozwiązaniami pasywnymi.
 Idea, na której swoje działanie opierają systemy ANC, jest bardzo prosta
 w zrozumieniu, jednak problematyczna w implementacji. 
 System ma za zadanie wygenerować sygnał o identycznej amplitudzie oraz częstotliwości co 
-wejściowy hałas, jednak odwrócony w fazie i tak wygenerowany sygnał, nazywany antyhałasem,
-zostaje wyprowadzony przez aktuator (głośnik) w tor, 
-którym porusza się sygnał mierzony (hałas). 
-W wyniku interferencji fal (superpozycji), hałas zostaje wyciszony.
+niechciany, jednak odwrócony w fazie. Tak wygenerowany sygnał, nazywany antyhałasem,
+zostaje wprowadzony przez aktuator (głośnik) w tor, 
+którym propaguje się tłumiony hałas. 
+W wyniku interferencji fal (superpozycji), sygnał zostaje wyciszony.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.65\textwidth]{graf/intro/anc.png}
+    \includegraphics[width=0.75\textwidth]{graf/intro/anc.png}
     \caption{Graficzna wizualizacja idei aktywnej redukcji hałasu}
     \label{intro::anc}
 \end{figure}
 
-\par Hałas w omawianej tematyce jest w większości 
+\par Tor, którym porusza się hałas w omawianej tematyce jest w większości 
 przypadków zmienny w czasie, co powoduje, że częstotliwość, amplituda, faza
 jak i prędkość rozchodzenia się drgań w ośrodku jest niestacjonarna.
 Takie zachowanie wymaga, żeby projektowany system był adaptacyjny, co oznacza,
@@ -92,12 +93,12 @@ dlatego pożądane jest, aby w systemach tego typu wykorzystać układy cyfrowe,
 próbkujące sygnały z czujników oraz przetwarzające je z wykorzystaniem 
 odpowiednich algorytmów przetwarzania. Układy cyfrowe przyznaczonego do tego
 celu muszą być odpowiednio szybkie i precyzjne, aby wszystkie potrzebne 
-obliczenia i przekształcenia wykonać w czasie rzeczywistym. 
-W celu uzyskania wysokiego stopinia tłumienia, niezbędne jest, 
+obliczenia wykonać w czasie rzeczywistym. 
+W celu uzyskania wysokiego stopnia tłumienia, niezbędne jest, 
 aby amplituda hałasu i antyhałasu była do siebie zbliżona z dużą precyzją, 
 a faza dokładnie odwrócona. W przeciwnym wypadku wysoce prawdopodobne jest,
-że system będzie tylko pogarszał sprawę, poprzez wprowadzenie dodatkowego
-hałasu na ten, który miał tłumić. 
+że system będzie tylko pogarszał sprawę, zwiększając nateżenie sygnału,
+który miał tłumić. 
 
 \section{Określenie problematyki}
 
@@ -117,12 +118,12 @@ na rysunku \ref{intro::processing}:
 \end{figure}
 
 Procesory sygnałowe charakteryzują się budową, która umożliwia 
-sprzętowe wykonanie operacji często występujących w przetwarzaniu sygnałów.
-Przykładowo, sprzętowo realizowane mogą być operacje filtracji cyfrowej, 
+sprzętowe wykonanie operacji często występujących w cyfrowym przetwarzaniu sygnałów.
+Przykładowo, sprzętowo realizowane mogą być operacje filtracji, 
 transformacji Fouriera czy korelacji wzajemnej. Dodatkowo, instrukcje
 na tego typu jednostkach obliczeniowych mogą być realizowane są w sposób 
-potokowy, co pozwala na znaczące przyśpieszenie obliczeń poprzez przetwarzanie
-równoległe.
+potokowy (ang. \textit{pipelining}), co pozwala na znaczące przyśpieszenie obliczeń poprzez 
+przetwarzanie równoległe.
 \par Pomimo, że wykorzystanie procesorów sygnałowych jest z pewnością jednym 
 z najlepszych wyborów przy projektowaniu systemu przetwarzającego sygnały
 w czasie rzeczywistym, to z takim rozwiązaniem wiąże się szereg problemów:
@@ -164,13 +165,14 @@ jest trudne, zamknięte i nieskalowalne. Z powodu tych ograniczeń wysunięty zo
 cel projektu, polegający na skonstruowanie układu realizującego
 aktywne tłumienie hałasu z wykorzystaniem ogólnodostępnych i otwartoźródłowych 
 rozwiązań, takich jak popularna i tania platforma obliczeniowa 
-z załadowanym jądrem systemu Linux, udostępniającym zestaw bibliotek pozwalających
+z załadowanym systemem operacyjnym wyposażonym w jądro Linux, 
+udostępniającym zestaw bibliotek pozwalających
 na komunikacją z peryferiami po określonych protokołach cyfrowych. 
 Jądro systemu Linux, jako że należy do wolnego oprogramowania, jest w pełni 
 modyfikowalne i rozszerzalne, co autor, będąc świadomy wymagań czasowych systemu ANC,
 wykorzysta poprzez dodanie rozszerzeń czasu rzeczywistego (ang. \textit{real-time
-extensions}), zapewniających lepszą kontrolę czasową. Oprogramowanie realizujące
-algorytmy ANC zostanie napisane w języku C, natywnym dla systemu Linux,
+extensions}), zapewniających lepszą kontrolę nad czasem i realizacją procesów. 
+Oprogramowanie realizujące algorytmy ANC zostanie napisane w języku C, natywnym dla systemu Linux,
 a sprzęt, poza wybraną, gotową platformą obliczeniową,
 zrealizowany samodzielnie, głównie ze względów edukacyjnych.
 \par Taka decyzja jednak w żaden sposób nie ogranicza elastyczności rozwiązania.
