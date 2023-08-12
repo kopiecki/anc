@@ -2,8 +2,8 @@
 
 \section{Struktury systemów}
 
-Typy systemów ANC dzielimy głównie ze względu 
-rodzaj wykorzystywanego sterowania, z którego wyróżniamy:
+Podział systemów ANC definiowany jest głównie ze względu 
+rodzaj wykorzystywanego sterowania, z którego można wyróżnić \cite{bib:kuo_morgan}:
 
 \begin{enumerate}
 
@@ -12,18 +12,17 @@ rodzaj wykorzystywanego sterowania, z którego wyróżniamy:
     za aktuatorem w celu określenia, jak bardzo został wytłumiony.
 
     \item Sterowanie ze sprzężeniem w tył - hałas jest mierzony jedynie
-    za aktuatorem.
+    za aktuatorem i stanowi jedyny pomiar przeprowadzany w systemie.
 
 \end{enumerate}
 
-Hałas występujący przed aktuatorem nazywamy hałasem pierwotnym i w 
+Hałas występujący przed aktuatorem przyjeło nazywać się hałasem pierwotnym i w 
 nomenklaturze automatyki traktowany jako wejście systemu, gdzie 
 ten mierzony za aktuatorem, nazywany hałasem resztkowym, traktowany jest jak błąd (uchyb).
 Mikrofon mierzący hałas pierwotny nazywany jest mikrofonem referencyjnym,
-a ten mierzący hałas resztkowy, mikrofonem błędu.
-\par W związku z przyjęciem takiego nazewnictwa, można napisać,
-że systemy ANC ze sprzężeniem w przód opierają swoje działanie na pomiarze
-wejścia i błędu, a system ze sprzężeniem w tył tylko na pomiarze błędu.
+a ten mierzący hałas resztkowy, mikrofonem błędu. W związku z przyjęciem takiego 
+nazewnictwa, można napisać, że systemy ANC ze sprzężeniem w przód opierają swoje 
+działanie na pomiarze wejścia i błędu, a system ze sprzężeniem w tył tylko na pomiarze błędu.
 Omawiane struktury w postaci schematów ideowych przedstawiono na rysunkach
 \ref{analysis::structs}.
 
@@ -31,14 +30,14 @@ Omawiane struktury w postaci schematów ideowych przedstawiono na rysunkach
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
-        \includegraphics[width=0.9\textwidth]{graf/analysis/bb_fw_anc.png}
+        \includegraphics[width=\textwidth]{graf/analysis/bb_fw_anc.png}
         \caption{ANC ze sprzężeniem w przód}
         \label{analysis::structs_a}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
-        \includegraphics[width=0.75\textwidth]{graf/analysis/fb_anc.png}
+        \includegraphics[width=0.8\textwidth]{graf/analysis/fb_anc.png}
         \caption{ANC ze sprzężeniem w tył}
     \end{subfigure}
        \caption{Porównanie struktur systemów}
@@ -55,7 +54,7 @@ Dodatkowy pomiar jest też nie zawsze możliwy, więc wybór struktury często
 jest kompromisem.
 
 \par Projektujac układ ze sprzężeniem w przód można dokonać dodatkowego
-założenia, które implikuje modyfikację struktury. Opiera się one
+założenia, które wprowadza możliwe modyfikacje struktury. Opiera się one
 charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować: 
 
 \begin{enumerate}
@@ -92,14 +91,15 @@ jak na rysunku \ref{analysis::systems}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/systems.png}
+    \includegraphics[width=0.8\textwidth]{graf/analysis/systems.png}
     \caption{Podział struktur systemów ANC}
     \label{analysis::systems}
 \end{figure}
 
 Każda z przedstawionych struktur różni się od siebie znacząco na poziomie sprzętowym 
 jak i programowym. Grubszą czcionką na diagramie \ref{analysis::systems} zaznaczono 
-strukturę, którą zdecydowano się wybrać do dalszej analizy z myślą o finalnej implementacji,
+strukturę, którą zdecydowano się wybrać do dalszej analizy z myślą o finalnej implementacji 
+i jest to szerokopasmowe ANC ze sprzężeniem w przód,
 głównie ze względu na źródło i charakterystykę hałasu, która w tym przypadku
 może być łatwo symulowana.
 
@@ -114,7 +114,7 @@ domen lub na cyfrowe w bloku \textbf{ANC}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{graf/analysis/scheme_0.png}
+    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_0.png}
     \caption{Wyprowadzenie schematu systemu ANC, 0}
     \label{analysis::scheme_0}
 \end{figure}
@@ -152,14 +152,11 @@ modelu (odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
     K(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L - 1} w_lz^{-l}
     \label{eq::fir}
 \end{equation}
-gdzie:
-\begin{itemize}
-    \item $w_l$ - współczynnik filtra o numerze $l$ (ang. \textit{tap}),
-    \item $L$ - rząd filtra (ilość współczynników, długość odpowiedzi impulsowej), a
-    \item $z^{-l}$ - operator opóźnienia o $l$ próbek.
-\end{itemize}
-
-W związku z \ref{eq::fir}, wyjście filtra SOI $y(n)$ dane jest
+gdzie $w_l$ to współczynnik filtra o numerze $l$ (ang. \textit{tap}), 
+$L$ to rząd filtra (ilość współczynników, długość odpowiedzi impulsowej),
+a $z^{-l}$ to operator opóźnienia o $l$ próbek.
+\\
+\par W związku z \ref{eq::fir}, wyjście filtra SOI dane jest
 \begin{equation}
         y(n) = \sum_{l = 0}^{L - 1}w_lx(n - l) \implies y(n) = \textbf{w}^T\textbf{x}(n)
 \end{equation}
@@ -190,28 +187,30 @@ przefiltrowanie przez nią sygnału $x(n)$ oraz odwórcenie znaku wyjścia.
 Nie jest to jednak proste zadanie, ponieważ tak jak opisywano wcześniej,
 charakterystyka toru pierwotnego, czyli drogi, którą propaguje się
 docelowo tłumiony hałas, jest silnie niestacjonarna. W celu identyfikacji takiego 
-obiektu niezbędny jest mechanizm pozwalający na bieżącą estymację parametrów, 
-czyli innymi słowy, układ musi się adaptować do zmian toru pierwotnego.
-\par Mając to na uwadze, zaktualizowany o filtr $W(z^{-1})$, będący bieżącą 
+obiektu niezbędny jest mechanizm pozwalający na bieżącą estymację parametrów, czyli
+innymi słowy, układ musi się adaptować do zmieniającej się charakterystyki toru
+podstawowego.
+Mając to na uwadze, zaktualizowany o filtr $W(z^{-1})$, będący bieżącą 
 estymacją obiektu $P(z^{-1})$, schemat blokowy przedstawiono na rysunku
 \ref{analysis::scheme_1}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.55\textwidth]{graf/analysis/scheme_1.png}
+    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_1.png}
     \caption{Wyprowadzenie schematu systemu ANC, 1}
     \label{analysis::scheme_1}
 \end{figure}
 
 \subsection{Algorytm LMS}
 
-Techniką najczęściej wykorzystywaną do bieżącej estymacji 
-parametrów obieków niestacjonarnych w systemach ANC jest algorytm LMS 
+Techniką często wykorzystywaną do bieżącej estymacji 
+parametrów obieków niestacjonarnych jest algorytm LMS 
 (ang. \textit{Least mean squares}).
 Jego działanie opiera się na zastosowaniu gradientowej metody najniższego
-spadku do minimalizacji błędu średniokwadratowego 
+spadku (ang. \textit{method of steepest descent}) 
+do minimalizacji błędu średniokwadratowego.
 
-\par Błąd w analizowanym przypadku dany jest zależnością
+\par Błąd w analizowanym przypadku dany jest
 \begin{equation}
     e(n) = d(n) - y(n) = d(n) - \textbf{w}^T(n)\textbf{x}(n)
 \end{equation}
@@ -273,9 +272,9 @@ a \textbf{x}(n) to wektor wejść w chwili $n$:
         \end{bmatrix}^T
 \end{equation}
 
-Parametr $\mu$ nazywamy krokiem algorytmu LMS. Jego wartość decyduje
+Parametr $\mu$ przyjęło się nazywać krokiem algorytmu LMS. Jego wartość decyduje
 o szybkości adaptacji algorytmu i ograniczona jest kryterium stabilności 
-zdefiniowanym zależnością
+zdefiniowanym
 \begin{equation}
     0 < \mu < \frac{2}{\lambda_{max}}
     \label{eq::lms_const}
@@ -283,7 +282,6 @@ zdefiniowanym zależnością
 
 gdzie $\lambda_{max}$ zdefiniowana jest jako maksymalna wartość własna 
 macierzy \textbf{R} \ref{eq::auto_corr_mat}.
-\\
 \\
 Zastosowanie warunku stabilności w formie \ref{eq::lms_const} jest 
 niepraktyczne z powodu problematycznych obliczeń $\lambda_{max}$ dla dużych
@@ -534,8 +532,28 @@ występujące w torze wtórnym.
 
 \subsection{Metody identyfikacji toru wtórnego}
 
-Z metod stosowanych do identyfikacji toru wtórnego 
-można wyróżnić:
+Metod stosowane do identyfikacji toru wtórnego 
+można podzielić na dwie kategorie, które opisano poniżej.
+
+\begin{enumerate}
+
+    \item \textbf{Metody offline} - opierają się na założeniu, że 
+    identyfikowany obiekt jest stacjonarny. Identyfikacja odbywa się
+    w kontrolowanym środowisku, na bazie pomiarów uzyskanych w systemie bez
+    oddziaływania w jego strukturę w trakcie pracy. Mogą być wykonywane
+    w systemie w procesie inicjalizującym, lub zewnętrznie, w oparciu o wcześniej
+    zebrane pomiary.
+
+    \item \textbf{Metody online} - identyfikacja przeprowadzana jest periodycznie w trakcie 
+    pracy systemu. Metody z tej kategorii można stosować w przypadku, kiedy
+    obiekt jest niestacjonarny i wymagane jest bezpośrednie oddziaływanie 
+    na zmieniającą się charakterystykę.
+
+\end{enumerate}
+
+Jednym z założeń systemu ANC przedstawionego na schemacie \ref{analysis::scheme_5}
+jest stacjonarność transmitancji toru wtórnego $S(z^{-1})$, więc wykorzystanymi metodami
+są te z kategorii offline. Trzy z nich opisano poniżej:
 
 \begin{enumerate}
 
@@ -567,29 +585,34 @@ można wyróżnić:
 
 \end{enumerate}
 
+Schemat eksperymentu identyfikacji metodami offline przedstawiono na rysunku
+\ref{analysis::offline_ident}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/analysis/offline_ident.png}
+    \caption{Schemat eksperymentu identyfikacji metodami offline}
+    \label{analysis::offline_ident}
+\end{figure}
+
+W tym przypadku
+\begin{equation}
+    e(n) = y'(n) = v(n) \ast s(n)
+\end{equation}
+
 Identyfikacja toru wtórnego w systemie ANC opiera się więc na wprowadzeniu 
 określonego sygnału identyfikującego $v(n)$ poprzez głośnik emitujący anthałas 
 i zebranie pomiaru mikrofonem błędu. Sygnał, poprzednio definiowany jako błąd $e(n)$
 w tym przypadku jest wynikiem filtracji sygnału $v(n)$ przez transmitancję
-toru wtórnego $S(z^{-1})$. W przypadku stosowania metod 1 i 2 zalecane jest,
-aby przeprowadzić kilka eksperymentów identyfikacyjnych i końcową
+toru wtórnego $S(z^{-1})$. Przeprowadzając identyfikację zalecane jest,
+aby przeprowadzić kilka eksperymentów i końcową
 odpowiedź impulsową $\hat{s}(n)$ uzyskać poprzez uśrednienie 
 rezultatów uzyskanych w poszczególnych eksperymentach.
 
 \par Należy mieć na uwadze, że na charakterystykę torów akustycznych
 wpływa wiele czynników, które w trakcie pracy systemu mogły ulec zmianie.
-Przykładowo, na tor akustyczny znaczący wpływ mają następujące kwestie:
-\begin{enumerate}
-
-    \item Wilgotność, temperatura i cieśnienie powietrza.
-
-    \item Obiekty zlokalizowane w okolicach toru, odpowiednio absorbujące lub/i odbijające 
-    fale akustyczne.
-
-    \item Odległość między źródłem dźwięku, a odbiornikiem.
-
-\end{enumerate}
-Jeżeli istnieje szansa, że któraś z wyczególnionych wyżej kwestii
-w trakcie pracy systemu uległa znaczącej zmianie, to proces identyfikacji
-toru wtórnego należy powtórzyć. Inaczej, adaptacja będzie przebiegała gorzej, 
-a system spełniał swoje zadanie mniej efektywnie.
+Jeżeli istnieje podejrzenie, że charakterystyka torów w trakcie pracy 
+systemu uległa zmianie, to proces identyfikacji należy powtórzyć,
+inaczej, adaptacja będzie przebiegała gorzej, a system spełniał swoje zadanie 
+mniej efektywnie. Typowo, proces identyfikacji toru wtórnego realizuje się 
+w procesie inicjalizującym, na początku działania systemu.

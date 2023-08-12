@@ -6,8 +6,8 @@
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Graficzna wizualizacja idei aktywnej redukcji hałasu\relax }}{2}{figure.caption.8}%
-\contentsline {figure}{\numberline {1.2}{\ignorespaces Typowy tor przetwarzania\relax }}{3}{figure.caption.9}%
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Wizualizacja fizycznej idei aktywnej redukcji hałasu\relax }}{3}{figure.caption.8}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Typowy tor przetwarzania\relax }}{4}{figure.caption.9}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Porównanie struktur systemów\relax }}{7}{figure.caption.10}%
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Podział struktur systemów ANC\relax }}{8}{figure.caption.11}%
@@ -17,36 +17,37 @@
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Wyprowadzenie schematu systemu ANC, 3\relax }}{13}{figure.caption.15}%
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Wyprowadzenie schematu systemu ANC, 4\relax }}{15}{figure.caption.16}%
 \contentsline {figure}{\numberline {2.8}{\ignorespaces Schemat systemu ANC\relax }}{16}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Schemat eksperymentu identyfikacji metodami offline\relax }}{18}{figure.caption.18}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Architektura zaprojektowanego systemu\relax }}{24}{figure.caption.30}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Architektura zaprojektowanego systemu\relax }}{24}{figure.caption.31}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Architektura sprzętowa - najwyższy poziom\relax }}{27}{figure.caption.31}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagram dystrybucji zasilania\relax }}{30}{figure.caption.32}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Sekcja wejściowa\relax }}{32}{figure.caption.33}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Symetryzacja szyn zasilających\relax }}{34}{figure.caption.34}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Zasilanie domeny cyfrowej\relax }}{35}{figure.caption.35}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Referencja domeny analogowo-cyfrowej\relax }}{36}{figure.caption.36}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Układ napięcia odniesienia\relax }}{36}{figure.caption.37}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Schemat blokowy wejściowego toru analogowego\relax }}{37}{figure.caption.38}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Wejście zbalansowane\relax }}{37}{figure.caption.39}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Filtr EMI wraz z ogranicznikiem diodowym\relax }}{38}{figure.caption.40}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Wzmacniacz różnicowy\relax }}{39}{figure.caption.41}%
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Przedwzmacniacz\relax }}{40}{figure.caption.42}%
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Topologia Sellena-Keya z jednostkowym wzmocnieniem\relax }}{40}{figure.caption.43}%
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Charakterystyka aplitudowa i fazowa układu filtra\relax }}{42}{figure.caption.44}%
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Filtr antyaliasingowy\relax }}{42}{figure.caption.45}%
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Układ pozycjonujący\relax }}{43}{figure.caption.46}%
-\contentsline {figure}{\numberline {4.17}{\ignorespaces Filtr dolnoprzepustowy i limiter\relax }}{44}{figure.caption.47}%
-\contentsline {figure}{\numberline {4.18}{\ignorespaces Pełen schemat wejściowej sekcji analogowej\relax }}{45}{figure.caption.48}%
-\contentsline {figure}{\numberline {4.19}{\ignorespaces Schemat blokowy wyjściowego toru analogowego\relax }}{45}{figure.caption.49}%
-\contentsline {figure}{\numberline {4.20}{\ignorespaces Wejściowy filtr pasmowoprzepustowy\relax }}{46}{figure.caption.50}%
-\contentsline {figure}{\numberline {4.21}{\ignorespaces Układy sterujące wyjściem analogowym\relax }}{47}{figure.caption.51}%
-\contentsline {figure}{\numberline {4.22}{\ignorespaces Filtracja końcowa toru analogowego\relax }}{48}{figure.caption.52}%
-\contentsline {figure}{\numberline {4.23}{\ignorespaces Pełen schemat wyjściowej sekcji analogowej\relax }}{48}{figure.caption.53}%
-\contentsline {figure}{\numberline {4.24}{\ignorespaces Diagram czasowy komunikacji I$^2$S\relax }}{50}{figure.caption.55}%
-\contentsline {figure}{\numberline {4.25}{\ignorespaces Diagram czasowy komunikacji \textit {Left justified} I$^2$S\relax }}{50}{figure.caption.56}%
-\contentsline {figure}{\numberline {4.26}{\ignorespaces Ideowy diagram transmisji SPI w trybie 3\relax }}{52}{figure.caption.59}%
-\contentsline {figure}{\numberline {4.27}{\ignorespaces Diagram połączeń sekcji przetworników\relax }}{53}{figure.caption.61}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Architektura sprzętowa - najwyższy poziom\relax }}{27}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagram dystrybucji zasilania\relax }}{30}{figure.caption.33}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Sekcja wejściowa\relax }}{32}{figure.caption.34}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Symetryzacja szyn zasilających\relax }}{34}{figure.caption.35}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Zasilanie domeny cyfrowej\relax }}{35}{figure.caption.36}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Referencja domeny analogowo-cyfrowej\relax }}{36}{figure.caption.37}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Układ napięcia odniesienia\relax }}{36}{figure.caption.38}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Schemat blokowy wejściowego toru analogowego\relax }}{37}{figure.caption.39}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Wejście zbalansowane\relax }}{37}{figure.caption.40}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Filtr EMI wraz z ogranicznikiem diodowym\relax }}{38}{figure.caption.41}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Wzmacniacz różnicowy\relax }}{39}{figure.caption.42}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Przedwzmacniacz\relax }}{40}{figure.caption.43}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Topologia Sellena-Keya z jednostkowym wzmocnieniem\relax }}{40}{figure.caption.44}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Charakterystyka aplitudowa i fazowa układu filtra\relax }}{42}{figure.caption.45}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Filtr antyaliasingowy\relax }}{42}{figure.caption.46}%
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Układ pozycjonujący\relax }}{43}{figure.caption.47}%
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Filtr dolnoprzepustowy i limiter\relax }}{44}{figure.caption.48}%
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Pełen schemat wejściowej sekcji analogowej\relax }}{45}{figure.caption.49}%
+\contentsline {figure}{\numberline {4.19}{\ignorespaces Schemat blokowy wyjściowego toru analogowego\relax }}{45}{figure.caption.50}%
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Wejściowy filtr pasmowoprzepustowy\relax }}{46}{figure.caption.51}%
+\contentsline {figure}{\numberline {4.21}{\ignorespaces Układy sterujące wyjściem analogowym\relax }}{47}{figure.caption.52}%
+\contentsline {figure}{\numberline {4.22}{\ignorespaces Filtracja końcowa toru analogowego\relax }}{48}{figure.caption.53}%
+\contentsline {figure}{\numberline {4.23}{\ignorespaces Pełen schemat wyjściowej sekcji analogowej\relax }}{48}{figure.caption.54}%
+\contentsline {figure}{\numberline {4.24}{\ignorespaces Diagram czasowy komunikacji I$^2$S\relax }}{50}{figure.caption.56}%
+\contentsline {figure}{\numberline {4.25}{\ignorespaces Diagram czasowy komunikacji \textit {Left justified} I$^2$S\relax }}{50}{figure.caption.57}%
+\contentsline {figure}{\numberline {4.26}{\ignorespaces Ideowy diagram transmisji SPI w trybie 3\relax }}{52}{figure.caption.60}%
+\contentsline {figure}{\numberline {4.27}{\ignorespaces Diagram połączeń sekcji przetworników\relax }}{53}{figure.caption.62}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
