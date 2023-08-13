@@ -58,12 +58,10 @@ McASP (ang. \textit{Multi-channel serial port}).
 
 \subsection{Mikrofony}
 
-Zważając na kwestie projektowe, autor zdecydował się na wykorzystanie 
-modelu Behringer ECM8000. Są one bardzo często wybierane przez amatorów
+W projekcie wykorzystano modele Behringer ECM8000. Są one bardzo często wybierane przez amatorów
 jak i profesjonalistów w zastosowaniach pomiarowych oraz cieszą się dobrymi 
 opiniami. Ich droższym odpowiednikiem jest flagowy Beyerdynamic MM1, a najbardziej 
 znaczące parametry przedstawiono poniżej \cite{bib:behringer}:
-
 \begin{enumerate}
 
     \item Typ - pojemnościowy, phantom +15 do +48 V.
@@ -76,13 +74,12 @@ znaczące parametry przedstawiono poniżej \cite{bib:behringer}:
     \item Czułość - $15 \text{ }\frac{\text{mV}}{{\text{Pa}}}$.
 
 \end{enumerate}
-
-Czułość mikrofonów informuje o wartości napięcia dla danego ciśnienia aktustycznego.
-Wynika z następującej zależności:
+Czułość mikrofonów informuje o wartości napięcia dla danego ciśnienia aktustycznego i
+opisuje ją zależność
 \begin{equation} 
-        S_{\text{dBV}} = 20 \text{log}_{10} \frac{S_{\text{mV/Pa}}}{U_{\text{ref}}}
+        S_{\text{dBV}} = 20 \text{log}_{10} \frac{S_{\text{mV/Pa}}}{U_{\text{ref}}},
+        \qquad U_{ref} = 1000 \text{ }\frac{\text{mV}}{\text{Pa}}
 \end{equation}
-gdzie $U_{ref} = 1000 \text{ }\frac{\text{mV}}{\text{Pa}}$.
 
 Na podstawie tego parametru dobiera się wzmocnienie przedwzmacniacza \cite{bib:mic}. 
 Dla wybranych mikrofonów z czułością na poziomie $15 \text{ }\frac{\text{mV}}{{\text{Pa}}}$,
@@ -95,7 +92,7 @@ nałożonej składowej stałej równej $U_c = 2.5$ V),
 zakresowi 2.5 V, co pozwala na obliczenie wzmocnienia.
 
 \begin{equation}
-        k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{52.5} = 47.6190 \approx 42 \text{ dB}
+        k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{0.0525} = 47.6190 \approx 42 \text{ dB}
         \label{eq::k_preamp}
 \end{equation}
 
@@ -123,7 +120,7 @@ z najbardziej znaczących parametrów można wyróżnić \cite{bib:krk}:
 \subsection{Platforma obliczeniowa}
 
 Analizując rynek w poszukiwaniu tanich i popularnych 
-układów spełniających założone wymagania wyboru można dokonać tak właściwie 
+układów spełniających założone wymagania, wyboru można dokonać tak właściwie 
 spośród dwóch platform. Jest to oparte na procesorze BCM2837B0 firmy Broadcom
 Raspberry Pi oraz oparty na procesorze Sitara AM3358 firmy Texas Instruments
 BeagleBone Black. Platformy są w podobnych cenach i wykorzystuje się je w 
@@ -136,7 +133,7 @@ mikrofonowej w oparciu o interfejs McASP
 (ang. \textit{Multi-channel audio serial port}) z wykorzystaniem procesora 
 sygnałowego oraz układu BeagleBone Black. Opisywany interfejs jest dedykowanym
 mechanizmem komunikacji w wielokanałowych systemach audio realizowanych 
-na układach firmy Texas Instruments i nie posiada 
+w układach firmy Texas Instruments i nie posiada 
 swojego odpowiednika na platformach Raspberry Pi. Z tego powodu wybór okazał się prosty
 i jako wykorzystaną platformą obliczeniową wykorzystano płytkę BeagleBone Black.
 
@@ -146,21 +143,10 @@ Diagram dystrybucji zasilania przedstawiono na rysunku \ref{hw::power_dist}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{graf/hw/power_dist.png}
+    \includegraphics[width=\textwidth]{graf/hw/power_dist.png}
     \caption{Diagram dystrybucji zasilania}
     \label{hw::power_dist}
 \end{figure}
-
-Wykorzystane akronimy zostały wyjaśnione poniżej:
-\begin{itemize}
-    \item \textbf{EXT} (ang. \textit{External}) - zasilanie zewnętrzne
-    \item \textbf{LDO} (ang. \textit{Low dropout regulator}) - linowy regulator
-    napięcia niskiego spadku
-    \item \textbf{REF} (ang. \textit{Reference voltage}) - generator napięcia
-    referencyjnego
-    \item \textbf{SMPS} (ang. \textit{Switching-mode power supply}) -
-    zasilacz impulsowy
-\end{itemize}
 
 \subsection{Sekcja wejściowa}
 
@@ -171,18 +157,18 @@ zasilacza wynosi maksymalnie 240 mV p-p.
 Na uwadze należy również mieć zakłócenia pochodzące z sieci wraz z przeregulowaniami powstającymi 
 w momentach włączenia i wyłączenia układu.
 \par Typowym rozwiązaniem stosowanym w sekcjach wejściowych układów elektronicznych
-jest zastosowanie dolnoprzepustowego filtru LC, mającego za zadanie 
+jest zastosowanie dolnoprzepustowego filtru LC \cite{bib:tietze}, mającego za zadanie 
 wygładzenie zewnętrznego zasilania jak i zapewnienie bufora do dalszych
 konwersji. Taki filtr opisany jest następującą zależnością, wynikającą z uogólnionego 
-równania dzielnika napięciowego \cite{bib:tietze}
+równania dzielnika napięciowego
 \begin{equation}
     U_{wy}(s) = U_{we}(s) \frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{Ls + \frac{1}{Cs}}
-        \implies K_{LP}(s) = \frac{1}{LCs^2 + 1}
+        \implies K_{LC}(s) = \frac{1}{LCs^2 + 1}
     \label{eq:lc_lp}
 \end{equation}
-W dziedzinie symbolicznej natomiast ($s = j\omega$):
+W dziedzinie symbolicznej natomiast ($s = j\omega$)
 \begin{equation}
-    K_{LP}(j\omega) = \frac{1}{1 - \omega^2LC}
+    K_{LC}(j\omega) = \frac{1}{1 - \omega^2LC}
 \end{equation}
 
 Częstotliwość rezonansowa takiego układu wynosi
@@ -201,13 +187,11 @@ staje się układem RLC, określonym zależnością
 
 Rezystor w takim układzie wprowadza tłumienie, z czego wynika
 współczynnik tłumienia oraz dobroć. 
-Wielkości te odpowiednio określone są następującymi zależnościami:
+Wielkości te określone są odpowiednio
 \begin{equation}
-    \zeta = \frac{1}{2Q} = \frac{1}{2R\sqrt{\frac{C}{L}}}
-    \label{eq:zeta}
-\end{equation}
-\begin{equation}
+    \zeta = \frac{1}{2Q} = \frac{1}{2R\sqrt{\frac{C}{L}}}, \qquad     
     Q = \frac{1}{R}\sqrt{\frac{L}{C}}
+    \label{eq::zeta}
 \end{equation}
 
 Współczynnik tłumienia może znajdować się w czterech typach zakresów:
@@ -222,7 +206,7 @@ Przy projektowaniu tego typu układów oczekuje się, że będą tłumione kryty
 Oznacza to, że układ jest na granicy oscylacji, a pik rezonansowy na charakterystyce
 częstotliwościowej jest nabliższy zakresowi pasma przenoszenia, 
 które nie jest tłumione (możliwe płaskie) \cite{bib:lc}.
-\par W związku z tym, podstawiając $\zeta = 1$ w równaniu \ref{eq:zeta} otrzymuje się:
+Podstawiając $\zeta = 1$ w równaniach \ref{eq:zeta} otrzymuje się
 \begin{equation}
     L = \frac{R\sqrt{2}}{\omega_0}, \quad C = \frac{1}{\omega_0 R\sqrt{2}}
 \end{equation}
@@ -262,21 +246,20 @@ tego wyboru będą dokładniej opisywane w sekcji torów analogowych.
 W literaturze \cite{bib:art} \cite{bib:tietze} opisanych jest wiele sposobów implementacji tego typu 
 układów, z czego najbardziej popularnymi są inwertery napięciowe zaimplementowane w oparciu o 
 wzmacniacze operacyjne lub dedykowane przetwornice (ang. \textit{buck-boost}).
-
-\par Rozwiązanie oparte o skonstruowanie układu inwerterów zostało odrzucone z 
+Rozwiązanie oparte o skonstruowanie układu inwerterów zostało odrzucone z 
 powodu dodatkowego nakładu pracy. Taki system, poza układem 
 odwracającym napięcie (ang. \textit{rail splitter}) wymagałby dodatkowego 
 wzmacniacza mocy na wyjściu. Jest to spowodowane zapotrzebowaniem prądowym 
-wzmacniaczy, które według specyfikacji wynosi maksymalnie 2.5 mA na układ. 
+wzmacniaczy, które według specyfikacji wynosi typowo 1.4 mA na układ. 
 Jako, że w projekcie wykorzystywanych jest pięć wzmacniaczy operacyjnych na kanał, a 
 kanałów jest cztery, to wymaganiem jest, aby wydajność prądowa wykorzystanego
-generatora ujemnego napięcia wynosiła maksymalnie 100 mA. Opcja wyboru
+generatora ujemnego napięcia wynosiła 28 mA. Opcja wyboru
 dedykowanej przetwornicy została odrzuca z powodu niskiej dostępności układów 
 zgodnych z założoną specyfikacją na rynku.
 \par Wynikowo zdecydowano się na wykorzystanie układu 
 odwracającej pompy ładunków. Układ spełnia wszystkie założenia projektowe i 
 jest wydajny prądowo (maksymalny pobierany prąd równy 100 mA), minusem
-jednak jest mała dokładność napięcia wyjściowego z dużymi fluktuacjami, 
+jednak jest mała dokładność napięcia wyjściowego z fluktuacjami, 
 opisanymi zależnością
 \begin{equation}
     U_{r,p-p} \approx \frac{I_{out}}{C_{out}}(\frac{1}{f_{osc}} - t_{on})
@@ -287,16 +270,14 @@ wyjściowych fluktuacji wyniesie 10 mV.
 
 \par Dopuszczenie takiego napięcia na wzmacniacze w sekcji analogowej jest niedopuszczalne, 
 między innymi zważając na wskaźnik PSRR, który dla wybranych wzmacniaczy wynosi
-około 40 dB dla częstotliwości 500 kHz oraz niską dokładność.
-
-\par W związku z powyższymi kwestiami, napięcie wyjściowe pompy ładunków należy
+około 40 dB dla częstotliwości 500 kHz oraz niską dokładność. 
+W związku z tym, napięcie wyjściowe pompy ładunków należy
 filtrować i stabilizować. Jako filtr zastosowano ponownie układ LC 
 (rzeczywisty RLC) o niższej częstotliwości rezonansowej, ponieważ celem jest
 filtracja fluktuacji wprowadzanych przez pompę ładunków. Dla dobranego 
 $L = 3.3 \text{ }\mu$H i $C = 57 \text{ }\mu$F uzyskano $f_c \approx 12.18$ kHz 
 oraz warunek na rezystancję cewki $R \approx 170 \text{ m}\Omega$, który 
 spełniono wybierając najbliższą dostepną wartość równą 250 m$\Omega$.
-
 \par Przefiltrowane ujemne napięcie trafia następnie wraz z jego dodatnim
 odpowiednikim na układy liniowych regulatorów napięcia o małym spadku 
 (LDO, ang. \textit{Low-dropout}), których celem jest stabilizacja oraz 
@@ -304,14 +285,13 @@ zwiększenie dokładności. Wykorzystane układy według specyfikacji dla zakres
 pracy od 12 do 15 V posiadają dokładność równą 2.5\%, wydajność prądową równą 
 maksymalnie 1 A oraz średni stosunek tłumienia zakłóceń równy 66 dB dla częstotliwości
 powyżej 100 kHz i prądu wyjściowego równego 10 mA.
-
-\par Omawiany układ wraz z dołożonymi kondensatorami odsprzęgającym, których
+Omawiany układ wraz z dołożonymi kondensatorami odsprzęgającym, których
 wartości dobierane były według not aplikacyjnych producenta przedstawiono na rysunku
 \ref{hw::split}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{graf/hw/split.png}
+    \includegraphics[width=\textwidth]{graf/hw/split.png}
     \caption{Symetryzacja szyn zasilających}
     \label{hw::split}
 \end{figure}
@@ -321,14 +301,13 @@ wartości dobierane były według not aplikacyjnych producenta przedstawiono na 
 Celem sekcji jest wygenerowanie napięcia równego 5 V, będącego zasilaniem
 przetworników cyfrowo-analogowych oraz wybranej platformy obliczeniowej.
 Maksymalne zapotrzebowanie prądowe tych elementów wynosi odpowiednio 200 $\mu$A 
-(100 $\mu$A na układ) oraz około 2 A.
-\par Wykorzystywana platformowa rozwojowa posiada własną sekcję stabilizacji i 
-filtracji napięcia wejściowego, a wybrane przetworniki cyfrowe-analogowe, w przeciwieństwie 
+(100 $\mu$A na układ) oraz około 2 A. Wykorzystywana jednostka obliczeniowa 
+posiada własną sekcję stabilizacji i filtracji napięcia wejściowego, a wybrane 
+przetworniki cyfrowe-analogowe, w przeciwieństwie 
 do analogowo-cyfrowych, generują wyjście na podstawie dodatkowego sygnału 
 referencyjnego, więc wymagania nałożone na dokładność wygenerowanego zasilania
 są zdecydowanie mniej rygorystyczne niż w przypadku zasilań i referencji 
-domeny analogowej.
-\par Zważając na powyższe, w celu generacji napięcia wykorzystano układ 
+domeny analogowej. W celu generacji napięcia wykorzystano układ 
 impulsowej przetwornicy napięcia (\textbf{SMPS}, ang. \textit{Switched mode power supply}),
 który jest tani, prosty w implementacji oraz zapewnia wysoką wydajność prądową,
 według dokumentacji wynoszącą do 3 A.
@@ -341,10 +320,9 @@ przez producenta i zdefiniowana jest poniższym równaniem
 Jak opisywano w sekcji dotyczącej filtracji i stabilizacji zasilania wejściowego,
 przetwornice generują fluktuacje na wyjściu, które należy filtrować. W przypadku
 tego układu, producent w nocie aplikacyjnej przedstawił zalecane parametry
-wyjściowego filtru LC, z których skorzystano.
-\par Napięcie z przetwornicy trafia końcowo na regulator napięcia w celu
-stabilizacji oraz zostaje wyprowadzone na pozostałe sekcje. Omowiany układ
-przedstawiono na rysunku \ref{hw::smps}.
+wyjściowego filtru LC, z których skorzystano. Napięcie z przetwornicy trafia końcowo na 
+regulator napięcia w celu stabilizacji oraz zostaje wyprowadzone na pozostałe sekcje. 
+Omowiany układ przedstawiono na rysunku \ref{hw::smps}.
 
 \begin{figure}[H]
     \centering
@@ -385,7 +363,7 @@ układ wraz z kondensatorami odsprzęgającymi przedstawiono na rysunku \ref{hw:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/hw/ref.png}
+    \includegraphics[width=0.75\textwidth]{graf/hw/ref.png}
     \caption{Referencja domeny analogowo-cyfrowej}
     \label{hw::smps}
 \end{figure}
@@ -444,7 +422,7 @@ napięc zasilania phantomowego i wynoszą one 6.81 k$\Omega$ dla zasilania +48 V
 że wybrana wartość zasilania jest niestandardowa ze względu na specyfikację 
 mikrofonów, to jako rezystancje dobrano te, dla których 
 wartości napięcia w standardzie jest najbliższa, czyli 680 $\Omega$.
-\par Po doprowadzeniu zasilania sygnały trafiają na kondensatory odcinające
+Po doprowadzeniu zasilania sygnały trafiają na kondensatory odcinające
 składową stałą. Omawianą część schematu przedstawiono na rysunku \ref{hw::xlr}.
 
 \begin{figure}[H]
@@ -499,7 +477,7 @@ na rysunku \ref{hw::op_diff}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{graf/hw/op_diff.png}
+    \includegraphics[width=0.45\textwidth]{graf/hw/op_diff.png}
     \caption{Wzmacniacz różnicowy}
     \label{hw::op_diff}
 \end{figure}
@@ -538,7 +516,7 @@ na rysunku \ref{hw::preamp}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{graf/hw/preamp.png}
+    \includegraphics[width=0.45\textwidth]{graf/hw/preamp.png}
     \caption{Przedwzmacniacz}
     \label{hw::preamp}
 \end{figure}
@@ -770,7 +748,7 @@ dolnoprzepustowego i górnoprzepustowego filtru RC.
 Dla sekcji dolnoprzepustowej dobrano $R = 1$ k$\Omega$ i $C = 10$ nF, uzyskujac
 w ten sposób $f_c \approx 15.91$ kHz, natomiast dla sekcji górnoprzepustowej
 dobrano $R = 100$ k$\Omega$ i $C = 47 \text{ }\mu$F, uzyskując $f_c < 1$ Hz. 
-\par Omawiany układ przedstawiono na rysunku \ref{hw::in_bandpass}:
+Omawiany układ przedstawiono na rysunku \ref{hw::in_bandpass}:
 
 \begin{figure}[H]
     \centering
@@ -786,8 +764,8 @@ zaimplementowanego w topologii nieodwracającej \ref{eq::op_ninv}.
 Z racji, że wykorzystywane głośniki posiadają regulację głośności, jedynym
 obligatoryjnym wymaganiem przy doborze wzmocnienia układu jest uniknięcie 
 saturacji wyjścia, które ograniczone jest przez symetryczne zasilanie 
-układu, równe $\pm$12 V.
-\par W związku z tym, zdecydowano się wzmocnienie $k = 3$ poprzez zastosowanie 
+układu, równe $\pm$12 V. W związku z tym, zdecydowano się wzmocnienie 
+$k = 3$ poprzez zastosowanie 
 rezystorów $R_1 = 6$ k$\Omega$ i $R_f = 18$ k$\Omega$. Taki wybór skutkuje
 $U_{wy} = 7.5$ V dla $U_{we} = 2.5$ V, czyli górnego zakresu przetwornika, co daje
 zalecane dla tego układu 4 V zapasu.
@@ -804,13 +782,12 @@ decyzji, wyjście układu jest ograniczone do założonego pasma wejściowego.
 
 Wyjście analogowe projektowane jest z myślą o 
 złączach XLR, co oznacza, że sygnał wyjściowy, tak jak wejściowy, musi
-być symetryczny (zbalansowany).
-\par W celu jego wytworzenia zastosowano układ 
+być symetryczny (zbalansowany). W celu jego wytworzenia zastosowano układ 
 wzmacniacza operacyjnego w topologii odwracającej z jednostkowym wzmocnieniem
 \ref{eq::op_diff_inv} ($R_1 = R_f$). Sygnał wyjściowy (-) takiego układu
 jest odwrócony w fazie względem wejściowego (+), co pozwala na uzyskanie
 symetrycznej pary wyprowadzanej docelowo na złącze XLR.
-\par Przy wykorzystaniu takiego układu należy miec na uwadze, 
+Przy wykorzystaniu takiego układu należy miec na uwadze, 
 że wzmacniacz generujący sygnał odwrócony (-) jest elementem nie mającym
 odpowiednika w torze sygnału nieodwróconego (+). Układy sterujące wyjściem
 tej sekcji, czyli odpowiednio ostatni wzmacniacz w układzie filtra
@@ -820,8 +797,7 @@ odwróconego (-) mogą zachowywać się znacząco inaczej.
 sygnału nieodwróconego (+), lecz wiązałoby się to z dodatkowymi wzmacniaczami 
 operacyjnymi na kanał wyjściowy. Jako, że wykorzystywanych wzmacniaczy na tym
 etapie jest już stosunkowo dużo (pięc na kanał), z pomysłu zrezygnowano, mając
-świadomość kompromisu.
-\par Omawiany fragment schematu przedstawiono na rysunku \ref{hw::synch}:
+świadomość kompromisu. Omawiany fragment schematu przedstawiono na rysunku \ref{hw::synch}:
 
 \begin{figure}[H]
     \centering
@@ -843,11 +819,11 @@ dolnoprzepustowym, aby nie zwiększać impedancji wyjściowej toru. Skutkuje
 to przemnożeniem częstotliwości granicznej filtru przez 10, co daje
 $f_c \approx 159.1$ kHz. Dodatkowo, zmieniono kolejność elementów w układzie, 
 starając się umieścić kondensator równolegle jak najbliżej złącza.
-\par Omawianą część schematu przedstawiono na rysunku \ref{hw::out_filter}:
+Omawianą część schematu przedstawiono na rysunku \ref{hw::out_filter}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{graf/hw/out_filter.png}
+    \includegraphics[width=0.75\textwidth]{graf/hw/out_filter.png}
     \caption{Filtracja końcowa toru analogowego}
     \label{hw::out_filter}
 \end{figure}
@@ -937,7 +913,7 @@ rysunku \ref{hw::i2s}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/hw/i2s.png}
+    \includegraphics[width=\textwidth]{graf/hw/i2s.png}
     \caption{Diagram czasowy komunikacji I$^2$S}
     \label{hw::i2s}
 \end{figure}
@@ -964,7 +940,7 @@ Diagram czasu z wykorzystaniem omawianego trybu pochodnego przedstawiono na rysu
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/hw/l_j.png}
+    \includegraphics[width=\textwidth]{graf/hw/l_j.png}
     \caption{Diagram czasowy komunikacji \textit{Left justified} I$^2$S}
     \label{hw::l_j}
 \end{figure}
@@ -989,7 +965,6 @@ synchronicznie w sposób dwukierunkowy z wykorzystaniem linii danych wyjściowyc
 danych wejściowych (ang. \textit{Master input, slave output}, \textbf{MISO}), 
 zegarowej (ang. \textit{Serial clock}, \textbf{SCLK}),
 oraz selektora układu (ang. \textit{Chip select}, \textbf{CS}).
-
 Interfejs SPI nie posiada ściśle zdefiniowanego standardu działania.
 Charakterystykę transmisji typowo definiuje peryferium podrzędne (\textit{slave}),
 do której układ nadrzędny (\textit{master}) musi się przystosować.
@@ -1046,12 +1021,12 @@ Przykładowy diagram czasowy komunikacji SPI w trybie 3 przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/hw/spi.png}
+    \includegraphics[width=\textwidth]{graf/hw/spi.png}
     \caption{Ideowy diagram transmisji SPI w trybie 3}
     \label{hw::spi}
 \end{figure}
 
-\par Bazując na powyższym opisie można stwierdzić, że transfer I$^2$S 
+Bazując na powyższym opisie można stwierdzić, że transfer I$^2$S 
 (w trybie \textit{Left justified } I$^2$S).
 jest tak właściwie szczególnym, jednokierunkowym transferem SPI realizowanym
 w trybie 3 (odczyt na zbocze narastające, zapis na opadające, domyślnie 
@@ -1087,9 +1062,7 @@ i selektor kanału (\textbf{FS})
 do wielu układów uzyskuje się synchroniczną transmisję wielokanałową,
 gdzie jeden układ odpowiada jednemu kanałowi, wejściowemu, jeżeli jest
 przetwornikiem analogowo-cyfrowym, lub wyjściowemu, jeżeli jest przetwornikem
-cyfrowo-analogowym.
-
-\par Przy doborze przetworników należy zwrócić szczególną uwagę
+cyfrowo-analogowym. Przy doborze przetworników należy zwrócić szczególną uwagę
 na zgodność transferów. Tryb I$^2$S jest konfigurowany globalnie dla całego
 interfejsu McASP, co oznacza, że konwencja zapisu na zbocze narastające, odczytu
 na opadające oraz ilości bitów na transfer 
@@ -1099,13 +1072,10 @@ Diagram połączeń sekcji przetworników przedstawiono na rysunku \ref{hw::adc_
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/hw/adc_dac.png}
+    \includegraphics[width=\textwidth]{graf/hw/adc_dac.png}
     \caption{Diagram połączeń sekcji przetworników}
     \label{hw::adc_dac}
 \end{figure}
-
-Wykorzystane w systemie przetworniki w obydwu przypadkach posiadają rozdzielczość
-16 bitów, co zapewnia zgodność formatu danych wejściowych i wyjściowych.
 
 \subsubsection{Przetworniki analogowo-cyfrowe}
 
@@ -1119,7 +1089,6 @@ wyniku konwersji. Jeżeli transmisja jest dłuższa niż optymalne 20 bitów,
 to w dodatkowe miejsca wpisywane są zera. Wykorzystywany przez przetwornik
 sposób transmisji wprowadza zatem wymaganie transferów równych lub dłuższych
 niż 20 bitów.
-
 Zapis odbywa się na zboczu opadającym, a dane przesyłane są w formacie najbardziej
 znaczącego bitu na początku (ang. \textit{MSB first}).
 Maksymalna prędkość transmisji wynosi 100 kSPS, a układ 
@@ -1144,7 +1113,9 @@ wykorzystano również +5 V.
 \section{Dodatkowe kwestie sprzętowe}
 
 Projektując płytkę drukowaną autor starał
-podążać się szeregiem zasad projektowych \cite{bib:ott} które opisano poniżej:
+podążać się szeregiem zasad projektowych 
+\cite{bib:ott}, które opisano poniżej:
+
 \begin{enumerate}
 
     \item Minimalizacja długości scieżek - elementy powinny być umieszczone
@@ -1163,23 +1134,104 @@ podążać się szeregiem zasad projektowych \cite{bib:ott} które opisano poni�
     \item Kondensatory odsprzęgające - powinny być możliwie najbliżej
     docelowych układów. Jako, że mają zapewnić filtrację zasilania i lokalny
     bufor energii, im dalej od docelowego układu, tym swoje zadanie spełniają 
-    gorzej.
+    gorzej. Mogą również służyć jako mosty pomiędzy wartstwami i płaszczyznami, 
+    kiedy droga sygnału może wymagać ich zmiany, co przedstawiono na 
+    rysunkach \ref{hw::cap_1} i \ref{hw::cap_0}:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{graf/hw/cap_1.png}
+        \caption{Zapewnienie powrotów przez kondensatory odsprzęgające}
+        \label{hw::cap_1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.75\textwidth]{graf/hw/cap_0.png}
+        \caption{Zmiany warst przez kondensatory odsprzęgające}
+        \label{hw::cap_0}
+    \end{figure}
+
+    Omawianą sytuację w projekcie wykorzystano do zapewnienia częściowego powrotu 
+    sygnałów cyfrowych przez bliższą warstwę zasilania, co zaskutkowało
+    krótszą drogą oraz stabilniejszą masą (brak spadków związanych ze szybkim
+    przełączaniem sygnałów cyfrowych).
+
+    \item Powroty sygnałów i rozmieszczenie elementów - jest kwestią znacząco wpływającą na rozmieszczenie
+    elementów. Sygnały najczęściej, jeżeli pod lub nad jest warstwa odniesienia,
+    jako drogę powrotną wybiorą tą bezpośrednio pod lub nad ścieżką sygnałową,
+    ponieważ jest to dla nich droga o najmniejszej induktancji \cite{bib:ott}.
+    Mając to na uwadze, elementy i przelotki należy układać tak, aby nie zaburzać
+    drogi powrotnej sygnałów. Duża ilość przelotek lub otworów 
+    (przykładowo na elementy THT) może skutkować zablokowaniem bezpośredniego 
+    powrotu, tworząc sloty. 
+    Dodatkowo, elementy należy ustawiać w sposób zapewniający 
+    unikanie warstwowego krzyżowania się sygnałów różnych sekcji i domen.
+    Układając sekcje cyfrową należy zwrócić uwagę, czy sygnały powrotne,
+    jeżeli odniesione są do tej samej płaszczyzny co sygnały analogowe, 
+    nie będą przechodzić bezpośrednio pod lub nad ścieżkami oraz układami
+    analogowymi i odwrotnie. Szybkozmienne sygnały cyfrowe w powrocie mogą 
+    zakłócać sygnały analogowe. 
+    Opisywane sytuacje przedstawiono na rysunkach \ref{hw::returns} i
+    \ref{hw::sections}:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{graf/hw/return.png}
+        \caption{Problematyczne powroty - nieciągłość plaszczyzny odniesienia}
+        \label{hw::returns}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{graf/hw/sections.png}
+        \caption{Poprawne ułożenie sekcji}
+        \label{hw::sections}
+    \end{figure}
 
     \item Rozmieszczenie warstw (ang. \textit{stackup}) - dla płytek wielowarstwowych
-    powinno być realizowane z myślą o optymalnych powrotach sygnałów. 
-    Warstwa odniesienia, czyli masa lub zasilanie,
-    powinna być bezpośrednio pod lub nad warstwą sygnałów, gdzie połączenia
-    realizowane są przez przelotki. 
-    W projekcie warstwy rozmieszczono następująco (pierwsza jest warstwą górną):
+    powinno być realizowane z myślą o optymalnych powrotach sygnałów i najniższej emisji, 
+    a grubości warstw dobierane na podstawie docelowej impedancji ścieżek.
+    Przy projektowaniu rozmieszczenia należy kierować się następującymi zasadami \cite{bib:ott}:
     \begin{enumerate}
-        \item Warstwa sygnałów analogowych
-        \item Warstwa masy
-        \item Warstwa zasilań
-        \item Warstwa sygnałów cyfrowych
+
+        \item Warstwa sygnałowa powinna być zawsze bezpośrednio sąsiadująca
+        z warstwą odniesienia.
+        
+        \item Odległość między warstwą sygnałową i odpowiedającą jej warstwą odniesienia
+        powinna być jak najmniejsza.
+        
+        \item Warstwy odniesienia (zasilania i masa) powinny być jak nabliżej siebie.
+
+        \item Wysokoczęstotliwościowe sygnały powinny znajdować 
+        pomiędzy warstwami odniesienia.
+
+        \item Im więcej warstw masy, tym lepiej.
+
+        \item Kiedy sygnały krytyczne są prowadzone na więcej niż jednej wartswie,
+        to nie powinny przechodzić przez więcej niż dwie bezpośrednio sąsiadujące.
+
     \end{enumerate}
 
-    Sygnały analogowe są odniesione do masy, a sygnały cyfrowe 
-    do zasilania.
+    Większość płytek drukowanych nie może spełniać wszystkich sześciu warunków 
+    przedstawionych powyżej, dlatego sposób projektowania jest kompromisem.
+    Przykładowo, projektując płytkę czterowarstwową, nie sposób spełnić 
+    dwóch pierwszych zasad jednocześnie.
+    Wykorzystane w projekcie rozmieszczenie przedstawiono na rysunku
+    \ref{hw::stackup}:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{graf/hw/stackup.png}
+        \caption{Rozłożenie warstw}
+        \label{hw::stackup}
+    \end{figure}
+
+    Rozmieszczenie \ref{hw::stackup} nie jest zbyt dobre, 
+    ponieważ każda warstwa odzielona jest od siebie o taką samą odległość.
+    W takim przypadku ustatysfakcjonowana jest tylko pierwsza zasada i
+    znacznie lepiej byłoby, gdyby warstwy sygnałowe umieścić bliżej ich warst
+    odniesienia, tak, aby również spełnić trzecią.
 
     \item Terminatory -  należy stosować 
     w celu kontroli impedancji ścieżek transmisyjnych.
@@ -1194,19 +1246,9 @@ podążać się szeregiem zasad projektowych \cite{bib:ott} które opisano poni�
 
     \item Pola masowe - puste powierzchnie na warstwach sygnałowych należy wypełniać
     masą i łączyć przelotkami z warstwą masy (jeżeli jest). Przy układaniu
-    przelotek należy uważać, żeby nie stworzyć odciętych od reszty wypełnioniej
-    powierzchni sekcji (ang. \textit{slot}). Wypełnienie masą tworzy ekran jak
-    i również mogą zapewniać powroty dla sygnałów.
-
-    \item Powroty sygnałów - jest kwestią znacząco wpływającą na rozmieszczenie
-    elementów. Sygnały najczęściej, jeżeli pod lub nad jest warstwa odniesienia,
-    jako drogę powrotną wybiorą tą bezpośrednio pod lub nad ścieżką sygnałową \cite{bib:ott}.
-    Mając to na uwadze, elementy należy ustawiać w sposób zapewniający 
-    unikanie warstwowego krzyżowania się sygnałów różnych sekcji i domen.
-    Układając sekcje cyfrową należy zwrócić uwagę, czy sygnały powrotne,
-    jeżeli odniesione są do tej samej płaszczyzny co sygnały analogowe, 
-    nie będą przechodzić bezpośrednio pod lub nad ścieżkami oraz układami
-    analogowymi i odwrotnie. Szybkozmienne sygnały cyfrowe w powrocie mogą 
-    zakłócać sygnały analogowe.
+    przelotek należy uważać, żeby nie stworzyć odciętych od reszty
+    powierzchni (ang. \textit{slot}), powodujących problematyczne powroty,
+    które przedstawiono na rysunku \ref{hw::returns_0}. Wypełnienie masą tworzy ekran jak
+    i również może zapewniać dodatkowe drogi powrotów dla sygnałów.
     
 \end{enumerate}
