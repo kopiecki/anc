@@ -25,17 +25,19 @@ najbardziej popularne i sprawdzone opcje:
 
 Dokonując analizy dostępnych opcji zdecydowano się na wykorzystanie zestawu 
 łatek PREEMPT\_RT. Xenomai i RTAI, mimo że bardzo cenione i często wykorzystywane
-w nawet rozwiązaniach komercyjnych, cechują się wysokim progiem wejścia 
+nawet w rozwiązaniach komercyjnych, cechują się wysokim progiem wejścia 
 i praca z nimi wymaga dużego nakładu czasowego. 
 
-\subsubsection{Zestaw łatek PREEMPT\_RT}
+\subsection{Problemy jądra Linux w kontekście real-time}
 
-Jądro systemu Linux jest wielozadaniowe i implementuje planistę (ang. \textit{scheduler}), 
+Podstawową kwestią, która dyskredytuje jądro Linux w zastosowaniach czasu rzeczywistego
+jest niedeterministyczny czas wykonania określonego zadania, który zależy od wielu czynników.
+Jądro Linux jest wielozadaniowe i implementuje planistę (ang. \textit{scheduler}), 
 którego zadaniem jest szeregowanie i obsłużenie zadań na podstawie ich priorytetu.
 Planista decyduje o przydziale czasu procesora na wykonanie zadań, które może przełączać 
 w zależności od aktualnego zdażenia lub ustalonego planu.
-Standardowo, jądro systemu Linux zapewnia mechanizm wywłaszczenia (ang. \textit{preemption}),
-zadania z przestrzeni użytkownia przez zadania o wyższym priorytecie lub przerwania sprzętowe.
+Standardowo, jądro Linux zapewnia mechanizm wywłaszczenia (ang. \textit{preemption})
+zadania z trybu użytkownia przez zadania o wyższym priorytecie lub przerwania sprzętowe.
 Przebieg wywłaszczenia przedstawiono na rysunku \ref{sw::preempt_0}:
 
 \begin{figure}[H]
@@ -58,9 +60,9 @@ nie trudno wyobrazić sobie sytuację, którą przedstawiono na rysunku \ref{sw:
 Jeżeli przerwanie żądające wywołanie innego zadania nadejdzie w momencie 
 wykonywania wywołania systemowego, to takie przerwanie nie zostanie obsłużone 
 do momentu jego zakończenia. Oznacza to, że w niektórych sytuacjach 
-nie sposób określić czasu potrzebnego na wykonanie pewnego zadania.
-Dodatkowo, każde zadanie z przestrzenii użytkownika może zostać wywłaszczone 
-przez przerwanie sprzętowe, w którego trakcie niemożliwa jest obsługa innych
+nie sposób określić czasu potrzebnego na wykonanie zadania.
+Dodatkowo, każde zadanie w trybie użytkownika może zostać wywłaszczone 
+przez przerwanie sprzętowe, w którego trakcie obsługi niemożliwa jest obsługa innych
 przerwań. Oznacza to, że małe ważne przerwania sprzętowe mogą wywłaszczyć
 krytyczne czasowo zadania czasu rzeczywistego.
 \par Z realizacją wywłaszczeń realizowanych w standardowym systemie Linux wiąże się 
@@ -77,8 +79,94 @@ zasobów zadaniu krytycznemu. Przebieg takiego problemu przedstawiono na rysunku
 
 Krytyczne zadanie \textbf{B} musi uzyskać dostęp do zasobów blokowanych przez zadanie \textbf{A}
 o niższym priorytecie. W celu ich odblokowania, 
-planista przełącza kontekst na zadanie \textbf{A} lecz w czasie jego wywoływania
+planista przełącza kontekst na zadanie \textbf{A}, lecz w czasie jego wykonywania
 zostaje ono wywłaszczone przez zadanie \textbf{B} o wyższym priorytecie.
+
+\subsection{Zestaw łatek PREEMPT\_RT}
+
+Samoistnie, jądro Linux nigdy nie będzie podstawą do stworzenia 
+systemu operacyjnego czasu rzeczywistego, dlatego celem zestawu łatek PREEMPT\_RT
+jest minimalizacja latencji. Latencja w kontekście obliczeń w czasie rzeczywistym
+definiowana jest jako czas liczony od momentu wystąpienia zdarzenia, 
+którym może być rządanie realizacji zadania krytycznego, do momentu jego obsługi.
+
+\par Zestaw łatek w odpowiedzi na problem \ref{sw::preempt_1} umożliwia
+wywłaszczenie wszystkich zadań, nawet tych z trybu jądra. Mając taką możliwość,
+problem przełączenia się na krytyczne zadanie w trakcie wykonywania
+zadania z trybu jądra może zostać rozwiązany jak przedstawiono na rysunku 
+\ref{sw::preempt_rt_0}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graf/sw/preempt_rt_0.png}
+    \caption{Wywłaszczenie zadania z trybu jądra}
+    \label{sw::preempt_rt_0}
+\end{figure}
+
+Problem inwersji priorytetów, przedstawiony na rysunku \ref{sw::prior_inv}
+zostaje rozwiązany w oparciu o metodę dziedziczenia priorytetów, którą przedstawiono
+na rysunku \ref{sw::prior_inh}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{graf/sw/prior_inh.png}
+    \caption{Dziedziczenie priorytetu}
+    \label{sw::prior_inh}
+\end{figure}
+
+Czyli w przypadku chęci uzyskania dostępu przez zadanie o wyższym priorytecie \textbf{B}
+do zasobów blokowanych przez zadanie o niższym \textbf{A}, priorytet zadania
+\textbf{A} zostaje zwiększony, aby w trakcie odblokowywania zasobów 
+nie nastąpiło jego wywłaszczenie.
+
+\par Dodatkowo, wprawdzenie łatek umożliwia wątką realizację przerwań sprzętowych,
+które standardowo są niewywłaszczalne. Różnice w standardowej obsłudze przerwania, 
+a wątkowej przedstawiono na rysunkach \ref{sw::hw_irq}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/sw/hw_irq.png}
+        \caption{Standarowa obsługa przerwania}
+        \label{analysis::structs_a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/sw/hw_irq_rt.png}
+        \caption{Wątkowa realizacja przerwania sprzętowego}
+    \end{subfigure}
+       \caption{Porównanie obsługi przerwań sprzętowych}
+       \label{sw::hw_irq}
+\end{figure}
+
+Poza kwestiami opisanymi wyżej, zestaw łatek PREEMPT\_RT wprowadza wsparcie dla:
+\begin{itemize}
+
+    \item Liczników wysokiej rozdzielczości (ang. \textit{High resolution timers})
+    - wykorzystanie dostępnych sprzętowych liczników do zaplanowania przerwań
+    w dokładnym momencie
+
+    \item Dodatkowe wytyczne dla planisty:
+    \begin{itemize}
+        \item SCHED\_FIFO - wszystkie zadania z tym samym priorytetem wykonywane
+            są w trybie FIFO (ang. \textit{First in, First out}).
+
+        \item SCHED\_RR - równomierne dzielenie czasu pomiędzy zadania z tym samym priorytetem z wykorzystaniem algorytmu
+        karuzelowego (ang. \textit{Round robin}).
+
+        \item SCHED\_DEADLINE - wspiera dodanie dodatkowych parametrów 
+        dla zadań, takich jak czas przetwarzania (ang. \textit{computation time}),
+        limit czasowy (ang. \textit{deadline}) i okres (czas, w którym tylko jedno
+        zadanie może zostać wykonane).
+    \end{itemize}
+\end{itemize}
+
+Jako, że PREEMPT\_RT jest zestawem łatek jądra Linux, obsługa funkcjonalności,
+które oferuje, opiera się na wykorzystaniu zestawu funkcji udostępnianych przez
+POSIX. Konfiguracja krytycznego zadania i planisty odbywa się poprzez
+funkcje zdefiniowane w nagłówkach \textit{pthread.h} i \textit{sched.h}.
 
 \section{System operacyjny}
 
@@ -218,11 +306,13 @@ projektu jest wystarczający.
 dodanie prostego sterownika obsługującego zaprojektowaną płytkę drukowaną na bazie
 kodeku PCM5102A \cite{bib:sitara}. Z najbardziej znaczących kwestii, 
 sterownik zawiera deklarację struktury opisującą
-konfigurację płytki dla transferów wejściowych i wyjściowych oraz funkcję, 
-która umożliwia jego załadowanie i widoczność w systemie.
+konfigurację płytki dla transferów wejściowych i wyjściowych (wspierane formaty, liczba kanałów) 
+oraz funkcję, która umożliwia jego załadowanie i widoczność w systemie.
 W wykorzystanym rozwiązaniu napisany moduł bezpośrednio zastąpił sterownik kodeka PCM5102A,
 zachowując początkową nazwę, więc dodatkowe modyfikacje w plikach konfiguracyjnych 
-jądra nie były konieczne.
+jądra nie były konieczne. Domyślnie, sterownik kodeka PCM5102A ładowany jest dynamicznie 
+jako moduł, więc po zbudowaniu jądra
+wymagana jest ich instalacja w głównym systemie plików.
 
 \par Proces zastosowania zestawu łatek PREEMPT\_RT można wykonać manualnie, lub 
 skorzystać z gotowej opcji przygotowanej przez twórców repozytorium 
@@ -236,13 +326,281 @@ partycję systemową nośnika.
 
 \subsection{Drzewo urządzeń}
 
+Wraz z plikami jądra, na partycji systemowej nośnika musi znaleźć się plik 
+informujący system o rozmieszczeniu i konfiguracji urządzeń nie posiadających
+automatycznej metody wykrywania. Mechanizmem stosowanym do tego celu we wbudowanych systemach 
+operacyjnych GNU/Linux jest drzewo urządzeń (ang. \textit{device tree}).
+\par Praca z drzewem urządzeń sprowadza się do następujących plików 
+
+\begin{itemize}
+
+    \item Pliki z kodem źródłowym (rozszerzenie \textit{.dts})
+
+    \item Pliki nagłówkowe (rozszerzenie \textit{.dtsi})
+
+    \item Pliki będące wynikiem budowania plików źródłowych (rozszerzenie \textit{.dtb}), 
+    które finalnie muszą znaleźć się obok obrazu jądra na partycji systemowej nośnika.
+
+\end{itemize}
+
+Pliki źródłowe zawierają definicje i odwołania do wezłów (ang. \textit{node}),
+które przypominają struktury języka C. Węzły posiadają zestaw właściwości 
+(ang. \textit{properites}) oraz możliwe węzły potomne. Kążdy węzeł posiada tylko 
+jednego rodzica, za wyjątkiem węzła \textit{root}, który jest węzłem nadrzędnym. 
+Węzły mogą się do siebie nawzajem odwoływać jak i modyfikować swoją zawartość, dlatego
+z matematycznego punktu widzenia, drzewo urządzeń jest tak właściwie grafem acyklicznym.
+\par Kody źródłowe jądra Linux posiadają gotowo przygotowane pliki źródłowe 
+drzewa urządzeń dla większości obsługiwanych platform, w tym wykorzystanej.
+Sporządzona układ pomiarowy, obsługiwany przez interfejs McASP,
+nie posiada mechanizmu automatycznego wykrywania, dlatego niezbędne jest
+zadeklarowanie go w drzewie urządzeń, wraz z niezbędną konfiguracją interfejsu 
+McASP, który domyślnie nie jest zdefiniowany. W tym celu, napisany został
+dodatkowy plik nagłówkowy dodany do głównego pliku źródłowego drzewa urządzeń, 
+z opisem niezbędnej konfiguracji, której zawartość jest następująca:
+\begin{enumerate}
+
+    \item Zdefiniowanie pinów McASP - płytka BeagleBone Black wspiera wiele
+    możliwych konfiguracji wyprowadzeń, które kontrolowane są przez wewnętrzny multilpekser. 
+    W ramach projektu wykorzystano McASP0, którego konfigurację wyprowadzeń 
+    przedstawiono w tabeli \ref{tab::mcasp}:
+
+    \begin{table}[H]
+        \centering
+        \begin{adjustbox}{width=1\textwidth}
+            \begin{tabular}{|| c | c | c | c | c | c ||} 
+            \hline
+            \textbf{Nazwa} & \textbf{Adres} & 
+            \textbf{Numer} & \textbf{Domyślny stan} & 
+            \textbf{Kierunek} &
+            \textbf{Tryb multipleksera} \\ [0.5ex] 
+            \hline\hline
+            MCASP0\_ACLKX & 0x990 & P9\_31 & 1 & OUT & 0 \\
+            \hline
+            MCASP0\_FSX & 0x994 & P9\_29 & 1 & OUT & 0 \\
+            \hline
+            MCASP0\_AXR0 & 0x998 & P9\_30 & 0 & IN & 0 \\
+            \hline
+            MCASP0\_AXR1 & 0x9A8 & P9\_41 & 0 & IN & 0 \\
+            \hline
+            MCASP0\_AXR2 & 0x99C & P9\_28 & 1 & OUT & 2 \\
+            \hline
+            MCASP0\_AXR3 & 0x9A4 & P9\_27 & 1 & OUT & 2 \\
+
+            \hline\hline
+        \end{tabular}
+    \end{adjustbox}
+    \caption{Konfiguracja wyprowadzeń McASP w drzewie urządzeń}
+    \label{tab::mcasp}
+
+    \end{table}
+
+    \item Zdefiniowanie węzła McASP - stworzenie węzła \textit{mcasp0}
+    z odpowiednim zestawem wartości, z których można wyróżnić:
+    \begin{itemize}
+
+        \item Odwołanie do wyprowadzeń (wartość \textit{pinctrl}) - 
+        odwołanie do zadeklarowanych w tabeli \ref{tab::mcasp}.
+
+        \item Kierunki serializatorów (wartość \textit{serial-dir}) -
+        definiowane jako wartość 2 dla trybu wejściowego i wartość 1 dla trybu 
+        wyjściowego. Wartość przyjmuje postać tablicy, której indeksy reprezentują
+        odpowiednie piny \textbf{AXR} (przykładowo \textbf{AXR0} dla indeksu zerowego).
+
+    \end{itemize}
+
+    \item Zdefiniowanie węzła zegara i przypisanie go sygnałowi \textbf{AHCLK} - 
+    jego domyślna częstotliwość wynosi 24.576 MHz i na jego podstawie generowane
+    są pozostałe zegary interfejsu McASP (\textbf{ACLKX} i \textbf{FSX})
+
+    \item Zdefiniowanie węzła opisującego sporzadzoną płytkę drukowaną - 
+    wymaga odwołania do zmodyfikowanego sterownika kodeka PCM5102A, 
+    którego opisano w sekcji jądra.
+
+    \item Zdefiniowanie węzłą urządzenia dźwiękowego - wykonana płytka drukowana 
+    będzie docelowo widoczna w systemie jako urządzenie dźwiękowe (karta dźwiękowa).
+    Deklaracja urządzenia dźwiękowego wymaga zdefiniowanie zestawu wartości, 
+    które opisano poniżej:
+    \begin{itemize}
+
+        \item Odniesienie do nadrzędnego sterownika karty - wykorzystano domyślny, 
+        czyli \textit{simple-audio-card}.
+
+        \item Format transmisji - wykorzystano tryb I$^2$S w trybie wyrównania w lewo
+        (ang. \textit{Left justified I$^2$S}), który opisano w sekcji sprzętowej 
+        interfejsu cyfrowego.
+
+        \item Odniesienia do urządzenia traktowanego jako \textit{master} i jako \textit{slave} - 
+        jako \textit{master} traktowany jest interfejs McASP0 (węzeł McASP) ponieważ zapewnia
+        potrzebne zegary, a jako \textit{slave} sporządzona
+        płytka drukowana (węzeł płytki drukowanej).
+
+        \item Nazwa karty - nazwa, pod jaką urządzenie będzie widoczne w systemie.
+
+    \end{itemize}
+
+\end{enumerate}
+
+Tak przygotowane źródła drzewa urządzeń można poddać procesowi budowania i 
+wynikowy plik umieścić obok obrazu jądra na partycji systemowej nośnika.
+
 \subsection{System plików}
 
-\section{Aplikacja}
-\subsection{Wykorzystanie rozszerzeń czasu rzeczywistego}
-\subsection{Akwizycja danych i warunkowanie początkowe}
-\subsection{Generacja hałasu}
-\subsection{Filtracja cyfrowa}
-\subsection{Identyfikacja toru wtórnego}
-\subsection{Adaptacja toru głównego}
+W celu generacji systemu plików wykorzystano narzędzie \textit{debootstrap},
+które umożliwia instalację systemu plików na bazie dystrybcji Debian we wskazanym
+katalogu. Narzędzie umożliwia zdefiniowanie architektury, na której docelowy system
+będzie działał oraz zestawu paczek, które zostaną pobrane i zainstalowane na końcu
+procesu instalacji.
+\par Po wykonanym procesie instalacji, nowy powstały system można w wygodny sposób 
+skonfigurować z wykorzystaniem narzędzia \textit{chroot}, które umożliwia dynamiczną 
+zmianę systemu, na którym aktualnie się pracuje. Dzięki temu, proces 
+konfiguracji haseł, połączeń sieciowych oraz instalacja dodatkowych pakietów 
+może odbyć się w prosty sposób z poziomu komputera personalnego, a nawet zostać 
+zautomatyzowana skryptem powłoki.
 
+\section{Aplikacja}
+
+Diagram aplikacji przedstawiono na rysunku \ref{sw::app_top}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{graf/sw/app_top.png}
+    \caption{Diagram aplikacji}
+    \label{sw::app_top}
+\end{figure}
+
+Kolorem niebieskim na diagramie \ref{sw::app_top} zaznaczono biblioteki
+wchodzące w bezpośredni skład aplikacji i są to moduły, które napisano
+samodzielnie. Można z nich wyróżnić:
+\begin{itemize}
+
+    \item Bilbioteka \textit{libdsp} - tworzy ją implementacja filtracji
+    cyfrowej opartej na modelu FIR (nagłówek \textit{fir.h}) oraz 
+    algorytmu LMS (nagłówek \textit{lms.h}).
+
+    \item Biblioteka \textit{libsignal} - tworzy ją implementacja 
+    generatorów standardowych sygnałów wykorzystywanych do symulacji źródła hałasu, 
+    testowania i identyfikacji (sygnały periodyczne, szumy). 
+
+    \item Biblioteka \textit{libsc} - opakowuje funkcje zewnętrznej biblioteki
+    \textit{libasound} w celu uzyskania wyższego poziomu abstrakcji.
+    Udostępnia funkcje pozwalające na interakcje z urządzeniami dźwiękowymi w 
+    systemie.
+
+\end{itemize}
+
+Kolorem zielonym zaznaczono moduł zewnętrzny, będącą w tym przypadku
+biblioteką \textit{libasound} udostępnianą przez środowisko ALSA, 
+które jest wykorzystanym programowym systemem obsługi dźwięku. 
+Na czerwono przedstawiono kontener z modułami jądra Linux, z którymi komunikuje 
+się system ALSA.
+
+\section{System ALSA}
+
+System ALSA (ang. \textit{Advanced Linux Sound Architecture}) jest głównym
+środowiskiem kontrolującym urządzenia dźwiękowe w systemie operacyjnym GNU/Linux
+i jest bezpośrednim pośrednikiem pomiędzy aplikacjami działającymi w trybie użytkownika
+oraz sterownikami działającymi w trybie jądra.
+Udostępnia zestaw narzędzi, pozwalających na interakcję z urządzeniami audio 
+w systemie (przykładowo programy \textit{aplay, arecord, alsamixer})
+oraz bibliotekę \textit{libasound}, która pozwala na wywoływanie funkcji
+systemu ALSA w aplikacji użytkownika. Z funkcji udostępnianych przez bibliotekę 
+można wyróżnić kompleksowy zestaw akcji służycych konfiguracji danego urządzenia
+audio wraz z metodami pozwalającymi na odczyt i zapis, skutkującymi odpowiednio
+nagraniem oraz odtworzeniem danych z kanałów obsługiwanej karty.
+\par Cyfrową reprezentacją dźwięku wykorzystywaną przez opisywany system 
+jest modulacja pulsowo-kodowa (ang. \textit{Pulse Code Modulation}, PCM),
+a próbki kodowane w ten sposób alokowane są w tworzonych na poziomie modułów
+jądra buforach cyklicznych, których długość można modyfikować korzystając 
+z funkcji udostępnianych przez bibliotekę. Jeżeli bufor jest zapełniony,
+sterownik generuje przerwanie, którego obsługa oddelegowana jest do modułu 
+DMA (ang. \textit{Direct Memory Access}), przeprowadzającego nieblokujący 
+transfer z bufora modułu do bufora aplikacji. Próbki w buforze sterownika
+szeregowane są w określony sposób, który przedstawiono na rysunku \ref{sw::alsa_buffer}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/sw/alsa_buffer.png}
+    \caption{Podział bufora sterownika}
+    \label{sw::alsa_buffer}
+\end{figure}
+
+Bufor składa się fragmentów (lub okresów, ang. \textit{periods}),
+składających się z określonej ilości ramek. Ramki z kolei składają
+się próbek przypisanych określonym kanałom karty, których długość
+zdefiniowana jest przez przyjęty format. 
+
+\par W trakcie działania programu w trybie
+użytkownika, próbki transportowane są z/do bufora sterownika do/z bufora aplikacji. 
+W przypadku odczytywania danych może dojść do sytuacji, kiedy 
+nie są one czytane z odpowiednią prędkością przez aplikację w trybie użytkownika, 
+co skutkuje nadpisaniem najstarszych próbek w buforze cyklicznym sterownika.
+W przypadku zapiywania danych, może dojść do sytuacji odwrotnej, czyli
+bufor cykliczny całkowicie się opróżni, kiedy dane nie są odpowiednio szybko wysyłane. 
+Opisywane sytuacje odpowiednio przyjęło się nazywać \textit{buffer overrun} i 
+\textit{buffer underrun} i ich pojawienie
+się zazwyczaj skutkuje przerwami w nagraniach/odtworzeniach.
+\par Ważną kwestią związaną z przetwarzaniem sygnałów audio jest latencja,
+która w tym kontekście informuje o czasie, który jest potrzebny na przetworzenie
+danych w systemie od momentu ich wprowadzenia do momentu ich wypuszczenia.
+W nomenklaturze systemu ALSA, zdefiniowana jest następującą zależnością:
+\begin{equation}
+    T_L = \frac{n_fL_{fb}}{f_sL_{sb}}
+    \label{eq::alsa_latency}
+\end{equation}
+gdzie $n_f$ to ilość fragmentów, $L_{fb}$ to rozmiar fragmentu w bajtach,
+$f_s$ to częstotliwość próbkowania, a $L_{sb}$ to rozmiar próbki w bajtach.
+Jak można zauważyć, licznik równiania \ref{eq::alsa_latency} odpowiada rozmiarowi
+bufora bajtach, czyli całe wyrażnienie odpowiada czasowi potrzebnemu na 
+zbuforowanie danych.
+
+\par Przykładowo, chcąc odtworzyć dźwięk z szesnastobitowego systemu stereo
+(dwa kanały wyjściowe) z typową częstotliwością audio $f_s = 44.1$ kHz, ramka
+ma rozmiar czterech bajtów (dwa bajty na dwa kanały, $L_{sb} = 2$). Deklarując 
+rozmiar fragmentu
+na 2048 ramek uzyskuje się rozmiar fragmentu $L_{fb} = 8192$ bajtów. Deklarując 
+rozmiar bufora na dwa fragmenty $n_f = 2$, wynikowo otrzymuję się latencję
+$T_L = 93$ ms. Latencja dla stałego rozmiaru próbki jest więc odwrotnie proporcjonalna
+do częstotliwości próbkowania i proporcjonalna do rozmiaru bufora.
+\par Ze zmniejszaniem latencji wiąże się jednak szereg problemów. Deklarując
+coraz to mniejsze rozmiary buforów, zwiększa się ilość przerwań na transfery próbek,
+które system musi obsłużyć. Powoduje to zwiększenie zużycia procesora, zmniejszając
+responsywność pozostałych aplikacji działających w systemie. 
+
+Projektując system ANC wymagana jest minimalizacja opóźnień w torach przetwarzania,
+dlatego w celu uzyskania jak najmniejszej latencji, możliwe jest 
+zwiększenie priorytetu i sposobu planowania procesu przetwarzania audio z 
+wykorzystaniem rozszerzeń czasu 
+rzeczywistego, co zostanie zbadane w późniejszych etapach pracy.
+
+\section{Główna pętla programowa}
+
+Proces działania pętli realizującej aktywne tłumienie hałasu 
+można przedstawić następującymi krokami:
+
+\begin{enumerate}
+
+    \item Zebranie sygnałów $x(n)$ i $e(n)$ z mikrofonu referencyjnego i błędu. 
+    Odczyt odbywa się z wykorzystaniem metod udostępnianych przez bibliotekę 
+    \textit{libsc}, która wywołuje określone funkcje systemu ALSA poprzez
+    bibliotekę \textit{libasound}.
+
+    \item Obliczenie antyhałasu $y_{an}(n)$ zgodnie z zależnością \ref{eq::fir}, 
+    wykorzystując implementację filtracji modelem FIR biblioteki \textit{libdsp}.
+
+    \item Jeżeli źródło hałasu jest symulowane, obliczenie kolejnego wektora
+    próbek $y_{n}(n)$ z wykorzystaniem generatorów sygnałów biblioteki \textit{libsignal}.
+
+    \item Równoczesne zapisanie antyhałasu i hałasu (jeżeli źródło jest symulowane)
+    do karty dźwiekowej z wykorzystaniem  biblioteki \textit{libsc}.
+
+    \item Przefiltrowanie odczytanego sygnału $x(n)$ przez zidentyfikowaną 
+    odpowiedź impulsową toru wtórnego $\hat{S}(z^{-1})$ zgodnie z zależnością
+    \ref{eq::fir} z wykorzystaniem biblioteki \textit{libdsp}.
+
+    \item Aktualizacja parametrów filtra adaptacyjnego $W(z^{-1})$ zgodnie
+    z zależnością \ref{eq::lms} wykorzystując implementację algorytmu LMS 
+    biblioteki \textit{libdsp}.
+
+\end{enumerate}
+
+Kroki 5 i 6 realizują algorytm FXLMS.

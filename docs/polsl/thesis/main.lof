@@ -54,10 +54,15 @@
 \contentsline {figure}{\numberline {4.31}{\ignorespaces Poprawne ułożenie sekcji\relax }}{55}{figure.caption.68}%
 \contentsline {figure}{\numberline {4.32}{\ignorespaces Rozłożenie warstw\relax }}{55}{figure.caption.69}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Przebieg wywłaszczenia zadania\relax }}{58}{figure.caption.71}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Przebieg wywłaszczenia zadania w sytuacji wywołania systemowego\relax }}{58}{figure.caption.72}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Przebieg problemu inwersji priorytetów\relax }}{59}{figure.caption.73}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Proces uruchomienia systemu operacyjnego\relax }}{59}{figure.caption.74}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Przebieg wywłaszczenia zadania\relax }}{58}{figure.caption.70}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Przebieg wywłaszczenia zadania w sytuacji wywołania systemowego\relax }}{58}{figure.caption.71}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Przebieg problemu inwersji priorytetów\relax }}{59}{figure.caption.72}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Wywłaszczenie zadania z trybu jądra\relax }}{59}{figure.caption.73}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Dziedziczenie priorytetu\relax }}{60}{figure.caption.74}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Porównanie obsługi przerwań sprzętowych\relax }}{60}{figure.caption.75}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Proces uruchomienia systemu operacyjnego\relax }}{61}{figure.caption.76}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Diagram aplikacji\relax }}{67}{figure.caption.78}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Podział bufora sterownika\relax }}{68}{figure.caption.79}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
