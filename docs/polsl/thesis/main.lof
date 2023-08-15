@@ -1,0 +1,112 @@
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Wizualizacja fizycznej idei aktywnej redukcji hałasu\relax }}{3}{figure.caption.8}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Typowy tor przetwarzania\relax }}{4}{figure.caption.9}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Porównanie struktur systemów\relax }}{7}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Podział struktur systemów ANC\relax }}{8}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Wyprowadzenie schematu systemu ANC, 0\relax }}{9}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Wyprowadzenie schematu systemu ANC, 1\relax }}{10}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Wyprowadzenie schematu systemu ANC, 2\relax }}{12}{figure.caption.14}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Wyprowadzenie schematu systemu ANC, 3\relax }}{13}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Wyprowadzenie schematu systemu ANC, 4\relax }}{15}{figure.caption.16}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Schemat systemu ANC\relax }}{16}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Schemat eksperymentu identyfikacji metodami offline\relax }}{18}{figure.caption.18}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Architektura zaprojektowanego systemu\relax }}{25}{figure.caption.31}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Architektura sprzętowa - najwyższy poziom\relax }}{27}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagram dystrybucji zasilania\relax }}{30}{figure.caption.33}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Sekcja wejściowa\relax }}{32}{figure.caption.34}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Symetryzacja szyn zasilających\relax }}{33}{figure.caption.35}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Zasilanie domeny cyfrowej\relax }}{34}{figure.caption.36}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Referencja domeny analogowo-cyfrowej\relax }}{35}{figure.caption.37}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Układ napięcia odniesienia\relax }}{36}{figure.caption.38}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Schemat blokowy wejściowego toru analogowego\relax }}{36}{figure.caption.39}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Wejście zbalansowane\relax }}{37}{figure.caption.40}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Filtr EMI wraz z ogranicznikiem diodowym\relax }}{38}{figure.caption.41}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Wzmacniacz różnicowy\relax }}{38}{figure.caption.42}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Wzmocnienie różnicowe\relax }}{39}{figure.caption.43}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Topologia Sellena-Keya z jednostkowym wzmocnieniem\relax }}{40}{figure.caption.44}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Charakterystyka aplitudowa i fazowa układu filtra\relax }}{41}{figure.caption.45}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Filtr antyaliasingowy\relax }}{42}{figure.caption.46}%
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Układ pozycjonujący\relax }}{43}{figure.caption.47}%
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Filtr dolnoprzepustowy i limiter\relax }}{43}{figure.caption.48}%
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Pełen schemat wejściowej sekcji analogowej\relax }}{44}{figure.caption.49}%
+\contentsline {figure}{\numberline {4.19}{\ignorespaces Schemat blokowy wyjściowego toru analogowego\relax }}{44}{figure.caption.50}%
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Wejściowy filtr pasmowoprzepustowy\relax }}{45}{figure.caption.51}%
+\contentsline {figure}{\numberline {4.21}{\ignorespaces Wzmocnienie sekcji wyjściowej\relax }}{45}{figure.caption.52}%
+\contentsline {figure}{\numberline {4.22}{\ignorespaces Układy sterujące wyjściem analogowym\relax }}{46}{figure.caption.53}%
+\contentsline {figure}{\numberline {4.23}{\ignorespaces Filtracja końcowa toru analogowego\relax }}{47}{figure.caption.54}%
+\contentsline {figure}{\numberline {4.24}{\ignorespaces Pełen schemat wyjściowej sekcji analogowej\relax }}{47}{figure.caption.55}%
+\contentsline {figure}{\numberline {4.25}{\ignorespaces Diagram czasowy komunikacji I$^2$S\relax }}{49}{figure.caption.57}%
+\contentsline {figure}{\numberline {4.26}{\ignorespaces Diagram czasowy komunikacji \textit {Left justified} I$^2$S\relax }}{50}{figure.caption.58}%
+\contentsline {figure}{\numberline {4.27}{\ignorespaces Ideowy diagram transmisji SPI w trybie 3\relax }}{51}{figure.caption.61}%
+\contentsline {figure}{\numberline {4.28}{\ignorespaces Diagram połączeń sekcji przetworników\relax }}{52}{figure.caption.63}%
+\contentsline {figure}{\numberline {4.29}{\ignorespaces Zapewnienie powrotów przez kondensatory odsprzęgające\relax }}{53}{figure.caption.66}%
+\contentsline {figure}{\numberline {4.30}{\ignorespaces Zmiany warst przez kondensatory odsprzęgające\relax }}{54}{figure.caption.67}%
+\contentsline {figure}{\numberline {4.31}{\ignorespaces Problematyczne powroty - nieciągłość plaszczyzny odniesienia\relax }}{54}{figure.caption.68}%
+\contentsline {figure}{\numberline {4.32}{\ignorespaces Poprawne ułożenie sekcji\relax }}{55}{figure.caption.69}%
+\contentsline {figure}{\numberline {4.33}{\ignorespaces Rozłożenie warstw\relax }}{55}{figure.caption.70}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Przebieg wywłaszczenia zadania\relax }}{58}{figure.caption.71}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Przebieg wywłaszczenia zadania w sytuacji wywołania systemowego\relax }}{58}{figure.caption.72}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Przebieg problemu inwersji priorytetów\relax }}{59}{figure.caption.73}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Wywłaszczenie zadania z trybu jądra\relax }}{59}{figure.caption.74}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Dziedziczenie priorytetu\relax }}{60}{figure.caption.75}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Porównanie obsługi przerwań sprzętowych\relax }}{60}{figure.caption.76}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Proces uruchomienia systemu operacyjnego\relax }}{61}{figure.caption.77}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Diagram aplikacji\relax }}{67}{figure.caption.79}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Podział bufora sterownika\relax }}{68}{figure.caption.80}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Sporządzona płytka drukowana\relax }}{71}{figure.caption.81}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Pomiary wzmacniacza wyjściowej sekcji analogowej\relax }}{72}{figure.caption.83}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Pomiary filtra wyjściowej sekcji analogowej\relax }}{73}{figure.caption.84}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Wyjście różnicowe wyjściowej sekcji analogowej\relax }}{74}{figure.caption.85}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Pomiary wejściowego toru analogowego dla $f_s = 200$ Hz\relax }}{74}{figure.caption.86}%
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Gęstość widmowa mocy pomiaru dla $f_s = 200$ Hz\relax }}{75}{figure.caption.87}%
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Pomiary wejściowego toru analogowego dla $f_s = 500$ Hz\relax }}{75}{figure.caption.88}%
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Gęstość widmowa mocy pomiaru dla $f_s = 200$ Hz\relax }}{76}{figure.caption.89}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\babel@toc {british}{}\relax 
+\babel@toc {polish}{}\relax 
+\addvspace {10\p@ }
