@@ -2,13 +2,12 @@
 	mcasp0_pins: mcasp0_pins {
 		pinctrl-single,pins = <
 			AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKX, PIN_INPUT_PULLUP, MUX_MODE0) /* mcasp0_ahcklx.mcasp0_ahclkx */
-			/* AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKR, PIN_OUTPUT_PULLDOWN, MUX_MODE2) mcasp0_ahclkr.mcasp0_axr2*/
 			AM33XX_PADCONF(AM335X_PIN_MCASP0_FSX, PIN_OUTPUT_PULLUP, MUX_MODE0)
 			AM33XX_PADCONF(AM335X_PIN_MCASP0_ACLKX, PIN_OUTPUT_PULLDOWN, MUX_MODE0)
 			AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR0, PIN_INPUT_PULLDOWN, MUX_MODE0)
 			AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR1, PIN_INPUT_PULLDOWN, MUX_MODE0)
             AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR2, PIN_OUTPUT_PULLUP, MUX_MODE2)
-
+            AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR3, PIN_OUTPUT_PULLUP, MUX_MODE2)
 			AM33XX_PADCONF(AM335X_PIN_GPMC_A11, PIN_OUTPUT_PULLDOWN, MUX_MODE7) /* gpmc_a11.GPIO1_27 */
 		>;
 	};
@@ -52,10 +51,9 @@
     sound0: sound@0 {
         compatible = "simple-audio-card";
         simple-audio-card,name = "anc-db";
-        simple-audio-card,format = "i2s";
+        simple-audio-card,format = "left_j";
         simple-audio-card,bitclock-master = <&sound_master>;
         simple-audio-card,frame-master = <&sound_master>;
-        simple-audio-card,bitclock-inversion;
 
         sound_master: simple-audio-card,cpu {
             sound-dai = <&mcasp0>;

@@ -11,10 +11,10 @@ def parse_arguments() -> arg.Namespace:
     parser: arg.ArgumentParser = arg.ArgumentParser()
     parser.add_argument("--lms", type=str,
                         default="coeffs.csv")
-    #parser.add_argument(
-    #    "--e", type=str, default="test/functional/output/lms_e.csv")
-    #parser.add_argument("--real", type=str,
-    #                    default="test/functional/input/fir_coeffs_26.csv")
+    parser.add_argument(
+        "--e", type=str, default="test/functional/output/lms_e.csv")
+    parser.add_argument("--real", type=str,
+                        default="test/functional/input/fir_coeffs_26.csv")
     return parser.parse_args()
 
 
@@ -47,14 +47,14 @@ if __name__ == "__main__":
     args = parse_arguments()
     w = read_lms_results(args.lms)
     logger.info("Last LMS esimtate = {}", w[-1])
-    #real_w = read_real_w(args.real)
-    #logger.info("Real filter coeffs = {}", real_w)
+    real_w = read_real_w(args.real)
+    logger.info("Real filter coeffs = {}", real_w)
 
-    #e = read_e(args.e)
+    e = read_e(args.e)
 
     plt.figure(1)
-    #plt.plot(e)
-    #plt.grid()
+    plt.plot(e)
+    plt.grid()
 
     plt.figure(2)
     plot_w(w)

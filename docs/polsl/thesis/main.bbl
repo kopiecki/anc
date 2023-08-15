@@ -73,6 +73,25 @@
     \field{year}{2002}
   \endentry
 
+  \entry{bib:ti_anc}{online}{}
+    \list{publisher}{1}{%
+      {Texas Instruments}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{number}{SPRA042}
+    \field{title}{Design of Active Noise Control Systems With the TMS320
+  Family}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/spra042/spra042.pdf
+    \endverb
+    \field{year}{1996}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
   \entry{bib:resnick}{book}{}
     \name{author}{3}{}{%
       {{hash=HD}{%
@@ -111,20 +130,42 @@
     \field{year}{2015}
   \endentry
 
-  \entry{bib:krk}{online}{}
-    \list{publisher}{1}{%
-      {KRK}%
+  \entry{bib:ana_ada}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=JJK}{%
+         family={Juan},
+         familyi={J\bibinitperiod},
+         given={Jui-Kuo},
+         giveni={J\bibinithyphendelim K\bibinitperiod},
+      }}%
+      {{hash=HJ}{%
+         family={Harris},
+         familyi={H\bibinitperiod},
+         given={J.G.},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=PJ}{%
+         family={Principe},
+         familyi={P\bibinitperiod},
+         given={J.C.},
+         giveni={J\bibinitperiod},
+      }}%
     }
+    \strng{namehash}{JJKHJPJ1}
+    \strng{fullhash}{JJKHJPJ1}
+    \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{sortinit}{K}
-    \field{sortinithash}{K}
-    \field{title}{KRK Classic 8 Professional Studio Monitor}
-    \verb{url}
-    \verb https://www.krkmusic.com/Studio-Monitors/CLASSIC-8
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{booktitle}{Proceedings of International Conference on Neural
+  Networks (ICNN'97)}
+    \verb{doi}
+    \verb 10.1109/ICNN.1997.616147
     \endverb
-    \field{urlday}{23}
-    \field{urlmonth}{07}
-    \field{urlyear}{2023}
+    \field{pages}{916\bibrangedash 921 vol.2}
+    \field{title}{Analog hardware implementation of adaptive filter structures}
+    \field{volume}{2}
+    \field{year}{1997}
   \endentry
 
   \entry{bib:kuo_morgan}{book}{}
@@ -216,24 +257,6 @@
     \field{year}{2010}
   \endentry
 
-  \entry{bib:behringer}{online}{}
-    \list{publisher}{1}{%
-      {Behringer}%
-    }
-    \field{labeltitlesource}{title}
-    \field{sortinit}{M}
-    \field{sortinithash}{M}
-    \field{title}{MEASUREMENT CONDENSER MICROPHONE ECM8000 Technical
-  Specifications}
-    \verb{url}
-    \verb https://mediadl.musictribe.com/media/PLM/data/docs/P0118/S_BE_P0118_E
-    \verb CM8000_A4_WW.pdf
-    \endverb
-    \field{urlday}{23}
-    \field{urlmonth}{07}
-    \field{urlyear}{2023}
-  \endentry
-
   \entry{bib:lc}{online}{}
     \name{author}{1}{}{%
       {{hash=ME}{%
@@ -260,6 +283,22 @@
     \field{year}{2017}
     \field{urlday}{23}
     \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:moore}{online}{}
+    \list{publisher}{1}{%
+      {Britannica}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{title}{Moore's law}
+    \verb{url}
+    \verb https://www.britannica.com/technology/Moores-law
+    \endverb
+    \field{urlday}{14}
+    \field{urlmonth}{08}
     \field{urlyear}{2023}
   \endentry
 
@@ -428,6 +467,23 @@
       {Texas Instruments}%
     }
     \field{year}{2019}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:preempt}{online}{}
+    \list{publisher}{1}{%
+      {Bootlin}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{title}{Understanding Linux real-time PREEMPT\_RT training}
+    \verb{url}
+    \verb https://bootlin.com/doc/training/preempt-rt
+    \endverb
+    \field{year}{2004}
     \field{urlday}{23}
     \field{urlmonth}{07}
     \field{urlyear}{2023}

@@ -13,20 +13,14 @@ default: pdflatex
 xelatex : $(f).tex
 	xelatex $(minted) -synctex=1 $(f)
 	bibtex $(f)
-	xelatex $(minted) -synctex=1 $(f)
-	xelatex $(minted) -synctex=1 $(f)
 
 pdflatex : $(f).tex
 	@ pdflatex $(minted) -synctex=1 $(f)
 	@ bibtex $(f)
-	@ pdflatex $(minted) -synctex=1 $(f)
-	@ pdflatex $(minted) -synctex=1 $(f)
 
 $(f).pdf : $(f).tex
 	pdflatex $(minted) -synctex=1 $(f)
 	bibtex $(f)
-	pdflatex $(minted) -synctex=1 $(f)
-	pdflatex $(minted) -synctex=1 $(f)
 
 short : $(f).tex
 	pdflatex $(minted) -synctex=1 $(f)

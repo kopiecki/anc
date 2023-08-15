@@ -19,47 +19,50 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: main-blx.bib
 Database file #2: biblio/biblio.bib
+Warning--entry type for "bib:ana_ada" isn't style-file defined
+--line 170 of file biblio/biblio.bib
 Biblatex version: 3.17
 Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
-You've used 15 entries,
+You've used 17 entries,
             6399 wiz_defined-function locations,
-            1282 strings with 10806 characters,
-and the built_in function-call counts, 100470 in all, are:
-= -- 7101
-> -- 3225
-< -- 805
-+ -- 3842
-- -- 1905
-* -- 5931
-:= -- 10488
+            1295 strings with 11087 characters,
+and the built_in function-call counts, 113355 in all, are:
+= -- 7959
+> -- 3656
+< -- 889
++ -- 4378
+- -- 2202
+* -- 6757
+:= -- 11868
 add.period$ -- 0
-call.type$ -- 15
-change.case$ -- 483
-chr.to.int$ -- 188
-cite$ -- 28
-duplicate$ -- 10218
-empty$ -- 8394
-format.name$ -- 742
-if$ -- 20047
+call.type$ -- 17
+change.case$ -- 522
+chr.to.int$ -- 212
+cite$ -- 32
+duplicate$ -- 11533
+empty$ -- 9515
+format.name$ -- 830
+if$ -- 22531
 int.to.chr$ -- 0
-int.to.str$ -- 49
+int.to.str$ -- 53
 missing$ -- 0
-newline$ -- 433
-num.names$ -- 872
-pop$ -- 4855
+newline$ -- 488
+num.names$ -- 938
+pop$ -- 5536
 preamble$ -- 1
-purify$ -- 530
+purify$ -- 576
 quote$ -- 0
-skip$ -- 3405
+skip$ -- 3754
 stack$ -- 0
-substring$ -- 11966
-swap$ -- 2385
-text.length$ -- 453
-text.prefix$ -- 14
+substring$ -- 13515
+swap$ -- 2702
+text.length$ -- 511
+text.prefix$ -- 16
 top$ -- 1
-type$ -- 498
+type$ -- 565
 warning$ -- 0
-while$ -- 1177
+while$ -- 1326
 width$ -- 0
-write$ -- 419
+write$ -- 472
+(There was 1 warning)

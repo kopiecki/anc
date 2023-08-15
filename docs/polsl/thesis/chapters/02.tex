@@ -77,8 +77,7 @@ wybór pada na mikrofon referencyjny, w przypadku hałasów wąskopasmowych,
 wybór czujnika można zaoptymalizować na rzecz nieakustycznego,
 takiego jak tachometr lub enkoder, kiedy mamy do czynienia z hałasami wygenerowanymi 
 przez obracający się mechanizm.
-
-\par Z wykorzystaniem mikrofonu jako czujnika mierzącego hałas pierwotny
+Z wykorzystaniem mikrofonu jako czujnika mierzącego hałas pierwotny
 często napotyka się na problem, że generowany antyhałas wpływa na pomiar
 hałasu pierwotnego, tworząc w układzie dodatkową pętlę sprzeżenia zwrotnego.
 Problem ten można łagodzić poprzez odpowiednie ustawienia kierunków mikrofonów i 
@@ -99,7 +98,7 @@ jak na rysunku \ref{analysis::systems}:
 Każda z przedstawionych struktur różni się od siebie znacząco na poziomie sprzętowym 
 jak i programowym. Grubszą czcionką na diagramie \ref{analysis::systems} zaznaczono 
 strukturę, którą zdecydowano się wybrać do dalszej analizy z myślą o finalnej implementacji 
-i jest to szerokopasmowe ANC ze sprzężeniem w przód,
+i jest to \textbf{szerokopasmowe ANC ze sprzężeniem w przód},
 głównie ze względu na źródło i charakterystykę hałasu, która w tym przypadku
 może być łatwo symulowana.
 
@@ -109,8 +108,8 @@ Diagram \ref{analysis::structs_a} można przedstawić za pomocą
 uogólnionego schematu blokowego \ref{analysis::scheme_0}. W celu
 łatwiejszej analizy, wszystkie sygnały i układy w systemie potraktowano
 jako dyskretne, jednak należy mieć na uwadze, że postaci sygnałów
-są zmieniane na ich napięciowe lub akustyczne odpowiedniki w trakcie przekraczania
-domen lub na cyfrowe w bloku \textbf{ANC}.
+są zmieniane na ich napięciowe, akustyczne lub cyfrowe odpowiedniki w trakcie 
+przekraczania domen i wchodzenia w blok \textbf{ANC}.
 
 \begin{figure}[H]
     \centering
@@ -205,7 +204,7 @@ estymacją obiektu $P(z^{-1})$, schemat blokowy przedstawiono na rysunku
 
 Techniką często wykorzystywaną do bieżącej estymacji 
 parametrów obieków niestacjonarnych jest algorytm LMS 
-(ang. \textit{Least mean squares}).
+(ang. \textit{Least mean squares}) \cite{bib:figwer}.
 Jego działanie opiera się na zastosowaniu gradientowej metody najniższego
 spadku (ang. \textit{method of steepest descent}) 
 do minimalizacji błędu średniokwadratowego.
@@ -288,7 +287,7 @@ Zastosowanie warunku stabilności w formie \ref{eq::lms_const} jest
 niepraktyczne z powodu problematycznych obliczeń $\lambda_{max}$ dla dużych
 rzędów filtra $W(z^{-1})$. W związku z tym, w praktycznym kryterium stabilności
 algorytmu LMS przyjęło się stosować estymację $\lambda_{max}$ na podstawie 
-śladu macierzy \textbf{R}
+śladu macierzy \textbf{R} \cite{bib:kuo_morgan}
 \begin{equation}
     \lambda_{max} \leq \sum_{l = 0}^{L - 1}\lambda_l = Lr_{xx}(0) = LP_x
 \end{equation}
@@ -440,7 +439,7 @@ określony jest zależnością
 
 Czyli sytuacja, mimo że uproszczona, jest analogiczna jak w \ref{eq::adapt}.
 Wykorzystanie standardowego algorytmu LMS, ze względu na transmitancję
-$S(z^{-1})$, jest znacząco utrudnione, dlatego aby układ ANC działał prawidłowo,
+$S(z^{-1})$, jest znacząco utrudnione, dlatego, aby układ ANC działał prawidłowo,
 wymagane jest wprowadzenie zmian w jego strukturze.
 
 \subsection{Algorytm FXLMS}
@@ -612,7 +611,7 @@ rezultatów uzyskanych w poszczególnych eksperymentach.
 
 \par Należy mieć na uwadze, że na charakterystykę torów akustycznych
 wpływa wiele czynników, które w trakcie pracy systemu mogły ulec zmianie i 
-jeżeli istnieje podejrzenie że tak się stało, to proces identyfikacji należy powtórzyć,
-w przeciwnym wypadku, adaptacja będzie przebiegała gorzej, a system spełniał swoje zadanie 
+jeżeli istnieje podejrzenie że tak się stało, to proces identyfikacji należy powtórzyć.
+W przeciwnym wypadku, adaptacja będzie przebiegała gorzej, a system spełniał swoje zadanie 
 mniej efektywnie. Typowo, proces identyfikacji toru wtórnego realizuje się 
 w procesie inicjalizującym, na początku działania systemu.

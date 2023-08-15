@@ -1,7 +1,28 @@
-\chapter{Weryfikacja}
-\section{Część sprzętowa}
-\subsection{Zasilania}
+\chapter{Testy i badania}
 
+\section{Weryfikacja części sprzętowej}
+
+Sporządzoną płytkę drukowaną przedstawiono na rysunku \ref{ver::board}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graf/verification/board.png}
+    \caption{Sporządzona płytka drukowana}
+    \label{ver::board}
+\end{figure}
+
+Widoczne na płyce przewody montażowe (kynary) są wynikiem błędu sprzętowego 
+związanego z zasilaniem phantom, dla którego bez modyfikacji poprowadzono
++12 V. Z racji, że wykorzystane mikrofony są 
+wyspecyfikowane na zakres +15 do +48 V, zasilanie +15 V dostarczono przez przewody
+z dużych kondensatorów sekcji filtrującej główne zasilanie.
+Później zweryfikowano, że wybrane mikrofony również działają dobrze 
+dla zasilania +12 V, pomiomo, że nie są na niego wyspecyfikowane,
+więc finalnie przewody można usunąć i zostawić początkowe połączenia.
+
+\subsection{Sekcja zasilania}
+
+Pomiary sekcji zasilania przedstawiono w tabeli \ref{tab::psu}:
 \begin{table}[H]
     \centering
     \begin{tabular}{|| c | c | c ||} 
@@ -10,7 +31,7 @@
         \hline\hline
         +15V & 15 $\pm$ 0.75 (5\%) & 15.255 \\ 
         \hline
-        -15V & -15 $\pm$ 0.75 (5\%) & -13.784 \\
+        -15V & -15 $\pm$ 0.75 (5\%) & \textbf{-13.784} \\
         \hline
         +12VA & 12 $\pm$ 0.24 (2\%) & 11.993 \\
         \hline
@@ -26,9 +47,136 @@
 
     \caption{Pomiary sekcji zasilania}
     \label{tab::psu}
-
 \end{table}
 
-\subsection{Domena analogowa}
-\subsection{Domena cyfrowa}
-\section{Część programowa}
+Jak można zauważyć, zasilanie -15 V jest poza spodziewaną skalą.
+Jest to problem, który nie wpływa drastycznie na pracę pozostałych sekcji,
+ponieważ zasilanie później jest filtrowane i stabilizowane przez liniowy
+regulator napięcia niskiego spadku. Pozostałe wartości mieszczą się w 
+wyspecyfikowanych zakresach.
+% TODO DK: Dopisać w przypadku rozwikłanej zagadki 
+
+\subsection{Wyjściowe sekcje analogowe i przetworniki}
+
+Pomiary wejść i wyjść wzmacniacza \ref{hw::gain_out} dla
+wejściowego sinusa o częstotliwości 200 Hz i ampitudzie równej połowie 
+zakresu przetwornika przedstawiono na rysunku \ref{ver::gain_out}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/verification/gain_out.png}
+    \caption{Pomiary wzmacniacza wyjściowej sekcji analogowej}
+    \label{ver::gain_out}
+\end{figure}
+
+Przebieg zielony przedstawia wyjście, a żółty wejście wzmacniacza \ref{hw::gain_out}.
+Jak można zauważyć, wzmocnienie jest zawyżone, lecz
+mimo wszystko sygnał wejściowy o pełnym zakresie przetwornika nie powoduje 
+saturacji i pozostawia bezpieczny zakres 2 V. 
+\par Pomiary wejść i wyjść filtra \ref{hw::filt} dla wejściowych sinusów
+o częstotliwościach 100 Hz i 500 Hz oraz amplitudach równych połowie zakresu przetwornika
+przedstawiono na rysunkach \ref{ver::filter}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{graf/verification/100hz_out.png}
+        \caption{Przebiegi dla częstotliwości 100 Hz}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{graf/verification/500hz_out.png}
+        \caption{Przebiegi dla częstotliwości 500 Hz}
+    \end{subfigure}
+       \caption{Pomiary filtra wyjściowej sekcji analogowej}
+       \label{ver::filter}
+\end{figure}
+Przebiegi żółte są wyjściami wzmacniacza \ref{hw::gain_out}, a przebiegi zielone
+wyjściami filtra \ref{hw::filt}.
+Dla sygnału o częstotliwości 500 Hz, która jest częstotliwością graniczną filtru 
+\ref{hw::filt} można zaobserwować tłumienie w okolicach 5 dB. 
+Oznacza to, że pasmo zaporowe zaczyna się wcześniej niż obliczono,
+co może być spowodowane rzeczywistymi wartościami elementów wraz z ich niedokładnościami.
+Bliższe pasmo zaporowe filtrów sekcji wyjściowych nie powoduje problemów,
+ponieważ sygnały do 500 Hz w dalszym ciągu są użyteczne.
+\par Wyjście różnicowe sekcji analogowej dla sygnału sinusoidalnego o częsotliwości
+200 Hz i pełnego zakresu przetwornika cyfrowo-analogowego przedstawiono na rysunku
+\ref{ver::diff_out}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/verification/diff_out.png}
+    \caption{Wyjście różnicowe wyjściowej sekcji analogowej}
+    \label{ver::diff_out}
+\end{figure}
+
+Sygnały są względem siebie dokładnie odwrócone a ich amplituda jest jednakowa,
+więc sekcja spełnia swoje zadanie tak jak w teorii.
+
+\subsection{Wejściowe sekcje analogowe i przetworniki}
+
+\par Pomiary wejść i wyjść pełnego toru dla wejściowego sinusa
+o częstotliwości 200 Hz i natężeniu około 85 dB SPL
+przedstawiono na rysunku \ref{ver::200hz_in}. Dźwięk odtworzono
+z głośnika wykorzystywanego w systemie, a mikrofon ustawiono bezpośrednio
+przy membranie w cichym pokoju.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/verification/200hz_in.png}
+    \caption{Pomiary wejściowego toru analogowego dla $f_s = 200$ Hz}
+    \label{ver::200hz_in}
+\end{figure}
+
+Przebieg zielony przedstawia wejście przetwornika analogowo-cyfrowego, 
+a żółty wyjście wzmacniacza \ref{hw::op_diff}.
+Sygnał na wejściu przetwornika jest odpowiednio przesunięty
+o dodaną składową stałą, a w amplitudy obu sygnałów są takie same.
+Gęstość widmową mocy obliczoną metodą Welcha z oknem Hanna przedstawiono
+na rysunku \ref{ver::200hz_in_psd}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{graf/verification/200hz_psd_in.png}
+    \caption{Gęstość widmowa mocy pomiaru dla $f_s = 200$ Hz}
+    \label{ver::200hz_in_psd}
+\end{figure}
+
+Na przebiegu \ref{ver::200hz_in_psd} dobrze widać wpływ filtra \ref{hw::filt},
+który mocno wytłumia zakres powyżej 500 Hz. Pik nagranego sinusa jest dużej
+mocy, widać jego harmoniczne a tło szumu akceptowalne.
+
+\par Pomiary wejść i wyjść pełnego toru dla wejściowego sinusa
+o częstotliwości 500 Hz i natężeniu około 85 dB SPL
+przedstawiono na rysunku \ref{ver::500hz_in}. 
+Dźwięk odtworzono analogicznie jak w poprzednim pomiarze.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/500hz_in.png}
+    \caption{Pomiary wejściowego toru analogowego dla $f_s = 500$ Hz}
+    \label{ver::500hz_in}
+\end{figure}
+
+Przebieg zielony przedstawia wejście przetwornika analogowo-cyfrowego, 
+a żółty wyjście wzmacniacza \ref{hw::op_diff}.
+Poza obserwacjami, które są analogiczne jak w punkcie wyżej, można zaobserwować,
+że filtr \ref{hw::filt} w tej sekcji zachowuje się zgodniej z obliczeniami.
+Tłumienie dla sygnału o częstotliwości granicznej wynosi około 3.22 dB.
+Gęstość widmową mocy obliczoną metodą Welcha z oknem Hanna przedstawiono
+na rysunku \ref{ver::500hz_in_psd}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{graf/verification/500hz_psd_in.png}
+    \caption{Gęstość widmowa mocy pomiaru dla $f_s = 200$ Hz}
+    \label{ver::500hz_in_psd}
+\end{figure}
+
+Nagrany sinus jest mniejszej mocy niż na \ref{ver::500hz_in_psd},
+a jego najbliższe harmoniczne mniej widoczne, co może być spodowowane kombinacją
+tłumienia filtra i wykorzystanym nagraniem.
+
+\section{Badania procesu ANC}

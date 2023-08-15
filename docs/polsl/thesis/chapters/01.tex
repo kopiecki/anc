@@ -23,7 +23,7 @@ czyli aktywnym tłumieniu drgań. Jak to zazwyczaj bywa z nowymi technologiami,
 pierwsze praktyczne realizacje ANC zaobserwowano w militariach, między innymi
 w tłumieniu hałasu akustycznego propagującego się wewnątrz odrzutowca.
 
-\par Jak opisuje prawo Moore'a, moc obliczeniowa układów cyfrowych w kolejnych latach
+\par Jak opisuje prawo Moore'a \cite{bib:moore}, moc obliczeniowa układów cyfrowych w kolejnych latach
 zwiększa się z zgodnie z trendem wykładniczym i takie zachowanie można
 zaobserwować do czasów teraźniejszych. Ekstremalna miniaturyzacja, 
 optymalizacja zapotrzebowania energetycznego jak i niskie koszta układów
@@ -38,8 +38,9 @@ ogólny hałas wokół nas.
 \section{Uogólniona koncepcja}
 
 Hałas w systemach ANC może rozchodzić się w różnych
-ośrodkach i w zależności od nich definiowany jest obszar zastosowania 
-(akustyczny, hydroakustyczny, wibracyjny).
+ośrodkach i w zależności od nich definiowany jest obszar zastosowania,
+z których wyróżnić można systemy akustyczne, hydroakustyczne lub wibracyjne 
+\cite{bib:kuo_morgan}.
 Od tego momementu, autor używając zwrotów ANC i hałas, będzie miał na myśli
 jednokanałowe systemy aktywnej redukcji hałasu w ujęciu akustycznym i wokół 
 tej tematyki skupia się dalsza część pracy.
@@ -50,12 +51,13 @@ Tradycyjne podejście do redukcji hałasu można uogólnić do wykorzystania
 pasywnych wytłumiaczy, takich jak szczelne bariery odgradzające, tłumiki czy
 izololacje akustyczne. Takie rozwiązania, pomimo że cenione za wysokie tłumienie
 w szerokim paśmie częstotliwości, w większości przypadków są drogie oraz 
-wymagają instalacji dużych rozmiarów, mocno przy tym ingerując środowisko pracy.
+wymagają instalacji dużych rozmiarów, mocno przy tym ingerując środowisko pracy 
+\cite{bib:kuo_morgan}.
 \par Największą wadą pasywnych rozwiązań jest jednak kwestia tłumienia
 hałasów o niskich częstotliwościach. Z racji, że ośrodek, którym propaguje się
-fala dźwiękowa wraz z przeszkodami, które napotyka na swojej drodze
+fala dźwiękowa wraz z przeszkodami, które napotyka na swojej drodze,
 zachowują się jak filtry dolnoprzepustowe dla sygnałów akustycznych, to
-trudno zrealizować mechaniczyny system zdolny wytłumiać hałasy
+trudno zrealizować ściśle mechaniczny system zdolny wytłumiać hałasy
 o największej energii w pasmach niskich. Długość fali jest odwrotnie proporcjonalna 
 do jej częstotliwości 
 \cite{bib:resnick}
@@ -65,14 +67,13 @@ do jej częstotliwości
 więc wolnozmienna fala akustyczna propagująca w powietrzu ($v \approx 343$ $\frac{\text{m}}{\text{s}}$) 
 o przykładowej częstotliwości 343 Hz osiągnie długość jednego metra.
 Zadanie tłumienia fal długich znacząco zwiększa koszta i złożoność 
-realizacji pasywnego systemu tłumienia, ponieważ wymagają
+realizacji pasywnego systemu tłumienia, ponieważ takie fale wymagają
 rozległych, grubych i wykonanych ze specjalnych materiałów, mocno absorbujących
-niechciany hałas barier akustycznych.
-
+niechciany hałas, barier akustycznych.
 \par Zważając na powyższe, systemy ANC wykorzystywane są głównie w celu tłumienia 
 hałasów niskoczęstotliwościowych, tam, gdzie rozwiązania pasywne są najmniej
 efektywne. Typowe pasmo zainteresowań zamyka się 
-w przedziale od 50 do 500 Hz \cite{bib:kuo_morgan}.
+w przedziale \textbf{od 50 do 500 Hz} \cite{bib:kuo_morgan}.
 Niskie częstotliwości powodują, że wymagania czasowe i koszta nałożone na system 
 ANC są z reguły mniejsze, próbkowanie może odbywać się rzadziej, co skutkuje 
 dłuższym czasem na wykonanie obliczeń i wypracowanie sterowania.
@@ -81,16 +82,16 @@ tłumienia na poziomie 30 dB, gdzie w przypadku hałasów szerokopasmowych lub l
 tłumienie jest zazwyczaj gorsze o połowę. Zakres poziomu ciśnienia akustycznego 
 (ang. \textit{Sound pressure level}, \textbf{SPL}) jest dobierany na podstawie 
 charakterystyki źródła i zazwyczaj, ze względu na parametry typowego hałasu
-i stosowanych urządzeń, zamyka się w przedziale od 80 do 100 dB SPL.
+i stosowanych urządzeń, zamyka się w przedziale \textbf{od 80 do 100 dB SPL}.
 
 \subsection{Idea przewodnia}
 
-Idea, na której swoje działanie opierają systemy ANC, jest bardzo prosta
+Fizyczna idea, na której swoje działanie opierają systemy ANC, jest bardzo prosta
 w zrozumieniu, jednak problematyczna w implementacji. 
 System ma za zadanie wygenerować sygnał o identycznej amplitudzie oraz częstotliwości co 
 niechciany hałas, jednak odwrócony w fazie. Tak wygenerowany sygnał, nazywany antyhałasem,
 zostaje wprowadzony przez aktuator (głośnik) w tor, 
-którym propaguje się tłumiony hałas. 
+którym propaguje się hałas. 
 W wyniku interferencji fal (superpozycji), sygnał zostaje wyciszony.
 Wizualizację fizycznej idei ANC przedstawiono na rysunku \ref{intro::anc}.
 \begin{figure}[H]
@@ -109,7 +110,8 @@ Takie zachowanie wymaga, żeby projektowany system był adaptacyjny, co oznacza,
 że jego działanie będzie odpowiednio korygowane, w zależności od zaobserwowanych
 zmian charaketerystyki toru, którym propaguje się niechciany sygnał. 
 Adaptacja realizowana jedynie w sposób analogowy, 
-pomimo że możliwa, posiada duże ograniczenia w zakresie elastyczności i precyzyjności, 
+pomimo że możliwa, posiada duże ograniczenia w zakresie elastyczności i precyzyjności
+\cite{bib:ana_ada}, 
 dlatego pożądane jest, aby w systemach tego typu wykorzystać układy cyfrowe,
 próbkujące sygnały z czujników oraz przetwarzające je z wykorzystaniem 
 odpowiednich algorytmów przetwarzania. Układy cyfrowe przyznaczonego do tego
@@ -126,7 +128,7 @@ który miał tłumić.
 Układami cyfrowymi wykorzystywanymi w systemach ANC, ze względu na wymóg
 przetwarzania sygnałów w czasie rzeczywistym z wysoką precyzją, są 
 specjalnie zaprojektowane do tych celów 
-procesory sygnałowe (DSP, ang. \textit{Digital signal processor}).
+procesory sygnałowe (DSP, ang. \textit{Digital signal processor}) \cite{bib:ti_anc}.
 Takie układy w współpracy z przetwornikami analogowo-cyfrowymi i 
 cyfrowo-analogowymi tworzą klasyczny tor przetwarzania, który przedstawiono
 na rysunku \ref{intro::processing}:
@@ -201,14 +203,14 @@ badawczych projektu.
 Oprogramowanie realizujące algorytmy ANC zostanie napisane w języku C, natywnym dla jądra 
 Linux, a sprzęt, poza wybraną, gotową platformą obliczeniową i urządzeniami zewnętrznymi 
 (mikrofony, głośniki), zrealizowany samodzielnie, głównie ze względów edukacyjnych.
-\par Taka decyzja jednak w żaden sposób nie ogranicza elastyczności rozwiązania.
+Taka decyzja jednak w żaden sposób nie ogranicza elastyczności rozwiązania.
 Do komunikacji z samodzielnie sporządzoną elektroniką wykorzystanie
 zostany, obsługiwany przez wybraną platformę obliczeniową i system operacyjny, 
 standardowy protokół cyfrowy, za pomocą którego można komunikować się innym, 
 kompatybilnymi peryferiami.
 
 \section{Zwięzła charakterystyka rozdziałów}
-Poza słowami wstępu zawartymi w aktulanym rozdziale, szczegółowy zakres
+Poza słowami wstępu zawartymi w aktulanym rozdziale, zakres
 pozostałej treści pracy można opisać następująco:
 \begin{itemize}
 
@@ -217,7 +219,7 @@ pozostałej treści pracy można opisać następująco:
     wraz z wyprowadzeniem schematu blokowego systemu implementowanego w
     dalszej części pracy.
 
-    \item Rozdział 3, Założenia i proponowane rozwizanie - opisanie założeń funkcjonalnych
+    \item Rozdział 3, Założenia i proponowane rozwiązanie - opisanie założeń funkcjonalnych
     stawianych projektowanemu układowi z podzieleniem na część sprzętową i programową
     oraz przedstawienie proponowanego rozwiązania z opisem na ich podstawie.
 
@@ -229,17 +231,14 @@ pozostałej treści pracy można opisać następująco:
     implementacji oprogramowania z podzieleniem na system operacyjny i 
     aplikację działającą w trybie użytkownika.
 
-    \item Rozdział 6, Weryfikacja - zweryfikowanie poprawności 
-    sporządzonego sprzętu i zaimplementowanego oprogramowania.
-    Przeprowadzenie pomiarów napięć zasilania, przebiegów czasowych 
-    sygnałów jak i surowa analiza algorytmów oraz wstępne testy wydajności.
+    \item Rozdział 6, Testy i badania - zweryfikowanie poprawności 
+    sporządzonego rozwiązania poprzez pomiary zasilania, analizę przebiegów
+    czasowych określonych sygnałów analogowych oraz cyfrowych.
+    Przeprowadzenie badań z użyciem pełnego systemu na rzeczywistych lub symulowanych 
+    sygnałach, ocena wydajności oraz ocena wpływu wybranych parametrów i konfiguracji na 
+    wynikowe tłumienie wraz z komentarzem.
 
-    \item Rozdział 7, Testy i badania - przeprowadzenie badań z użyciem
-    pełnego systemu na rzeczywistych lub symulowanych sygnałach i ocena wydajności.
-    Ocena wpływu parametrów i konfiguracji na wynikowe tłumienie wraz 
-    z komentarzem.
-
-    \item Roadział 8, Podsumowanie - komentarz zamykający treść pracy. 
+    \item Roadział 7, Podsumowanie - komentarz zamykający treść pracy. 
     Finalna ocena wykonanego systemu, obiektywna ocena jego działania oraz 
     pomysły na dalsze prace.
 

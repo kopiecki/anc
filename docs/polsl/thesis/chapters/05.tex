@@ -31,7 +31,8 @@ i praca z nimi wymaga dużego nakładu czasowego.
 \subsection{Problemy jądra Linux w kontekście real-time}
 
 Podstawową kwestią, która dyskredytuje jądro Linux w zastosowaniach czasu rzeczywistego
-jest niedeterministyczny czas wykonania określonego zadania, który zależy od wielu czynników.
+jest niedeterministyczny czas wykonania określonego zadania, który zależy od wielu czynników 
+\cite{bib:preempt}.
 Jądro Linux jest wielozadaniowe i implementuje planistę (ang. \textit{scheduler}), 
 którego zadaniem jest szeregowanie i obsłużenie zadań na podstawie ich priorytetu.
 Planista decyduje o przydziale czasu procesora na wykonanie zadań, które może przełączać 
@@ -42,7 +43,7 @@ Przebieg wywłaszczenia przedstawiono na rysunku \ref{sw::preempt_0}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/sw/preempt_0.png}
+    \includegraphics[width=0.8\textwidth]{graf/sw/preempt_0.png}
     \caption{Przebieg wywłaszczenia zadania}
     \label{sw::preempt_0}
 \end{figure}
@@ -125,16 +126,16 @@ a wątkowej przedstawiono na rysunkach \ref{sw::hw_irq}:
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.8\textwidth}
+    \begin{subfigure}[b]{\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{graf/sw/hw_irq.png}
+        \includegraphics[width=0.8\textwidth]{graf/sw/hw_irq.png}
         \caption{Standarowa obsługa przerwania}
         \label{analysis::structs_a}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.8\textwidth}
+    \begin{subfigure}[b]{\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{graf/sw/hw_irq_rt.png}
+        \includegraphics[width=0.8\textwidth]{graf/sw/hw_irq_rt.png}
         \caption{Wątkowa realizacja przerwania sprzętowego}
     \end{subfigure}
        \caption{Porównanie obsługi przerwań sprzętowych}
@@ -175,7 +176,7 @@ platformie obliczeniowej przedstawiono na rysunku \ref{sw::boot_process}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/sw/boot_process.png}
+    \includegraphics[width=0.95\textwidth]{graf/sw/boot_process.png}
     \caption{Proces uruchomienia systemu operacyjnego}
     \label{sw::boot_process}
 \end{figure}
@@ -211,7 +212,7 @@ Opis poszczególnych etapów przedstawiono poniżej:
     sterowników, które mogą być osadzone statycznie lub ładowane dynamicznie w postaci modułów.
     Po uruchomieniu i przeprowadzeniu procesu inicjalizacji, włącza
     programy startowe i umożliwia użytkownikowi pracę. Zadania wykonywane przez jądro
-    zawierają się w tak zwanej przestrzenii jądra 
+    zawierają się w tak zwanym trybie jądra 
     (ang. \textit{kernel space}), która tworzy osobną przestrzeń adresową niedostępną
     dla aplikacji użytkownika. 
 
@@ -254,7 +255,7 @@ Opis poszczególnych partycji przedstawiono poniżej:
     \item Partycja systemowa - zawiera pliki jądra systemu i drzewa urządzeń. Wymagany jest system
     plików EXT4.
 
-    \item Partycja z głównym systemem plików - jak sama nazwa wskazuje, zawiera wypakowany
+    \item Partycja z głównym systemem plików - zawiera wypakowany
     główny system plików systemu. Wymagany jest system plików EXT4.
 
 \end{enumerate}
@@ -275,7 +276,7 @@ zazwyczaj wygląda bardzo podobnie i można go podzielić na trzy główne kroki
 
     \item Pobranie kodów źródłowych z repozytorium twórców - jeżeli oprogramowanie
     udostępniane jest na licencjach otwartoźródłowych, to twórcy zwyczajowo
-    magazynują wszystkie kody źródłowe programu na ogólnodostępnych w internecie repozytoriach.
+    magazynują wszystkie kody źródłowe na ogólnodostępnych w internecie repozytoriach.
 
     \item Konfiguracja procesu budowania - może się różnić w zależności od 
     wykorzystywanego przez program systemu budowania. Typowo, procesowi należy
@@ -463,7 +464,7 @@ Diagram aplikacji przedstawiono na rysunku \ref{sw::app_top}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/sw/app_top.png}
+    \includegraphics[width=0.7\textwidth]{graf/sw/app_top.png}
     \caption{Diagram aplikacji}
     \label{sw::app_top}
 \end{figure}
@@ -519,7 +520,7 @@ szeregowane są w określony sposób, który przedstawiono na rysunku \ref{sw::a
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/sw/alsa_buffer.png}
+    \includegraphics[width=0.5\textwidth]{graf/sw/alsa_buffer.png}
     \caption{Podział bufora sterownika}
     \label{sw::alsa_buffer}
 \end{figure}
@@ -528,8 +529,7 @@ Bufor składa się fragmentów (lub okresów, ang. \textit{periods}),
 składających się z określonej ilości ramek. Ramki z kolei składają
 się próbek przypisanych określonym kanałom karty, których długość
 zdefiniowana jest przez przyjęty format. 
-
-\par W trakcie działania programu w trybie
+W trakcie działania programu w trybie
 użytkownika, próbki transportowane są z/do bufora sterownika do/z bufora aplikacji. 
 W przypadku odczytywania danych może dojść do sytuacji, kiedy 
 nie są one czytane z odpowiednią prędkością przez aplikację w trybie użytkownika, 
@@ -542,7 +542,7 @@ się zazwyczaj skutkuje przerwami w nagraniach/odtworzeniach.
 \par Ważną kwestią związaną z przetwarzaniem sygnałów audio jest latencja,
 która w tym kontekście informuje o czasie, który jest potrzebny na przetworzenie
 danych w systemie od momentu ich wprowadzenia do momentu ich wypuszczenia.
-W nomenklaturze systemu ALSA, zdefiniowana jest następującą zależnością:
+W nomenklaturze systemu ALSA, zdefiniowana jest zależnością
 \begin{equation}
     T_L = \frac{n_fL_{fb}}{f_sL_{sb}}
     \label{eq::alsa_latency}
@@ -552,8 +552,7 @@ $f_s$ to częstotliwość próbkowania, a $L_{sb}$ to rozmiar próbki w bajtach.
 Jak można zauważyć, licznik równiania \ref{eq::alsa_latency} odpowiada rozmiarowi
 bufora bajtach, czyli całe wyrażnienie odpowiada czasowi potrzebnemu na 
 zbuforowanie danych.
-
-\par Przykładowo, chcąc odtworzyć dźwięk z szesnastobitowego systemu stereo
+Przykładowo, chcąc odtworzyć dźwięk z szesnastobitowego systemu stereo
 (dwa kanały wyjściowe) z typową częstotliwością audio $f_s = 44.1$ kHz, ramka
 ma rozmiar czterech bajtów (dwa bajty na dwa kanały, $L_{sb} = 2$). Deklarując 
 rozmiar fragmentu
@@ -561,16 +560,15 @@ na 2048 ramek uzyskuje się rozmiar fragmentu $L_{fb} = 8192$ bajtów. Deklaruj�
 rozmiar bufora na dwa fragmenty $n_f = 2$, wynikowo otrzymuję się latencję
 $T_L = 93$ ms. Latencja dla stałego rozmiaru próbki jest więc odwrotnie proporcjonalna
 do częstotliwości próbkowania i proporcjonalna do rozmiaru bufora.
-\par Ze zmniejszaniem latencji wiąże się jednak szereg problemów. Deklarując
-coraz to mniejsze rozmiary buforów, zwiększa się ilość przerwań na transfery próbek,
-które system musi obsłużyć. Powoduje to zwiększenie zużycia procesora, zmniejszając
+\par Ze zmniejszaniem latencji wiąże się szereg problemów. Deklarując
+coraz to mniejsze rozmiary buforów, zwiększa się ilość przerwań na transfery próbek, 
+co powoduje zwiększenie zużycia procesora, zmniejszając
 responsywność pozostałych aplikacji działających w systemie. 
-
 Projektując system ANC wymagana jest minimalizacja opóźnień w torach przetwarzania,
 dlatego w celu uzyskania jak najmniejszej latencji, możliwe jest 
 zwiększenie priorytetu i sposobu planowania procesu przetwarzania audio z 
-wykorzystaniem rozszerzeń czasu 
-rzeczywistego, co zostanie zbadane w późniejszych etapach pracy.
+wykorzystaniem rozszerzeń czasu rzeczywistego, co zostanie zbadane w późniejszych 
+etapach pracy.
 
 \section{Główna pętla programowa}
 
@@ -603,4 +601,21 @@ można przedstawić następującymi krokami:
 
 \end{enumerate}
 
-Kroki 5 i 6 realizują algorytm FXLMS.
+Kroki 5 i 6 realizują algorytm FXLMS i mogą być wykonane przed krokiem 4.
+\\
+\par Inicjalizacja pętli ANC zaczyna się od konfiguracji rozszerzeń 
+czasu rzeczywistego. Konfigurowany jest planista, któremu podaje się 
+odpowiednią wytyczną oraz tworzony jest wątek, któremu nakłada się odpowiedni 
+priorytet, gdzie dodatkowo można jawnie skonfigurować dziedziczenie priorytetów.
+W tak skonfigurowanym wątku uruchamiania jest pętla ANC. Ograniczeniem czasowym przetwarzania
+danych w pętli jest czas potrzebny na zbuforowanie fragmentu (lub fragmentów), 
+którego rozmiar, wraz z częstotliwością próbkowania, jest parametrem konfiguracyjnym.
+Typowo, deklarując rozmiar bufora na dwa fragmenty, przerwanie informujące
+o możliwości odczytania/zapisania danych konfigurowane jest w taki sposób,
+aby wystąpiło w momencie odczytania/zapisania jednego fragmentu. 
+Deklarując rozmiar odczytu/zapisu na pełen bufor, funkcja odblokuje się
+w momencie wystąpienia przerwania, gdzie pozostały fragment w buforze będzie
+odczytywany/zapisywany równolegle do działającej aplikacji. Takie działanie
+daje okno czasowe na realizację potrzebnych obliczeń, zapewniając 
+ciągłość odtwarzanych danych.
+

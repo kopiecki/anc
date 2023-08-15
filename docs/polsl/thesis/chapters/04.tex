@@ -10,49 +10,36 @@ rysunku \ref{hw::arch}:
     \label{hw::arch}
 \end{figure}
 
-\par Jak można zauważyć, na architekturę płytki drukowanej składają się cztery główne bloki:
-\begin{enumerate}
-
-    \item Zasilanie (\textbf{PSU}, ang. \textit{Power supply unit}) - sekcja 
-    dopasowująca i propagująca zasilanie na cały układ na bazie zasilania
-    zewnętrznego.
-
-    \item Wejściowe tory analogowe (\textbf{Input}, wejście)
-    - sekcja przetwarzająca i dopasowująca sygnały z mikrofonów pod 
-    późniejszą konwersję do domeny cyfrowej. Łączy się z sekcją przetworników 
-    poprzez przetworzone sygnały wejściowe.
-
-    \item Wyjściowe tory analogowe (\textbf{Output}, wyjście)
-    - sekcja przetwarzająca i dopasowująca sygnały z przetworników 
-    cyfrowo-analogowych pod dostarczenie do głośników.
-
-    \item Przetworniki (\textbf{ADC/DAC}) - sekcja opisująca połączenia 
-    przetworników z interfejsem cyfrowym i resztą układu. Na jej wejście
-    trafiają przetworzone sygnały z mikrofonów, a wychodzą sygnały z 
-    przetworników cyfrowo-analogowych.
-
-\end{enumerate}
+\par Jak można zauważyć, na architekturę zaprojekowanej płytki drukowanej 
+składają się cztery główne sekcje, które komunikują się z elementami zewnętrznymi
+zaznaczonymi na szaro. Z sekcji można wyróżnić:
+\begin{itemize}
+    \item Sekcję zasilania (\textbf{PSU}, ang. \textit{Power supply unit})
+    \item Sekcję wejściowych torów analogowych (\textbf{Input}, wejście)
+    \item Sekcję wyjściowych torów analogowych (\textbf{Output}, wyjście)
+    \item Sekcję przetworników (\textbf{ADC/DAC})
+\end{itemize}
 
 Na diagramie konektory o najmniejszej grubości reprezentują sygnały analogowe,
 z których można wyróżnić:
-\begin{enumerate}
-    \item $x(t)$ - sygnał z mikrofonu przy źródle hałasu.
-    \item $e(t)$ - sygnał z mikrofonu błędu, mięrzącego superpozycję hałasu i antyhałasu.
+\begin{itemize}
+    \item $x(t)$ - sygnał z mikrofonu referencyjnego przy źródle hałasu.
+    \item $e(t)$ - sygnał z mikrofonu błędu, mierzącego superpozycję hałasu i antyhałasu.
     \item $y_n(t)$ - sygnał reperezentujący wygenerowany hałas.
     \item $y_{an}(t)$ - sygnał reperezentujący obliczony antyhałas.
-\end{enumerate}
+\end{itemize}
 
 Każdy z wyszczególnionych wyżej sygnałów analogowych posiada swoje przetworzone
-odpowiedniki, które na schemacie zaznaczono z apostrofem.
-\\
-\par Pogrubionymi konektorami zaznaczono szyny zasilania i są to odpowiednio:
-\begin{enumerate}
+odpowiedniki, które na schemacie zaznaczono z apostrofem. Pogrubionymi konektorami 
+zaznaczono szyny zasilania i są to odpowiednio:
+\begin{itemize}
     \item \textbf{AP} (ang. \textit{Analog power}) - zasilanie sekcji analogowych.
     \item \textbf{DP} (ang. \textit{Digital power}) - zasilanie sekcji cyfrowych.
-\end{enumerate}
+\end{itemize}
 
 Dużą strzałką zaznaczono wykorzystywany protokół cyfrowy, czyli
-McASP (ang. \textit{Multi-channel serial port}).
+McASP (ang. \textit{Multi-channel serial port}), który dokładniej opisywany
+będzie w sekcji interfejsu cyfrowego.
 
 \section{Urządzenia zewnętrzne}
 
@@ -61,7 +48,7 @@ McASP (ang. \textit{Multi-channel serial port}).
 W projekcie wykorzystano modele Behringer ECM8000. Są one bardzo często wybierane przez amatorów
 jak i profesjonalistów w zastosowaniach pomiarowych oraz cieszą się dobrymi 
 opiniami. Ich droższym odpowiednikiem jest flagowy Beyerdynamic MM1, a najbardziej 
-znaczące parametry przedstawiono poniżej \cite{bib:behringer}:
+znaczące parametry przedstawiono poniżej:
 \begin{enumerate}
 
     \item Typ - pojemnościowy, phantom +15 do +48 V.
@@ -86,11 +73,9 @@ Dla wybranych mikrofonów z czułością na poziomie $15 \text{ }\frac{\text{mV}
 uzyskuje się 15 mV dla 1 Pa, co jest równe 94 dB SPL.
 Pracując na hałasach w zakresie 85 do 105 dB SPL, dla górnej granicy otrzymuje 
 się około 3.5 Pa, czyli odpowiednio około 52.5 mV. W przypadku przetwornika analogowo-cyfrowego 
-pracującego w przedziale 0 do 5 V ($U_{max}$ = 2.5 V amplitudy sygnału przy
-nałożonej składowej stałej równej $U_c = 2.5$ V), 
-52.5 mV z mikrofonu powinno odpowiadać maksymalnemu 
-zakresowi 2.5 V, co pozwala na obliczenie wzmocnienia.
-
+pracującego w przedziale od 0 do 5 V (2.5 V amplitudy sygnału przy
+nałożonej składowej stałej 2.5 V), 52.5 mV z mikrofonu powinno odpowiadać maksymalnemu 
+zakresowi 2.5 V, co pozwala na obliczenie wzmocnienia
 \begin{equation}
         k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{0.0525} = 47.6190 \approx 42 \text{ dB}
         \label{eq::k_preamp}
@@ -101,7 +86,7 @@ zakresowi 2.5 V, co pozwala na obliczenie wzmocnienia.
 Na użytek prywatny, autor posiada parę monitorów studyjnych 
 KRK Classic 8, spełniających wszystkie wyszczególnione dla 
 zestawu głośników wymagania. Nie wchodząc w techniczne szczegóły, 
-z najbardziej znaczących parametrów można wyróżnić \cite{bib:krk}:
+z najbardziej znaczących parametrów można wyróżnić:
 
 \begin{enumerate}
 
@@ -121,8 +106,8 @@ z najbardziej znaczących parametrów można wyróżnić \cite{bib:krk}:
 
 Analizując rynek w poszukiwaniu tanich i popularnych 
 układów spełniających założone wymagania, wyboru można dokonać tak właściwie 
-spośród dwóch platform. Jest to oparte na procesorze BCM2837B0 firmy Broadcom
-Raspberry Pi oraz oparty na procesorze Sitara AM3358 firmy Texas Instruments
+spośród dwóch platform. Jest to oparte na module BCM2837B0 firmy Broadcom
+Raspberry Pi oraz oparty na module Sitara AM3358 firmy Texas Instruments
 BeagleBone Black. Platformy są w podobnych cenach i wykorzystuje się je w 
 równie podobnych zastosowaniach.
 \par Argumentem przemawiającym za wyborem jednej z nich
@@ -136,6 +121,9 @@ mechanizmem komunikacji w wielokanałowych systemach audio realizowanych
 w układach firmy Texas Instruments i nie posiada 
 swojego odpowiednika na platformach Raspberry Pi. Z tego powodu wybór okazał się prosty
 i jako wykorzystaną platformą obliczeniową wykorzystano płytkę BeagleBone Black.
+Z kwestii dodatkowych, moduł Sitara AM3358 posiada sprzętową realizację
+działań zmiennoprzecinkowych (FPU) oraz koprocesor NEON\textsuperscript{\texttrademark} 
+(SIMD).
 
 \section{Zasilanie}
 
@@ -148,18 +136,28 @@ Diagram dystrybucji zasilania przedstawiono na rysunku \ref{hw::power_dist}.
     \label{hw::power_dist}
 \end{figure}
 
+Wykorzystane symbole zostały wyjaśnione poniżej:
+\begin{itemize}
+    \item \textbf{EXT} (ang. \textit{External}) - zasilanie zewnętrzne
+    \item \textbf{LDO} (ang. \textit{Low dropout regulator}) - linowy regulator
+    napięcia niskiego spadku
+    \item \textbf{REF} (ang. \textit{Reference voltage}) - generator napięcia
+    referencyjnego
+    \item \textbf{SMPS} (ang. \textit{Switching-mode power supply}) -
+    zasilacz impulsowy
+\end{itemize}
+
 \subsection{Sekcja wejściowa}
 
 Układ zasilany jest z zewnętrznego zasilacza impulsowego o napięciu wyjściowym 
 15 V. Zasilacze impulsowe znane są wysokiej, wynikającej z przełączania wewnętrznego
 klucza tranzystorowego, fluktuacji napięcia wyjściowego (ang. \textit{ripple}), które w przypadku dobranego 
 zasilacza wynosi maksymalnie 240 mV p-p.
-Na uwadze należy również mieć zakłócenia pochodzące z sieci wraz z przeregulowaniami powstającymi 
-w momentach włączenia i wyłączenia układu.
-\par Typowym rozwiązaniem stosowanym w sekcjach wejściowych układów elektronicznych
+Na uwadze należy również mieć zakłócenia pochodzące z sieci, dlatego typowym rozwiązaniem 
+stosowanym w sekcjach wejściowych układów elektronicznych
 jest zastosowanie dolnoprzepustowego filtru LC \cite{bib:tietze}, mającego za zadanie 
 wygładzenie zewnętrznego zasilania jak i zapewnienie bufora do dalszych
-konwersji. Taki filtr opisany jest następującą zależnością, wynikającą z uogólnionego 
+konwersji. Taki filtr opisany jest zależnością, wynikającą z uogólnionego 
 równania dzielnika napięciowego
 \begin{equation}
     U_{wy}(s) = U_{we}(s) \frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{Ls + \frac{1}{Cs}}
@@ -189,9 +187,11 @@ Rezystor w takim układzie wprowadza tłumienie, z czego wynika
 współczynnik tłumienia oraz dobroć. 
 Wielkości te określone są odpowiednio
 \begin{equation}
-    \zeta = \frac{1}{2Q} = \frac{1}{2R\sqrt{\frac{C}{L}}}, \qquad     
-    Q = \frac{1}{R}\sqrt{\frac{L}{C}}
+    \zeta = \frac{1}{2Q} = \frac{1}{2R\sqrt{\frac{C}{L}}}, \qquad
     \label{eq::zeta}
+\end{equation}
+\begin{equation}
+    Q = \frac{1}{R}\sqrt{\frac{L}{C}}
 \end{equation}
 
 Współczynnik tłumienia może znajdować się w czterech typach zakresów:
@@ -206,9 +206,10 @@ Przy projektowaniu tego typu układów oczekuje się, że będą tłumione kryty
 Oznacza to, że układ jest na granicy oscylacji, a pik rezonansowy na charakterystyce
 częstotliwościowej jest nabliższy zakresowi pasma przenoszenia, 
 które nie jest tłumione (możliwe płaskie) \cite{bib:lc}.
-Podstawiając $\zeta = 1$ w równaniach \ref{eq:zeta} otrzymuje się
+Podstawiając $\zeta = 1$ w równaniu \ref{eq::zeta} otrzymuje się
 \begin{equation}
-    L = \frac{R\sqrt{2}}{\omega_0}, \quad C = \frac{1}{\omega_0 R\sqrt{2}}
+    L = \frac{R\sqrt{2}}{\omega_0}, \qquad 
+    C = \frac{1}{\omega_0 R\sqrt{2}}
 \end{equation}
 
 Jako rezystancję przyjmuje się rezystancję wewnętrzną cewki.
@@ -246,29 +247,25 @@ tego wyboru będą dokładniej opisywane w sekcji torów analogowych.
 W literaturze \cite{bib:art} \cite{bib:tietze} opisanych jest wiele sposobów implementacji tego typu 
 układów, z czego najbardziej popularnymi są inwertery napięciowe zaimplementowane w oparciu o 
 wzmacniacze operacyjne lub dedykowane przetwornice (ang. \textit{buck-boost}).
-Rozwiązanie oparte o skonstruowanie układu inwerterów zostało odrzucone z 
+\par Rozwiązanie oparte o skonstruowanie układu inwerterów zostało odrzucone z 
 powodu dodatkowego nakładu pracy. Taki system, poza układem 
 odwracającym napięcie (ang. \textit{rail splitter}) wymagałby dodatkowego 
-wzmacniacza mocy na wyjściu. Jest to spowodowane zapotrzebowaniem prądowym 
-wzmacniaczy, które według specyfikacji wynosi typowo 1.4 mA na układ. 
+wzmacniacza mocy na wyjściu, co jest to spowodowane zapotrzebowaniem prądowym 
+wzmacniaczy, według specyfikacji wynoszącym typowo 1.4 mA na układ. 
 Jako, że w projekcie wykorzystywanych jest pięć wzmacniaczy operacyjnych na kanał, a 
 kanałów jest cztery, to wymaganiem jest, aby wydajność prądowa wykorzystanego
 generatora ujemnego napięcia wynosiła 28 mA. Opcja wyboru
-dedykowanej przetwornicy została odrzuca z powodu niskiej dostępności układów 
-zgodnych z założoną specyfikacją na rynku.
+dedykowanej przetwornicy została odrzucona z powodu niskiej dostępności układów 
+zgodnych z założoną specyfikacją na rynku. 
 \par Wynikowo zdecydowano się na wykorzystanie układu 
-odwracającej pompy ładunków. Układ spełnia wszystkie założenia projektowe i 
-jest wydajny prądowo (maksymalny pobierany prąd równy 100 mA), minusem
-jednak jest mała dokładność napięcia wyjściowego z fluktuacjami, 
-opisanymi zależnością
-\begin{equation}
-    U_{r,p-p} \approx \frac{I_{out}}{C_{out}}(\frac{1}{f_{osc}} - t_{on})
-\end{equation}
-W wykorzystywanym trybie pracy $t_{on} = 1 \text{ }\mu$s, $f_{osc} = 500$ kHz,
-$I_{out} = 100$ mA i $C_{out} = 10 \text{ }\mu$ F, więc przewidywana aplituda
-wyjściowych fluktuacji wyniesie 10 mV.
-
-\par Dopuszczenie takiego napięcia na wzmacniacze w sekcji analogowej jest niedopuszczalne, 
+odwracającej pompy ładunków, który spełnia wszystkie założenia projektowe i 
+jest wydajna prądowo (maksymalny pobierany prąd równy 100 mA). 
+Minusem układu jest mała dokładność napięcia wyjściowego z fluktuacjami, które
+według dokumentacji dla wybranego trybu pracy wyniosą 10 mV. Dodatkowo, 
+układ generuje spadek napięcia w zależności od wyjściowego prądu, 
+który w przypadku 30 mA wyniesie około 750 mV.
+Dopuszczenie takiego napięcia na wzmacniacze 
+w sekcji analogowej jest niedopuszczalne, 
 między innymi zważając na wskaźnik PSRR, który dla wybranych wzmacniaczy wynosi
 około 40 dB dla częstotliwości 500 kHz oraz niską dokładność. 
 W związku z tym, napięcie wyjściowe pompy ładunków należy
@@ -291,7 +288,7 @@ wartości dobierane były według not aplikacyjnych producenta przedstawiono na 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/hw/split.png}
+    \includegraphics[width=0.95\textwidth]{graf/hw/split.png}
     \caption{Symetryzacja szyn zasilających}
     \label{hw::split}
 \end{figure}
@@ -301,7 +298,8 @@ wartości dobierane były według not aplikacyjnych producenta przedstawiono na 
 Celem sekcji jest wygenerowanie napięcia równego 5 V, będącego zasilaniem
 przetworników cyfrowo-analogowych oraz wybranej platformy obliczeniowej.
 Maksymalne zapotrzebowanie prądowe tych elementów wynosi odpowiednio 200 $\mu$A 
-(100 $\mu$A na układ) oraz około 2 A. Wykorzystywana jednostka obliczeniowa 
+(100 $\mu$A na układ wzmacniacza) oraz około 2 A na platformę. 
+Wykorzystywana jednostka obliczeniowa 
 posiada własną sekcję stabilizacji i filtracji napięcia wejściowego, a wybrane 
 przetworniki cyfrowe-analogowe, w przeciwieństwie 
 do analogowo-cyfrowych, generują wyjście na podstawie dodatkowego sygnału 
@@ -445,19 +443,19 @@ jest jako stosunek wzmocnienia różnicowego do wzmocnienia sygnału zgodnego
 \cite{bib:art}. Dla wykorzystywanych wzmacniaczy powyżej częstotliwości 100 kHz, 
 CMRR osiąga wartość około 80 dB.
 \par Zaprojektowany filtr jest dolnoprzepustowym filtrem RC pierwszego rzędu, którego
-opisuje następująca zależność \cite{bib:tietze}:
+opisuje następująca zależność \cite{bib:tietze}
 \begin{equation}
     U_{wy}(s) = U_{we}(s)\frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{R + \frac{1}{Cs}}
         \implies K(s) = \frac{1}{RCs + 1}
     \label{eq::rc}
 \end{equation}
-Stała czasowa $\tau$ oraz częstotliwość odcięcia 3 dB dane są zależnościami:
+Stała czasowa $\tau$ oraz częstotliwość odcięcia 3 dB dane są zależnościami
 \begin{equation}
     \tau = RC, \quad f_c = \frac{1}{2\pi RC}
 \end{equation}
 Dobierając $R = 2$ k$\Omega$ i $C = 10$ nF uzyskano $f_c \approx 7.957$ kHz.
-
-\par Poza filtrem, w sekcji zaimplementowano saturację w postaci
+\newpage
+Poza filtrem, w sekcji zaimplementowano saturację w postaci
 ogranicznika diodowego ograniczającego amplitudy sygnału wejściowego do 
 limitu +12 V. Omawiany układ przedstawiono na rysunku \ref{hw::emif}
 
@@ -477,7 +475,7 @@ na rysunku \ref{hw::op_diff}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{graf/hw/op_diff.png}
+    \includegraphics[width=0.5\textwidth]{graf/hw/op_diff.png}
     \caption{Wzmacniacz różnicowy}
     \label{hw::op_diff}
 \end{figure}
@@ -485,26 +483,26 @@ na rysunku \ref{hw::op_diff}.
 \par Zależność opisująca układ opiera się na wykorzystaniu zasady superpozycji.
 Równanie opisujące wyjście w układu w stosunku do wejścia odwracającego przy
 wirtualnie wyzerowanym wejściu nieodwracającym jest zależnością opisującją
-wzmocnienie wzmacniacza w topologi odwracającej, opisaną jako \cite{bib:tietze}:
+wzmocnienie wzmacniacza w topologi odwracającej \cite{bib:tietze}, opisaną jako
 \begin{equation}
     U_{-,wy} = -U_{-,we}\left(\frac{R_f}{R_{1}}\right)
     \label{eq::op_diff_inv}
 \end{equation}
 Wyjście wzmacniacza w stosunku do wejścia nieodwracającego
-przy wirtualnie wyzerowanym wejściu odwracającym jest zależnościa opisującą 
+przy wirtualnie wyzerowanym wejściu odwracającym jest zdefiniowane zależnością opisującą
 wzmacniacz w topologi nieodwracającej w połączeniu z dzielnikiem występującym
-na wejściu nieodwracającym:
+na wejściu nieodwracającym
 \begin{equation}
     U_{+,wy} = U_{+,we}\left(\frac{R_3}{R_2 + R_3}\right)\left(1 + \frac{R_f}{R_1}\right)
     \label{eq::op_diff_ninv}
 \end{equation}
-Korzystając z zasady superpozycji otrzymuje się:
+Korzystając z zasady superpozycji otrzymuje się
 \begin{equation}
     U_{wy} = U_{+, we} - U_{-,wy} = U_{+,we}\left(\frac{R_3}{R_2 + R_3}\right)\left(1 + \frac{R_f}{R_1}\right)
     - U_{-,we}\left(\frac{R_f}{R_{1}}\right)
     \label{eq::op_diff}
 \end{equation}
-Dla $R_1 = R_2$ i $R_3 = R_f$ równanie \ref{eq::op_diff} upraszcza się do postaci:
+Dla $R_1 = R_2$ i $R_3 = R_f$ równanie \ref{eq::op_diff} upraszcza się do postaci
 \begin{equation}
     U_{wy} = \frac{R_f}{R_1}(U_{+,we} - U_{-,we})
 \end{equation}
@@ -516,8 +514,8 @@ na rysunku \ref{hw::preamp}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{graf/hw/preamp.png}
-    \caption{Przedwzmacniacz}
+    \includegraphics[width=0.4\textwidth]{graf/hw/preamp.png}
+    \caption{Wzmocnienie różnicowe}
     \label{hw::preamp}
 \end{figure}
 
@@ -527,7 +525,7 @@ Jako, że pasmo interesujących częstotliwości, wynikających z założeń pro
 zamyka się w 500 Hz, zdecydowano się na implementację analogowego filtru
 Butterwortha szóstego rzędu o częstotliwości graniczej $f_c = 500$ Hz.
 Filtr ten spełnia rolę filtru antyaliasingowego,
-umożliwijąc próbkowanie wynikające z twierdzenia Nyquista-Shannona \cite{bib:lyons}:
+umożliwijąc próbkowanie \cite{bib:lyons} wynikające z twierdzenia Nyquista-Shannona 
 \begin{equation}
     f_p > 2f_s
 \end{equation}
@@ -535,7 +533,7 @@ umożliwijąc próbkowanie wynikające z twierdzenia Nyquista-Shannona \cite{bib
 Dla $f_s = f_g = 500$ Hz sygnał może zostać spróbkowany z częstotliwościami
 większymi niż 1 kHz.
 \par Projektując układ posłużono się topologią Sellena-Keya z jednostkowym
-wzmocnieniem, którą przedstawiono na rysunku \ref{hw::sellen_key}.
+wzmocnieniem \cite{bib:tietze}, którą przedstawiono na rysunku \ref{hw::sellen_key}.
 
 \begin{figure}[H]
     \centering
@@ -545,19 +543,19 @@ wzmocnieniem, którą przedstawiono na rysunku \ref{hw::sellen_key}.
 \end{figure}
 
 Transmitancję takiego układu, będącego aktywnym filtrem dolnoprzepustowym
-drugiego rzędu opisuje zależność \cite{bib:tietze}:
+drugiego rzędu opisuje
 \begin{equation}
     K_f(s) = \frac{1}{b_1s^2 + a_1s + 1}
     \label{eq::filter}
 \end{equation}
-gdzie:
+gdzie
 \begin{equation}
     b_1 = R_1R_2C_1C_2, \quad a_1 = C_1(R_1 + R_2)
     \label{eq::ba}
 \end{equation}
 
 Transmitancję filtru szóstego rzędu można zapisać jako iloczyn trzech filtrów
-\ref{eq::filter}:
+\ref{eq::filter}
 \begin{equation}
     K(s) = K_1(s)K_2(s)K_3(s) = \prod_{i = 1}^{3} \frac{1}{(b_is^2 + a_is + 1)}
     \label{eq::ffilter}
@@ -566,7 +564,7 @@ Transmitancję filtru szóstego rzędu można zapisać jako iloczyn trzech filtr
 Z wykorzystaniem funkcji wspomagających projektowanie filtrów analogowych 
 języka programowania Python (biblioteka SciPy, funkcje \textit{signal.butter} i 
 \textit{signal.zp2tf}) uzyskano wartości współczynników transmitancji 
-\ref{eq::ffilter} dla $f_c = 500$ Hz:
+\ref{eq::ffilter} dla $f_c = 500$ Hz
 \begin{equation}
     b_1 = b_2 = b_3 = 1.0132\text{e-07}
 \end{equation}
@@ -584,12 +582,12 @@ języka programowania Python (biblioteka SciPy, funkcje \textit{signal.butter} i
 
 Mając policzone współczynniki transmitancji \ref{eq::ffilter}, 
 z równań \ref{eq::ba} można obliczyć wartości poszczególnych elementów układu.
-Dla przyjętych pojemności wartości rezystancji określone są zależnościami:
+Dla przyjętych pojemności wartości rezystancji określone są zależnościami
 \begin{equation}
-    R_{1,2} = \frac{C_2a_i \pm \sqrt{C_2(C_2a^2_i - 4C_1b_i)}}{2C_1C_2}, 
+    R_{1_{i},2_{i}} = \frac{C_2a_i \pm \sqrt{C_2(C_2a^2_i - 4C_1b_i)}}{2C_1C_2}, 
     \qquad \text{dla } i = 1,2,3
 \end{equation}
-Dla następujących rzeczywistych wartości pojemności:
+Dla następujących rzeczywistych wartości pojemności
 \begin{equation}
     \textbf{C} = \begin{bmatrix}
         C_{1,1} & C_{1,2} \\
@@ -601,7 +599,7 @@ Dla następujących rzeczywistych wartości pojemności:
         560\text{e-12} & 22\text{e-09}
     \end{bmatrix} \text{ F}
 \end{equation}
-otrzymano następujące teoretyczne wartości rezystancji:
+otrzymano następujące teoretyczne wartości rezystancji
 \begin{equation}
         \textbf{R} = \begin{bmatrix}
             R_{1,1} & R_{1,2} \\
@@ -645,7 +643,7 @@ jest dodanie do niego składowej stałej, będącej środkiem zakresu przetworni
 przedstawionego na rysunku \ref{hw::op_diff}, z modyfikacją wykluczającą 
 dzielnik napięciowy złożony z rezystorów $R_1$ i $R_2$. To implikuje zmianę równania 
 \ref{eq::op_diff_ninv} na klasyczną zależność opisującą wzmocnienie wzmacniacza w topologii 
-nieodwracającej \cite{bib:tietze}:
+nieodwracającej \cite{bib:tietze}
 \begin{equation}
     U_{+,wy} = U_{+,we}\left(1 + \frac{R_f}{R_1}\right)
     \label{eq::op_ninv}
@@ -653,20 +651,21 @@ nieodwracającej \cite{bib:tietze}:
 Zależność opisująca wyjście ze względu na wejście $U_{-,we}$
 pozostaje niezmienna.
 \par Zważając na powyższe, wyjście układu wynikające z zasady superpozycji jest
-opisane zmodyfikowaną zależnością \ref{eq::op_diff}:
+opisane zmodyfikowaną zależnością \ref{eq::op_diff}
 \begin{equation}
     U_{wy} = U_{+, we} - U_{-,wy} = U_{+, we}\left(1 + \frac{R_f}{R_1}\right) - 
         U_{-, we}\left(\frac{R_f}{R_1}\right)
 \end{equation}
 
-Dla arbitralnej wartości $R_f = R_1$ otrzymuje się:
+Dla arbitralnej wartości $R_f = R_1$ otrzymuje się
 \begin{equation}
     U_{wy} = 2U_{+, we} - U_{-, we}
     \label{eq::offset}
 \end{equation}
 
 Chcąc uzyskać stałe przesunięcie sygnału $U_{-, we}$ o środek zakresu 
-przetwornika $U_c = 2.5$ V uzyskuje się warunek na pierwszy składnik równania \ref{eq::offset}:
+przetwornika $U_c = 2.5$ V uzyskuje się warunek na pierwszy składnik 
+równania \ref{eq::offset}
 \begin{equation}
     2U_{+,we} = 2.5 \text{ V} \implies U_{+, we} = 1.25 \text{ V}
 \end{equation}
@@ -674,11 +673,11 @@ przetwornika $U_c = 2.5$ V uzyskuje się warunek na pierwszy składnik równania
 Jak można zauważyć z równiania \ref{eq::offset} sygnał $U_{-, we}$ zostaje 
 w tym etapie odwrócony. Omawiany układ wraz z kondensatorem
 pełniącym rolę lokalnego bufora składowej stałej przedstawiono
-na rysunku \ref{hw::offset}:
+na rysunku \ref{hw::offset}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{graf/hw/offset.png}
+    \includegraphics[width=0.51\textwidth]{graf/hw/offset.png}
     \caption{Układ pozycjonujący}
     \label{hw::offset}
 \end{figure}
@@ -686,7 +685,7 @@ na rysunku \ref{hw::offset}:
 \subsection{Filtr końcowy i saturacja}
 
 \par Bezpośrednio przed wejściem przetwornika dołączono
-dodatkowy filtr dolnoprzepustowy RC pierwszego rzędu \label{eq::rc}, odcinający
+dodatkowy filtr dolnoprzepustowy RC pierwszego rzędu \ref{eq::rc}, odcinający
 możliwe szumy powstałe w wyniku zastosowanych wzmacniaczy operacyjnych oraz
 zapewniający lokalny bufor energii dla kondensatora próbkującego 
 wewnątrz przetwornika. Wymagania na taki filtr nie są surowe, ponieważ
@@ -764,11 +763,18 @@ zaimplementowanego w topologii nieodwracającej \ref{eq::op_ninv}.
 Z racji, że wykorzystywane głośniki posiadają regulację głośności, jedynym
 obligatoryjnym wymaganiem przy doborze wzmocnienia układu jest uniknięcie 
 saturacji wyjścia, które ograniczone jest przez symetryczne zasilanie 
-układu, równe $\pm$12 V. W związku z tym, zdecydowano się wzmocnienie 
-$k = 3$ poprzez zastosowanie 
-rezystorów $R_1 = 6$ k$\Omega$ i $R_f = 18$ k$\Omega$. Taki wybór skutkuje
+układu, równe $\pm$12 V. W związku z tym, zdecydowano się wzmocnienie $k = 3$ poprzez 
+zastosowanie rezystorów $R_1 = 6$ k$\Omega$ i $R_f = 18$ k$\Omega$. Taki wybór skutkuje
 $U_{wy} = 7.5$ V dla $U_{we} = 2.5$ V, czyli górnego zakresu przetwornika, co daje
-zalecane dla tego układu 4 V zapasu.
+zalecane dla tego układu 4 V zapasu. Omawiany układ przedstawiono na rysunku
+\ref{hw::gain_out}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{graf/hw/gain_out.png}
+    \caption{Wzmocnienie sekcji wyjściowej}
+    \label{hw::gain_out}
+\end{figure}
 
 \subsection{Filtracja rekonstrukcyjna}
 
@@ -793,7 +799,7 @@ odpowiednika w torze sygnału nieodwróconego (+). Układy sterujące wyjściem
 tej sekcji, czyli odpowiednio ostatni wzmacniacz w układzie filtra
 dla sygnału nieodwróconego (+) oraz wzmacniacz odwracający dla sygnału
 odwróconego (-) mogą zachowywać się znacząco inaczej.
-\par Możliwym rozwiązaniem byłoby dodanie wtórnika napięciowego w ścieżce 
+Możliwym rozwiązaniem byłoby dodanie wtórnika napięciowego w ścieżce 
 sygnału nieodwróconego (+), lecz wiązałoby się to z dodatkowymi wzmacniaczami 
 operacyjnymi na kanał wyjściowy. Jako, że wykorzystywanych wzmacniaczy na tym
 etapie jest już stosunkowo dużo (pięc na kanał), z pomysłu zrezygnowano, mając
@@ -801,7 +807,7 @@ etapie jest już stosunkowo dużo (pięc na kanał), z pomysłu zrezygnowano, ma
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{graf/hw/synch.png}
+    \includegraphics[width=0.35\textwidth]{graf/hw/synch.png}
     \caption{Układy sterujące wyjściem analogowym}
     \label{hw::synch}
 \end{figure}
@@ -823,7 +829,7 @@ Omawianą część schematu przedstawiono na rysunku \ref{hw::out_filter}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/hw/out_filter.png}
+    \includegraphics[width=0.5\textwidth]{graf/hw/out_filter.png}
     \caption{Filtracja końcowa toru analogowego}
     \label{hw::out_filter}
 \end{figure}
@@ -1067,15 +1073,17 @@ na zgodność transferów. Tryb I$^2$S jest konfigurowany globalnie dla całego
 interfejsu McASP, co oznacza, że konwencja zapisu na zbocze narastające, odczytu
 na opadające oraz ilości bitów na transfer 
 zostaje przyjęta przez wszystkie linie danych.
-
 Diagram połączeń sekcji przetworników przedstawiono na rysunku \ref{hw::adc_dac}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/hw/adc_dac.png}
+    \includegraphics[width=0.9\textwidth]{graf/hw/adc_dac.png}
     \caption{Diagram połączeń sekcji przetworników}
     \label{hw::adc_dac}
 \end{figure}
+
+Wykorzystane przetworniki w obu przypadkach posiadają rozdzielczość 16 bitów, 
+więc zapewniony jest wspólny format przetwarzanych danych.
 
 \subsubsection{Przetworniki analogowo-cyfrowe}
 
@@ -1104,8 +1112,7 @@ odbywa się na zboczach narastających,
 licząc od momentu wystąpienia zbocza opadającego na selektorze. Wartość 
 wyjściowa wystawiana jest w momencie wystąpienia zbocza narastającego na selektorze i 
 jeżeli transfer jest dłuższy niż 16 bitów, dodatkowe wartości są ignorowane.
-Umożliwia to komunikację z przetwornikiem transferami dłuższymi niż 16 bitów,
-co jest wymaganiem przy wykorzystaniu wcześniej opisanych przetworników analogowo-cyfrowych.
+Umożliwia to komunikację z przetwornikiem transferami dłuższymi niż 16 bitów.
 Przetwornik poza zasilaniem o wartości +5 V wymaga napięcia referencyjnego, 
 które defniniuje wartości wyjściowe i zakres. Jako napięcie referencyjne 
 wykorzystano również +5 V. 
@@ -1157,8 +1164,8 @@ podążać się szeregiem zasad projektowych
     krótszą drogą oraz stabilniejszą masą (brak spadków związanych ze szybkim
     przełączaniem sygnałów cyfrowych).
 
-    \item Powroty sygnałów i rozmieszczenie elementów - jest kwestią znacząco wpływającą na rozmieszczenie
-    elementów. Sygnały najczęściej, jeżeli pod lub nad jest warstwa odniesienia,
+    \item Powroty sygnałów i rozmieszczenie elementów - sygnały najczęściej, jeżeli pod lub
+     nad jest warstwa odniesienia,
     jako drogę powrotną wybiorą tą bezpośrednio pod lub nad ścieżką sygnałową,
     ponieważ jest to dla nich droga o najmniejszej induktancji \cite{bib:ott}.
     Mając to na uwadze, elementy i przelotki należy układać tak, aby nie zaburzać
@@ -1233,7 +1240,7 @@ podążać się szeregiem zasad projektowych
     znacznie lepiej byłoby, gdyby warstwy sygnałowe umieścić bliżej ich warst
     odniesienia, tak, aby również spełnić trzecią.
 
-    \item Terminatory -  należy stosować 
+    \item Terminatory - należy stosować 
     w celu kontroli impedancji ścieżek transmisyjnych.
     Dla szybkozmiennych sygnałów i długich ścieżek z powodu
     pojemności i idukcyjności pasożytniczych w torze mogą wystąpić
@@ -1247,8 +1254,8 @@ podążać się szeregiem zasad projektowych
     \item Pola masowe - puste powierzchnie na warstwach sygnałowych należy wypełniać
     masą i łączyć przelotkami z warstwą masy (jeżeli jest). Przy układaniu
     przelotek należy uważać, żeby nie stworzyć odciętych od reszty
-    powierzchni (ang. \textit{slot}), powodujących problematyczne powroty,
-    które przedstawiono na rysunku \ref{hw::returns_0}. Wypełnienie masą tworzy ekran jak
-    i również może zapewniać dodatkowe drogi powrotów dla sygnałów.
+    powierzchni (slotów), powodujących problematyczne powroty,
+    które przedstawiono na rysunku \ref{hw::returns}. Wypełnienie masą tworzy ekran jak
+    i również może zapewniać dodatkowe drogi powrotne dla sygnałów.
     
 \end{enumerate}

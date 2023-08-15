@@ -10,7 +10,16 @@ oprogramowania. Sprzęt ma być prosty w obsłudze i możliwe odporny
 na błędy użytkownika, a struktura oprogramowania powinna udostępniać
 zestaw narzędzi pozwalających na łatwy proces prototypowania, symulacji, 
 komplilacji i ostatecznie wdrożenia zaimplementowanego rozwiązania.
-
+\par Jednym z głównych aspektów, który zostanie zweryfikowany w końcowych
+etapach pracy, jest wpływ wybranych rozszerzeń czasu rzeczywistego jądra Linux
+na proces aktywnego tłumienia hałasu. Systemy ANC wymagają przetwarzania
+sygnałów w czasie rzeczywistym i kluczową rolę w efektywności ich działania 
+odgrywa prędkość i precyzja, z którą dane są przetwarzane. Autor ma zamiar sprawdzić,
+czy takie systemy mają szansę działać pod kontrolą systemu operacyjnego,
+któremu daleko do systemu czasu rzeczywistego i czy rozszerzenia, o których
+wspomniano wcześniej, są w stanie pomóc, polepszając efektywność działania
+procesu. Jeżeli są w stanie pomóc, to jaki jest koszt takiej pomocy i jak 
+wpływa na ogólny proces działania platformy.
 \par Autorowi pracy zależy, żeby wykonany projekt miał jak najszersze 
 horyzonty edukacyjne. W związku z tym, platforma sprzętowa, poza wykorzystaną
 jednostką obliczeniową, zostanie zaprojektowana i sporządzona samodzielnie w 
@@ -20,7 +29,7 @@ realizujące algorytmy będącymi znaczącymi elementami pracy.
 Wykorzystanie zewnętrznych bibliotek zostanie zamknięte na poziomie 
 prototypowania i symulacji. Dodatkowo postanowiono, że wykorzystane narzędzia wspomagające
 proces projektowania sprzętu jak i implementacji oprogramowania będą 
-na licencjach otwartego oprogramowania.
+dystrybuowane na licencjach otwartego oprogramowania.
 
 \subsection{Część sprzętowa}
 
@@ -41,7 +50,7 @@ na licencjach otwartego oprogramowania.
     poprzez wybrany protokół cyfrowy, przez który przesyłane będą przekonwertowane
     z użyciem osadzonych na płytce przetworników analogowo-cyfrowych 
     do domeny cyfrowej wejściowe, pochodzące z mikrofonów, sygnały analogowe, 
-    oraz końcowo trafiające na głośniki dane wyjściowe do przetworników 
+    oraz końcowo trafiające na głośniki, dane wyjściowe do przetworników 
     cyfrowo-analogowych.
 
     \item Zapewnienie odpowiednich zasilań dla sekcji analogowych oraz cyfrowych
@@ -67,7 +76,7 @@ z których można wyróżnić:
 
 Poza sekcjami znajdującymi się na projektowanej płytce drukowanej, 
 w skład wykorzystywanego sprzętu wchodzić będą urządzenia zewnętrzne, czyli
-dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
+dwa mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
 
 \subsubsection{Wymagania sekcji zasilania}
 
@@ -96,13 +105,13 @@ dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
 \begin{enumerate}
 
     \item Obsłużenie symetrycznych wejść sygnałowych z mikrofonów
-    oraz ich konwersję do odpowiednio wzmocnionej sumy. 
+    oraz ich konwersję do odpowiednio wzmocnionej sumy.
 
     \item Filtrację dolnoprzepustową, ograniczającą pasmo sygnału wejściowego
     do przedziału zainteresowań, mieszczącego się w zakresie od 50 do 500 Hz.
 
     \item Odpowiednie wyskalowanie przetworzonego sygnału, aby mieścił się
-    w pełnym zakresie dynamicznym przetworników analogowo-cyfrowych.
+    w pełnym zakresie dynamicznym wybranych przetworników analogowo-cyfrowych.
 
     \item Zabezpieczenie przetworników analogowo-cyfrowych 
     przed uszkodzeniem, poprzez zastosowanie odpowiednich układów 
@@ -114,9 +123,10 @@ dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
 
 \begin{enumerate}
 
-    \item Odpowiednie przetworzenie sygnału wyjściowego pochodzącego
-    z przetworników cyfrowo-analogwych, opierające się na skalowaniu i filtracji
-    rekonstrukcyjnej.
+    \item Obsłużenie wyjść przetworników cyfrowo-analogowych.
+
+    \item Odpowiednie przetworzenie sygnału wyjściowego, 
+    opierające się na skalowaniu i filtracji rekonstrukcyjnej.
 
     \item Przekształcenie wyjściowego sygnału na symetryczną parę,
     zdefiniowaną przez standard złącza XLR.
@@ -136,6 +146,9 @@ dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
 
     \item Jak najmniejsze opóźnienia wynikające z konwersji.
 
+    \item Identyczny format danych, pozwalający na globalną konfigurację
+    protokołu według jednej wytycznej.
+
 \end{enumerate}
 
 \subsubsection{Wymagania protokołu cyfrowego}
@@ -152,13 +165,18 @@ dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
     lub odpowiednią konfigurację selektorów (CS), ewentulanie selektora (FS), 
     jeżeli zostaną wykorzystane pojedyncze linie danych na kanał.
 
+    \item Konfigurowalność. Możliwość zmian częstotliwości zegarów, co 
+    implikuje wpływ na częstotliwość próbkowania, jak i 
+    sposobu, w jaki dane są czytane/zapisywane, czyli na jakie zbocza zegarów
+    odbywa się zapis/odczyt.
+
 \end{enumerate}
 
 \subsubsection{Wymagania mikrofonów}
 
 \begin{enumerate}
 
-        \item Stosunkowo niska cena i wysoka dostępność.
+        \item Niska cena i wysoka dostępność.
 
         \item Typ - standardem w omawianej tematyce są mikrofony pojemnościowe.
         Znane są z wysokiej czułości i płaskiej charakterystki częstotliwościowej, jednak
@@ -182,6 +200,8 @@ dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
 
 \begin{enumerate}
 
+        \item Rozsądna cena i dobra dostępność.
+
         \item Z racji, że zrezygnowano z projektowania końcówki mocy, wymagany 
         jest wbudowany wzmacniacz. Innymi słowy, zestawy muszą być aktywne.
     
@@ -189,10 +209,12 @@ dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
         wymagane jest wsparcie dla tonów niskich. Innymi słowy, na wyposażeniu zestawu
         musi być głośnik niskotonowy (ang. \textit{woofer}), zdolny do emisji
         sygnałów akustycznych o niskiej częstotliwości.
+
+        \item Rozsądny rozmiar, pozwalający na manipulację położeniem i kierunkiem.
     
         \item Z uwagi na zakres poziomu akustycznego analizowanych sygnałów, 
         zestaw musi być zdolny do osiągnięcia jego górnego limitu, czyli użytecznego 
-        90 dB SPL.
+        100 dB SPL.
 
 \end{enumerate}
 
@@ -204,7 +226,7 @@ dwa mikrofony, dwa zestawy głośnikowe oraz platforma obliczeniowa.
 
     \item Dostępny kompilator języka C.
 
-    \item Możliwość instalacji dystrybucji systemu operacyjnego GNU/Linux.
+    \item Możliwość instalacji wybranej dystrybucji systemu operacyjnego GNU/Linux.
 
     \item Wsparcie sprzętowe dla wybranego protokołu cyfrowego.
 
@@ -225,7 +247,10 @@ port szeregowy oraz złącze Ethernet.
     \item Pełna kontrola nad wykorzystywanym protokołem cyfrowym.
     Możliwość jednoczesnego odczytu z dwóch kanałów wejściowych,
     zapisu do dwóch kanałów wyjściowych, konfiguracji częstotliwości 
-    głównego zegara (MCLK) oraz zachowania selektorów/selektora (CS/FS).
+    głównego zegara oraz zachowania selektorów/selektora.
+
+    \item Pełna kontrola nad sporządzoną elektroniką poprzez wykorzystany
+    protokół cyfrowy.
 
     \item Realizacja filtracji cyfrowej oraz algorytmu FXLMS.
 
@@ -251,14 +276,18 @@ użytkownika oraz odpowiednio skonfigurowany system operacyjny.
 \begin{enumerate}
 
     \item Wsparcie dla wybranego interfejsu cyfrowego w postaci
-    sterownika jądra.
+    modułu jądra.
+
+    \item Możliwość interakcji ze sporządzoną elektorniką poprzez 
+    moduł jądra wybranego interfejsu cyfrowego lub osobny sterownik
+    reprezentujący sporządzoną płytkę.
 
     \item Zapewnienie zestawu bibliotek pozwalających na komunikację 
-    wybranym interfejsem cyfrowym przez sterownik jądra z poziomu 
+    wybranym interfejsem cyfrowym przez moduł jądra z poziomu 
     aplikacji działającej w trybie użytkownika.
 
-    \item Minimalizacja opóźnień wynikających z synchronizacji procesów
-    oraz buforowania danych.
+    \item Wpływ na opóźnienia wynikające z synchronizacji procesów, 
+    buforowania danych oraz czasu przetwarzania.
 
     \item Obecność narzędzi ułatwiających ogólną prace w systemie
     (edytor tekstowy, obsługa internetu, debugger) oraz pozwalających na 
@@ -266,20 +295,20 @@ użytkownika oraz odpowiednio skonfigurowany system operacyjny.
 
 \end{enumerate}
 
-Jako, że GNU/Linux nie jest systemem operacyjnym czasu rzeczywistego, do 
-realizacji trzeciego punktu wymagań niezbędnie będzie wykorzystanie rozszerzeń,
-umożliwiających lepszą kontrolę nad przydziałem priorytetów, planowaniem i 
-czasem wykonywania zadań. Rozszerzenia, o których mowa przyjęło się 
-nazywać rozszerzeniami czasu rzeczywistego, jednak należy mieć na uwadze,
-że wykorzystywany system operacyjny nigdy taki nie będzie bez wykorzystania
-zewnętrznych lub dodatkowych rozszerzeń sprzętowych, które nie są tematem pracy.
-
 \subsubsection{Wymagania aplikacji}
 
 \begin{enumerate}
 
+    \item Programowa obsługa sporządzonej elektroniki za pośrednictwem
+    bibliotek komunikujących się z odpowiednimi modułami jądra.
+
+    \item Możliwość symulacji źródła hałasu poprzez generację odpowiedniego
+    sygnału w trakcie działania pętli ANC.
+
     \item Odpowiednio szybkie przetwarzanie danych, zapobiegające 
-    nieciągłościom transferów.
+    nieciągłościom transferów i destabilizacji pętli ANC.
+
+    \item Wykorzystanie rozszerzeń czasu rzeczywistego. 
 
     \item Wykorzystanie możliwych realizacji sprzętowych określonych operacji
     (FPU, SIMD).
@@ -288,8 +317,22 @@ zewnętrznych lub dodatkowych rozszerzeń sprzętowych, które nie są tematem p
 
 \section{Architektura systemu}
 
-Bazując na założeniach projektowych, diagram architektury zaprojektowanego 
-systemu przedstawiono na rysunku \ref{impl::top}:
+Tak jak opisywano w sekcji dotyczącej teoretycznej analizy tematu, 
+wybraną strukturą jest ANC ze sprzężeniem w przód
+dla hałasów szerokopasmowych. 
+Układ elektroniczny, uogólniony na schemacie \ref{analysis::scheme_0} jak 
+blok \textbf{ANC}
+został podzielony na dwie części, stale 
+komunikujące się ze sobą po określonym interfejsie cyfrowym, zapewniającym
+synchronizację przetworników oraz przesyłanie i odbieranie danych będących
+cyfrowymi odpowiednikami sygnałów analogowych występujących w systemie.
+Sporządzona płytka drukowana, będąca częścią sprzętową projektu, traktowana 
+jest przez platformę obliczeniową jak zewnętrzna karta pomiarowa obsługująca
+dwa kanały wejściowe i dwa kanały wyjściowe. Dodatkowy kanał wyjściowy 
+umożliwia generację hałasu, co pozwala na przeprowadzenie testów i badań
+bez obecności rzeczywistego źródła.
+\par Diagram architektury zaprojektowanego 
+systemu przedstawiono na rysunku \ref{impl::top} 
 
 \begin{figure}[H]
     \centering
@@ -298,21 +341,7 @@ systemu przedstawiono na rysunku \ref{impl::top}:
     \label{impl::top}
 \end{figure}
 
-Tak jak opisywano w sekcji dotyczącej teoretycznej analizy tematu, 
-wybraną strukturą jest ANC ze sprzężeniem w przód
-dla hałasów szerokopasmowych 
-(ang. \textit{broadband feedforward active noise control}).
-Układ elektroniczny został podzielony na dwie części, stale 
-komunikujące się ze sobą po określonym interfejsie cyfrowym, zapewniającym
-synchronizację przetworników oraz przesyłającym i odbierającym
-cyfrowe odpowiedniki sygnałów analogowych występujących w systemie.
-Sporządzona płytka drukowana, będąca częścią sprzętową projektu, traktowana 
-jest przez platformę obliczeniową jak zewnętrzna karta pomiarowa obsługująca
-dwa kanały wejściowe i dwa kanały wyjściowe. Dodatkowy kanał wyjściowy 
-umożliwia generację hałasu, co pozwala na przeprowadzenie testów i badań
-bez obecności rzeczywistego źródła. 
-
-\par Aplikacja działająca w trybie użytkownika komunikuje się z jądrem 
+Aplikacja działająca w trybie użytkownika komunikuje się z jądrem 
 poprzez biblioteki systemowe, komunikujące się z odpowiednimi sterownikami
 wspierającymi obsługę wybranego protokołu cyfrowego
 oraz bezpośrednie wywołania (ang. \textit{syscall}). 
@@ -320,7 +349,7 @@ Jądro, poprzez wykorzystanie planisty (ang. \textit{scheduler})
 zarządza i kontroluje alokację zasobów procesora platformy obliczeniowej 
 potrzebnych do wykonywania procesów, wśród których wyróżniony jest proces
 zaimplementowanej aplikacji. Dzięki wykorzystanym rozszerzeniom czasu 
-rzeczywistego aplikacja, ma bezpośredni wpływ na przydzielone zasoby, 
+rzeczywistego aplikacja ma bezpośredni wpływ na przydzielone zasoby, 
 głównie priorytet, sposób wywłaszczania i realizacji przerwań.
 Wpływ aplikacji na sposób zarządzania jądra może zostać wykorzystany
 do minimalizacji opóźnień występujących w torze cyfrowym, wynikających
@@ -329,12 +358,13 @@ z zastosowania systemu operacyjnego, nie będącego systemem czasu rzeczywistego
 \section{Wykorzystane narzędzia}
 
 Tak jak opisywano w głównych założeniach projektowych, wykorzystane narzędzia
-programowe oparte są na licencjach otwartego oprogramowania. 
+programowe oparte są na licencjach otwartoźródłowych. 
 Spośród nich można wyróżnić:
 
 \begin{itemize}
     \item KiCAD - wykorzystane EDA (ang. \textit{Electronic Design Automation}).
-    \item Język programowania Python - wykorzystywany do prototypowania i symulacji.
+    \item Język programowania Python - wykorzystywany do prototypowania, symulacji
+    i wizualizacji danych.
     \item Język programowania C - wykorzystany do implementacji.
     \item GCC - jako zestaw kompilatorów.
     \item CMake i GNU Make - jako systemy budowania.
