@@ -10,8 +10,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-enum signal_type
-{
+enum signal_type {
         SIGNAL_TYPE_SINE = 0u,
         SIGNAL_TYPE_SQUARE,
         SIGNAL_TYPE_TRIANGLE,
@@ -19,20 +18,20 @@ enum signal_type
         SIGNAL_TYPE_NOISE,
 };
 
-struct signal
-{
+struct signal {
         float amplitude;
         float frequency, sampling_frequency, phase;
         enum signal_type type;
 };
 
 void signal_initialize_noise(void);
-void signal_generate(struct signal* const self, float* const buffer, size_t size);
+uint16_t signal_generate(
+        struct signal* const self, uint16_t* const buffer, size_t size);
 
 void signal_generate_sum(
         struct signal* signals[],
         uint8_t num_of_signals,
-        float* const buffer,
+        uint16_t* const buffer,
         size_t size);
 
 #endif /* SIGNAL_H_ */

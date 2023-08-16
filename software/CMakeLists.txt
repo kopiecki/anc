@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.18)
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 set(PROJECT_NAME "anc" CACHE STRING "Project name - Can be overridden by Makefile")
+set(ANC_BUILD_TEST OFF)
 
 project(${PROJECT_NAME} LANGUAGES C CXX ASM)
 set(CMAKE_C_STANDARD 23)

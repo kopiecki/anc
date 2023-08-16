@@ -46,16 +46,18 @@ struct sound_card_s {
         int poll_count;
 };
 
+#if 0
 static inline void sound_card_prepare_buffer_interleaved(
         sound_card_t* const self,
         struct sound_card_task* const task,
-        SAMPLE_FORMAT* const buffer)
+        void* const buffer)
 {
         size_t j = 0u;
         for (size_t i = 0u; i < task->size; i++)
                 for (uint8_t channel = 0u; channel < self->channels; channel++)
                         buffer[j++] = task->sample_buffers[channel][i];
 }
+#endif
 
 static inline snd_pcm_uframes_t sound_card_get_start_threshold(
         sound_card_t* const self)
@@ -202,7 +204,7 @@ static int sound_card_hw_set_format(sound_card_t* const self, int format)
         ASSERT(self != NULL);
 
         int error = snd_pcm_hw_params_set_format(
-                self->pcm_handle, self->pcm_hw_params_handle, SND_PCM_FORMAT_S24);
+                self->pcm_handle, self->pcm_hw_params_handle, format);
         if (error < 0) {
                 LOG_ERROR(
                         "Cannot set PCM device %s format [%s]",
@@ -477,7 +479,7 @@ static int sound_card_hw_configure(
         if (error < 0)
                 return error;
 
-        error = sound_card_hw_set_format(self, SOUND_CARD_FORMAT);
+        error = sound_card_hw_set_format(self, config->format);
         if (error < 0)
                 return error;
 
@@ -676,16 +678,14 @@ static int sound_card_xrun_recovery(sound_card_t* const self, int error)
         return error;
 }
 
-int sound_card_playback(sound_card_t* const self, struct sound_card_task* const task)
+int sound_card_playback(sound_card_t* const self, void* buffer, size_t size)
 {
         ASSERT(self != NULL);
-        ASSERT(task != NULL);
+        ASSERT(buffer != NULL);
 
-        int error                 = 0;
-        snd_pcm_sframes_t sframes = snd_pcm_writen(
-                self->pcm_handle,
-                (void**)(task->sample_buffers),
-                self->period_size_frames);
+        int error = 0;
+        const snd_pcm_sframes_t sframes =
+                snd_pcm_writei(self->pcm_handle, buffer, size);
         if (sframes < 0) {
                 LOG_WARNING("Write error, trying recover...");
                 error = sound_card_xrun_recovery(self, error);
@@ -718,16 +718,14 @@ int sound_card_synchronize(sound_card_t* const playback, sound_card_t* const cap
         return error;
 }
 
-int sound_card_capture(sound_card_t* const self, struct sound_card_task* const task)
+int sound_card_capture(sound_card_t* const self, void* buffer, size_t size)
 {
         ASSERT(self != NULL);
-        ASSERT(task != NULL);
+        ASSERT(buffer != NULL);
 
-        int error                 = 0;
-        snd_pcm_sframes_t rframes = snd_pcm_readn(
-                self->pcm_handle,
-                (void**)(task->sample_buffers),
-                self->period_size_frames);
+        int error = 0;
+        const snd_pcm_sframes_t rframes =
+                snd_pcm_readi(self->pcm_handle, buffer, size);
         if (rframes < 0) {
                 LOG_WARNING("Read error, trying recover...");
                 error = sound_card_xrun_recovery(self, error);

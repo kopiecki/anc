@@ -12,36 +12,32 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define SOUND_CARD_MAX_CHANNEL   2u
-#define SOUND_CARD_FORMAT_UINT16 2
-#define SOUND_CARD_FORMAT_FLOAT  14
-
-#ifndef SOUND_CARD_FORMAT
-#define SOUND_CARD_FORMAT SOUND_CARD_FORMAT_FLOAT
-#define SAMPLE_FORMAT     float
-#endif
+#define SOUND_CARD_MAX_CHANNEL 4u
 
 /* Opaque sound card handle */
 typedef struct sound_card_s sound_card_t;
 
-enum sound_card_stream
-{
+enum sound_card_stream {
         SOUND_CARD_STREAM_PLAYBACK = 0,
         SOUND_CARD_STREAM_CAPTURE,
 };
 
-enum sound_card_access
-{
+enum sound_card_access {
         SOUND_CARD_ACCESS_INTERLEAVED = 3,
         SOUND_CARD_ACCESS_SEPARATE    = 4,
 };
 
-struct sound_card_config
-{
+enum sound_card_format {
+        SOUND_CARD_FORMAT_U16_LE = 4,
+        SOUND_CARD_FORMAT_U24_LE = 8,
+};
+
+struct sound_card_config {
         const char* name;
 
         enum sound_card_stream stream;
         enum sound_card_access access;
+        enum sound_card_format format;
 
         uint32_t rate;
         uint8_t channels;
@@ -53,21 +49,18 @@ struct sound_card_config
         bool blocking;
 };
 
-struct sound_card_task
-{
-        SAMPLE_FORMAT* sample_buffers[SOUND_CARD_MAX_CHANNEL];
+struct sound_card_task {
+        void* sample_buffer;
         size_t size;
-        uint16_t num_of_periods;
 };
 
-sound_card_t* sound_card_construct(
-        const struct sound_card_config* const config);
+sound_card_t* sound_card_construct(const struct sound_card_config* const config);
 void sound_card_destruct(sound_card_t* const this);
 
 int sound_card_get_period_size_bytes(sound_card_t* const this);
 
-int sound_card_capture(sound_card_t* const this, struct sound_card_task* const task);
-int sound_card_playback(sound_card_t* const this, struct sound_card_task* const task);
+int sound_card_capture(sound_card_t* const this, void* buffer, size_t size);
+int sound_card_playback(sound_card_t* const this, void* buffer, size_t size);
 
 int sound_card_synchronize(sound_card_t* const playback, sound_card_t* const capture);
 

@@ -23,7 +23,7 @@ static inline float signal_normalize(float y, float min, float max)
 
 static inline float signal_sine_calc(struct signal* const self)
 {
-        return self->amplitude * (float)sin(self->phase);
+        return INT16_MAX * sin(self->phase) + INT16_MAX;
 }
 
 static inline float signal_square_calc(struct signal* const self)
@@ -49,24 +49,20 @@ static inline float signal_noise_calc(struct signal* const self)
         return (2 * ((float)rand() / (float)RAND_MAX) - 1) * self->amplitude;
 }
 
-static void signal_generator_template(
+static uint16_t signal_generator_template(
         struct signal* const self,
         float (*calculation)(struct signal* const self),
-        float* const buffer,
+        uint16_t* const buffer,
         size_t size)
 {
         ASSERT(self != NULL);
-        ASSERT(buffer != NULL);
 
-        const float angle =
+        self->phase +=
                 SIGNAL_MAX_PHASE * self->frequency / self->sampling_frequency;
-        for (size_t i = 0u; i < size; i++) {
-                self->phase += angle;
-                buffer[i] = calculation(self);
+        if (self->phase >= SIGNAL_MAX_PHASE)
+                self->phase -= SIGNAL_MAX_PHASE;
 
-                if (self->phase >= SIGNAL_MAX_PHASE)
-                        self->phase -= SIGNAL_MAX_PHASE;
-        }
+        return calculation(self);
 }
 
 static float (*signal_calculators[])(struct signal* const self) = {
@@ -77,14 +73,18 @@ static float (*signal_calculators[])(struct signal* const self) = {
         signal_noise_calc,
 };
 
-void signal_generate(struct signal* const self, float* const buffer, size_t size)
+uint16_t signal_generate(
+        struct signal* const self, uint16_t* const buffer, size_t size)
 {
-        signal_generator_template(
+        return signal_generator_template(
                 self, signal_calculators[self->type], buffer, size);
 }
 
 void signal_generate_sum(
-        struct signal* signals[], uint8_t num_of_signals, float* buffer, size_t size)
+        struct signal* signals[],
+        uint8_t num_of_signals,
+        uint16_t* buffer,
+        size_t size)
 {
         float max = 1;
         float min = -1;
@@ -92,7 +92,7 @@ void signal_generate_sum(
         for (size_t i = 0u; i < size; i++) {
                 float y = 0;
                 for (uint8_t j = 0u; j < num_of_signals; ++j) {
-                        float temp = 0;
+                        uint16_t temp = 0;
                         signal_generator_template(
                                 signals[j],
                                 signal_calculators[signals[j]->type],

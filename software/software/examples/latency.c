@@ -817,8 +817,8 @@ int main(int argc, char *argv[])
 			if ((r = readbuf(chandle, buffer, cap_avail, &frames_in, &in_max)) < 0)
 				ok = 0;
 			else {
-				if (effect)
-					applyeffect(buffer, r);
+				for (size_t i = 0; i < r; i++)
+					buffer[i] <<= 4;
 			 	if (writebuf(phandle, buffer, r, &frames_out) < 0)
 					ok = 0;
 			}

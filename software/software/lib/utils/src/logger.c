@@ -30,8 +30,6 @@ void logger_unused(const char* format, ...)
 
 void logger_log(const char* format, ...)
 {
-        fprintf(stderr, "%s ", logger_get_timestamp());
-
         va_list args;
         va_start(args, format);
         vfprintf(stderr, format, args);
