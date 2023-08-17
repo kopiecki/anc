@@ -4,8 +4,11 @@
  */
 
 #include <errno.h>
+#include <pthread.h>
+#include <sched.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "dsp/fir.h"
@@ -154,20 +157,91 @@ static int create_buffers(void)
         return 0;
 }
 
-static void encode_buffer()
+static int set_scheduler(int policy, int priority, const char* policy_name)
 {
-        for (size_t i = 0u; i < period_size; i += NUM_CHANNELS) {
-                const uint16_t noise_sample =
-                        signal_generate(&white_noise, NULL, 0);
-
-                p_buff[i + NOISE_BUFF] = noise_sample;
+        if (!priority) {
+                priority = sched_get_priority_max(policy);
+                if (priority < 0) {
+                        LOG_ERROR("Cannot get maximum priority");
+                        return priority;
+                }
         }
+
+        struct sched_param param;
+        param.sched_priority = priority;
+
+        int error = sched_setscheduler(0, policy, &param);
+        if (error < 0) {
+                LOG_ERROR("Cannot set scheduler policy %s", policy_name);
+                return error;
+        }
+
+        LOG_INFO(
+                "Scheduler policy set to %s with priority %d",
+                policy_name,
+                priority);
+
+        return 0;
 }
 
-static void decode_buffer()
+static int create_rt_thread(
+        int policy,
+        const char* policy_name,
+        int priority,
+        pthread_t* thread,
+        void* (*worker)(void*))
 {
-        for (size_t i = 0u; i < period_size; i += NUM_CHANNELS) {
-                error_buff[i] = c_buff[i];
+        struct sched_param param;
+        pthread_attr_t attr;
+
+        int error = pthread_attr_init(&attr);
+        if (error < 0) {
+                LOG_ERROR(
+                        "Cannot initialize pthread attribute [%d, %s]",
+                        error,
+                        strerror(error));
+                return error;
+        }
+
+        error = pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED);
+        if (error < 0) {
+                LOG_ERROR(
+                        "Cannot set inherited scheduler [%d, %s]",
+                        error,
+                        strerror(error));
+        }
+
+        error = pthread_attr_setschedpolicy(&attr, policy);
+        if (error < 0) {
+                LOG_ERROR(
+                        "Cannot set scheduler policy %s [%d, %s]",
+                        policy_name,
+                        error,
+                        strerror(error));
+        }
+
+        if (!priority) {
+                priority = sched_get_priority_max(policy);
+                if (priority < 0) {
+                        LOG_ERROR("Cannot get maximum priority");
+                        return priority;
+                }
+        }
+
+        param.sched_priority = priority;
+        error                = pthread_attr_setschedparam(&attr, &param);
+        if (error < 0) {
+                LOG_ERROR(
+                        "Cannot set thread scheduler [%d, %s]",
+                        error,
+                        strerror(error));
+                return error;
+        }
+
+        error = pthread_create(thread, &attr, worker, NULL);
+        if (error < 0) {
+                LOG_ERROR("Cannot create thread [%d, %s]", error, strerror(error));
+                return error;
         }
 }
 
@@ -182,7 +256,7 @@ static int loop(void)
                         const uint16_t noise_sample =
                                 signal_generate(&white_noise, NULL, 0);
 
-                        p_buff[j] = noise_sample;
+                        p_buff[j]       = noise_sample;
                         ref_buff[j + i] = noise_sample;
                 }
 
@@ -199,7 +273,7 @@ static int loop(void)
                         uint32_t noise_sample = c_buff[j] << 4u;
                         noise_sample          = (noise_sample >> 8u);
 
-                        error_buff[j + i] = noise_sample; 
+                        error_buff[j + i] = noise_sample;
                 }
 
                 LOG_INFO("Captured full buffer, i = %d", i);
@@ -208,13 +282,30 @@ static int loop(void)
 
         file_helpers_write_buf("error.txt", '\n', error_buff, F_HZ * 4, false);
         file_helpers_write_buf("noise.txt", '\n', ref_buff, F_HZ * 4, false);
+}
 
+void cleanup(void)
+{
+        sound_card_destruct(c_dev);
+        sound_card_destruct(p_dev);
+
+        free(c_buff);
+        free(p_buff);
+        free(ref_buff);
+        free(error_buff);
+
+        circ_fifo_destruct(&x);
+        circ_fifo_destruct(&fx);
+
+        LOG_INFO("Resources deallocated");
 }
 
 int main(int argc, char* argv[])
 {
         (void)argc;
         (void)argv;
+
+        pthread_t anc_thread;
 
         int error = create_devs();
         if (error < 0)
@@ -224,9 +315,15 @@ int main(int argc, char* argv[])
         if (error < 0)
                 return error;
 
-        error = loop();
+        error = create_rt_thread(SCHED_RR, "SCHED_RR", 0, &anc_thread, loop);
         if (error < 0)
                 return error;
+
+        error = pthread_join(anc_thread, NULL);
+        if (error < 0)
+                return error;
+
+        cleanup();
 
         return 0;
 }
