@@ -245,9 +245,11 @@ static int create_rt_thread(
         }
 }
 
-static int loop(void)
+static void* loop(void* foo)
 {
         int error = 0;
+
+        LOG_INFO("Started ANC loop");
 
         size_t i = 0;
         while (i < (F_HZ * 4)) {
@@ -262,11 +264,11 @@ static int loop(void)
 
                 error = sound_card_playback(p_dev, p_buff, period_size);
                 if (error < 0)
-                        return error;
+                        return NULL;
 
                 error = sound_card_capture(c_dev, c_buff, period_size);
                 if (error < 0)
-                        return error;
+                        return NULL;
 
                 size_t k = 0;
                 for (size_t j = 0; j < period_size; j++) {
@@ -282,6 +284,8 @@ static int loop(void)
 
         file_helpers_write_buf("error.txt", '\n', error_buff, F_HZ * 4, false);
         file_helpers_write_buf("noise.txt", '\n', ref_buff, F_HZ * 4, false);
+
+        LOG_INFO("ANC loop finished");
 }
 
 void cleanup(void)
