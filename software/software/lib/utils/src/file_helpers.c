@@ -14,7 +14,7 @@
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
-        const float* const buffer,
+        const uint32_t* const buffer,
         size_t size,
         bool append)
 {
@@ -28,14 +28,14 @@ int file_helpers_write_buf(
         }
 
         for (size_t i = 0u; i < size; i++)
-                fprintf(file, "%0.6f%c", (double)buffer[i], delimiter);
+                fprintf(file, "%d%c", buffer[i], delimiter);
         if (delimiter != '\n')
                 fprintf(file, "%c", '\n');
 
         return fclose(file);
 }
 
-int file_helpers_read_buf(const char* name, float* const buffer)
+int file_helpers_read_buf(const char* name, uint32_t* const buffer)
 {
         ASSERT(name != NULL);
         ASSERT(buffer != NULL);

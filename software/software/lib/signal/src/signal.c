@@ -46,7 +46,10 @@ static inline float signal_saw_calc(struct signal* const self)
 
 static inline float signal_noise_calc(struct signal* const self)
 {
-        return (2 * ((float)rand() / (float)RAND_MAX) - 1) * self->amplitude;
+        int upper = UINT16_MAX;
+        int lower = 0;
+
+        return (rand() % (upper - lower + 1)) + lower;
 }
 
 static uint16_t signal_generator_template(

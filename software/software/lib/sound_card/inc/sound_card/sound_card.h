@@ -30,6 +30,7 @@ enum sound_card_access {
 enum sound_card_format {
         SOUND_CARD_FORMAT_U16_LE = 4,
         SOUND_CARD_FORMAT_U24_LE = 8,
+        SOUND_CARD_FORMAT_U32_LE = 12,
 };
 
 struct sound_card_config {

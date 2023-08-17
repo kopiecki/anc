@@ -595,10 +595,18 @@ sound_card_t* sound_card_construct(const struct sound_card_config* const config)
         if (error < 0)
                 goto fail;
 
-        self->poll = config->poll;
-        error      = sound_card_configure_poll(self);
-        if (error < 0)
-                goto fail;
+        if (self->stream == SOUND_CARD_STREAM_CAPTURE) {
+                error = snd_pcm_prepare(self->pcm_handle);
+                if (error < 0) {
+                        fprintf(stderr,
+                                "cannot prepare audio interface for use (%s)\n",
+                                snd_strerror(error));
+                        goto fail;
+                }
+                error = snd_pcm_start(self->pcm_handle);
+                if (error < 0)
+                        LOG_WARNING("Cannot start capture device");
+        }
 
         LOG_INFO("PCM device %s configured", self->name);
 
@@ -627,7 +635,7 @@ int sound_card_get_period_size_bytes(sound_card_t* const self)
 static int sound_card_epipe_recovery(sound_card_t* const self)
 {
         LOG_WARNING(
-                "Underrun occured for PCM device %s %s",
+                "Underrun occured for PCM device %s",
                 self->name,
                 snd_pcm_stream_name(self->stream));
 
@@ -643,6 +651,11 @@ static int sound_card_epipe_recovery(sound_card_t* const self)
 
 static int sound_card_estrpipe_recovery(sound_card_t* const self)
 {
+        LOG_WARNING(
+                "ESTRPIPE occured for PCM device %s %s",
+                self->name,
+                snd_pcm_stream_name(self->stream));
+
         int error = snd_pcm_resume(self->pcm_handle);
         do {
                 error = snd_pcm_resume(self->pcm_handle);
@@ -671,7 +684,14 @@ static int sound_card_xrun_recovery(sound_card_t* const self, int error)
                 case -ESTRPIPE:
                         error = sound_card_estrpipe_recovery(self);
                         break;
+                case 0:
+                        LOG_WARNING("Waiting");
+                        snd_pcm_wait(self->pcm_handle, 1000);
+                        snd_pcm_prepare(self->pcm_handle);
+                        snd_pcm_start(self->pcm_handle);
+                        break;
                 default:
+                        LOG_ERROR("Not supported error: %d", error);
                         break;
         }
 
@@ -724,17 +744,24 @@ int sound_card_capture(sound_card_t* const self, void* buffer, size_t size)
         ASSERT(buffer != NULL);
 
         int error = 0;
-        const snd_pcm_sframes_t rframes =
-                snd_pcm_readi(self->pcm_handle, buffer, size);
-        if (rframes < 0) {
-                LOG_WARNING("Read error, trying recover...");
-                error = sound_card_xrun_recovery(self, error);
-                if (error < 0) {
-                        LOG_ERROR(
-                                "Read error for PCM device %s [%s]",
-                                self->name,
-                                snd_strerror(error));
-                        return error;
+        while (size > 0) {
+                const snd_pcm_sframes_t rframes =
+                        snd_pcm_readi(self->pcm_handle, buffer, size);
+                if (rframes < 0) {
+                        LOG_WARNING("Read error, trying recover...");
+                        error = sound_card_xrun_recovery(self, error);
+                        if (error < 0) {
+                                LOG_ERROR(
+                                        "Read error for PCM device %s [%s]",
+                                        self->name,
+                                        snd_strerror(error));
+                                return error;
+                        }
+                }
+
+                if (rframes > 0) {
+                        size -= rframes;
+                        buffer += rframes * FORMAT_SIZE_BYTES(self->format);
                 }
         }
 
