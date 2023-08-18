@@ -10,6 +10,8 @@ set(CMAKE_C_STANDARD 23)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option (ANC_BUILD_TEST "Build functional tests"               ON)
+option (DEBUG                                                 ON)
+
 
 add_subdirectory(software)
 if (ANC_BUILD_TEST)

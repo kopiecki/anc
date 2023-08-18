@@ -18,6 +18,9 @@
  * @return Filter output
  */
 float dsp_fir(
-        struct circ_fifo* const cl, const float* const w, size_t order, size_t cnt);
+        struct circ_fifo* const cl,
+        const float* restrict const w,
+        size_t order,
+        size_t cnt);
 
 #endif /* FIR_H_ */

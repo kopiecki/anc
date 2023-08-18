@@ -14,5 +14,5 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
-set(CMAKE_C_FLAGS "-mfpu=neon -ftree-vectorize")
+set(CMAKE_C_FLAGS "-mfpu=neon -ftree-vectorize -mhard-float -O4")
 set (PACKAGE_ARCHITECTURE arm)

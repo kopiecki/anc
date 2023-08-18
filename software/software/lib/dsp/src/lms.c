@@ -10,7 +10,7 @@
 #include "utils/common.h"
 
 void dsp_lms(
-        float* const w,
+        float* restrict const w,
         float error,
         float step,
         struct circ_fifo* const cf,
