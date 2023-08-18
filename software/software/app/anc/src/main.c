@@ -29,9 +29,11 @@
 #define BUFF_US   2 * PERIOD_US
 #define S_SIZE    sizeof(uint32_t)
 
+#define LMS_STEP 1.0
+
 enum playback_buffers {
-        NOISE_BUFF     = 0,
-        ANTINOISE_BUFF = 1,
+        ANTINOISE_BUFF = 0,
+        NOISE_BUFF     = 1,
 };
 
 enum capture_buffers {
@@ -44,7 +46,7 @@ static uint32_t *p_buff, *c_buff, *ref_buff, *error_buff;
 static size_t period_size;
 
 #define FIFO_SIZE 8192u
-static struct circ_fifo x, fx;
+static struct circ_fifo x_fifo, fx_fifo;
 
 #define PRIMARY_ORDER 512u
 static float primary_w[PRIMARY_ORDER];
@@ -59,13 +61,21 @@ static struct signal white_noise = {
         .type               = SIGNAL_TYPE_NOISE,
         .phase              = 0,
 };
-static struct signal sine_150_hz_noise = {
-        .amplitude          = UINT16_MAX,
-        .frequency          = 150.0,
-        .sampling_frequency = F_HZ,
-        .type               = SIGNAL_TYPE_SINE,
-        .phase              = 0,
-};
+
+static inline uint16_t convert_adc(uint32_t sample)
+{
+        return (sample << 4u) >> 8u;
+}
+
+static inline float normalize(uint16_t sample)
+{
+        return (float)sample / (float)(UINT16_MAX);
+}
+
+static inline uint16_t to_u16(float sample)
+{
+        return (sample + 1) * INT16_MAX;
+}
 
 static int create_capture_dev(void)
 {
@@ -144,11 +154,11 @@ static int create_buffers(void)
         if (!error_buff)
                 return -ENOMEM;
 
-        int error = circ_fifo_construct(&x, NULL, FIFO_SIZE);
+        int error = circ_fifo_construct(&x_fifo, NULL, FIFO_SIZE);
         if (error < 0)
                 return error;
 
-        error = circ_fifo_construct(&fx, NULL, FIFO_SIZE);
+        error = circ_fifo_construct(&fx_fifo, NULL, FIFO_SIZE);
         if (error < 0)
                 return error;
 
@@ -245,10 +255,73 @@ static int create_rt_thread(
         }
 }
 
-static void* loop(void* foo)
+static void* identificate(void* foo)
 {
-        int error = 0;
+        LOG_INFO("Started identification loop");
 
+        size_t i = 0;
+        while (i < (F_HZ * 4)) {
+
+                for (size_t j = 0u; j < period_size; j++) {
+                        const uint16_t noise_sample =
+                                signal_generate(&white_noise, NULL, 0);
+
+                        p_buff[j + ANTINOISE_BUFF] = noise_sample;
+                        ref_buff[j + i]            = noise_sample;
+                }
+
+                int error = sound_card_playback(p_dev, p_buff, period_size);
+                if (error < 0)
+                        return NULL;
+
+                error = sound_card_capture(c_dev, c_buff, period_size);
+                if (error < 0)
+                        return NULL;
+
+                for (size_t j = 0; j < period_size; j++) {
+                        error_buff[j + i] = convert_adc(c_buff[j]);
+                }
+
+                LOG_INFO("Captured full buffer, i = %d", i);
+
+                i += period_size;
+        }
+
+        file_helpers_write_buf("error.txt", '\n', error_buff, F_HZ * 4, false);
+        LOG_INFO("Written error to error.txt");
+
+        file_helpers_write_buf("noise.txt", '\n', ref_buff, F_HZ * 4, false);
+        LOG_INFO("Written identification signal to noise.txt");
+
+        LOG_INFO("Identification loop finished");
+}
+
+static void fxlms(void)
+{
+        size_t k = 0;
+        for (size_t j = 0; j < period_size; j += (NUM_CHANNELS / 2)) {
+                const uint16_t x = convert_adc(c_buff[j + REF_BUFF]);
+                circ_fifo_write(&x_fifo, normalize(x));
+
+                float y = dsp_fir(&x_fifo, primary_w, PRIMARY_ORDER, k);
+                p_buff[j + ANTINOISE_BUFF] = to_u16(y);
+
+                const float fx =
+                        dsp_fir(&x_fifo, secondary_w, SECONDARY_ORDER, k);
+                circ_fifo_write(&fx_fifo, fx);
+
+                const uint16_t e = convert_adc(c_buff[j + ERROR_BUFF]);
+                dsp_lms(primary_w,
+                        normalize(e),
+                        LMS_STEP,
+                        &fx_fifo,
+                        PRIMARY_ORDER,
+                        k++);
+        }
+}
+
+static void* anc_loop(void* foo)
+{
         LOG_INFO("Started ANC loop");
 
         size_t i = 0;
@@ -258,11 +331,10 @@ static void* loop(void* foo)
                         const uint16_t noise_sample =
                                 signal_generate(&white_noise, NULL, 0);
 
-                        p_buff[j]       = noise_sample;
-                        ref_buff[j + i] = noise_sample;
+                        p_buff[j + NOISE_BUFF] = noise_sample;
                 }
 
-                error = sound_card_playback(p_dev, p_buff, period_size);
+                int error = sound_card_playback(p_dev, p_buff, period_size);
                 if (error < 0)
                         return NULL;
 
@@ -270,22 +342,20 @@ static void* loop(void* foo)
                 if (error < 0)
                         return NULL;
 
-                size_t k = 0;
-                for (size_t j = 0; j < period_size; j++) {
-                        uint32_t noise_sample = c_buff[j] << 4u;
-                        noise_sample          = (noise_sample >> 8u);
-
-                        error_buff[j + i] = noise_sample;
-                }
+                fxlms();
 
                 LOG_INFO("Captured full buffer, i = %d", i);
+
                 i += period_size;
         }
 
         file_helpers_write_buf("error.txt", '\n', error_buff, F_HZ * 4, false);
-        file_helpers_write_buf("noise.txt", '\n', ref_buff, F_HZ * 4, false);
+        LOG_INFO("Written error to error.txt");
 
-        LOG_INFO("ANC loop finished");
+        file_helpers_write_buf("noise.txt", '\n', ref_buff, F_HZ * 4, false);
+        LOG_INFO("Written identification signal to noise.txt");
+
+        LOG_INFO("Identification loop finished");
 }
 
 void cleanup(void)
@@ -298,8 +368,8 @@ void cleanup(void)
         free(ref_buff);
         free(error_buff);
 
-        circ_fifo_destruct(&x);
-        circ_fifo_destruct(&fx);
+        circ_fifo_destruct(&x_fifo);
+        circ_fifo_destruct(&fx_fifo);
 
         LOG_INFO("Resources deallocated");
 }
@@ -319,7 +389,7 @@ int main(int argc, char* argv[])
         if (error < 0)
                 return error;
 
-        error = create_rt_thread(SCHED_RR, "SCHED_RR", 0, &anc_thread, loop);
+        error = create_rt_thread(SCHED_RR, "SCHED_RR", 0, &anc_thread, anc_loop);
         if (error < 0)
                 return error;
 
