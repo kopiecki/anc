@@ -25,10 +25,7 @@ void dsp_lms(
          * @brief Loop unrolling to optimize processing time.
          */
         float mult = step * error;
-        for (size_t i = 0u; i < order; i += 4u) {
-                w[i + 0] += mult * circ_fifo_peek(cf, i + offset + 0);
-                w[i + 1] += mult * circ_fifo_peek(cf, i + offset + 1);
-                w[i + 2] += mult * circ_fifo_peek(cf, i + offset + 2);
-                w[i + 3] += mult * circ_fifo_peek(cf, i + offset + 3);
+        for (size_t i = 0u; i < order; i++) {
+                w[i] += mult * circ_fifo_peek(cf, i + offset);
         }
 }

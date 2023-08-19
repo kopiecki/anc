@@ -25,7 +25,7 @@ float dsp_fir(
          */
         float y, y0, y1, y2, y3 = 0.0f;
         for (size_t i = 0u; i < order; i++) {
-                y = w[i] * circ_fifo_peek(cf, i + offset);
+                y += w[i] * circ_fifo_peek(cf, i + offset);
         }
 
         return y;

@@ -8,9 +8,6 @@
 #include <errno.h>
 #include <stdio.h>
 
-#include "utils/assert.h"
-#include "utils/logger.h"
-
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
@@ -18,12 +15,8 @@ int file_helpers_write_buf(
         size_t size,
         bool append)
 {
-        ASSERT(name != NULL);
-        ASSERT(buffer != NULL);
-
         FILE* file = fopen(name, (append) ? "a" : "w");
         if (file == NULL) {
-                LOG_ERROR("Cannot open %s file", name);
                 return -ENOENT;
         }
 
@@ -37,14 +30,9 @@ int file_helpers_write_buf(
 
 int file_helpers_read_buf(const char* name, float* const buffer)
 {
-        ASSERT(name != NULL);
-        ASSERT(buffer != NULL);
-
         FILE* file = fopen(name, "r");
-        if (file == NULL) {
-                LOG_ERROR("Cannot open %s file", name);
+        if (file == NULL)
                 return -ENOENT;
-        }
 
         char* line = NULL;
         size_t size, i = 0u;

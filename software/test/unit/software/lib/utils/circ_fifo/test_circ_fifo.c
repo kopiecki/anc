@@ -70,8 +70,18 @@ void test_circ_fifo_should_write_and_read(void)
 
         TEST_ASSERT_EQUAL(0, error);
 
-        for (uint8_t i = 0u; i < TEST_CIRC_FIFO_TEST_BUFFER_SIZE; i++)
+        for (uint8_t i = 0u; i < TEST_CIRC_FIFO_TEST_BUFFER_SIZE; i++) {
                 circ_fifo_write(&test_cf, i);
+        }
+
+        circ_fifo_print(&test_cf);
+
+        for (uint8_t i = 10u; i < TEST_CIRC_FIFO_TEST_BUFFER_SIZE + 20; i++) {
+                circ_fifo_write(&test_cf, i);
+        }
+
+        printf("---------------------");
+        circ_fifo_print(&test_cf);
 
         float test_buffer[TEST_CIRC_FIFO_TEST_BUFFER_SIZE];
         for (uint8_t i = 0u; i < TEST_CIRC_FIFO_TEST_BUFFER_SIZE; i++)
