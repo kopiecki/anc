@@ -23,17 +23,10 @@ float dsp_fir(
         /**
          * @brief Loop unrolling to optimize processing time.
          */
-        float y0, y1, y2, y3 = 0.0f;
-        for (size_t i = 0u; i < order; i += 4u) {
-                y0 += w[i + 0] * circ_fifo_peek(cf, i + offset + 0);
-                y1 += w[i + 1] * circ_fifo_peek(cf, i + offset + 1);
-                y2 += w[i + 2] * circ_fifo_peek(cf, i + offset + 2);
-                y3 += w[i + 3] * circ_fifo_peek(cf, i + offset + 3);
+        float y, y0, y1, y2, y3 = 0.0f;
+        for (size_t i = 0u; i < order; i++) {
+                y = w[i] * circ_fifo_peek(cf, i + offset);
         }
 
-        y0 += y1;
-        y2 += y3;
-        y0 += y2;
-
-        return y0;
+        return y;
 }

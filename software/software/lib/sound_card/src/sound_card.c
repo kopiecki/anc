@@ -46,19 +46,6 @@ struct sound_card_s {
         int poll_count;
 };
 
-#if 0
-static inline void sound_card_prepare_buffer_interleaved(
-        sound_card_t* const self,
-        struct sound_card_task* const task,
-        void* const buffer)
-{
-        size_t j = 0u;
-        for (size_t i = 0u; i < task->size; i++)
-                for (uint8_t channel = 0u; channel < self->channels; channel++)
-                        buffer[j++] = task->sample_buffers[channel][i];
-}
-#endif
-
 static inline snd_pcm_uframes_t sound_card_get_start_threshold(
         sound_card_t* const self)
 {
@@ -73,7 +60,10 @@ static int sound_card_open(
         ASSERT(config != NULL);
 
         int error = snd_pcm_open(
-                &self->pcm_handle, self->name, (snd_pcm_stream_t)config->stream, 0);
+                &self->pcm_handle,
+                self->name,
+                (snd_pcm_stream_t)config->stream,
+                !config->blocking);
         if (error < 0)
                 LOG_ERROR(
                         "Cannot open PCM device %s [%d, %s]",
@@ -174,6 +164,20 @@ static void sound_card_deallocate(sound_card_t* const self)
         LOG_DEBUG("Sound card resources deallocated");
 }
 
+static int sound_card_hw_resample(sound_card_t* const self, bool resample)
+{
+        int error = snd_pcm_hw_params_set_rate_resample(
+                self->pcm_handle, self->pcm_hw_params_handle, resample);
+        if (error < 0) {
+                LOG_ERROR(
+                        "Resample setup failed for PCM device %s [%s]",
+                        self->name,
+                        snd_strerror(error));
+        }
+
+        return error;
+}
+
 static int sound_card_hw_set_access(
         sound_card_t* const self, enum sound_card_access access)
 {
@@ -250,6 +254,25 @@ static int sound_card_hw_set_rate(sound_card_t* const self, uint32_t rate)
                         "Setted rate %d for PCM device %s", exact_rate, self->name);
 
         self->rate = rate;
+
+        return error;
+}
+
+static int sound_card_set_period_wakeup(sound_card_t* const self, bool set)
+{
+        int error = 0;
+        if (snd_pcm_hw_params_can_disable_period_wakeup(self->pcm_hw_params_handle)
+            == 1) {
+                error = snd_pcm_hw_params_set_period_wakeup(
+                        self->pcm_handle, self->pcm_hw_params_handle, set);
+                if (error < 0) {
+                        LOG_ERROR(
+                                "Cannot disable period wakeups for PCM device "
+                                "%s [%s]",
+                                self->name,
+                                snd_strerror(error));
+                }
+        }
 
         return error;
 }
@@ -470,12 +493,30 @@ static int sound_card_sw_write_params(sound_card_t* const self)
         return error;
 }
 
+static int sound_card_prepare(sound_card_t* const self)
+{
+        int error = snd_pcm_prepare(self->pcm_handle);
+        if (error < 0)
+                LOG_ERROR(
+                        "Cannot prepare PCM device %s [%s]",
+                        self->name,
+                        snd_strerror(error));
+        else
+                LOG_DEBUG("Prepared PCM device %s", self->name);
+
+        return error;
+}
+
 static int sound_card_hw_configure(
         sound_card_t* const self, const struct sound_card_config* const config)
 {
         ASSERT(self != NULL);
 
-        int error = sound_card_hw_set_access(self, config->access);
+        int error = sound_card_hw_resample(self, true);
+        if (error < 0)
+                return error;
+
+        error = sound_card_hw_set_access(self, config->access);
         if (error < 0)
                 return error;
 
@@ -491,6 +532,12 @@ static int sound_card_hw_configure(
         if (error < 0)
                 return error;
 
+        if (!config->blocking) {
+                error = sound_card_set_period_wakeup(self, false);
+                if (error < 0)
+                        return error;
+        }
+
         error = sound_card_hw_set_buffer(self, config->buffer_time_us);
         if (error < 0)
                 return error;
@@ -502,6 +549,20 @@ static int sound_card_hw_configure(
         error = sound_card_hw_write_params(self);
         if (error < 0)
                 return error;
+
+        return error;
+}
+
+int sound_card_start(sound_card_t* const self)
+{
+
+        int error = snd_pcm_start(self->pcm_handle);
+        if (error < 0) {
+                LOG_ERROR(
+                        "Cannot start PCM device %s [%s]",
+                        self->name,
+                        snd_strerror(error));
+        }
 
         return error;
 }
@@ -521,45 +582,6 @@ static int sound_card_sw_configure(sound_card_t* const self)
         error = sound_card_sw_write_params(self);
         if (error < 0)
                 return error;
-
-        return error;
-}
-
-static int sound_card_configure_poll(sound_card_t* const self)
-{
-        if (!self->poll)
-                return 0;
-
-        self->poll_count = snd_pcm_poll_descriptors_count(self->pcm_handle);
-        if (self->poll_count <= 0) {
-                LOG_ERROR(
-                        "Invalid poll descriptors count [%d] for PCM device %s",
-                        self->poll_count,
-                        self->name);
-                return self->poll_count;
-        }
-
-        self->poll_ufds =
-                malloc(sizeof(struct pollfd) * (size_t)self->poll_count);
-        if (self->poll_ufds == NULL) {
-                LOG_ERROR("Cannot allocate memory for ufds struct");
-                return -ENOMEM;
-        }
-
-        int error = snd_pcm_poll_descriptors(
-                self->pcm_handle, self->poll_ufds, (unsigned int)self->poll_count);
-        if (error < 0) {
-                LOG_ERROR(
-                        "Cannot obtain poll descriptors for PCM device %s [%s]",
-                        self->name,
-                        snd_strerror(error));
-                return error;
-        }
-
-        if (self->stream == (snd_pcm_stream_t)SOUND_CARD_STREAM_CAPTURE)
-                error = snd_pcm_start(self->pcm_handle);
-        if (self->stream == (snd_pcm_stream_t)SOUND_CARD_STREAM_PLAYBACK)
-                error = snd_pcm_prepare(self->pcm_handle);
 
         return error;
 }
@@ -594,19 +616,6 @@ sound_card_t* sound_card_construct(const struct sound_card_config* const config)
         error = sound_card_sw_configure(self);
         if (error < 0)
                 goto fail;
-
-        if (self->stream == SOUND_CARD_STREAM_CAPTURE) {
-                error = snd_pcm_prepare(self->pcm_handle);
-                if (error < 0) {
-                        fprintf(stderr,
-                                "cannot prepare audio interface for use (%s)\n",
-                                snd_strerror(error));
-                        goto fail;
-                }
-                error = snd_pcm_start(self->pcm_handle);
-                if (error < 0)
-                        LOG_WARNING("Cannot start capture device");
-        }
 
         LOG_INFO("PCM device %s configured", self->name);
 
@@ -731,11 +740,21 @@ int sound_card_synchronize(sound_card_t* const playback, sound_card_t* const cap
                         capture->name,
                         snd_strerror(error));
 
-        error = snd_pcm_start(capture->pcm_handle);
-        if (error < 0)
-                LOG_WARNING("Cannot start capture device");
-
         return error;
+}
+
+int sound_card_get_avail(sound_card_t* const self)
+{
+        ssize_t avail = 0;
+
+        while (1) {
+                avail = snd_pcm_avail(self->pcm_handle);
+                if (avail == -EAGAIN)
+                        continue;
+                break;
+        }
+
+        return avail;
 }
 
 int sound_card_capture(sound_card_t* const self, void* buffer, size_t size)
@@ -763,54 +782,9 @@ int sound_card_capture(sound_card_t* const self, void* buffer, size_t size)
                         size -= rframes;
                         buffer += rframes * FORMAT_SIZE_BYTES(self->format);
                 }
+
+                error = rframes;
         }
 
-        return error;
-}
-
-static int sound_card_wait_for_poll(sound_card_t* const self)
-{
-        uint16_t revents = 0;
-        while (1) {
-                poll(self->poll_ufds, (nfds_t)self->poll_count, -1);
-                snd_pcm_poll_descriptors_revents(
-                        self->pcm_handle,
-                        self->poll_ufds,
-                        (uint8_t)self->poll_count,
-                        &revents);
-
-                if (revents & POLLERR)
-                        return -EIO;
-                else if ((revents & POLLOUT) && (self->stream == (snd_pcm_stream_t)SOUND_CARD_STREAM_PLAYBACK))
-                        return 0;
-                else if ((revents & POLLIN) && (self->stream == (snd_pcm_stream_t)SOUND_CARD_STREAM_CAPTURE))
-                        return 0;
-                else if ((revents & POLLIN) && (revents & POLLOUT))
-                        return 0;
-        }
-}
-
-int sound_card_poll_is_ready(sound_card_t* const self, bool* const ready)
-{
-        int error = sound_card_wait_for_poll(self);
-        if (error < 0) {
-                snd_pcm_state_t state = snd_pcm_state(self->pcm_handle);
-                if ((state == SND_PCM_STATE_XRUN)
-                    || (state == SND_PCM_STATE_SUSPENDED)) {
-                        error = (state == SND_PCM_STATE_XRUN) ? -EPIPE :
-                                                                -ESTRPIPE;
-                        error = sound_card_xrun_recovery(self, error);
-                        if (error < 0)
-                                return error;
-                } else {
-                        LOG_ERROR(
-                                "Wait for poll failed for PCM device "
-                                "%s",
-                                self->name);
-                        return error;
-                }
-        }
-
-        *ready = true;
-        return 0;
+        return error; 
 }

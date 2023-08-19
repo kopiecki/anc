@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <alsa/asoundlib.h>
 
 #define SOUND_CARD_MAX_CHANNEL 4u
 
@@ -59,6 +60,9 @@ sound_card_t* sound_card_construct(const struct sound_card_config* const config)
 void sound_card_destruct(sound_card_t* const this);
 
 int sound_card_get_period_size_bytes(sound_card_t* const this);
+
+int sound_card_start(sound_card_t* const self);
+int sound_card_get_avail(sound_card_t* const self);
 
 int sound_card_capture(sound_card_t* const this, void* buffer, size_t size);
 int sound_card_playback(sound_card_t* const this, void* buffer, size_t size);

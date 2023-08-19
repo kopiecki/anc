@@ -14,7 +14,7 @@
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
-        const uint32_t* const buffer,
+        const uint16_t* const buffer,
         size_t size,
         bool append)
 {
@@ -35,7 +35,7 @@ int file_helpers_write_buf(
         return fclose(file);
 }
 
-int file_helpers_read_buf(const char* name, uint32_t* const buffer)
+int file_helpers_read_buf(const char* name, float* const buffer)
 {
         ASSERT(name != NULL);
         ASSERT(buffer != NULL);
