@@ -66,12 +66,6 @@ static int prepare_x(void)
         if (error < 0)
                 return error;
 
-        for (size_t i = 0u; i < NUM_OF_SAMPLES; i++) {
-                circ_fifo_write(&x_p_cf, x[i]);
-                circ_fifo_write(&x_w_cf, x[i]);
-                circ_fifo_write(&x_lms_cf, x[i]);
-        }
-
         return error;
 }
 
@@ -92,11 +86,15 @@ int lms(void)
                 if (error < 0)
                         return error;
 
-                d[i] = dsp_fir(&x_p_cf, w, ORDER, i);
-                y[i] = dsp_fir(&x_w_cf, w_est, ORDER, i);
+                circ_fifo_write(&x_p_cf, x[i]);
+                circ_fifo_write(&x_w_cf, x[i]);
+                circ_fifo_write(&x_lms_cf, x[i]);
+
+                d[i] = dsp_fir(&x_p_cf, w, ORDER, 0);
+                y[i] = dsp_fir(&x_w_cf, w_est, ORDER, 0);
 
                 e[i] = d[i] - y[i];
-                dsp_lms(w_est, e[i], LMS_STEP, &x_lms_cf, ORDER, i);
+                dsp_lms(w_est, e[i], LMS_STEP, &x_lms_cf, ORDER, 0);
         }
 
         error = file_helpers_write_buf(

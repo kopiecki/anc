@@ -13,7 +13,7 @@
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
-        const uint16_t* const buffer,
+        const float* const buffer,
         size_t size,
         bool append);
 int file_helpers_read_buf(const char* name, float* const buffer);

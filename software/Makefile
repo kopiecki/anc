@@ -5,7 +5,7 @@ CORES := $(shell nproc)
 
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 BUILD_DIR := build
-TOOLCHAIN ?= arm-none-linux-gnueabihf
+TOOLCHAIN ?= native
 
 BUILD_PATH := $(BUILD_DIR)/$(TOOLCHAIN)
 
@@ -57,13 +57,13 @@ run_unit_test:
 #------------------------------------------------------------------------------
 
 run_test_fir: 
-	@ ./$(BUILD_DIR)/test/test_fir
+	@ ./$(BUILD_DIR)/native/test/test_fir
 .PHONY: run_test_fir
 
 #------------------------------------------------------------------------------
 
 run_test_lms: 
-	@ ./$(BUILD_DIR)/test/test_lms
+	@ ./$(BUILD_DIR)/native/test/test_lms
 .PHONY: run_test_lms
 
 #------------------------------------------------------------------------------

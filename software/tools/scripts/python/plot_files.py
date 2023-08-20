@@ -33,8 +33,6 @@ def plot(buffers: list[list[float]], names: list[str], sampling_rate: float) -> 
     plt.legend()
     plt.xlabel("t, s")
     plt.ylabel("y(t)")
-    plt.ylim([0, 65535])
-    plt.xlim([0, 0.1])
     plt.grid()
     plt.show()
 

@@ -11,7 +11,7 @@
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
-        const uint16_t* const buffer,
+        const float* const buffer,
         size_t size,
         bool append)
 {
@@ -21,7 +21,7 @@ int file_helpers_write_buf(
         }
 
         for (size_t i = 0u; i < size; i++)
-                fprintf(file, "%d%c", buffer[i], delimiter);
+                fprintf(file, "%f%c", buffer[i], delimiter);
         if (delimiter != '\n')
                 fprintf(file, "%c", '\n');
 

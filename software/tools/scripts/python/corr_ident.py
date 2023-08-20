@@ -23,7 +23,7 @@ if __name__ == "__main__":
     rxx = np.correlate(x, x, 'full')[len(x) - 1 : ] 
 
 
-    y = np.genfromtxt("left.txt", delimiter='\n')
+    y = np.genfromtxt("error.txt", delimiter='\n')
     y_mean = np.mean(y)
     y_var = np.var(y)
     y = y - y_mean
@@ -31,10 +31,10 @@ if __name__ == "__main__":
     
     c = np.correlate(y, x, 'full')[len(x) - 1 : ]
     gk = c / np.max(rxx)
-    gk = gk[ : 400]
+    gk = gk[0 : 328]
 
     logger.info("Estimated coeffs: {}", gk)
-    np.savetxt("sec_coeffs.csv", gk, delimiter='\n')
+    np.savetxt("sec_coeffs.csv", gk, delimiter=',')
 
     plt.figure(1)
     plt.plot(gk)

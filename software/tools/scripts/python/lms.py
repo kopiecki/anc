@@ -41,13 +41,11 @@ class LMS(object):
     def filter(self) -> FIR:
         return self._filter
 
-    def plot_w_history(self, plot_filter: bool = True):
+    def plot_w_history(self, plot_filter: bool = False):
         self._w_history = np.matrix.transpose(self._w_history)
         for i, (filter_coeffs, lms_filter_coeffs) in enumerate(zip(self._filter.coeffs, self._w_history)):
             plt.plot(lms_filter_coeffs, label="lms coeff {}".format(i))
-            if (plot_filter):
-                plt.plot(np.ones(self._w_history.shape[1]) * filter_coeffs,
-                        label="filter coeff {}".format(i))
+
         plt.grid()
         plt.xlabel("i")
         plt.ylabel("w_l(i)")
@@ -71,7 +69,7 @@ def __estimate_sec() -> None:
     SAMPLING_HZ = 4000
     ORDER = 150
 
-    lms = LMS(SAMPLING_HZ, 0.001, np.zeros(ORDER))
+    lms = LMS(SAMPLING_HZ, 0.005, np.zeros(ORDER))
 
     x = np.genfromtxt("input.csv", delimiter='\n')
     y = np.genfromtxt("capture.csv", delimiter='\n')
@@ -96,23 +94,24 @@ def __estimate_sec() -> None:
 def __estimate_filter() -> None:
     SAMPLING_HZ = 4000
     NUM_OF_SAMPLES = 2 * SAMPLING_HZ
+    order = 200
 
     filter = FIR(sampling_hz=SAMPLING_HZ, stopband_ripple_db=30,
                  cutoff_hz=200, trans_band_width_hz=500)
 
-    lms = LMS(NUM_OF_SAMPLES, 0.005, np.zeros(filter.order))
-    x = __generate_x(SAMPLING_HZ, NUM_OF_SAMPLES)
+    lms = LMS(NUM_OF_SAMPLES, 0.0005, np.zeros(order))
+    x = np.genfromtxt("noise.txt", delimiter='\n')
+    y = np.genfromtxt("x.txt", delimiter='\n')
 
-    x_ring = deque([0] * filter.order, maxlen=filter.order)
+    x_ring = deque([0] * order, maxlen=order)
 
     lms_filter = lms.filter
-    for sample in x:
-        x_ring.appendleft(sample)
+    for x_s, y_s in zip(x, y):
+        x_ring.appendleft(x_s)
 
-        d = filter(x_ring)
         y = lms_filter(x_ring)
 
-        error = d - y
+        error = y_s - y
         lms_filter = lms(x_ring, error)
 
     logger.info("Last LMS estimate = {}", lms_filter.coeffs)
@@ -121,4 +120,4 @@ def __estimate_filter() -> None:
 
 
 if __name__ == "__main__":
-    __estimate_sec()
+    __estimate_filter()
