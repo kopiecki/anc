@@ -1,5 +1,6 @@
 set (CMAKE_SYSTEM_NAME      "linux")
 set (CMAKE_SYSTEM_PROCESSOR "arm")
+set (ARMHF ON)
 
 set (prefix                 arm-none-linux-gnueabihf-)
 set (CMAKE_C_COMPILER       ${prefix}gcc)

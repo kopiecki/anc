@@ -389,7 +389,7 @@ static int sound_card_hw_set_period(sound_card_t* const self, uint32_t period_ti
 
         error = snd_pcm_hw_params_get_period_size(
                 self->pcm_hw_params_handle, &(self->period_size_frames), NULL);
-        if (error < 0)
+        if (error < 0) {
                 LOG_ERROR(
                         "Cannot get PCM device %s period size in "
                         "frames [%d, "
@@ -397,12 +397,33 @@ static int sound_card_hw_set_period(sound_card_t* const self, uint32_t period_ti
                         self->name,
                         error,
                         strerror(-error));
-        else
+                return error;
+        } else {
                 LOG_DEBUG(
                         "PCM device %s configured with period size %d "
                         "frames",
                         self->name,
                         self->period_size_frames);
+        }
+
+        snd_pcm_uframes_t min_period = 0;
+        error                        = snd_pcm_hw_params_get_period_size_min(
+                self->pcm_hw_params_handle, &min_period, NULL);
+        if (error < 0) {
+                LOG_ERROR(
+                        "Cannot get PCM device %s period size min in "
+                        "frames [%d, "
+                        "%s]",
+                        self->name,
+                        error,
+                        strerror(-error));
+        } else {
+                LOG_DEBUG(
+                        "PCM device %s period size min is %d "
+                        "frames",
+                        self->name,
+                        min_period);
+        }
 
         return error;
 }
@@ -786,5 +807,5 @@ int sound_card_capture(sound_card_t* const self, void* buffer, size_t size)
                 error = rframes;
         }
 
-        return error; 
+        return error;
 }

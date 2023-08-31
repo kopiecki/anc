@@ -5,7 +5,7 @@ CORES := $(shell nproc)
 
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 BUILD_DIR := build
-TOOLCHAIN ?= native
+TOOLCHAIN ?= arm-none-linux-gnueabihf
 
 BUILD_PATH := $(BUILD_DIR)/$(TOOLCHAIN)
 

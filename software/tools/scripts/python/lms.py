@@ -101,7 +101,7 @@ def __estimate_filter() -> None:
 
     lms = LMS(NUM_OF_SAMPLES, 0.0005, np.zeros(order))
     x = np.genfromtxt("noise.txt", delimiter='\n')
-    y = np.genfromtxt("x.txt", delimiter='\n')
+    y = np.genfromtxt("error.txt", delimiter='\n')
 
     x_ring = deque([0] * order, maxlen=order)
 

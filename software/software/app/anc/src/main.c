@@ -40,6 +40,7 @@
 
 #include "dsp/fir.h"
 #include "dsp/lms.h"
+#include "dsp/nlms.h"
 #include "signal/signal.h"
 #include "sound_card/sound_card.h"
 #include "utils/circ_fifo.h"
@@ -77,80 +78,61 @@ int realtime_check = 0;
 unsigned long loop_limit;
 snd_pcm_uframes_t playback_buffer_size;
 
-snd_output_t* output = NULL;
-static float error_buffer[1000 * 1024];
-static float x_buffer[1000 * 1024];
-static float y_buffer[1000 * 1024];
-static float noise_buffer[100 * 1024];
-static size_t cnt = 0;
+snd_output_t* output                   = NULL;
+static float error_buffer[1000 * 1024] = {0};
+static float x_buffer[1000 * 1024]     = {0};
+static float y_buffer[1000 * 1024]     = {0};
+static float noise_buffer[100 * 1024]  = {0};
+static size_t cnt                      = 0;
+static bool init                       = 0;
 snd_pcm_channel_area_t* areas;
 
 #define FIFO_SIZE (1 << 24u)
 static struct circ_fifo x_fifo, fx_fifo;
 
-#define PRIMARY_ORDER 500u
+#define PRIMARY_ORDER 124u
 static float primary_w[PRIMARY_ORDER] = {0u};
 
-#define SECONDARY_ORDER 200u
+#define SECONDARY_ORDER (60)
 static float secondary_w[] = {
-        4.56771913e-04,  4.63606793e-04,  4.52041077e-04,  3.32583419e-04,
-        3.09382769e-04,  2.07631724e-04,  1.94435325e-04,  1.44763461e-04,
-        9.49165485e-05,  3.74634639e-05,  -1.30312735e-05, -3.68377615e-05,
-        -9.22603760e-05, -8.66892913e-05, -1.01447967e-05, 2.32802403e-05,
-        5.59759937e-05,  3.13468136e-05,  4.38780009e-06,  2.49550965e-05,
-        9.67909391e-07,  -1.16204635e-05, -2.32611702e-05, -6.49796751e-05,
-        -1.53802248e-04, -2.38369952e-04, -3.57095045e-04, -4.84456099e-04,
-        -5.53861567e-04, -5.90538489e-04, -5.51659546e-04, -5.18174710e-04,
-        -5.52874514e-04, -4.91834422e-04, -4.84187264e-04, -5.17894508e-04,
-        -5.27521627e-04, -4.83439480e-04, -4.61812608e-04, -4.64610372e-04,
-        -4.95088719e-04, -4.09135570e-04, -4.61681542e-04, -4.28474625e-04,
-        -4.30755231e-04, -3.46505096e-04, -2.62819559e-04, -1.91820258e-04,
-        -1.72096502e-04, -5.22067532e-05, -2.22643865e-05, -8.96362570e-05,
-        -1.21020108e-04, -1.76801016e-04, -2.51029390e-04, -2.98547870e-04,
-        -3.15004340e-04, -3.43587600e-04, -4.34916326e-04, -4.03757208e-04,
-        -4.19569798e-04, -3.54124796e-04, -2.54320978e-04, -3.01387105e-04,
-        -2.50356589e-04, -1.71054279e-04, -1.77689536e-04, -6.85920944e-05,
-        -6.75366964e-06, 1.06076697e-04,  2.12830038e-04,  2.75128653e-04,
-        3.65389055e-04,  3.47047237e-04,  3.66894262e-04,  3.25168221e-04,
-        3.13536913e-04,  3.49935408e-04,  2.46842549e-04,  2.24429964e-04,
-        1.63058987e-04,  1.59447258e-04,  1.08149957e-04,  8.13551374e-05,
-        8.53745079e-05,  3.47789663e-05,  8.28001496e-05,  9.79768614e-05,
-        1.61709222e-04,  2.64481771e-04,  3.90117150e-04,  4.63883234e-04,
-        5.34971020e-04,  5.83036122e-04,  5.54679259e-04,  5.59876295e-04,
-        5.69492882e-04,  5.63364051e-04,  5.66544578e-04,  5.40768776e-04,
-        5.88965416e-04,  5.67244730e-04,  5.47999608e-04,  5.28278590e-04,
-        5.06621928e-04,  5.49232324e-04,  6.25906178e-04,  5.71286072e-04,
-        5.98117280e-04,  6.05538432e-04,  6.01810599e-04,  5.81642762e-04,
-        5.70149319e-04,  5.92679749e-04,  5.11667623e-04,  4.00796805e-04,
-        3.22767885e-04,  2.94094842e-04,  1.57041971e-04,  7.41909676e-05,
-        -1.46569683e-04, -2.83069974e-04, -3.55403481e-04, -3.87742464e-04,
-        -3.11089661e-04, -3.27086914e-04, -3.57943403e-04, -3.82810796e-04,
-        -3.94255896e-04, -4.17578797e-04, -3.59096751e-04, -3.93702521e-04,
-        -3.78771908e-04, -3.74555610e-04, -3.60286717e-04, -3.68094242e-04,
-        -3.23303591e-04, -2.50451837e-04, -3.66221163e-04, -4.32513117e-04,
-        -4.07120198e-04, -4.04135305e-04, -3.81984427e-04, -2.61673278e-04,
-        -2.54378475e-04, -1.91899297e-04, -1.65279212e-04, -1.19328763e-04,
-        -9.92399048e-05, -1.38060824e-04, -1.00533916e-04, -9.65447097e-05,
-        5.57483216e-05,  3.06718364e-04,  6.98463892e-04,  1.24245847e-03,
-        1.87355161e-03,  2.59235833e-03,  3.40990271e-03,  4.12273469e-03,
-        4.73473121e-03,  4.96294723e-03,  4.69302268e-03,  4.04753967e-03,
-        2.87663889e-03,  1.25961628e-03,  -7.61904086e-04, -3.11342136e-03,
-        -5.57510480e-03, -7.93691247e-03, -9.95292134e-03, -1.14373558e-02,
-        -1.22091484e-02, -1.22156733e-02, -1.13678749e-02, -9.82768527e-03,
-        -7.59528549e-03, -4.92959938e-03, -2.17228963e-03, 3.94142008e-04,
-        2.60076278e-03,  4.25331566e-03,  5.30872409e-03,  5.67849600e-03,
-        5.20396428e-03,  4.24970653e-03,  2.82797763e-03,  1.22832669e-03,
-        -4.77432483e-04, -1.89922629e-03, -2.86773361e-03, -3.42200485e-03,
-        -3.45868646e-03, -2.96370587e-03, -2.04805436e-03, -8.05252574e-04,
-        6.05538654e-04,  2.09232233e-03,  3.39780801e-03,  4.47262368e-03,
+        5.385724848310277646e-03,  3.101870702836740257e-03,
+        -1.077019633825816291e-03, -2.266822236866447831e-03,
+        -4.690822821854922532e-03, -8.524576448472103926e-03,
+        -6.187959381275889154e-03, 1.706913165211359140e-03,
+        4.900860847600583409e-03,  7.534780665903634570e-04,
+        -1.133965695747724640e-03, 3.256921532855976652e-03,
+        6.630987236161364415e-03,  1.838533135897459786e-02,
+        5.180880561365763110e-02,  5.051887917111830967e-02,
+        -3.818279708369756720e-02, -1.256173534279129422e-01,
+        -1.006044556135156504e-01, -1.052669704988149282e-02,
+        3.183064945363811571e-02,  1.988925057837438726e-02,
+        1.309386304258209482e-02,  2.440340390509575241e-02,
+        3.049620861179961478e-02,  3.146441595230090038e-02,
+        3.909890646479651649e-02,  4.405936869243948922e-02,
+        3.509471705778596101e-02,  1.943878219639954413e-02,
+        5.319333777364381941e-03,  -7.555965963449269573e-03,
+        -1.645095911592946852e-02, -1.771943445948450518e-02,
+        -1.672819423355558985e-02, -2.118784552813607683e-02,
+        -2.951847315005206099e-02, -3.313605938937500689e-02,
+        -2.937505851014457145e-02, -2.208861874187805982e-02,
+        -1.445861577297363407e-02, -7.469257958799425251e-03,
+        -3.816453973895580533e-03, -6.282254911589880107e-03,
+        -1.017878315179856878e-02, -4.801394836693878738e-03,
+        1.054440618599228330e-02,  2.264940865325961589e-02,
+        2.328886593150069836e-02,  1.912935021089515880e-02,
+        1.685958222139336340e-02,  1.446366655904479659e-02,
+        9.043179429676187139e-03,  2.897542016119879216e-03,
+        -5.767735517960037887e-04, -1.995688790553199529e-03,
+        -1.909243100033610006e-03, 6.056296134159896592e-04,
+        4.831186444712284693e-03,  6.694355156303927190e-03,
 };
 
-#define LMS_STEP 0.0001
+#define LMS_STEP 0.001
 
 static struct signal sine_200hz = {
         .amplitude          = UINT16_MAX,
         .frequency          = 200.0,
-        .sampling_frequency = 8000,
+        .sampling_frequency = 8000 / 4,
         .type               = SIGNAL_TYPE_SINE,
         .phase              = 0,
 };
@@ -158,14 +140,14 @@ static struct signal sine_200hz = {
 static struct signal white_noise = {
         .amplitude          = UINT16_MAX,
         .frequency          = 200.0,
-        .sampling_frequency = 8000,
+        .sampling_frequency = 8000 / 4,
         .type               = SIGNAL_TYPE_NOISE,
         .phase              = 0,
 };
 
 static inline uint16_t to_u16(float sample)
 {
-        return (12 * UINT8_MAX * sample) + INT16_MAX;
+        return (sample * INT16_MAX) + INT16_MAX;
 }
 
 static void generate_sine(snd_pcm_uframes_t offset, int count, double* _phase)
@@ -221,7 +203,7 @@ void anc(char* buffer, int r)
 {
         unsigned char* samples[channels];
         int steps[channels];
-        int bps = 16 / 8; /* bytes per sample */
+        int bps = 16 / 8;
 
         /* verify and prepare the contents of areas */
         for (int chn = 0; chn < channels; chn++) {
@@ -245,8 +227,7 @@ void anc(char* buffer, int r)
         }
 
         uint16_t* r_samples = (uint16_t*)buffer;
-
-        for (int i = 0; i < r; i++) {
+        for (int i = 0; i < r; i += 4) {
                 const uint16_t e = r_samples[i * channels + 0] << 4;
                 const uint16_t x = r_samples[i * channels + 1] << 4;
 
@@ -254,33 +235,29 @@ void anc(char* buffer, int r)
                 const float x_n = normalize(x);
 
                 error_buffer[cnt] = e_n;
-                x_buffer[cnt] = x_n;
+                x_buffer[cnt]     = x_n;
 
                 circ_fifo_write(&x_fifo, x_n);
 
-                float y = dsp_fir(&x_fifo, primary_w, PRIMARY_ORDER, 0);
-                const uint16_t y_dac = to_u16(y);
-                y_buffer[cnt++]        = y_dac;
-
-                for (int chn = 0; chn < channels; chn++) {
-                        for (int i = 0; i < bps; i++) {
-                                if (chn == 0) {
-                                        *(samples[chn] + i) =
-                                                (y_dac >> i * 8) & 0xff;
-                                }
-                        }
-
-                        samples[chn] += steps[chn];
-                }
+                float y         = dsp_fir(&x_fifo, primary_w, PRIMARY_ORDER, 0);
+                y_buffer[cnt++] = y;
 
                 const float fx =
                         dsp_fir(&x_fifo, secondary_w, SECONDARY_ORDER, 0);
                 circ_fifo_write(&fx_fifo, fx);
 
-                if (cnt < 50000) {
-                        dsp_lms(primary_w, e_n, LMS_STEP, &fx_fifo, PRIMARY_ORDER, 0);
+                dsp_lms(primary_w, e_n, LMS_STEP, &fx_fifo, PRIMARY_ORDER, 0);
+
+                unsigned dec_cnt = 4;
+                while (dec_cnt--) {
+                        const uint16_t y_dac = to_u16(y);
+                        for (int i = 0; i < bps; i++)
+                                *(samples[0] + i) = (y_dac >> i * 8) & 0xff;
+                        samples[0] += steps[0];
                 }
         }
+
+        printf("%d\n", r);
 }
 
 void ident(char* buffer, int r)
@@ -312,25 +289,28 @@ void ident(char* buffer, int r)
 
         uint16_t* r_samples = (uint16_t*)buffer;
 
-        for (int i = 0; i < r; i++) {
-                const uint16_t e = r_samples[i * channels + 0] << 4;
-                const uint16_t x = r_samples[i * channels + 1] << 4;
+        for (int i = 0; i < r; i += 4) {
+                if (init) {
+                        const uint16_t e = r_samples[i * channels + 0] << 4;
+                        const uint16_t x = r_samples[i * channels + 1] << 4;
 
-                error_buffer[cnt] = normalize(e);
-                x_buffer[cnt]     = normalize(x);
+                        error_buffer[cnt] = normalize(e);
+                        x_buffer[cnt]     = normalize(x);
+                }
 
                 uint16_t y          = signal_generate(&white_noise, NULL, 0);
                 noise_buffer[cnt++] = normalize(y);
-                for (int chn = 0; chn < channels; chn++) {
-                        for (int i = 0; i < bps; i++) {
-                                if (chn == 0) {
-                                        *(samples[chn] + i) = (y >> i * 8) & 0xff;
-                                }
-                        }
 
-                        samples[chn] += steps[chn];
+                unsigned dec_cnt = 4;
+                while (dec_cnt--) {
+                        for (int j = 0; j < bps; j++)
+                                *(samples[0] + j) = (y >> j * 8) & 0xff;
+                        samples[0] += steps[0];
+                        y = signal_generate(&white_noise, NULL, 0);
                 }
         }
+
+        init = true;
 }
 
 static inline long long frames_to_micro(size_t frames)
@@ -1073,13 +1053,11 @@ int main(int argc, char* argv[])
                         break;
                 }
 
-                anc(buffer, latency);
                 if (writebuf(phandle, buffer, latency, &frames_out) < 0) {
                         fprintf(stderr, "write error\n");
                         break;
                 }
 
-                anc(buffer, latency);
                 if (writebuf(phandle, buffer, latency, &frames_out) < 0) {
                         fprintf(stderr, "write error\n");
                         break;
@@ -1219,7 +1197,7 @@ int main(int argc, char* argv[])
         free(pdevice);
         free(cdevice);
 
-        file_helpers_write_buf("error.txt", '\n', error_buffer, cnt, false);
+        file_helpers_write_buf("anc.txt", '\n', error_buffer, cnt, false);
         file_helpers_write_buf("noise.txt", '\n', noise_buffer, cnt, false);
         file_helpers_write_buf("y.txt", '\n', y_buffer, cnt, false);
         file_helpers_write_buf("x.txt", '\n', x_buffer, cnt, false);

@@ -1,0 +1,761 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{bib:ad5541}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{2}
+    \field{sortinithash}{2}
+    \field{number}{D07557-0-3/12(F)}
+    \field{title}{2.7 V to 5.5 V, Serial-Input, Voltage-Output, 16-Bit DACs}
+    \verb{url}
+    \verb https://www.analog.com/media/en/technical-documentation/data-sheets/A
+    \verb D5541_5542.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Analog Devices}%
+    }
+    \field{year}{2004}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:ad7680}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{3}
+    \field{sortinithash}{3}
+    \field{number}{D03643-0-5/11(A)}
+    \field{title}{3 mW, 100 kSPS, 16-Bit ADC in 6-Lead SOT-23}
+    \verb{url}
+    \verb https://www.analog.com/media/en/technical-documentation/data-sheets/A
+    \verb D7680.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Analog Devices}%
+    }
+    \field{year}{2004}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:bbb}{online}{}
+    \list{publisher}{1}{%
+      {beagleboard}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{title}{BeagleBone Black Board}
+    \verb{url}
+    \verb https://www.beagleboard.org/boards/beaglebone-black
+    \endverb
+    \field{urlday}{31}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:figwer}{book}{}
+    \name{author}{6}{}{%
+      {{hash=BE}{%
+         family={Bielińska},
+         familyi={B\bibinitperiod},
+         given={Ewa},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=FJ}{%
+         family={Figwer},
+         familyi={F\bibinitperiod},
+         given={Jarosław},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=KJ}{%
+         family={Kasprzyk},
+         familyi={K\bibinitperiod},
+         given={Jerzy},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=LT}{%
+         family={Legierski},
+         familyi={L\bibinitperiod},
+         given={Tadeusz},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=OZ}{%
+         family={Ogonowski},
+         familyi={O\bibinitperiod},
+         given={Zbigniew},
+         giveni={Z\bibinitperiod},
+      }}%
+      {{hash=PM}{%
+         family={Pawełczyk},
+         familyi={P\bibinitperiod},
+         given={Marek},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwo Politechniki Śląskiej}%
+    }
+    \strng{namehash}{BE+1}
+    \strng{fullhash}{BEFJKJLTOZPM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{isbn}{83-7335-077-2}
+    \field{title}{Identyfikacja procesów}
+    \list{location}{1}{%
+      {Gliwice}%
+    }
+    \field{year}{2002}
+  \endentry
+
+  \entry{bib:ti_anc}{online}{}
+    \list{publisher}{1}{%
+      {Texas Instruments}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{number}{SPRA042}
+    \field{title}{Design of Active Noise Control Systems With the TMS320
+  Family}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/spra042/spra042.pdf
+    \endverb
+    \field{year}{1996}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:resnick}{book}{}
+    \name{author}{3}{}{%
+      {{hash=HD}{%
+         family={Halliday},
+         familyi={H\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=RR}{%
+         family={Resnick},
+         familyi={R\bibinitperiod},
+         given={Robert},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=WJ}{%
+         family={Walker},
+         familyi={W\bibinitperiod},
+         given={Jearl},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwo naukowe PWN}%
+    }
+    \strng{namehash}{HDRRWJ1}
+    \strng{fullhash}{HDRRWJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{isbn}{9788301181147}
+    \field{title}{Podstawy fizyki}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{2015}
+  \endentry
+
+  \entry{bib:ltc3261}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{number}{3261fb}
+    \field{title}{High Voltage, Low Quiescent Current Inverting Charge Pump}
+    \verb{url}
+    \verb https://www.analog.com/media/en/technical-documentation/data-sheets/3
+    \verb 261fb.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Linear Technology}%
+    }
+    \field{year}{2012}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:ana_ada}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=JJK}{%
+         family={Juan},
+         familyi={J\bibinitperiod},
+         given={Jui-Kuo},
+         giveni={J\bibinithyphendelim K\bibinitperiod},
+      }}%
+      {{hash=HJ}{%
+         family={Harris},
+         familyi={H\bibinitperiod},
+         given={J.G.},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=PJ}{%
+         family={Principe},
+         familyi={P\bibinitperiod},
+         given={J.C.},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JJKHJPJ1}
+    \strng{fullhash}{JJKHJPJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{booktitle}{Proceedings of International Conference on Neural
+  Networks (ICNN'97)}
+    \verb{doi}
+    \verb 10.1109/ICNN.1997.616147
+    \endverb
+    \field{pages}{916\bibrangedash 921 vol.2}
+    \field{title}{Analog hardware implementation of adaptive filter structures}
+    \field{volume}{2}
+    \field{year}{1997}
+  \endentry
+
+  \entry{bib:krk}{online}{}
+    \list{publisher}{1}{%
+      {KRK}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{title}{KRK Classic 8 Professional Studio Monitor}
+    \verb{url}
+    \verb https://www.krkmusic.com/Studio-Monitors/CLASSIC-8
+    \endverb
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:kuo_morgan}{book}{}
+    \name{author}{2}{}{%
+      {{hash=KSM}{%
+         family={Kuo},
+         familyi={K\bibinitperiod},
+         given={Sen\bibnamedelima Maw},
+         giveni={S\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+      {{hash=MDR}{%
+         family={Morgan},
+         familyi={M\bibinitperiod},
+         given={Dennis\bibnamedelima R.},
+         giveni={D\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {John Wiley \& Sons, Inc.}%
+    }
+    \strng{namehash}{KSMMDR1}
+    \strng{fullhash}{KSMMDR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{isbn}{0471134244}
+    \field{title}{Active Noise Control Systems: Algorithms and DSP
+  Implementations}
+    \list{location}{1}{%
+      {USA}%
+    }
+    \field{year}{1995}
+  \endentry
+
+  \entry{bib:mic}{online}{}
+    \name{author}{1}{}{%
+      {{hash=LJ}{%
+         family={Lewis},
+         familyi={L\bibinitperiod},
+         given={Jared},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Analog Devices}%
+    }
+    \strng{namehash}{LJ1}
+    \strng{fullhash}{LJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{46-05}
+    \field{title}{Understanding Microphone Sensitivity}
+    \verb{url}
+    \verb https://www.analog.com/media/en/analog-dialogue/volume-46/number-2/ar
+    \verb ticles/understanding_microphone_sensitivity.pdf
+    \endverb
+    \field{year}{2012}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:lm1085}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{SNVS038H}
+    \field{title}{LM1085 3-A Low Dropout Positive Regulators}
+    \verb{url}
+    \verb https://www.ti.com/lit/ds/symlink/lm1085.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Texas Instruments}%
+    }
+    \field{year}{1999}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:lm2940}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{SNVS769J}
+    \field{title}{LM2940x 1-A Low Dropout Regulator}
+    \verb{url}
+    \verb https://www.ti.com/lit/ds/symlink/lm2940-n.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Texas Instruments}%
+    }
+    \field{year}{2000}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:lm2990}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{SNVS093G}
+    \field{title}{LM2990 Negative Low Dropout Regulator}
+    \verb{url}
+    \verb https://www.ti.com/lit/ds/symlink/lm2990.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Texas Instruments}%
+    }
+    \field{year}{1999}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:max6001}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{13-1395}
+    \field{title}{Low-Cost, Low-Power, Low-Dropout, SOT23-3 Voltage References}
+    \verb{url}
+    \verb https://www.analog.com/media/en/technical-documentation/data-sheets/M
+    \verb AX6001-MAX6005.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Analog Devices}%
+    }
+    \field{year}{1999}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:lyons}{book}{}
+    \name{author}{1}{}{%
+      {{hash=LRG}{%
+         family={Lyons},
+         familyi={L\bibinitperiod},
+         given={Richard\bibnamedelima G.},
+         giveni={R\bibinitperiod\bibinitdelim G\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwa Komunikacji i Łączności}%
+    }
+    \strng{namehash}{LRG1}
+    \strng{fullhash}{LRG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{isbn}{978-83-206-1764-1}
+    \field{title}{Wprowadzenie do cyfrowego przetwarzania sygnałów}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{2010}
+  \endentry
+
+  \entry{bib:behringer}{online}{}
+    \list{publisher}{1}{%
+      {Behringer}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{title}{Measurement Condenser Microphone ECM8000 Technical
+  Specifications}
+    \verb{url}
+    \verb https://mediadl.musictribe.com/media/PLM/data/docs/P0118/S_BE_P0118_E
+    \verb CM8000_A4_WW.pdf
+    \endverb
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:lc}{online}{}
+    \name{author}{1}{}{%
+      {{hash=ME}{%
+         family={Michael},
+         familyi={M\bibinitperiod},
+         given={Erdahl},
+         giveni={E\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Texas Instruments}%
+    }
+    \strng{namehash}{ME1}
+    \strng{fullhash}{ME1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{SPRAC97}
+    \field{title}{LC filter design}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/sprac97/sprac97.pdf
+    \endverb
+    \field{year}{2017}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:moore}{online}{}
+    \list{publisher}{1}{%
+      {Britannica}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{title}{Moore's law}
+    \verb{url}
+    \verb https://www.britannica.com/technology/Moores-law
+    \endverb
+    \field{urlday}{14}
+    \field{urlmonth}{08}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:ott}{book}{}
+    \name{author}{1}{}{%
+      {{hash=OHW}{%
+         family={Ott},
+         familyi={O\bibinitperiod},
+         given={Henry\bibnamedelima W.},
+         giveni={H\bibinitperiod\bibinitdelim W\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {John Wiley \& Sons, Inc.}%
+    }
+    \strng{namehash}{OHW1}
+    \strng{fullhash}{OHW1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{isbn}{9780470189306}
+    \field{title}{Electromagnetic Compatibility Engineering}
+    \list{location}{1}{%
+      {USA}%
+    }
+    \field{year}{2009}
+  \endentry
+
+  \entry{bib:ref195}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{number}{DO0371-0-9/11(L)}
+    \field{title}{Precision Micropower, Low Dropout Voltage References}
+    \verb{url}
+    \verb https://www.analog.com/media/en/technical-documentation/data-sheets/R
+    \verb EF19xSeries.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Analog Devices}%
+    }
+    \field{year}{1996}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:rpi}{online}{}
+    \list{publisher}{1}{%
+      {raspberrypi}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{title}{Raspberry Pi Documentation}
+    \verb{url}
+    \verb https://www.raspberrypi.com/documentation/
+    \endverb
+    \field{urlday}{30}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:sitara}{online}{}
+    \list{publisher}{1}{%
+      {Texas Instruments}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{SLAA701}
+    \field{title}{Sitara\textsuperscript{TM} Linux ALSA DSP Microphone Array
+  Voice Recognition}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/slaa701a/slaa701a.pdf
+    \endverb
+    \field{year}{2016}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:stoica}{book}{}
+    \name{author}{2}{}{%
+      {{hash=ST}{%
+         family={S{\"o}derstr{\"o}m},
+         familyi={S\bibinitperiod},
+         given={Torsten},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=SP}{%
+         family={Stoica},
+         familyi={S\bibinitperiod},
+         given={Petre},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwo Naukowe PWN}%
+    }
+    \strng{namehash}{STSP1}
+    \strng{fullhash}{STSP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{isbn}{83-01-12158-0}
+    \field{title}{Identyfikacja systemów}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{1997}
+  \endentry
+
+  \entry{bib:art}{book}{}
+    \name{author}{2}{}{%
+      {{hash=TU}{%
+         family={Tietze},
+         familyi={T\bibinitperiod},
+         given={Ulrich},
+         giveni={U\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Schenk},
+         familyi={S\bibinitperiod},
+         given={Christoph},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwa Naukowo-Techniczne}%
+    }
+    \strng{namehash}{TUSC1}
+    \strng{fullhash}{TUSC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{isbn}{83-204-2123-3}
+    \field{title}{Sztuka elektroniki}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{1997}
+  \endentry
+
+  \entry{bib:tietze}{book}{}
+    \name{author}{2}{}{%
+      {{hash=TU}{%
+         family={Tietze},
+         familyi={T\bibinitperiod},
+         given={Ulrich},
+         giveni={U\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Schenk},
+         familyi={S\bibinitperiod},
+         given={Christoph},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwa Naukowo-Techniczne}%
+    }
+    \strng{namehash}{TUSC1}
+    \strng{fullhash}{TUSC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{isbn}{83-204-2123-3}
+    \field{title}{Układy półprzewodnikowe}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{1997}
+  \endentry
+
+  \entry{bib:tl071}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{number}{SLOS090V}
+    \field{title}{TL07xx Low-Noise FET-Input Operational Amplifiers}
+    \verb{url}
+    \verb https://www.ti.com/lit/ds/symlink/tl072h.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Texas Instruments}%
+    }
+    \field{year}{2023}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:tps562209}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{number}{SLVSCM5A}
+    \field{title}{TPS56x209, 4.5V to 17V Input, 2-A, 3-A Synchronous Step-Down
+  Voltage Regulator in 6 pin SOT-23}
+    \verb{url}
+    \verb https://www.ti.com/lit/ds/symlink/tps562209.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Texas Instruments}%
+    }
+    \field{year}{2014}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:mcasp}{online}{}
+    \name{author}{1}{}{%
+      {{hash=TB}{%
+         family={Tufino},
+         familyi={T\bibinitperiod},
+         given={Bobby},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TB1}
+    \strng{fullhash}{TB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{number}{SPRACK0}
+    \field{title}{McASP Design Guide - Tips, Tricks and Practical Examples}
+    \verb{url}
+    \verb https://www.ti.com/lit/an/sprack0/sprack0.pdf
+    \endverb
+    \list{institution}{1}{%
+      {Texas Instruments}%
+    }
+    \field{year}{2019}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:preempt}{online}{}
+    \list{publisher}{1}{%
+      {Bootlin}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{title}{Understanding Linux real-time PREEMPT\_RT training}
+    \verb{url}
+    \verb https://bootlin.com/doc/training/preempt-rt
+    \endverb
+    \field{year}{2004}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:xp}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{V}
+    \field{sortinithash}{V}
+    \field{title}{VEC50 Series AC-DC Power Supplies}
+    \verb{url}
+    \verb https://www.xppower.com/portals/0/pdfs/SF_VEC50.pdf
+    \endverb
+    \list{institution}{1}{%
+      {XP Power}%
+    }
+    \field{year}{2021}
+    \field{urlday}{23}
+    \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+\enddatalist
+\endinput

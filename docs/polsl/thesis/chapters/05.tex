@@ -6,39 +6,39 @@
 najbardziej popularne i sprawdzone opcje:
 \begin{enumerate}
 
-    \item Zestaw łatek PREEMPT\_RT - zestaw modyfikacji jądra Linux mających
-    na celu rozszerzenie standardowych funkcjonalności o możliwość
-    realizacji zadań w czasie rzeczywistym.
+    \item Zestaw łatek PREEMPT\_RT - zestaw modyfikacji jądra Linux mających na
+    celu rozszerzenie standardowych funkcjonalności o możliwość realizacji zadań
+    w czasie rzeczywistym.
 
-    \item Xenomai - środowisko programistyczne pracujące wspólnie 
-    z jądrem Linux, umożliwiające tworzenie zadań pracujących w czasie 
-    rzeczywistym z deterministycznym czasem realizacji równolegle 
-    z zadaniami jądra. Działanie opiera się na stworzeniu mikrojądra obok
-    głównego, obsługującego jedynie krytyczne zadania.
+    \item Xenomai - środowisko programistyczne pracujące wspólnie z jądrem
+    Linux, umożliwiające tworzenie zadań pracujących w czasie rzeczywistym z
+    deterministycznym czasem realizacji równolegle z zadaniami jądra. Działanie
+    opiera się na stworzeniu mikrojądra obok głównego, obsługującego jedynie
+    krytyczne zadania.
 
-    \item RTAI (ang. \textit{Real-Time Application Interface}) - podobnie jak Xenomai,
-    zapewnia zestaw interfejsów pozwalających na realizację krytycznych zadań z użyciem
-    drugiego jądra, które w przeciwieństwie do środowiska Xenomai, nie jest realizowane 
-    w architekturze mikrojądra.
+    \item RTAI (ang. \textit{Real-Time Application Interface}) - podobnie jak
+    Xenomai, zapewnia zestaw interfejsów pozwalających na realizację krytycznych
+    zadań z użyciem drugiego jądra, które w przeciwieństwie do środowiska
+    Xenomai, nie jest realizowane w architekturze mikrojądra.
 
 \end{enumerate}
 
-Dokonując analizy dostępnych opcji zdecydowano się na wykorzystanie zestawu 
-łatek PREEMPT\_RT. Xenomai i RTAI, mimo że bardzo cenione i często wykorzystywane
-nawet w rozwiązaniach komercyjnych, cechują się wysokim progiem wejścia 
-i praca z nimi wymaga dużego nakładu czasowego. 
+Dokonując analizy dostępnych opcji zdecydowano się na wykorzystanie zestawu
+łatek PREEMPT\_RT. Xenomai i RTAI, mimo że bardzo cenione i często
+wykorzystywane nawet w rozwiązaniach komercyjnych, cechują się wysokim progiem
+wejścia i praca z nimi wymaga dużego nakładu czasowego. 
 
 \subsection{Problemy jądra Linux w kontekście real-time}
 
-Podstawową kwestią, która dyskredytuje jądro Linux w zastosowaniach czasu rzeczywistego
-jest niedeterministyczny czas wykonania określonego zadania, który zależy od wielu czynników 
-\cite{bib:preempt}.
-Jądro Linux jest wielozadaniowe i implementuje planistę (ang. \textit{scheduler}), 
-którego zadaniem jest szeregowanie i obsłużenie zadań na podstawie ich priorytetu.
-Planista decyduje o przydziale czasu procesora na wykonanie zadań, które może przełączać 
-w zależności od aktualnego zdażenia lub ustalonego planu.
-Standardowo, jądro Linux zapewnia mechanizm wywłaszczenia (ang. \textit{preemption})
-zadania z trybu użytkownia przez zadania o wyższym priorytecie lub przerwania sprzętowe.
+Podstawową kwestią, która dyskredytuje jądro Linux w zastosowaniach czasu
+rzeczywistego jest niedeterministyczny czas wykonania określonego zadania, który
+zależy od wielu czynników \cite{bib:preempt}. Jądro Linux jest wielozadaniowe i
+implementuje planistę (ang. \textit{scheduler}), którego zadaniem jest
+szeregowanie i obsłużenie zadań na podstawie ich priorytetu. Planista decyduje o
+przydziale czasu procesora na wykonanie zadań, które może przełączać w
+zależności od aktualnego zdażenia lub ustalonego planu. Standardowo, jądro Linux
+zapewnia mechanizm wywłaszczenia (ang. \textit{preemption}) zadania z trybu
+użytkownia przez zadania o wyższym priorytecie lub przerwania sprzętowe.
 Przebieg wywłaszczenia przedstawiono na rysunku \ref{sw::preempt_0}:
 
 \begin{figure}[H]
@@ -48,8 +48,9 @@ Przebieg wywłaszczenia przedstawiono na rysunku \ref{sw::preempt_0}:
     \label{sw::preempt_0}
 \end{figure}
 
-Jako, że jedynie wywłaszczone mogą zostać zadania pracujące w trybie użytkownika, 
-nie trudno wyobrazić sobie sytuację, którą przedstawiono na rysunku \ref{sw::preempt_1}
+Jako, że jedynie wywłaszczone mogą zostać zadania pracujące w trybie
+użytkownika, nie trudno wyobrazić sobie sytuację, którą przedstawiono na rysunku
+\ref{sw::preempt_1}
 
 \begin{figure}[H]
     \centering
@@ -58,18 +59,18 @@ nie trudno wyobrazić sobie sytuację, którą przedstawiono na rysunku \ref{sw:
     \label{sw::preempt_1}
 \end{figure}
 
-Jeżeli przerwanie żądające wywołanie innego zadania nadejdzie w momencie 
-wykonywania wywołania systemowego, to takie przerwanie nie zostanie obsłużone 
-do momentu jego zakończenia. Oznacza to, że w niektórych sytuacjach 
-nie sposób określić czasu potrzebnego na wykonanie zadania.
-Dodatkowo, każde zadanie w trybie użytkownika może zostać wywłaszczone 
-przez przerwanie sprzętowe, w którego trakcie obsługi niemożliwa jest obsługa innych
-przerwań. Oznacza to, że małe ważne przerwania sprzętowe mogą wywłaszczyć
-krytyczne czasowo zadania czasu rzeczywistego.
-\par Z realizacją wywłaszczeń realizowanych w standardowym systemie Linux wiąże się 
-również problem nazywany inwersją priorytetów (ang. \textit{priority inversion}).
-Opiera się on na sytuacji, kiedy niekrytyczne zadanie blokuje dostęp (ang. \textit{mutex}) do 
-zasobów zadaniu krytycznemu. Przebieg takiego problemu przedstawiono na rysunku \ref{sw::prior_inv}:
+Jeżeli przerwanie żądające wywołanie innego zadania nadejdzie w momencie
+wykonywania wywołania systemowego, to takie przerwanie nie zostanie obsłużone do
+momentu jego zakończenia. Oznacza to, że w niektórych sytuacjach nie sposób
+określić czasu potrzebnego na wykonanie zadania. Dodatkowo, każde zadanie w
+trybie użytkownika może zostać wywłaszczone przez przerwanie sprzętowe, w
+którego trakcie obsługi niemożliwa jest obsługa innych przerwań. Oznacza to, że
+małe ważne przerwania sprzętowe mogą wywłaszczyć krytyczne czasowo zadania czasu
+rzeczywistego. \par Z realizacją wywłaszczeń realizowanych w standardowym
+systemie Linux wiąże się również problem nazywany inwersją priorytetów (ang.
+\textit{priority inversion}). Opiera się on na sytuacji, kiedy niekrytyczne
+zadanie blokuje dostęp (ang. \textit{mutex}) do zasobów zadaniu krytycznemu.
+Przebieg takiego problemu przedstawiono na rysunku \ref{sw::prior_inv}:
 
 \begin{figure}[H]
     \centering
@@ -78,23 +79,23 @@ zasobów zadaniu krytycznemu. Przebieg takiego problemu przedstawiono na rysunku
     \label{sw::prior_inv}
 \end{figure}
 
-Krytyczne zadanie \textbf{B} musi uzyskać dostęp do zasobów blokowanych przez zadanie \textbf{A}
-o niższym priorytecie. W celu ich odblokowania, 
-planista przełącza kontekst na zadanie \textbf{A}, lecz w czasie jego wykonywania
-zostaje ono wywłaszczone przez zadanie \textbf{B} o wyższym priorytecie.
+Krytyczne zadanie \textbf{B} musi uzyskać dostęp do zasobów blokowanych przez
+zadanie \textbf{A} o niższym priorytecie. W celu ich odblokowania, planista
+przełącza kontekst na zadanie \textbf{A}, lecz w czasie jego wykonywania zostaje
+ono wywłaszczone przez zadanie \textbf{B} o wyższym priorytecie.
 
 \subsection{Zestaw łatek PREEMPT\_RT}
 
-Samoistnie, jądro Linux nigdy nie będzie podstawą do stworzenia 
-systemu operacyjnego czasu rzeczywistego, dlatego celem zestawu łatek PREEMPT\_RT
-jest minimalizacja latencji. Latencja w kontekście obliczeń w czasie rzeczywistym
-definiowana jest jako czas liczony od momentu wystąpienia zdarzenia, 
-którym może być rządanie realizacji zadania krytycznego, do momentu jego obsługi.
+Samoistnie, jądro Linux nigdy nie będzie podstawą do stworzenia systemu
+operacyjnego czasu rzeczywistego, dlatego celem zestawu łatek PREEMPT\_RT jest
+minimalizacja latencji. Latencja w kontekście obliczeń w czasie rzeczywistym
+definiowana jest jako czas liczony od momentu wystąpienia zdarzenia, którym może
+być rządanie realizacji zadania krytycznego, do momentu jego obsługi.
 
 \par Zestaw łatek w odpowiedzi na problem \ref{sw::preempt_1} umożliwia
 wywłaszczenie wszystkich zadań, nawet tych z trybu jądra. Mając taką możliwość,
-problem przełączenia się na krytyczne zadanie w trakcie wykonywania
-zadania z trybu jądra może zostać rozwiązany jak przedstawiono na rysunku 
+problem przełączenia się na krytyczne zadanie w trakcie wykonywania zadania z
+trybu jądra może zostać rozwiązany jak przedstawiono na rysunku
 \ref{sw::preempt_rt_0}:
 
 \begin{figure}[H]
@@ -105,8 +106,8 @@ zadania z trybu jądra może zostać rozwiązany jak przedstawiono na rysunku
 \end{figure}
 
 Problem inwersji priorytetów, przedstawiony na rysunku \ref{sw::prior_inv}
-zostaje rozwiązany w oparciu o metodę dziedziczenia priorytetów, którą przedstawiono
-na rysunku \ref{sw::prior_inh}:
+zostaje rozwiązany w oparciu o metodę dziedziczenia priorytetów, którą
+przedstawiono na rysunku \ref{sw::prior_inh}:
 
 \begin{figure}[H]
     \centering
@@ -115,14 +116,14 @@ na rysunku \ref{sw::prior_inh}:
     \label{sw::prior_inh}
 \end{figure}
 
-Czyli w przypadku chęci uzyskania dostępu przez zadanie o wyższym priorytecie \textbf{B}
-do zasobów blokowanych przez zadanie o niższym \textbf{A}, priorytet zadania
-\textbf{A} zostaje zwiększony, aby w trakcie odblokowywania zasobów 
-nie nastąpiło jego wywłaszczenie.
+Czyli w przypadku chęci uzyskania dostępu przez zadanie o wyższym priorytecie
+\textbf{B} do zasobów blokowanych przez zadanie o niższym \textbf{A}, priorytet
+zadania \textbf{A} zostaje zwiększony, aby w trakcie odblokowywania zasobów nie
+nastąpiło jego wywłaszczenie.
 
-\par Dodatkowo, wprawdzenie łatek umożliwia wątką realizację przerwań sprzętowych,
-które standardowo są niewywłaszczalne. Różnice w standardowej obsłudze przerwania, 
-a wątkowej przedstawiono na rysunkach \ref{sw::hw_irq}:
+\par Dodatkowo, wprawdzenie łatek umożliwia wątką realizację przerwań
+sprzętowych, które standardowo są niewywłaszczalne. Różnice w standardowej
+obsłudze przerwania, a wątkowej przedstawiono na rysunkach \ref{sw::hw_irq}:
 
 \begin{figure}[H]
     \centering
@@ -145,34 +146,35 @@ a wątkowej przedstawiono na rysunkach \ref{sw::hw_irq}:
 Poza kwestiami opisanymi wyżej, zestaw łatek PREEMPT\_RT wprowadza wsparcie dla:
 \begin{itemize}
 
-    \item Liczników wysokiej rozdzielczości (ang. \textit{High resolution timers})
-    - wykorzystanie dostępnych sprzętowych liczników do zaplanowania przerwań
-    w dokładnym momencie
+    \item Liczników wysokiej rozdzielczości (ang. \textit{High resolution
+    timers}) - wykorzystanie dostępnych sprzętowych liczników do zaplanowania
+    przerwań w dokładnym momencie
 
     \item Dodatkowe wytyczne dla planisty:
     \begin{itemize}
         \item SCHED\_FIFO - wszystkie zadania z tym samym priorytetem wykonywane
             są w trybie FIFO (ang. \textit{First in, First out}).
 
-        \item SCHED\_RR - równomierne dzielenie czasu pomiędzy zadania z tym samym priorytetem z wykorzystaniem algorytmu
-        karuzelowego (ang. \textit{Round robin}).
+        \item SCHED\_RR - równomierne dzielenie czasu pomiędzy zadania z tym
+        samym priorytetem z wykorzystaniem algorytmu karuzelowego (ang.
+        \textit{Round robin}).
 
-        \item SCHED\_DEADLINE - wspiera dodanie dodatkowych parametrów 
-        dla zadań, takich jak czas przetwarzania (ang. \textit{computation time}),
-        limit czasowy (ang. \textit{deadline}) i okres (czas, w którym tylko jedno
-        zadanie może zostać wykonane).
+        \item SCHED\_DEADLINE - wspiera dodanie dodatkowych parametrów dla
+        zadań, takich jak czas przetwarzania (ang. \textit{computation time}),
+        limit czasowy (ang. \textit{deadline}) i okres (czas, w którym tylko
+        jedno zadanie może zostać wykonane).
     \end{itemize}
 \end{itemize}
 
 Jako, że PREEMPT\_RT jest zestawem łatek jądra Linux, obsługa funkcjonalności,
 które oferuje, opiera się na wykorzystaniu zestawu funkcji udostępnianych przez
-POSIX. Konfiguracja krytycznego zadania i planisty odbywa się poprzez
-funkcje zdefiniowane w nagłówkach \textit{pthread.h} i \textit{sched.h}.
+POSIX. Konfiguracja krytycznego zadania i planisty odbywa się poprzez funkcje
+zdefiniowane w nagłówkach \textit{pthread.h} i \textit{sched.h}.
 
 \section{System operacyjny}
 
-Proces uruchomienia systemu operacyjnego GNU/Linux na wybranej
-platformie obliczeniowej przedstawiono na rysunku \ref{sw::boot_process}:
+Proces uruchomienia systemu operacyjnego GNU/Linux na wybranej platformie
+obliczeniowej przedstawiono na rysunku \ref{sw::boot_process}:
 
 \begin{figure}[H]
     \centering
@@ -184,154 +186,160 @@ platformie obliczeniowej przedstawiono na rysunku \ref{sw::boot_process}:
 Opis poszczególnych etapów przedstawiono poniżej:
 \begin{enumerate}
 
-    \item Pierwszy etap rozruchowy (ang. \textit{Boot ROM}) - jego zadanie polega na 
-    inicjalizacji podstawowych magistral i peryferiów niezbędnych do dalszych etapów rozruchu.
-    Znajduje się z zafiksowanej przestrzenii adresowej z uprawnieniami
-    tylko do odczytu, z której procesor bezpośrednio po uruchomieniu zaczyna
-    wykonywać instrukcje.    
-    Po inicjalizacji, jego zadaniem jest załadowanie następnego w koleji 
-    programu rozruchowego (plik SPL lub MLO) z pamięci zewnętrznej (eMMC, karta microSD) lub
-    przez określony protokół cyfrowy (SPI, UART) do wewnętrznej pamięci SRAM procesora.
-    Jako, że program znajduje się w pamięci tylko do odczytu, nie podlega 
-    modyfikacji.
+    \item Pierwszy etap rozruchowy (ang. \textit{Boot ROM}) - jego zadanie
+    polega na inicjalizacji podstawowych magistral i peryferiów niezbędnych do
+    dalszych etapów rozruchu. Znajduje się z zafiksowanej przestrzenii adresowej
+    z uprawnieniami tylko do odczytu, z której procesor bezpośrednio po
+    uruchomieniu zaczyna wykonywać instrukcje.    
+    Po inicjalizacji, jego zadaniem jest załadowanie następnego w koleji
+    programu rozruchowego (plik SPL lub MLO) z pamięci zewnętrznej (eMMC, karta
+    microSD) lub przez określony protokół cyfrowy (SPI, UART) do wewnętrznej
+    pamięci SRAM procesora. Jako, że program znajduje się w pamięci tylko do
+    odczytu, nie podlega modyfikacji.
 
-    \item Drugi etap rozruchowy - kontynuuje inicjalizację peryferiów 
-    procesora oraz ładuje trzeci program rozruchowy (plik u-boot.img), wymagający najwięcej
-    miejsca do pamięci DDR. Po załadowaniu, przekazuje mu pełną kontrolę. 
+    \item Drugi etap rozruchowy - kontynuuje inicjalizację peryferiów procesora
+    oraz ładuje trzeci program rozruchowy (plik u-boot.img), wymagający
+    najwięcej miejsca do pamięci DDR. Po załadowaniu, przekazuje mu pełną
+    kontrolę. 
 
-    \item Trzeci etap rozruchowy - ładuje jądro wraz z drzewem urządzeń do pamięci DDR oraz 
-    inicjalizuje peryferia, które mogą zostać do tego wykorzystane 
-    (I2C, NAND, FLASH, Ethernet). Proces ładowania należy odpowiednio skonfigurować,
-    wskazując programowi miejsce, w który znajduje się obraz jądra oraz adres
-    w pamięci, do którego ma je załadować. Konfiguracji można dokonywać statycznie,
-    poprzez uprzednio przygotowany plik (uEnv.txt, uboot.env) lub dynamicznie, 
-    wpisując polecenia na etapie działania programu.
+    \item Trzeci etap rozruchowy - ładuje jądro wraz z drzewem urządzeń do
+    pamięci DDR oraz inicjalizuje peryferia, które mogą zostać do tego
+    wykorzystane (I2C, NAND, FLASH, Ethernet). Proces ładowania należy
+    odpowiednio skonfigurować, wskazując programowi miejsce, w który znajduje
+    się obraz jądra oraz adres w pamięci, do którego ma je załadować.
+    Konfiguracji można dokonywać statycznie, poprzez uprzednio przygotowany plik
+    (uEnv.txt, uboot.env) lub dynamicznie, wpisując polecenia na etapie
+    działania programu.
 
     \item Jądro - wykonuje, planuje i zarządza procesami. Jest pośrednikiem
-    między interakcjami ze sprzętem (peryferiami), kontrolując je za pośrednictwem
-    sterowników, które mogą być osadzone statycznie lub ładowane dynamicznie w postaci modułów.
-    Po uruchomieniu i przeprowadzeniu procesu inicjalizacji, włącza
-    programy startowe i umożliwia użytkownikowi pracę. Zadania wykonywane przez jądro
-    zawierają się w tak zwanym trybie jądra 
-    (ang. \textit{kernel space}), która tworzy osobną przestrzeń adresową niedostępną
+    między interakcjami ze sprzętem (peryferiami), kontrolując je za
+    pośrednictwem sterowników, które mogą być osadzone statycznie lub ładowane
+    dynamicznie w postaci modułów. Po uruchomieniu i przeprowadzeniu procesu
+    inicjalizacji, włącza programy startowe i umożliwia użytkownikowi pracę.
+    Zadania wykonywane przez jądro zawierają się w tak zwanym trybie jądra (ang.
+    \textit{kernel space}), która tworzy osobną przestrzeń adresową niedostępną
     dla aplikacji użytkownika. 
 
-    \item Główny system plików - zawiera zestaw plików i katalogów, niezbędnych do działania 
-    systemu. Z tego miejsca wychodzą pozostałe struktury katalogów, które definiują 
-    obszar roboczy użytkowników systemu wraz z aplikacjami, z których korzystają.
+    \item Główny system plików - zawiera zestaw plików i katalogów, niezbędnych
+    do działania systemu. Z tego miejsca wychodzą pozostałe struktury katalogów,
+    które definiują obszar roboczy użytkowników systemu wraz z aplikacjami, z
+    których korzystają.
 
 \end{enumerate}
 
 \subsection{Środkowisko pracy}
 
-Tworząc oprogramowanie na platformę wbudowaną należy pamiętać, że architektura 
-procesorów na takich urządzeniach różni się od tych typowo wykorzystywanych 
-w komputerach personalnych. Chcać skompilować działający program pod daną architekturę, 
-niezbędny będzie odpowiedni zestaw narzędzi (ang. \textit{toolchain}), w któreg skład wchodzi
-zestaw kompilatorów, konsolidatorów i bibliotek standardowych wykorzystywanego języka.
-Wykorzystana w projekcie platforma zaopatrzona jest w procesor ARM Cortex-A8,
-więc niezbędny jest zestaw narzędzi zdolnych budować programy pod taką architekturę.
-Taki proces przyjeło się nazywać kompilacją skrośną (ang. \textit{cross-compilation}).
-\par W projekcie wykorzystano gotowy zestaw narzędzi udostępnianych przez firmę ARM.
-W ich skład wchodzi odpowiednio przebudowany GCC oraz zestaw bibliotek standardowych 
-języka C i C++. Wszystkie wyszczególnione na rysunku \ref{sw::boot_process} konfigurowalne
-etapy ładowania systemu operacyjnego wraz z aplikacją działającą w trybie użytkownia są 
-budowane z jego użyciem.
+Tworząc oprogramowanie na platformę wbudowaną należy pamiętać, że architektura
+procesorów na takich urządzeniach różni się od tych typowo wykorzystywanych w
+komputerach personalnych. Chcać skompilować działający program pod daną
+architekturę, niezbędny będzie odpowiedni zestaw narzędzi (ang.
+\textit{toolchain}), w któreg skład wchodzi zestaw kompilatorów, konsolidatorów
+i bibliotek standardowych wykorzystywanego języka. Wykorzystana w projekcie
+platforma zaopatrzona jest w procesor ARM Cortex-A8, więc niezbędny jest zestaw
+narzędzi zdolnych budować programy pod taką architekturę. Taki proces przyjeło
+się nazywać kompilacją skrośną (ang. \textit{cross-compilation}). \par W
+projekcie wykorzystano gotowy zestaw narzędzi udostępnianych przez firmę ARM. W
+ich skład wchodzi odpowiednio przebudowany GCC oraz zestaw bibliotek
+standardowych języka C i C++. Wszystkie wyszczególnione na rysunku
+\ref{sw::boot_process} konfigurowalne etapy ładowania systemu operacyjnego wraz
+z aplikacją działającą w trybie użytkownia są budowane z jego użyciem.
 
 \subsection{Przygotowanie nośnika}
 
-Docelowo, platforma BeagleBone Black ładuje zapisany na etapie 
-produkcji system operacyjny z wewnętrznej pamięci eMMC. Chąc wgrać inny system,
-wymagane jest zapisanie niezbędnych plików na kartę SD i odpowiednie skonfigurowanie 
-płytki, aby przeprowadzała z niej proces ładowania. Aby to wykonać, karta 
-SD z plikami systemu operacyjnego musi być odpowiednio podzielona na partycje.
-Opis poszczególnych partycji przedstawiono poniżej:
+Docelowo, platforma BeagleBone Black ładuje zapisany na etapie produkcji system
+operacyjny z wewnętrznej pamięci eMMC. Chąc wgrać inny system, wymagane jest
+zapisanie niezbędnych plików na kartę SD i odpowiednie skonfigurowanie płytki,
+aby przeprowadzała z niej proces ładowania. Aby to wykonać, karta SD z plikami
+systemu operacyjnego musi być odpowiednio podzielona na partycje. Opis
+poszczególnych partycji przedstawiono poniżej:
 
 \begin{enumerate}
 
     \item Partycja rozruchowa - zawiera pliki drugiego i trzeciego programu
     rozruchowego. Wymagany jest system plików FAT32.
 
-    \item Partycja systemowa - zawiera pliki jądra systemu i drzewa urządzeń. Wymagany jest system
-    plików EXT4.
+    \item Partycja systemowa - zawiera pliki jądra systemu i drzewa urządzeń.
+    Wymagany jest system plików EXT4.
 
-    \item Partycja z głównym systemem plików - zawiera wypakowany
-    główny system plików systemu. Wymagany jest system plików EXT4.
+    \item Partycja z głównym systemem plików - zawiera wypakowany główny system
+    plików systemu. Wymagany jest system plików EXT4.
 
 \end{enumerate}
 
 \subsection{Programy rozruchowe}
 
-Pierwszy program rozruchowy jest wgrany przez producenta na etapie produkowania 
-układu, więc jest to część systemu, na którą programista nie ma wpływu. Pozostałe 
-dwa programy, czyli odpowiednio drugi i trzeci etap rozruchowy, muszą być
-odpowiednio skonfigurowane i umiejscowione na odpowiedniej partycji docelowego nośnika,
-aby proces uruchomienia systemu odbył się prawidłowo. Jako program rozruchowy zapewniający 
-drugi i trzeci etap wybrano pakiet \textit{Das U-Boot}, który stanowi podstawowe 
-rozwiązanie dla wbudowanych systemów operacyjnych.
-\par Proces budowania poszczególnych etapów przedstawionych na rysunku \ref{sw::boot_process} 
-zazwyczaj wygląda bardzo podobnie i można go podzielić na trzy główne kroki:
+Pierwszy program rozruchowy jest wgrany przez producenta na etapie produkowania
+układu, więc jest to część systemu, na którą programista nie ma wpływu.
+Pozostałe dwa programy, czyli odpowiednio drugi i trzeci etap rozruchowy, muszą
+być odpowiednio skonfigurowane i umiejscowione na odpowiedniej partycji
+docelowego nośnika, aby proces uruchomienia systemu odbył się prawidłowo. Jako
+program rozruchowy zapewniający drugi i trzeci etap wybrano pakiet \textit{Das
+U-Boot}, który stanowi podstawowe rozwiązanie dla wbudowanych systemów
+operacyjnych. \par Proces budowania poszczególnych etapów przedstawionych na
+rysunku \ref{sw::boot_process} zazwyczaj wygląda bardzo podobnie i można go
+podzielić na trzy główne kroki:
 
 \begin{enumerate}
 
-    \item Pobranie kodów źródłowych z repozytorium twórców - jeżeli oprogramowanie
-    udostępniane jest na licencjach otwartoźródłowych, to twórcy zwyczajowo
-    magazynują wszystkie kody źródłowe na ogólnodostępnych w internecie repozytoriach.
+    \item Pobranie kodów źródłowych z repozytorium twórców - jeżeli
+    oprogramowanie udostępniane jest na licencjach otwartoźródłowych, to twórcy
+    zwyczajowo magazynują wszystkie kody źródłowe na ogólnodostępnych w
+    internecie repozytoriach.
 
-    \item Konfiguracja procesu budowania - może się różnić w zależności od 
+    \item Konfiguracja procesu budowania - może się różnić w zależności od
     wykorzystywanego przez program systemu budowania. Typowo, procesowi należy
     wskazać plik konfiguracyjny z charakterystyką używanej platformy.
 
-    \item Budowanie - proces kompilacji zakończony generacją odpowiedniego pliku 
+    \item Budowanie - proces kompilacji zakończony generacją odpowiedniego pliku
     wykonywalnego.
 
 \end{enumerate}
 
-Platforma BeagleBone Black, jako że jest popularnym układem, posiada już odpowiednio
-przygotowane pliki konfiguracyjne dla drugiego etapu budowania, więc dodatkowa 
-ingerencja w proces konfiguracji nie jest wymagana. Wynikiem pomyślnego zbudowania 
-programu są pliki MLO i u-boot.img, będące odpowiednio drugim i trzecim programem rozruchowym. 
-Po wgraniu plików na partycję rozruchową nośnika i uruchomieniu ładowania, 
-trzeci program rozruchowy przedstawi się linią poleceń i wymagane będzie wpisanie 
-kilku komend, informujących program, skąd i gdzie ma załadować pliki jądra systemu.
-Po zapisaniu konfiguracji, programy rozruchowe nie wymagają dodatkowych modyfikacji.
+Platforma BeagleBone Black, jako że jest popularnym układem, posiada już
+odpowiednio przygotowane pliki konfiguracyjne dla drugiego etapu budowania, więc
+dodatkowa ingerencja w proces konfiguracji nie jest wymagana. Wynikiem
+pomyślnego zbudowania programu są pliki MLO i u-boot.img, będące odpowiednio
+drugim i trzecim programem rozruchowym. Po wgraniu plików na partycję rozruchową
+nośnika i uruchomieniu ładowania, trzeci program rozruchowy przedstawi się linią
+poleceń i wymagane będzie wpisanie kilku komend, informujących program, skąd i
+gdzie ma załadować pliki jądra systemu. Po zapisaniu konfiguracji, programy
+rozruchowe nie wymagają dodatkowych modyfikacji.
 
 \subsection{Jądro Linux}
 
-Proces budowania jądra Linux jest analogiczny jak proces budowania programów 
-rozruchowych. Dodatkową opcją jest możliwość interaktywnej konfiguracji 
-budowanego systemu w oparciu o narzędzie \textit{menuconfig}, jednak
-domyślny plik konfiguracyjny, opisujący wybraną platformę na potrzeby realizowanego
-projektu jest wystarczający.
-\par Jedyną zmianą, którą wprowadzono w kodach źródłowych jądra było 
-dodanie prostego sterownika obsługującego zaprojektowaną płytkę drukowaną na bazie
-kodeku PCM5102A \cite{bib:sitara}. Z najbardziej znaczących kwestii, 
-sterownik zawiera deklarację struktury opisującą
-konfigurację płytki dla transferów wejściowych i wyjściowych (wspierane formaty, liczba kanałów) 
-oraz funkcję, która umożliwia jego załadowanie i widoczność w systemie.
-W wykorzystanym rozwiązaniu napisany moduł bezpośrednio zastąpił sterownik kodeka PCM5102A,
-zachowując początkową nazwę, więc dodatkowe modyfikacje w plikach konfiguracyjnych 
-jądra nie były konieczne. Domyślnie, sterownik kodeka PCM5102A ładowany jest dynamicznie 
-jako moduł, więc po zbudowaniu jądra
-wymagana jest ich instalacja w głównym systemie plików.
+Proces budowania jądra Linux jest analogiczny jak proces budowania programów
+rozruchowych. Dodatkową opcją jest możliwość interaktywnej konfiguracji
+budowanego systemu w oparciu o narzędzie \textit{menuconfig}, jednak domyślny
+plik konfiguracyjny, opisujący wybraną platformę na potrzeby realizowanego
+projektu jest wystarczający. \par Jedyną zmianą, którą wprowadzono w kodach
+źródłowych jądra było dodanie prostego sterownika obsługującego zaprojektowaną
+płytkę drukowaną na bazie kodeku PCM5102A \cite{bib:sitara}. Z najbardziej
+znaczących kwestii, sterownik zawiera deklarację struktury opisującą
+konfigurację płytki dla transferów wejściowych i wyjściowych (wspierane formaty,
+liczba kanałów) oraz funkcję, która umożliwia jego załadowanie i widoczność w
+systemie. W wykorzystanym rozwiązaniu napisany moduł bezpośrednio zastąpił
+sterownik kodeka PCM5102A, zachowując początkową nazwę, więc dodatkowe
+modyfikacje w plikach konfiguracyjnych jądra nie były konieczne. Domyślnie,
+sterownik kodeka PCM5102A ładowany jest dynamicznie jako moduł, więc po
+zbudowaniu jądra wymagana jest ich instalacja w głównym systemie plików.
 
-\par Proces zastosowania zestawu łatek PREEMPT\_RT można wykonać manualnie, lub 
-skorzystać z gotowej opcji przygotowanej przez twórców repozytorium 
-składującego kody źródłowe jądra systemu Linux przystosowane do pracy 
-na platformie BeagleBone Black. Wersje jądra z zastosowanym zestawem łatek
-PREEMPT\_RT oznaczone są tagami \textit{*-rt-*}, gdzie gwiazdki oznaczają numery
-wersji. Aby skorzystać z gotowo połatanego jądra, wystarczy ściągnąć odpowiednią
-wersję i przeprowadzić na niej znany już wcześniej proces budowania, którego
-wynikiem będzie plik zImage, następnie ładowany na
-partycję systemową nośnika.
+\par Proces zastosowania zestawu łatek PREEMPT\_RT można wykonać manualnie, lub
+skorzystać z gotowej opcji przygotowanej przez twórców repozytorium składującego
+kody źródłowe jądra systemu Linux przystosowane do pracy na platformie
+BeagleBone Black. Wersje jądra z zastosowanym zestawem łatek PREEMPT\_RT
+oznaczone są tagami \textit{*-rt-*}, gdzie gwiazdki oznaczają numery wersji. Aby
+skorzystać z gotowo połatanego jądra, wystarczy ściągnąć odpowiednią wersję i
+przeprowadzić na niej znany już wcześniej proces budowania, którego wynikiem
+będzie plik zImage, następnie ładowany na partycję systemową nośnika.
 
 \subsection{Drzewo urządzeń}
 
-Wraz z plikami jądra, na partycji systemowej nośnika musi znaleźć się plik 
+Wraz z plikami jądra, na partycji systemowej nośnika musi znaleźć się plik
 informujący system o rozmieszczeniu i konfiguracji urządzeń nie posiadających
-automatycznej metody wykrywania. Mechanizmem stosowanym do tego celu we wbudowanych systemach 
-operacyjnych GNU/Linux jest drzewo urządzeń (ang. \textit{device tree}).
-\par Praca z drzewem urządzeń sprowadza się do następujących plików 
+automatycznej metody wykrywania. Mechanizmem stosowanym do tego celu we
+wbudowanych systemach operacyjnych GNU/Linux jest drzewo urządzeń (ang.
+\textit{device tree}). \par Praca z drzewem urządzeń sprowadza się do
+następujących plików 
 
 \begin{itemize}
 
@@ -339,41 +347,40 @@ operacyjnych GNU/Linux jest drzewo urządzeń (ang. \textit{device tree}).
 
     \item Pliki nagłówkowe (rozszerzenie \textit{.dtsi})
 
-    \item Pliki będące wynikiem budowania plików źródłowych (rozszerzenie \textit{.dtb}), 
-    które finalnie muszą znaleźć się obok obrazu jądra na partycji systemowej nośnika.
+    \item Pliki będące wynikiem budowania plików źródłowych (rozszerzenie
+    \textit{.dtb}), które finalnie muszą znaleźć się obok obrazu jądra na
+    partycji systemowej nośnika.
 
 \end{itemize}
 
 Pliki źródłowe zawierają definicje i odwołania do wezłów (ang. \textit{node}),
-które przypominają struktury języka C. Węzły posiadają zestaw właściwości 
-(ang. \textit{properites}) oraz możliwe węzły potomne. Kążdy węzeł posiada tylko 
-jednego rodzica, za wyjątkiem węzła \textit{root}, który jest węzłem nadrzędnym. 
-Węzły mogą się do siebie nawzajem odwoływać jak i modyfikować swoją zawartość, dlatego
-z matematycznego punktu widzenia, drzewo urządzeń jest tak właściwie grafem acyklicznym.
-\par Kody źródłowe jądra Linux posiadają gotowo przygotowane pliki źródłowe 
-drzewa urządzeń dla większości obsługiwanych platform, w tym wykorzystanej.
-Sporządzona układ pomiarowy, obsługiwany przez interfejs McASP,
+które przypominają struktury języka C. Węzły posiadają zestaw właściwości (ang.
+\textit{properites}) oraz możliwe węzły potomne. Kążdy węzeł posiada tylko
+jednego rodzica, za wyjątkiem węzła \textit{root}, który jest węzłem nadrzędnym.
+Węzły mogą się do siebie nawzajem odwoływać jak i modyfikować swoją zawartość,
+dlatego z matematycznego punktu widzenia, drzewo urządzeń jest tak właściwie
+grafem acyklicznym. \par Kody źródłowe jądra Linux posiadają gotowo przygotowane
+pliki źródłowe drzewa urządzeń dla większości obsługiwanych platform, w tym
+wykorzystanej. Sporządzona układ pomiarowy, obsługiwany przez interfejs McASP,
 nie posiada mechanizmu automatycznego wykrywania, dlatego niezbędne jest
-zadeklarowanie go w drzewie urządzeń, wraz z niezbędną konfiguracją interfejsu 
+zadeklarowanie go w drzewie urządzeń, wraz z niezbędną konfiguracją interfejsu
 McASP, który domyślnie nie jest zdefiniowany. W tym celu, napisany został
-dodatkowy plik nagłówkowy dodany do głównego pliku źródłowego drzewa urządzeń, 
-z opisem niezbędnej konfiguracji, której zawartość jest następująca:
+dodatkowy plik nagłówkowy dodany do głównego pliku źródłowego drzewa urządzeń, z
+opisem niezbędnej konfiguracji, której zawartość jest następująca:
 \begin{enumerate}
 
     \item Zdefiniowanie pinów McASP - płytka BeagleBone Black wspiera wiele
-    możliwych konfiguracji wyprowadzeń, które kontrolowane są przez wewnętrzny multilpekser. 
-    W ramach projektu wykorzystano McASP0, którego konfigurację wyprowadzeń 
-    przedstawiono w tabeli \ref{tab::mcasp}:
+    możliwych konfiguracji wyprowadzeń, które kontrolowane są przez wewnętrzny
+    multilpekser. W ramach projektu wykorzystano McASP0, którego konfigurację
+    wyprowadzeń przedstawiono w tabeli \ref{tab::mcasp}:
 
     \begin{table}[H]
         \centering
         \begin{adjustbox}{width=1\textwidth}
             \begin{tabular}{|| c | c | c | c | c | c ||} 
             \hline
-            \textbf{Nazwa} & \textbf{Adres} & 
-            \textbf{Numer} & \textbf{Domyślny stan} & 
-            \textbf{Kierunek} &
-            \textbf{Tryb multipleksera} \\ [0.5ex] 
+            \textbf{Nazwa} & \textbf{Adres} & \textbf{Numer} & \textbf{Domyślny
+            stan} & \textbf{Kierunek} & \textbf{Tryb multipleksera} \\ [0.5ex]
             \hline\hline
             MCASP0\_ACLKX & 0x990 & P9\_31 & 1 & OUT & 0 \\
             \hline
@@ -395,68 +402,70 @@ z opisem niezbędnej konfiguracji, której zawartość jest następująca:
 
     \end{table}
 
-    \item Zdefiniowanie węzła McASP - stworzenie węzła \textit{mcasp0}
-    z odpowiednim zestawem wartości, z których można wyróżnić:
+    \item Zdefiniowanie węzła McASP - stworzenie węzła \textit{mcasp0} z
+    odpowiednim zestawem wartości, z których można wyróżnić:
     \begin{itemize}
 
-        \item Odwołanie do wyprowadzeń (wartość \textit{pinctrl}) - 
-        odwołanie do zadeklarowanych w tabeli \ref{tab::mcasp}.
+        \item Odwołanie do wyprowadzeń (wartość \textit{pinctrl}) - odwołanie do
+        zadeklarowanych w tabeli \ref{tab::mcasp}.
 
         \item Kierunki serializatorów (wartość \textit{serial-dir}) -
-        definiowane jako wartość 2 dla trybu wejściowego i wartość 1 dla trybu 
-        wyjściowego. Wartość przyjmuje postać tablicy, której indeksy reprezentują
-        odpowiednie piny \textbf{AXR} (przykładowo \textbf{AXR0} dla indeksu zerowego).
+        definiowane jako wartość 2 dla trybu wejściowego i wartość 1 dla trybu
+        wyjściowego. Wartość przyjmuje postać tablicy, której indeksy
+        reprezentują odpowiednie piny \textbf{AXR} (przykładowo \textbf{AXR0}
+        dla indeksu zerowego).
 
     \end{itemize}
 
-    \item Zdefiniowanie węzła zegara i przypisanie go sygnałowi \textbf{AHCLK} - 
+    \item Zdefiniowanie węzła zegara i przypisanie go sygnałowi \textbf{AHCLK} -
     jego domyślna częstotliwość wynosi 24.576 MHz i na jego podstawie generowane
     są pozostałe zegary interfejsu McASP (\textbf{ACLKX} i \textbf{FSX})
 
-    \item Zdefiniowanie węzła opisującego sporzadzoną płytkę drukowaną - 
-    wymaga odwołania do zmodyfikowanego sterownika kodeka PCM5102A, 
-    którego opisano w sekcji jądra.
+    \item Zdefiniowanie węzła opisującego sporzadzoną płytkę drukowaną - wymaga
+    odwołania do zmodyfikowanego sterownika kodeka PCM5102A, którego opisano w
+    sekcji jądra.
 
-    \item Zdefiniowanie węzłą urządzenia dźwiękowego - wykonana płytka drukowana 
-    będzie docelowo widoczna w systemie jako urządzenie dźwiękowe (karta dźwiękowa).
-    Deklaracja urządzenia dźwiękowego wymaga zdefiniowanie zestawu wartości, 
-    które opisano poniżej:
+    \item Zdefiniowanie węzłą urządzenia dźwiękowego - wykonana płytka drukowana
+    będzie docelowo widoczna w systemie jako urządzenie dźwiękowe (karta
+    dźwiękowa). Deklaracja urządzenia dźwiękowego wymaga zdefiniowanie zestawu
+    wartości, które opisano poniżej:
     \begin{itemize}
 
-        \item Odniesienie do nadrzędnego sterownika karty - wykorzystano domyślny, 
-        czyli \textit{simple-audio-card}.
+        \item Odniesienie do nadrzędnego sterownika karty - wykorzystano
+        domyślny, czyli \textit{simple-audio-card}.
 
-        \item Format transmisji - wykorzystano tryb I$^2$S w trybie wyrównania w lewo
-        (ang. \textit{Left justified I$^2$S}), który opisano w sekcji sprzętowej 
-        interfejsu cyfrowego.
+        \item Format transmisji - wykorzystano tryb I$^2$S w trybie wyrównania w
+        lewo (ang. \textit{Left justified I$^2$S}), który opisano w sekcji
+        sprzętowej interfejsu cyfrowego.
 
-        \item Odniesienia do urządzenia traktowanego jako \textit{master} i jako \textit{slave} - 
-        jako \textit{master} traktowany jest interfejs McASP0 (węzeł McASP) ponieważ zapewnia
-        potrzebne zegary, a jako \textit{slave} sporządzona
-        płytka drukowana (węzeł płytki drukowanej).
+        \item Odniesienia do urządzenia traktowanego jako \textit{master} i jako
+        \textit{slave} - jako \textit{master} traktowany jest interfejs McASP0
+        (węzeł McASP) ponieważ zapewnia potrzebne zegary, a jako \textit{slave}
+        sporządzona płytka drukowana (węzeł płytki drukowanej).
 
-        \item Nazwa karty - nazwa, pod jaką urządzenie będzie widoczne w systemie.
+        \item Nazwa karty - nazwa, pod jaką urządzenie będzie widoczne w
+        systemie.
 
     \end{itemize}
 
 \end{enumerate}
 
-Tak przygotowane źródła drzewa urządzeń można poddać procesowi budowania i 
+Tak przygotowane źródła drzewa urządzeń można poddać procesowi budowania i
 wynikowy plik umieścić obok obrazu jądra na partycji systemowej nośnika.
 
 \subsection{System plików}
 
 W celu generacji systemu plików wykorzystano narzędzie \textit{debootstrap},
-które umożliwia instalację systemu plików na bazie dystrybcji Debian we wskazanym
-katalogu. Narzędzie umożliwia zdefiniowanie architektury, na której docelowy system
-będzie działał oraz zestawu paczek, które zostaną pobrane i zainstalowane na końcu
-procesu instalacji.
-\par Po wykonanym procesie instalacji, nowy powstały system można w wygodny sposób 
-skonfigurować z wykorzystaniem narzędzia \textit{chroot}, które umożliwia dynamiczną 
-zmianę systemu, na którym aktualnie się pracuje. Dzięki temu, proces 
-konfiguracji haseł, połączeń sieciowych oraz instalacja dodatkowych pakietów 
-może odbyć się w prosty sposób z poziomu komputera personalnego, a nawet zostać 
-zautomatyzowana skryptem powłoki.
+które umożliwia instalację systemu plików na bazie dystrybcji Debian we
+wskazanym katalogu. Narzędzie umożliwia zdefiniowanie architektury, na której
+docelowy system będzie działał oraz zestawu paczek, które zostaną pobrane i
+zainstalowane na końcu procesu instalacji. \par Po wykonanym procesie
+instalacji, nowy powstały system można w wygodny sposób skonfigurować z
+wykorzystaniem narzędzia \textit{chroot}, które umożliwia dynamiczną zmianę
+systemu, na którym aktualnie się pracuje. Dzięki temu, proces konfiguracji
+haseł, połączeń sieciowych oraz instalacja dodatkowych pakietów może odbyć się w
+prosty sposób z poziomu komputera personalnego, a nawet zostać zautomatyzowana
+skryptem powłoki.
 
 \section{Aplikacja}
 
@@ -475,48 +484,46 @@ samodzielnie. Można z nich wyróżnić:
 \begin{itemize}
 
     \item Bilbioteka \textit{libdsp} - tworzy ją implementacja filtracji
-    cyfrowej opartej na modelu FIR (nagłówek \textit{fir.h}) oraz 
-    algorytmu LMS (nagłówek \textit{lms.h}).
+    cyfrowej opartej na modelu FIR (nagłówek \textit{fir.h}) oraz algorytmu LMS
+    (nagłówek \textit{lms.h}).
 
-    \item Biblioteka \textit{libsignal} - tworzy ją implementacja 
-    generatorów standardowych sygnałów wykorzystywanych do symulacji źródła hałasu, 
+    \item Biblioteka \textit{libsignal} - tworzy ją implementacja generatorów
+    standardowych sygnałów wykorzystywanych do symulacji źródła hałasu,
     testowania i identyfikacji (sygnały periodyczne, szumy). 
 
     \item Biblioteka \textit{libsc} - opakowuje funkcje zewnętrznej biblioteki
-    \textit{libasound} w celu uzyskania wyższego poziomu abstrakcji.
-    Udostępnia funkcje pozwalające na interakcje z urządzeniami dźwiękowymi w 
-    systemie.
+    \textit{libasound} w celu uzyskania wyższego poziomu abstrakcji. Udostępnia
+    funkcje pozwalające na interakcje z urządzeniami dźwiękowymi w systemie.
 
 \end{itemize}
 
-Kolorem zielonym zaznaczono moduł zewnętrzny, będącą w tym przypadku
-biblioteką \textit{libasound} udostępnianą przez środowisko ALSA, 
-które jest wykorzystanym programowym systemem obsługi dźwięku. 
-Na czerwono przedstawiono kontener z modułami jądra Linux, z którymi komunikuje 
-się system ALSA.
+Kolorem zielonym zaznaczono moduł zewnętrzny, będącą w tym przypadku biblioteką
+\textit{libasound} udostępnianą przez środowisko ALSA, które jest wykorzystanym
+programowym systemem obsługi dźwięku. Na czerwono przedstawiono kontener z
+modułami jądra Linux, z którymi komunikuje się system ALSA.
 
 \section{System ALSA}
 
 System ALSA (ang. \textit{Advanced Linux Sound Architecture}) jest głównym
 środowiskiem kontrolującym urządzenia dźwiękowe w systemie operacyjnym GNU/Linux
-i jest bezpośrednim pośrednikiem pomiędzy aplikacjami działającymi w trybie użytkownika
-oraz sterownikami działającymi w trybie jądra.
-Udostępnia zestaw narzędzi, pozwalających na interakcję z urządzeniami audio 
-w systemie (przykładowo programy \textit{aplay, arecord, alsamixer})
-oraz bibliotekę \textit{libasound}, która pozwala na wywoływanie funkcji
-systemu ALSA w aplikacji użytkownika. Z funkcji udostępnianych przez bibliotekę 
-można wyróżnić kompleksowy zestaw akcji służycych konfiguracji danego urządzenia
-audio wraz z metodami pozwalającymi na odczyt i zapis, skutkującymi odpowiednio
-nagraniem oraz odtworzeniem danych z kanałów obsługiwanej karty.
-\par Cyfrową reprezentacją dźwięku wykorzystywaną przez opisywany system 
-jest modulacja pulsowo-kodowa (ang. \textit{Pulse Code Modulation}, PCM),
-a próbki kodowane w ten sposób alokowane są w tworzonych na poziomie modułów
-jądra buforach cyklicznych, których długość można modyfikować korzystając 
-z funkcji udostępnianych przez bibliotekę. Jeżeli bufor jest zapełniony,
-sterownik generuje przerwanie, którego obsługa oddelegowana jest do modułu 
-DMA (ang. \textit{Direct Memory Access}), przeprowadzającego nieblokujący 
-transfer z bufora modułu do bufora aplikacji. Próbki w buforze sterownika
-szeregowane są w określony sposób, który przedstawiono na rysunku \ref{sw::alsa_buffer}:
+i jest bezpośrednim pośrednikiem pomiędzy aplikacjami działającymi w trybie
+użytkownika oraz sterownikami działającymi w trybie jądra. Udostępnia zestaw
+narzędzi, pozwalających na interakcję z urządzeniami audio w systemie
+(przykładowo programy \textit{aplay, arecord, alsamixer}) oraz bibliotekę
+\textit{libasound}, która pozwala na wywoływanie funkcji systemu ALSA w
+aplikacji użytkownika. Z funkcji udostępnianych przez bibliotekę można wyróżnić
+kompleksowy zestaw akcji służycych konfiguracji danego urządzenia audio wraz z
+metodami pozwalającymi na odczyt i zapis, skutkującymi odpowiednio nagraniem
+oraz odtworzeniem danych z kanałów obsługiwanej karty. \par Cyfrową
+reprezentacją dźwięku wykorzystywaną przez opisywany system jest modulacja
+pulsowo-kodowa (ang. \textit{Pulse Code Modulation}, PCM), a próbki kodowane w
+ten sposób alokowane są w tworzonych na poziomie modułów jądra buforach
+cyklicznych, których długość można modyfikować korzystając z funkcji
+udostępnianych przez bibliotekę. Jeżeli bufor jest zapełniony, sterownik
+generuje przerwanie, którego obsługa oddelegowana jest do modułu DMA (ang.
+\textit{Direct Memory Access}), przeprowadzającego nieblokujący transfer z
+bufora modułu do bufora aplikacji. Próbki w buforze sterownika szeregowane są w
+określony sposób, który przedstawiono na rysunku \ref{sw::alsa_buffer}:
 
 \begin{figure}[H]
     \centering
@@ -525,97 +532,93 @@ szeregowane są w określony sposób, który przedstawiono na rysunku \ref{sw::a
     \label{sw::alsa_buffer}
 \end{figure}
 
-Bufor składa się fragmentów (lub okresów, ang. \textit{periods}),
-składających się z określonej ilości ramek. Ramki z kolei składają
-się próbek przypisanych określonym kanałom karty, których długość
-zdefiniowana jest przez przyjęty format. 
-W trakcie działania programu w trybie
-użytkownika, próbki transportowane są z/do bufora sterownika do/z bufora aplikacji. 
-W przypadku odczytywania danych może dojść do sytuacji, kiedy 
-nie są one czytane z odpowiednią prędkością przez aplikację w trybie użytkownika, 
-co skutkuje nadpisaniem najstarszych próbek w buforze cyklicznym sterownika.
-W przypadku zapiywania danych, może dojść do sytuacji odwrotnej, czyli
-bufor cykliczny całkowicie się opróżni, kiedy dane nie są odpowiednio szybko wysyłane. 
-Opisywane sytuacje odpowiednio przyjęło się nazywać \textit{buffer overrun} i 
-\textit{buffer underrun} i ich pojawienie
-się zazwyczaj skutkuje przerwami w nagraniach/odtworzeniach.
-\par Ważną kwestią związaną z przetwarzaniem sygnałów audio jest latencja,
-która w tym kontekście informuje o czasie, który jest potrzebny na przetworzenie
-danych w systemie od momentu ich wprowadzenia do momentu ich wypuszczenia.
-W nomenklaturze systemu ALSA, zdefiniowana jest zależnością
+Bufor składa się fragmentów (lub okresów, ang. \textit{periods}), składających
+się z określonej ilości ramek. Ramki z kolei składają się próbek przypisanych
+określonym kanałom karty, których długość zdefiniowana jest przez przyjęty
+format. W trakcie działania programu w trybie użytkownika, próbki transportowane
+są z/do bufora sterownika do/z bufora aplikacji. W przypadku odczytywania danych
+może dojść do sytuacji, kiedy nie są one czytane z odpowiednią prędkością przez
+aplikację w trybie użytkownika, co skutkuje nadpisaniem najstarszych próbek w
+buforze cyklicznym sterownika. W przypadku zapiywania danych, może dojść do
+sytuacji odwrotnej, czyli bufor cykliczny całkowicie się opróżni, kiedy dane nie
+są odpowiednio szybko wysyłane. Opisywane sytuacje odpowiednio przyjęło się
+nazywać \textit{buffer overrun} i \textit{buffer underrun} i ich pojawienie się
+zazwyczaj skutkuje przerwami w nagraniach/odtworzeniach. \par Ważną kwestią
+związaną z przetwarzaniem sygnałów audio jest latencja, która w tym kontekście
+informuje o czasie, który jest potrzebny na przetworzenie danych w systemie od
+momentu ich wprowadzenia do momentu ich wypuszczenia. W nomenklaturze systemu
+ALSA, zdefiniowana jest zależnością
 \begin{equation}
     T_L = \frac{n_fL_{fb}}{f_sL_{sb}}
     \label{eq::alsa_latency}
 \end{equation}
-gdzie $n_f$ to ilość fragmentów, $L_{fb}$ to rozmiar fragmentu w bajtach,
-$f_s$ to częstotliwość próbkowania, a $L_{sb}$ to rozmiar próbki w bajtach.
-Jak można zauważyć, licznik równiania \ref{eq::alsa_latency} odpowiada rozmiarowi
-bufora bajtach, czyli całe wyrażnienie odpowiada czasowi potrzebnemu na 
-zbuforowanie danych.
-Przykładowo, chcąc odtworzyć dźwięk z szesnastobitowego systemu stereo
-(dwa kanały wyjściowe) z typową częstotliwością audio $f_s = 44.1$ kHz, ramka
-ma rozmiar czterech bajtów (dwa bajty na dwa kanały, $L_{sb} = 2$). Deklarując 
-rozmiar fragmentu
-na 2048 ramek uzyskuje się rozmiar fragmentu $L_{fb} = 8192$ bajtów. Deklarując 
-rozmiar bufora na dwa fragmenty $n_f = 2$, wynikowo otrzymuję się latencję
-$T_L = 93$ ms. Latencja dla stałego rozmiaru próbki jest więc odwrotnie proporcjonalna
-do częstotliwości próbkowania i proporcjonalna do rozmiaru bufora.
-\par Ze zmniejszaniem latencji wiąże się szereg problemów. Deklarując
-coraz to mniejsze rozmiary buforów, zwiększa się ilość przerwań na transfery próbek, 
-co powoduje zwiększenie zużycia procesora, zmniejszając
-responsywność pozostałych aplikacji działających w systemie. 
-Projektując system ANC wymagana jest minimalizacja opóźnień w torach przetwarzania,
-dlatego w celu uzyskania jak najmniejszej latencji, możliwe jest 
-zwiększenie priorytetu i sposobu planowania procesu przetwarzania audio z 
-wykorzystaniem rozszerzeń czasu rzeczywistego, co zostanie zbadane w późniejszych 
-etapach pracy.
+gdzie $n_f$ to ilość fragmentów, $L_{fb}$ to rozmiar fragmentu w bajtach, $f_s$
+to częstotliwość próbkowania, a $L_{sb}$ to rozmiar próbki w bajtach. Jak można
+zauważyć, licznik równiania \ref{eq::alsa_latency} odpowiada rozmiarowi bufora
+bajtach, czyli całe wyrażnienie odpowiada czasowi potrzebnemu na zbuforowanie
+danych. Przykładowo, chcąc odtworzyć dźwięk z szesnastobitowego systemu stereo
+(dwa kanały wyjściowe) z typową częstotliwością audio $f_s = 44.1$ kHz, ramka ma
+rozmiar czterech bajtów (dwa bajty na dwa kanały, $L_{sb} = 2$). Deklarując
+rozmiar fragmentu na 2048 ramek uzyskuje się rozmiar fragmentu $L_{fb} = 8192$
+bajtów. Deklarując rozmiar bufora na dwa fragmenty $n_f = 2$, wynikowo otrzymuję
+się latencję $T_L = 93$ ms. Latencja dla stałego rozmiaru próbki jest więc
+odwrotnie proporcjonalna do częstotliwości próbkowania i proporcjonalna do
+rozmiaru bufora. \par Ze zmniejszaniem latencji wiąże się szereg problemów.
+Deklarując coraz to mniejsze rozmiary buforów, zwiększa się ilość przerwań na
+transfery próbek, co powoduje zwiększenie zużycia procesora, zmniejszając
+responsywność pozostałych aplikacji działających w systemie. Projektując system
+ANC wymagana jest minimalizacja opóźnień w torach przetwarzania, dlatego w celu
+uzyskania jak najmniejszej latencji, możliwe jest zwiększenie priorytetu i
+sposobu planowania procesu przetwarzania audio z wykorzystaniem rozszerzeń czasu
+rzeczywistego, co zostanie zbadane w późniejszych etapach pracy.
 
 \section{Główna pętla programowa}
 
-Proces działania pętli realizującej aktywne tłumienie hałasu 
-można przedstawić następującymi krokami:
+Proces działania pętli realizującej aktywne tłumienie hałasu można przedstawić
+następującymi krokami:
 
 \begin{enumerate}
 
-    \item Zebranie sygnałów $x(n)$ i $e(n)$ z mikrofonu referencyjnego i błędu. 
-    Odczyt odbywa się z wykorzystaniem metod udostępnianych przez bibliotekę 
+    \item Zebranie sygnałów $x(n)$ i $e(n)$ z mikrofonu referencyjnego i błędu.
+    Odczyt odbywa się z wykorzystaniem metod udostępnianych przez bibliotekę
     \textit{libsc}, która wywołuje określone funkcje systemu ALSA poprzez
     bibliotekę \textit{libasound}.
 
-    \item Obliczenie antyhałasu $y_{an}(n)$ zgodnie z zależnością \ref{eq::fir}, 
-    wykorzystując implementację filtracji modelem FIR biblioteki \textit{libdsp}.
+    \item Obliczenie antyhałasu $y_{an}(n)$ zgodnie z zależnością \ref{eq::fir},
+    wykorzystując implementację filtracji modelem FIR biblioteki
+    \textit{libdsp}.
 
     \item Jeżeli źródło hałasu jest symulowane, obliczenie kolejnego wektora
-    próbek $y_{n}(n)$ z wykorzystaniem generatorów sygnałów biblioteki \textit{libsignal}.
+    próbek $y_{n}(n)$ z wykorzystaniem generatorów sygnałów biblioteki
+    \textit{libsignal}.
 
-    \item Równoczesne zapisanie antyhałasu i hałasu (jeżeli źródło jest symulowane)
-    do karty dźwiekowej z wykorzystaniem  biblioteki \textit{libsc}.
+    \item Równoczesne zapisanie antyhałasu i hałasu (jeżeli źródło jest
+    symulowane) do karty dźwiekowej z wykorzystaniem  biblioteki \textit{libsc}.
 
-    \item Przefiltrowanie odczytanego sygnału $x(n)$ przez zidentyfikowaną 
+    \item Przefiltrowanie odczytanego sygnału $x(n)$ przez zidentyfikowaną
     odpowiedź impulsową toru wtórnego $\hat{S}(z^{-1})$ zgodnie z zależnością
     \ref{eq::fir} z wykorzystaniem biblioteki \textit{libdsp}.
 
-    \item Aktualizacja parametrów filtra adaptacyjnego $W(z^{-1})$ zgodnie
-    z zależnością \ref{eq::lms} wykorzystując implementację algorytmu LMS 
+    \item Aktualizacja parametrów filtra adaptacyjnego $W(z^{-1})$ zgodnie z
+    zależnością \ref{eq::lms} wykorzystując implementację algorytmu LMS
     biblioteki \textit{libdsp}.
 
 \end{enumerate}
 
-Kroki 5 i 6 realizują algorytm FXLMS i mogą być wykonane przed krokiem 4.
-\\
-\par Inicjalizacja pętli ANC zaczyna się od konfiguracji rozszerzeń 
-czasu rzeczywistego. Konfigurowany jest planista, któremu podaje się 
-odpowiednią wytyczną oraz tworzony jest wątek, któremu nakłada się odpowiedni 
-priorytet, gdzie dodatkowo można jawnie skonfigurować dziedziczenie priorytetów.
-W tak skonfigurowanym wątku uruchamiania jest pętla ANC. Ograniczeniem czasowym przetwarzania
-danych w pętli jest czas potrzebny na zbuforowanie fragmentu (lub fragmentów), 
-którego rozmiar, wraz z częstotliwością próbkowania, jest parametrem konfiguracyjnym.
-Typowo, deklarując rozmiar bufora na dwa fragmenty, przerwanie informujące
-o możliwości odczytania/zapisania danych konfigurowane jest w taki sposób,
-aby wystąpiło w momencie odczytania/zapisania jednego fragmentu. 
-Deklarując rozmiar odczytu/zapisu na pełen bufor, funkcja odblokuje się
-w momencie wystąpienia przerwania, gdzie pozostały fragment w buforze będzie
-odczytywany/zapisywany równolegle do działającej aplikacji. Takie działanie
-daje okno czasowe na realizację potrzebnych obliczeń, zapewniając 
-ciągłość odtwarzanych danych.
+Kroki 5 i 6 realizują algorytm FXLMS i mogą być wykonane przed krokiem 4. \\
+\par Inicjalizacja pętli ANC zaczyna się od konfiguracji rozszerzeń czasu
+rzeczywistego. Konfigurowany jest planista, któremu podaje się odpowiednią
+wytyczną oraz tworzony jest wątek, któremu nakłada się odpowiedni priorytet,
+gdzie dodatkowo można jawnie skonfigurować dziedziczenie priorytetów. W tak
+skonfigurowanym wątku uruchamiania jest pętla ANC. Ograniczeniem czasowym
+przetwarzania danych w pętli jest czas potrzebny na zbuforowanie fragmentu (lub
+fragmentów), którego rozmiar, wraz z częstotliwością próbkowania, jest
+parametrem konfiguracyjnym. Typowo, deklarując rozmiar bufora na dwa fragmenty,
+przerwanie informujące o możliwości odczytania/zapisania danych konfigurowane
+jest w taki sposób, aby wystąpiło w momencie odczytania/zapisania jednego
+fragmentu. Deklarując rozmiar odczytu/zapisu na pełen bufor, funkcja odblokuje
+się w momencie wystąpienia przerwania, gdzie pozostały fragment w buforze będzie
+odczytywany/zapisywany równolegle do działającej aplikacji. Takie działanie daje
+okno czasowe na realizację potrzebnych obliczeń, zapewniając ciągłość
+odtwarzanych danych.
 

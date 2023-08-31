@@ -23,7 +23,7 @@ static inline float signal_normalize(float y, float min, float max)
 
 static inline float signal_sine_calc(struct signal* const self)
 {
-        return INT16_MAX * sin(self->phase) + INT16_MAX;
+        return (1 + sin(self->phase)) * INT16_MAX;
 }
 
 static inline float signal_square_calc(struct signal* const self)
@@ -84,24 +84,19 @@ uint16_t signal_generate(
 }
 
 void signal_generate_sum(
-        struct signal* signals[],
-        uint8_t num_of_signals,
-        uint16_t* buffer,
-        size_t size)
+        struct signal* signals[], uint8_t num_of_signals, float* buffer, size_t size)
 {
         float max = 1;
         float min = -1;
 
         for (size_t i = 0u; i < size; i++) {
-                float y = 0;
+                uint16_t y = 0;
                 for (uint8_t j = 0u; j < num_of_signals; ++j) {
-                        uint16_t temp = 0;
-                        signal_generator_template(
+                        y += signal_generator_template(
                                 signals[j],
                                 signal_calculators[signals[j]->type],
-                                &temp,
+                                NULL,
                                 1u);
-                        y += temp;
                 }
 
                 if (y > max)
@@ -109,11 +104,8 @@ void signal_generate_sum(
                 else if (y < min)
                         min = y;
 
-                buffer[i] = y;
+                buffer[i] = signal_normalize(y, min, max);
         }
-
-        for (size_t i = 0u; i < size; i++)
-                buffer[i] = signal_normalize(buffer[i], min, max);
 }
 
 void signal_initialize_noise(void)

@@ -34,7 +34,7 @@ static int circ_fifo_prepare(struct circ_fifo* const self, size_t capacity)
                 return 0;
         }
 
-        memset(self->buffer, 0.0f, capacity * sizeof(float));
+        memset(self->buffer, 0.0f, self->mask * sizeof(float));
 
         return 0;
 }
@@ -49,6 +49,8 @@ int circ_fifo_construct(
                 LOG_ERROR("Requested capacity isn't power of two");
                 return -EPERM;
         }
+
+        self->buffer = buffer;
 
         int error = circ_fifo_prepare(self, capacity);
         if (error < 0) {
@@ -71,8 +73,6 @@ void circ_fifo_destruct(struct circ_fifo* const self)
 
 void circ_fifo_write(struct circ_fifo* const self, float data)
 {
-        ASSERT(self != NULL);
-
         self->i               = (self->i - 1u) & self->mask;
         self->buffer[self->i] = data;
 }

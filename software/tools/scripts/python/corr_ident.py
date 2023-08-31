@@ -14,6 +14,9 @@ def normalize(data):
     return (data - data_min) / (data_max - data_min)
 
 if __name__ == "__main__":
+    font = {'size': 16}
+    plt.rc('font', **font)
+
     SAMPLING_HZ = 8000
 
     x = np.genfromtxt("noise.txt", delimiter='\n')
@@ -21,7 +24,6 @@ if __name__ == "__main__":
     x_var = np.var(x)
     x = x - x_mean
     rxx = np.correlate(x, x, 'full')[len(x) - 1 : ] 
-
 
     y = np.genfromtxt("error.txt", delimiter='\n')
     y_mean = np.mean(y)
@@ -31,12 +33,16 @@ if __name__ == "__main__":
     
     c = np.correlate(y, x, 'full')[len(x) - 1 : ]
     gk = c / np.max(rxx)
-    gk = gk[0 : 328]
+    gk = gk[0 : 60]
 
     logger.info("Estimated coeffs: {}", gk)
     np.savetxt("sec_coeffs.csv", gk, delimiter=',')
 
     plt.figure(1)
-    plt.plot(gk)
+    plt.plot(gk, linewidth=2)
+    plt.title("Odpowiedź impulsowa $S(z^{-1})$ - metoda korelacyjna")
+    plt.xlabel(r"i")
+    plt.ylabel(r"$\dfrac{R_{xy}}{\delta^2}$")
+    plt.legend()
     plt.grid()
     plt.show()

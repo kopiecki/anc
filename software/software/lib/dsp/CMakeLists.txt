@@ -2,6 +2,7 @@ set(target_name dsp)
 set(target_sources
         src/fir.c
         src/lms.c
+        src/nlms.c
 )
 
 add_library(${target_name}

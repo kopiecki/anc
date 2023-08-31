@@ -2,64 +2,63 @@
 
 \section{Wymagania projektowe}
 
-Głównym wymaganiem stawianym całemu projektowi jest wykonanie prostego i 
+Głównym wymaganiem stawianym całemu projektowi jest wykonanie prostego i
 wygodnego w obsłudze środowiska, pozwalającego na wykonywanie badań i
-eksperymentów związanych z tematyką ANC. Poprzez pojęcie środowiska, 
-autor ma na myśli nie tylko platformę sprzętową, ale również strukturę
-oprogramowania. Sprzęt ma być prosty w obsłudze i możliwe odporny 
-na błędy użytkownika, a struktura oprogramowania powinna udostępniać
-zestaw narzędzi pozwalających na łatwy proces prototypowania, symulacji, 
-komplilacji i ostatecznie wdrożenia zaimplementowanego rozwiązania.
-\par Jednym z głównych aspektów, który zostanie zweryfikowany w końcowych
-etapach pracy, jest wpływ wybranych rozszerzeń czasu rzeczywistego jądra Linux
-na proces aktywnego tłumienia hałasu. Systemy ANC wymagają przetwarzania
-sygnałów w czasie rzeczywistym i kluczową rolę w efektywności ich działania 
-odgrywa prędkość i precyzja, z którą dane są przetwarzane. Autor ma zamiar sprawdzić,
-czy takie systemy mają szansę działać pod kontrolą systemu operacyjnego,
-któremu daleko do systemu czasu rzeczywistego i czy rozszerzenia, o których
-wspomniano wcześniej, są w stanie pomóc, polepszając efektywność działania
-procesu. Jeżeli są w stanie pomóc, to jaki jest koszt takiej pomocy i jak 
-wpływa na ogólny proces działania platformy.
-\par Autorowi pracy zależy, żeby wykonany projekt miał jak najszersze 
-horyzonty edukacyjne. W związku z tym, platforma sprzętowa, poza wykorzystaną
-jednostką obliczeniową, zostanie zaprojektowana i sporządzona samodzielnie w 
-postaci płytki drukowanej. Oprogramowanie napisane na docelową 
-platformę nie będzie korzystało z bibliotek udostępniających gotowe funkcje
-realizujące algorytmy będącymi znaczącymi elementami pracy.
-Wykorzystanie zewnętrznych bibliotek zostanie zamknięte na poziomie 
-prototypowania i symulacji. Dodatkowo postanowiono, że wykorzystane narzędzia wspomagające
-proces projektowania sprzętu jak i implementacji oprogramowania będą 
-dystrybuowane na licencjach otwartego oprogramowania.
+eksperymentów związanych z tematyką ANC. Poprzez pojęcie środowiska, autor ma na
+myśli nie tylko platformę sprzętową, ale również strukturę oprogramowania.
+Sprzęt ma być prosty w obsłudze i możliwe odporny na błędy użytkownika, a
+struktura oprogramowania powinna udostępniać zestaw narzędzi pozwalających na
+łatwy proces prototypowania, symulacji, komplilacji i ostatecznie wdrożenia
+zaimplementowanego rozwiązania. \par Jednym z głównych aspektów, który zostanie
+zweryfikowany w końcowych etapach pracy, jest wpływ wybranych rozszerzeń czasu
+rzeczywistego jądra Linux na proces aktywnego tłumienia hałasu. Systemy ANC
+wymagają przetwarzania sygnałów w czasie rzeczywistym i kluczową rolę w
+efektywności ich działania odgrywa prędkość i precyzja, z którą dane są
+przetwarzane. Autor ma zamiar sprawdzić, czy takie systemy mają szansę działać
+pod kontrolą systemu operacyjnego, któremu daleko do systemu czasu rzeczywistego
+i czy rozszerzenia, o których wspomniano wcześniej, są w stanie pomóc,
+polepszając efektywność działania procesu. Jeżeli są w stanie pomóc, to jaki
+jest koszt takiej pomocy i jak wpływa na ogólny proces działania platformy. \par
+Autorowi pracy zależy, żeby wykonany projekt miał jak najszersze horyzonty
+edukacyjne. W związku z tym, platforma sprzętowa, poza wykorzystaną jednostką
+obliczeniową, zostanie zaprojektowana i sporządzona samodzielnie w postaci
+płytki drukowanej. Oprogramowanie napisane na docelową platformę nie będzie
+korzystało z bibliotek udostępniających gotowe funkcje realizujące algorytmy
+będącymi znaczącymi elementami pracy. Wykorzystanie zewnętrznych bibliotek
+zostanie zamknięte na poziomie prototypowania i symulacji. Dodatkowo
+postanowiono, że wykorzystane narzędzia wspomagające proces projektowania
+sprzętu jak i implementacji oprogramowania będą dystrybuowane na licencjach
+otwartego oprogramowania.
 
 \subsection{Część sprzętowa}
 
 \subsubsection{Cele projektowe}
 \begin{enumerate}
 
-    \item Obsłużenie i przetworzenie wejściowych sygnałów analogowych 
-    z mikrofonów pomiarowych pod kowersję do domeny cyfrowej z użyciem 
-    osadzonych na płytce przetworników analogowo-cyfrowych.
-    Wykorzystywane będą dwa kanały wejściowe.
+    \item Obsłużenie i przetworzenie wejściowych sygnałów analogowych z
+    mikrofonów pomiarowych pod kowersję do domeny cyfrowej z użyciem osadzonych
+    na płytce przetworników analogowo-cyfrowych. Wykorzystywane będą dwa kanały
+    wejściowe.
 
     \item Obsłużenie i przetworzenie wyjściowych sygnałów analogowych
     pochodzących z osadzonych na płytce przetworników cyfrowo-analogowych pod
-    poprawne dostarczenie ich na głośniki.
-    Wykorzystywane będą dwa kanały wyjściowe.
+    poprawne dostarczenie ich na głośniki. Wykorzystywane będą dwa kanały
+    wyjściowe.
 
-    \item Zapewnienie działającej komunikacji z wybraną platformą obliczeniową 
-    poprzez wybrany protokół cyfrowy, przez który przesyłane będą przekonwertowane
-    z użyciem osadzonych na płytce przetworników analogowo-cyfrowych 
-    do domeny cyfrowej wejściowe, pochodzące z mikrofonów, sygnały analogowe, 
-    oraz końcowo trafiające na głośniki, dane wyjściowe do przetworników 
-    cyfrowo-analogowych.
+    \item Zapewnienie działającej komunikacji z wybraną platformą obliczeniową
+    poprzez wybrany protokół cyfrowy, przez który przesyłane będą
+    przekonwertowane z użyciem osadzonych na płytce przetworników
+    analogowo-cyfrowych do domeny cyfrowej wejściowe, pochodzące z mikrofonów,
+    sygnały analogowe, oraz końcowo trafiające na głośniki, dane wyjściowe do
+    przetworników cyfrowo-analogowych.
 
     \item Zapewnienie odpowiednich zasilań dla sekcji analogowych oraz cyfrowych
     jak i możliwość zasilania wybranej platformy obliczeniowej z poziomu płytki.
 
 \end{enumerate}
 
-W skład projektowanego układu elektronicznego wchodzą cztery sekcje,
-z których można wyróżnić:
+W skład projektowanego układu elektronicznego wchodzą cztery sekcje, z których
+można wyróżnić:
 
 \begin{enumerate}
 
@@ -69,14 +68,14 @@ z których można wyróżnić:
 
     \item Wyjściową sekcję analogową, obsługującą kanały głośnikowe.
 
-    \item Sekcję przetworników, komunikujacą się z sekcjami analogowymi
-    oraz z wybraną platformą obliczeniową.
+    \item Sekcję przetworników, komunikujacą się z sekcjami analogowymi oraz z
+    wybraną platformą obliczeniową.
 
 \end{enumerate}
 
-Poza sekcjami znajdującymi się na projektowanej płytce drukowanej, 
-w skład wykorzystywanego sprzętu wchodzić będą urządzenia zewnętrzne, czyli
-dwa mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
+Poza sekcjami znajdującymi się na projektowanej płytce drukowanej, w skład
+wykorzystywanego sprzętu wchodzić będą urządzenia zewnętrzne, czyli dwa
+mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
 
 \subsubsection{Wymagania sekcji zasilania}
 
@@ -88,15 +87,14 @@ dwa mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
     \item Generacja symetrycznych zasilań dla wzmacniaczy operacyjnych
     pracujących w sekcjach analogowych o względnie wysokiej dokładności.
 
-    \item W przypadku wyboru mikrofonów pojemnościowych, generacja
-    odpowiedniego zasilania phantomowego, typowo mieszczącego się w zakresie
-    od +12 do +15 V.
+    \item W przypadku wyboru mikrofonów pojemnościowych, generacja odpowiedniego
+    zasilania phantomowego, typowo mieszczącego się w zakresie od +12 do +15 V.
 
     \item Generacja zasilań dla przetworników i zewnętrznej platformy
     obliczeniowej.
 
-    \item Generacja dokładnych napięć referencyjnych dla przetworników
-    (jeżeli będą potrzebne).
+    \item Generacja dokładnych napięć referencyjnych dla przetworników (jeżeli
+    będą potrzebne).
 
 \end{enumerate}
 
@@ -104,18 +102,18 @@ dwa mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
 
 \begin{enumerate}
 
-    \item Obsłużenie symetrycznych wejść sygnałowych z mikrofonów
-    oraz ich konwersję do odpowiednio wzmocnionej sumy.
+    \item Obsłużenie symetrycznych wejść sygnałowych z mikrofonów oraz ich
+    konwersję do odpowiednio wzmocnionej sumy.
 
-    \item Filtrację dolnoprzepustową, ograniczającą pasmo sygnału wejściowego
-    do przedziału zainteresowań, mieszczącego się w zakresie od 50 do 500 Hz.
+    \item Filtrację dolnoprzepustową, ograniczającą pasmo sygnału wejściowego do
+    przedziału zainteresowań, mieszczącego się w zakresie od 50 do 500 Hz.
 
-    \item Odpowiednie wyskalowanie przetworzonego sygnału, aby mieścił się
-    w pełnym zakresie dynamicznym wybranych przetworników analogowo-cyfrowych.
+    \item Odpowiednie wyskalowanie przetworzonego sygnału, aby mieścił się w
+    pełnym zakresie dynamicznym wybranych przetworników analogowo-cyfrowych.
 
-    \item Zabezpieczenie przetworników analogowo-cyfrowych 
-    przed uszkodzeniem, poprzez zastosowanie odpowiednich układów 
-    ograniczających napięcie wejściowe.
+    \item Zabezpieczenie przetworników analogowo-cyfrowych przed uszkodzeniem,
+    poprzez zastosowanie odpowiednich układów ograniczających napięcie
+    wejściowe.
 
 \end{enumerate}
 
@@ -125,14 +123,14 @@ dwa mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
 
     \item Obsłużenie wyjść przetworników cyfrowo-analogowych.
 
-    \item Odpowiednie przetworzenie sygnału wyjściowego, 
-    opierające się na skalowaniu i filtracji rekonstrukcyjnej.
+    \item Odpowiednie przetworzenie sygnału wyjściowego, opierające się na
+    skalowaniu i filtracji rekonstrukcyjnej.
 
-    \item Przekształcenie wyjściowego sygnału na symetryczną parę,
-    zdefiniowaną przez standard złącza XLR.
+    \item Przekształcenie wyjściowego sygnału na symetryczną parę, zdefiniowaną
+    przez standard złącza XLR.
 
-    \item Finalne dostarczenie przygotowanego sygnału wyjściowego
-    na wykorzystany zestaw głośnikowy.
+    \item Finalne dostarczenie przygotowanego sygnału wyjściowego na
+    wykorzystany zestaw głośnikowy.
 
 \end{enumerate}
 
@@ -155,20 +153,19 @@ dwa mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
 
 \begin{enumerate}
     
-    \item Synchronizacja wszystkich przetworników poprzez wystawienie
-    wspólnego sygnału zegarowego o konfigurowalnej częstotliwości.
+    \item Synchronizacja wszystkich przetworników poprzez wystawienie wspólnego
+    sygnału zegarowego o konfigurowalnej częstotliwości.
 
-    \item Jednoczesna obsługa dwóch kanałów wejściowych (RX) i 
-    dwóch kanałów wyjściowych (TX). Oznacza to, że protokół 
-    musi wspierać multipleksowanie kanałów, jeżeli wykorzystane
-    zostaną pojedyncze linie danych na odpowiednim kierunku transmisji,
-    lub odpowiednią konfigurację selektorów (CS), ewentulanie selektora (FS), 
-    jeżeli zostaną wykorzystane pojedyncze linie danych na kanał.
+    \item Jednoczesna obsługa dwóch kanałów wejściowych (RX) i dwóch kanałów
+    wyjściowych (TX). Oznacza to, że protokół musi wspierać multipleksowanie
+    kanałów, jeżeli wykorzystane zostaną pojedyncze linie danych na odpowiednim
+    kierunku transmisji, lub odpowiednią konfigurację selektorów (CS),
+    ewentulanie selektora (FS), jeżeli zostaną wykorzystane pojedyncze linie
+    danych na kanał.
 
-    \item Konfigurowalność. Możliwość zmian częstotliwości zegarów, co 
-    implikuje wpływ na częstotliwość próbkowania, jak i 
-    sposobu, w jaki dane są czytane/zapisywane, czyli na jakie zbocza zegarów
-    odbywa się zapis/odczyt.
+    \item Konfigurowalność. Możliwość zmian częstotliwości zegarów, co implikuje
+    wpływ na częstotliwość próbkowania, jak i sposobu, w jaki dane są
+    czytane/zapisywane, czyli na jakie zbocza zegarów odbywa się zapis/odczyt.
 
 \end{enumerate}
 
@@ -179,19 +176,20 @@ dwa mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
         \item Niska cena i wysoka dostępność.
 
         \item Typ - standardem w omawianej tematyce są mikrofony pojemnościowe.
-        Znane są z wysokiej czułości i płaskiej charakterystki częstotliwościowej, jednak
-        wymagają dodatkowego zasilania, zwanego zasilaniem phantom.
+        Znane są z wysokiej czułości i płaskiej charakterystki
+        częstotliwościowej, jednak wymagają dodatkowego zasilania, zwanego
+        zasilaniem phantom.
     
-        \item Charakterystyka kierunkowa - superkardoidalne lub hiperkardoidalne 
-        mogą lepiej skupić się na kierunkowym źródle dźwięku, lecz w przypadku hałasu 
-        w otwartej przestrzenii odbierany dźwięk będzie słabszy, jeżeli jego źródło 
-        znajdzie się poza docelowym obszarem działania. Tematyka 
-        projektu skupia się na hałasie w przestrzeni, a źródła dźwięku ustawione są
-        względem siebie pod pewnym kątem, więc docelową charakterystyką jest 
+        \item Charakterystyka kierunkowa - superkardoidalne lub hiperkardoidalne
+        mogą lepiej skupić się na kierunkowym źródle dźwięku, lecz w przypadku
+        hałasu w otwartej przestrzenii odbierany dźwięk będzie słabszy, jeżeli
+        jego źródło znajdzie się poza docelowym obszarem działania. Tematyka
+        projektu skupia się na hałasie w przestrzeni, a źródła dźwięku ustawione
+        są względem siebie pod pewnym kątem, więc docelową charakterystyką jest
         charakterystyka kulista.
     
         \item Odpowiedź częstotliwościowa - ideowo płaska. Zakres nie odgrywa
-        znaczącej roli, bo analizowane sygnały są wolnozmienne (typowe zakresy 
+        znaczącej roli, bo analizowane sygnały są wolnozmienne (typowe zakresy
         posiadają górną granicę definiowaną w dziesiątkach kiloherców).
 
 \end{enumerate}
@@ -202,19 +200,20 @@ dwa mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
 
         \item Rozsądna cena i dobra dostępność.
 
-        \item Z racji, że zrezygnowano z projektowania końcówki mocy, wymagany 
+        \item Z racji, że zrezygnowano z projektowania końcówki mocy, wymagany
         jest wbudowany wzmacniacz. Innymi słowy, zestawy muszą być aktywne.
     
-        \item Analizowane sygnały są wolnozmienne (pasmo 50 do 500 Hz), więc 
-        wymagane jest wsparcie dla tonów niskich. Innymi słowy, na wyposażeniu zestawu
-        musi być głośnik niskotonowy (ang. \textit{woofer}), zdolny do emisji
-        sygnałów akustycznych o niskiej częstotliwości.
+        \item Analizowane sygnały są wolnozmienne (pasmo 50 do 500 Hz), więc
+        wymagane jest wsparcie dla tonów niskich. Innymi słowy, na wyposażeniu
+        zestawu musi być głośnik niskotonowy (ang. \textit{woofer}), zdolny do
+        emisji sygnałów akustycznych o niskiej częstotliwości.
 
-        \item Rozsądny rozmiar, pozwalający na manipulację położeniem i kierunkiem.
+        \item Rozsądny rozmiar, pozwalający na manipulację położeniem i
+        kierunkiem.
     
-        \item Z uwagi na zakres poziomu akustycznego analizowanych sygnałów, 
-        zestaw musi być zdolny do osiągnięcia jego górnego limitu, czyli użytecznego 
-        100 dB SPL.
+        \item Z uwagi na zakres poziomu akustycznego analizowanych sygnałów,
+        zestaw musi być zdolny do osiągnięcia jego górnego limitu, czyli
+        użytecznego 100 dB SPL.
 
 \end{enumerate}
 
@@ -226,17 +225,18 @@ dwa mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
 
     \item Dostępny kompilator języka C.
 
-    \item Możliwość instalacji wybranej dystrybucji systemu operacyjnego GNU/Linux.
+    \item Możliwość instalacji wybranej dystrybucji systemu operacyjnego
+    GNU/Linux.
 
     \item Wsparcie sprzętowe dla wybranego protokołu cyfrowego.
 
 \end{enumerate}
 
-Poza opisanymi wyżej wymaganiami, porządane jest (lecz nie wymagane),
-aby wykorzystana platforma posiadała sprzętową realizację działań
-zmiennoprzecikowych (FPU), wsparcie dla architektury SIMD (ang. \textit{Single 
-Instruction, Multiple Data}) wspomagającą obliczenia wektorowe, 
-port szeregowy oraz złącze Ethernet.
+Poza opisanymi wyżej wymaganiami, porządane jest (lecz nie wymagane), aby
+wykorzystana platforma posiadała sprzętową realizację działań
+zmiennoprzecikowych (FPU), wsparcie dla architektury SIMD (ang. \textit{Single
+Instruction, Multiple Data}) wspomagającą obliczenia wektorowe, port szeregowy
+oraz złącze Ethernet.
 
 \subsection{Część programowa}
 
@@ -244,10 +244,10 @@ port szeregowy oraz złącze Ethernet.
 
 \begin{enumerate}
 
-    \item Pełna kontrola nad wykorzystywanym protokołem cyfrowym.
-    Możliwość jednoczesnego odczytu z dwóch kanałów wejściowych,
-    zapisu do dwóch kanałów wyjściowych, konfiguracji częstotliwości 
-    głównego zegara oraz zachowania selektorów/selektora.
+    \item Pełna kontrola nad wykorzystywanym protokołem cyfrowym. Możliwość
+    jednoczesnego odczytu z dwóch kanałów wejściowych, zapisu do dwóch kanałów
+    wyjściowych, konfiguracji częstotliwości głównego zegara oraz zachowania
+    selektorów/selektora.
 
     \item Pełna kontrola nad sporządzoną elektroniką poprzez wykorzystany
     protokół cyfrowy.
@@ -255,7 +255,8 @@ port szeregowy oraz złącze Ethernet.
     \item Realizacja filtracji cyfrowej oraz algorytmu FXLMS.
 
     \item Symulacyjna generacja hałasu w postaci typowych sygnałów okresowych
-    (sinus, cosinus, prostokąt, trójkąt, piła i szum) o konfigurowalnych parametrach.
+    (sinus, cosinus, prostokąt, trójkąt, piła i szum) o konfigurowalnych
+    parametrach.
 
     \item Generacja odpowiedniego sygnału identyfikującego (biały szum, PRBS),
     pozwalającego na identyfikację toru wtórnego.
@@ -263,35 +264,34 @@ port szeregowy oraz złącze Ethernet.
     \item Możliwość rejestracji i zapisu określonych sygnałów do pliku w celu
     dalszej analizy i wizualizacji.
 
-    \item Udostępnienie środowiska pozwalającego no prosty proces
-    kompilacji krzyżowej oraz symulacji prototypowanych rozwiązań.
+    \item Udostępnienie środowiska pozwalającego no prosty proces kompilacji
+    krzyżowej oraz symulacji prototypowanych rozwiązań.
 
 \end{enumerate}
 
-W skład projektowanego oprogramowania wchodzi aplikacja działająca w trybie 
+W skład projektowanego oprogramowania wchodzi aplikacja działająca w trybie
 użytkownika oraz odpowiednio skonfigurowany system operacyjny.
 
 \subsubsection{Wymagania systemu operacyjnego}
 
 \begin{enumerate}
 
-    \item Wsparcie dla wybranego interfejsu cyfrowego w postaci
-    modułu jądra.
+    \item Wsparcie dla wybranego interfejsu cyfrowego w postaci modułu jądra.
 
-    \item Możliwość interakcji ze sporządzoną elektorniką poprzez 
-    moduł jądra wybranego interfejsu cyfrowego lub osobny sterownik
-    reprezentujący sporządzoną płytkę.
+    \item Możliwość interakcji ze sporządzoną elektorniką poprzez moduł jądra
+    wybranego interfejsu cyfrowego lub osobny sterownik reprezentujący
+    sporządzoną płytkę.
 
-    \item Zapewnienie zestawu bibliotek pozwalających na komunikację 
-    wybranym interfejsem cyfrowym przez moduł jądra z poziomu 
-    aplikacji działającej w trybie użytkownika.
+    \item Zapewnienie zestawu bibliotek pozwalających na komunikację wybranym
+    interfejsem cyfrowym przez moduł jądra z poziomu aplikacji działającej w
+    trybie użytkownika.
 
-    \item Wpływ na opóźnienia wynikające z synchronizacji procesów, 
-    buforowania danych oraz czasu przetwarzania.
+    \item Wpływ na opóźnienia wynikające z synchronizacji procesów, buforowania
+    danych oraz czasu przetwarzania.
 
-    \item Obecność narzędzi ułatwiających ogólną prace w systemie
-    (edytor tekstowy, obsługa internetu, debugger) oraz pozwalających na 
-    określenie wydajności zaimplementowanej aplikacji.
+    \item Obecność narzędzi ułatwiających ogólną prace w systemie (edytor
+    tekstowy, obsługa internetu, debugger) oraz pozwalających na określenie
+    wydajności zaimplementowanej aplikacji.
 
 \end{enumerate}
 
@@ -299,14 +299,14 @@ użytkownika oraz odpowiednio skonfigurowany system operacyjny.
 
 \begin{enumerate}
 
-    \item Programowa obsługa sporządzonej elektroniki za pośrednictwem
-    bibliotek komunikujących się z odpowiednimi modułami jądra.
+    \item Programowa obsługa sporządzonej elektroniki za pośrednictwem bibliotek
+    komunikujących się z odpowiednimi modułami jądra.
 
     \item Możliwość symulacji źródła hałasu poprzez generację odpowiedniego
     sygnału w trakcie działania pętli ANC.
 
-    \item Odpowiednio szybkie przetwarzanie danych, zapobiegające 
-    nieciągłościom transferów i destabilizacji pętli ANC.
+    \item Odpowiednio szybkie przetwarzanie danych, zapobiegające nieciągłościom
+    transferów i destabilizacji pętli ANC.
 
     \item Wykorzystanie rozszerzeń czasu rzeczywistego. 
 
@@ -317,22 +317,18 @@ użytkownika oraz odpowiednio skonfigurowany system operacyjny.
 
 \section{Architektura systemu}
 
-Tak jak opisywano w sekcji dotyczącej teoretycznej analizy tematu, 
-wybraną strukturą jest ANC ze sprzężeniem w przód
-dla hałasów szerokopasmowych. 
-Układ elektroniczny, uogólniony na schemacie \ref{analysis::scheme_0} jak 
-blok \textbf{ANC}
-został podzielony na dwie części, stale 
-komunikujące się ze sobą po określonym interfejsie cyfrowym, zapewniającym
-synchronizację przetworników oraz przesyłanie i odbieranie danych będących
-cyfrowymi odpowiednikami sygnałów analogowych występujących w systemie.
-Sporządzona płytka drukowana, będąca częścią sprzętową projektu, traktowana 
-jest przez platformę obliczeniową jak zewnętrzna karta pomiarowa obsługująca
-dwa kanały wejściowe i dwa kanały wyjściowe. Dodatkowy kanał wyjściowy 
-umożliwia generację hałasu, co pozwala na przeprowadzenie testów i badań
-bez obecności rzeczywistego źródła.
-\par Diagram architektury zaprojektowanego 
-systemu przedstawiono na rysunku \ref{impl::top} 
+Tak jak opisywano w sekcji dotyczącej teoretycznej analizy tematu, wybraną
+strukturą jest ANC ze sprzężeniem w przód dla hałasów szerokopasmowych. Układ
+elektroniczny, uogólniony na schemacie \ref{analysis::scheme_0} jak blok
+\textbf{ANC} został podzielony na dwie części, stale komunikujące się ze sobą po
+określonym interfejsie cyfrowym, zapewniającym synchronizację przetworników oraz
+przesyłanie i odbieranie danych będących cyfrowymi odpowiednikami sygnałów
+analogowych występujących w systemie. Sporządzona płytka drukowana, będąca
+częścią sprzętową projektu, traktowana jest przez platformę obliczeniową jak
+zewnętrzna karta pomiarowa obsługująca dwa kanały wejściowe i dwa kanały
+wyjściowe. Dodatkowy kanał wyjściowy umożliwia generację hałasu, co pozwala na
+przeprowadzenie testów i badań bez obecności rzeczywistego źródła. \par Diagram
+architektury zaprojektowanego systemu przedstawiono na rysunku \ref{impl::top} 
 
 \begin{figure}[H]
     \centering
@@ -341,30 +337,29 @@ systemu przedstawiono na rysunku \ref{impl::top}
     \label{impl::top}
 \end{figure}
 
-Aplikacja działająca w trybie użytkownika komunikuje się z jądrem 
-poprzez biblioteki systemowe, komunikujące się z odpowiednimi sterownikami
-wspierającymi obsługę wybranego protokołu cyfrowego
-oraz bezpośrednie wywołania (ang. \textit{syscall}). 
-Jądro, poprzez wykorzystanie planisty (ang. \textit{scheduler}) 
-zarządza i kontroluje alokację zasobów procesora platformy obliczeniowej 
-potrzebnych do wykonywania procesów, wśród których wyróżniony jest proces
-zaimplementowanej aplikacji. Dzięki wykorzystanym rozszerzeniom czasu 
-rzeczywistego aplikacja ma bezpośredni wpływ na przydzielone zasoby, 
-głównie priorytet, sposób wywłaszczania i realizacji przerwań.
-Wpływ aplikacji na sposób zarządzania jądra może zostać wykorzystany
-do minimalizacji opóźnień występujących w torze cyfrowym, wynikających
-z zastosowania systemu operacyjnego, nie będącego systemem czasu rzeczywistego.
+Aplikacja działająca w trybie użytkownika komunikuje się z jądrem poprzez
+biblioteki systemowe, komunikujące się z odpowiednimi sterownikami wspierającymi
+obsługę wybranego protokołu cyfrowego oraz bezpośrednie wywołania (ang.
+\textit{syscall}). Jądro, poprzez wykorzystanie planisty (ang.
+\textit{scheduler}) zarządza i kontroluje alokację zasobów procesora platformy
+obliczeniowej potrzebnych do wykonywania procesów, wśród których wyróżniony jest
+proces zaimplementowanej aplikacji. Dzięki wykorzystanym rozszerzeniom czasu
+rzeczywistego aplikacja ma bezpośredni wpływ na przydzielone zasoby, głównie
+priorytet, sposób wywłaszczania i realizacji przerwań. Wpływ aplikacji na sposób
+zarządzania jądra może zostać wykorzystany do minimalizacji opóźnień
+występujących w torze cyfrowym, wynikających z zastosowania systemu
+operacyjnego, nie będącego systemem czasu rzeczywistego.
 
 \section{Wykorzystane narzędzia}
 
 Tak jak opisywano w głównych założeniach projektowych, wykorzystane narzędzia
-programowe oparte są na licencjach otwartoźródłowych. 
-Spośród nich można wyróżnić:
+programowe oparte są na licencjach otwartoźródłowych. Spośród nich można
+wyróżnić:
 
 \begin{itemize}
     \item KiCAD - wykorzystane EDA (ang. \textit{Electronic Design Automation}).
-    \item Język programowania Python - wykorzystywany do prototypowania, symulacji
-    i wizualizacji danych.
+    \item Język programowania Python - wykorzystywany do prototypowania,
+    symulacji i wizualizacji danych.
     \item Język programowania C - wykorzystany do implementacji.
     \item GCC - jako zestaw kompilatorów.
     \item CMake i GNU Make - jako systemy budowania.

@@ -25,14 +25,17 @@ def read_files(file_names: str) -> list[list[float]]:
 
 
 def plot(buffers: list[list[float]], names: list[str], sampling_rate: float) -> None:
+    font = {'size': 16}
+    plt.rc('font', **font)
+
     t = np.arange(len(buffers[0])) / sampling_rate
 
     for buffer, name in zip(buffers, names):
-        plt.plot(t, buffer, label=name)
+        plt.plot(t, buffer, label=name, linewidth=2)
 
     plt.legend()
     plt.xlabel("t, s")
-    plt.ylabel("y(t)")
+    plt.ylabel("e(t)")
     plt.grid()
     plt.show()
 

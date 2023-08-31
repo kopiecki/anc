@@ -9,9 +9,25 @@ project(${PROJECT_NAME} LANGUAGES C CXX ASM)
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-option (ANC_BUILD_TEST "Build functional tests"               ON)
-option (DEBUG                                                 ON)
+set(ANC_BUILD_TEST "Build functional tests"               ON)
+set(DEBUG                                                 ON)
 
+if (ARMHF)
+    message(STATUS "Adding NEON and FPU support!")
+
+    add_compile_options(
+        -O2
+        -g
+        -Wall
+        -std=c11
+        -ffast-math
+        -ftree-vectorize
+        -mcpu=cortex-a8
+        -mfpu=neon
+        -mhard-float
+    )
+
+endif()
 
 add_subdirectory(software)
 if (ANC_BUILD_TEST)

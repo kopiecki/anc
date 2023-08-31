@@ -14,30 +14,28 @@
 #define NUM_OF_SAMPLES     SAMPLING_FREQUENCY
 #define IMP_RES_MAX_SIZE   100
 #define IMP_RES_FILE       "test/functional/input/fir_coeffs_26.csv"
-#define FIR_ORDER          26
+#define FIR_ORDER          32
 
-static float signal_buffer[NUM_OF_SAMPLES];
+static float signal_buffer[NUM_OF_SAMPLES] = {0u};
 static float filtered_signal_buffer[NUM_OF_SAMPLES];
 static float fir_imp_res_buffer[IMP_RES_MAX_SIZE];
 
+static inline float signal_normalize(float y, float min, float max)
+{
+        return 2 * ((y - min) / (max - min)) - 1;
+}
+
 static int generate_signal(void)
 {
-        struct signal sine_5_hz = {
-                .amplitude          = 1.0f,
-                .sampling_frequency = SAMPLING_FREQUENCY,
-                .frequency          = 5.0f,
-                .type               = SIGNAL_TYPE_SINE,
-        };
+        struct signal signals[100] = {0};
 
-        struct signal sine_100_hz = {
-                .amplitude          = 0.2f,
-                .sampling_frequency = SAMPLING_FREQUENCY,
-                .frequency          = 500.0f,
-                .type               = SIGNAL_TYPE_SINE,
-        };
-
-        struct signal* signals[] = {&sine_5_hz, &sine_100_hz};
-        signal_generate_sum(signals, 2, signal_buffer, NUM_OF_SAMPLES);
+        for (size_t i = 0; i < 500; i += 5) {
+                signals[i - 50].amplitude          = INT16_MAX;
+                signals[i - 50].frequency          = i;
+                signals[i - 50].phase              = 0;
+                signals[i - 50].sampling_frequency = SAMPLING_FREQUENCY;
+                signals[i - 50].type               = SIGNAL_TYPE_SINE;
+        }
 
         return file_helpers_write_buf(
                 "test/functional/output/before_fir.csv",

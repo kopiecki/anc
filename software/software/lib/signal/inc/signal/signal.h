@@ -31,7 +31,7 @@ uint16_t signal_generate(
 void signal_generate_sum(
         struct signal* signals[],
         uint8_t num_of_signals,
-        uint16_t* const buffer,
+        float* const buffer,
         size_t size);
 
 #endif /* SIGNAL_H_ */

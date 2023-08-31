@@ -5,28 +5,26 @@
 
 #include "dsp/fir.h"
 
-#include "utils/assert.h"
 #include "utils/circ_fifo.h"
-#include "utils/common.h"
-#include "utils/logger.h"
+
+static float __fir(
+        const float* restrict x,
+        const float* restrict w,
+        unsigned int i,
+        unsigned int mask,
+        unsigned int n)
+{
+        float y = 0.0f;
+        for (unsigned j = 0u; j < n; j++)
+                y += w[j] * x[i + j];
+        return y;
+}
 
 float dsp_fir(
         struct circ_fifo* const cf,
         const float* restrict const w,
-        size_t order,
-        size_t offset)
+        unsigned int order,
+        unsigned int offset)
 {
-        ASSERT(cf != NULL);
-        ASSERT(w != NULL);
-        ASSERT(IS_POW_2(order));
-
-        /**
-         * @brief Loop unrolling to optimize processing time.
-         */
-        float y, y0, y1, y2, y3 = 0.0f;
-        for (size_t i = 0u; i < order; i++) {
-                y += w[i] * circ_fifo_peek(cf, i + offset);
-        }
-
-        return y;
+        return __fir(cf->buffer, w, cf->i, cf->mask, order);
 }
