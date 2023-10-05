@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 from scipy.signal import welch
 from scipy.io import wavfile
 
-def compute_and_plot_psd(data, fs):
-    f, p_den = welch(data, fs=fs, window='hann', nperseg=2**12)
+def compute_and_plot_psd(data, fs, seg=2**10):
+    f, p_den = welch(data, fs=fs, window='hann', nperseg=seg)
 
     plt.plot(f, 10*np.log10(p_den), linewidth=4, label="PSD")
     plt.xlabel('f, Hz')

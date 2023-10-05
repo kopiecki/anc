@@ -41,6 +41,7 @@
 #include "dsp/fir.h"
 #include "dsp/lms.h"
 #include "dsp/nlms.h"
+#include "dsp/prng.h"
 #include "signal/signal.h"
 #include "sound_card/sound_card.h"
 #include "utils/circ_fifo.h"
@@ -180,7 +181,6 @@ static void generate_sine(snd_pcm_uframes_t offset, int count, double* _phase)
                 samples[chn] += offset * steps[chn];
         }
         /* fill the channel areas */
-        size_t k = 0;
         while (count-- > 0) {
                 uint16_t res = signal_generate(&sine_200hz, NULL, 0);
                 for (int chn = 0; chn < channels; chn++) {
@@ -298,7 +298,7 @@ void ident(char* buffer, int r)
                         x_buffer[cnt]     = normalize(x);
                 }
 
-                uint16_t y          = signal_generate(&white_noise, NULL, 0);
+                uint16_t y          = prng_xorshift();
                 noise_buffer[cnt++] = normalize(y);
 
                 unsigned dec_cnt = 4;

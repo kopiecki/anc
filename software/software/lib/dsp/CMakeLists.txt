@@ -3,6 +3,7 @@ set(target_sources
         src/fir.c
         src/lms.c
         src/nlms.c
+        src/prng.c
 )
 
 add_library(${target_name}

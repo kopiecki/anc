@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 
 import numpy as np
-import scipy.signal as scisig
 import matplotlib.pyplot as plt
 
-from fir import FIR
 from loguru import logger
 
 def normalize(data):
