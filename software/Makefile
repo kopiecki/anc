@@ -68,6 +68,12 @@ run_test_lms:
 
 #------------------------------------------------------------------------------
 
+run_test_prng: 
+	@ ./$(BUILD_DIR)/native/test/test_prng
+.PHONY: run_test_prng
+
+#------------------------------------------------------------------------------
+
 run_test_signal: 
 	@ ./$(BUILD_DIR)/test/test_signal
 .PHONY: run_test_signal

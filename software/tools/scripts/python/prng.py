@@ -5,6 +5,22 @@ import matplotlib.pyplot as plt
 import ctypes
 
 from psd_wav import compute_and_plot_psd
+from random import seed, randint
+
+def read_file(name):
+    with open(name) as f:
+        return np.array([int(x) for x in f.readlines()]).astype('uint16')
+
+def xcorr(x):
+    mean = np.mean(x)
+    x = x - mean
+    sxx = np.correlate(x, x, 'full')[len(x) - 1:]
+    sxx /= np.max(sxx)
+
+    plt.plot(sxx, linewidth=2)
+    plt.xlabel(r"$\tau$")
+    plt.ylabel(r"$S_{xx}(\tau)$")
+    plt.grid()
 
 
 def u16(x: int):
@@ -33,25 +49,36 @@ class xorshift(object):
         return u16(self.__seed)
 
 
-if __name__ == "__main__":
-    prng = fib(1)
-    x = np.array([])
-    for i in range(1024):
-        x = np.append(x, prng())
+class rand(object):
+    def __init__(self):
+        seed(1)
 
-    mean = np.mean(x)
-    var = np.var(x)
-    x -= mean
-    sxx = np.correlate(x, x, 'full')[len(x) - 1:]
-    sxx /= np.max(sxx)
+    def __call__(self):
+        return u16(randint(0, 32767))
+
+def test():
+    prng = rand()
+
+    x = np.array([])
+    for _ in range(1024):
+        x = np.append(x, prng())
 
     plt.subplot(2, 1, 1)
     compute_and_plot_psd(x, 8e3)
-
     plt.subplot(2, 1, 2)
-    plt.plot(sxx, linewidth=2)
-    plt.xlabel(r"$\tau$")
-    plt.ylabel(r"$S_{xx}(\tau)$")
-    plt.grid()
+    xcorr(x)
 
     plt.show()
+
+
+if __name__ == "__main__":
+    r, xor = read_file("randn.csv"), read_file("xorshift.csv")
+
+    plt.subplot(2, 1, 1)
+    compute_and_plot_psd(r, 1, 2**8)
+    compute_and_plot_psd(xor, 1, 2**8)
+    plt.subplot(2, 1, 2)
+    xcorr(r)
+    xcorr(xor)
+    plt.show()
+

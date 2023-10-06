@@ -13,9 +13,9 @@
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
-        const float* const buffer,
+        const uint16_t* const buffer,
         size_t size,
         bool append);
-int file_helpers_read_buf(const char* name, float* const buffer);
+int file_helpers_read_buf(const char* name, uint16_t* const buffer);
 
 #endif /* FILE_HELPERS_H_ */
