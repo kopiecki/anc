@@ -290,6 +290,7 @@ przyjęło się stosować estymację $\lambda_{max}$ na podstawie śladu macierz
 w związku z czym
 \begin{equation}
     0 < \mu < \frac{2}{LP_x}
+    \label{eq::lms_stab}
 \end{equation}
 
 i dla sygnałów o rozkładzie normalnym
@@ -399,7 +400,7 @@ $S'(z^{-1})$ wraz z jego odwróceniem. Jest to mocno problematyczne, ponieważ
     \item Niemożliwym jest kompensować opóźnienia $S'(z^{-1})$, jeżeli
     $P(z^{-1})$ nie zawiera takiego samego lub mniejszego.
 
-    \item Jeżeli istnieje częstotliwoś, dla której $S'(\omega) = 0$, to filtr
+    \item Jeżeli istnieje częstotliwość, dla której $S'(\omega) = 0$, to filtr
     staje się niestabilny. Taką częstotliwość nazywa się niesterowalną.
 
 \end{enumerate}
@@ -521,6 +522,99 @@ wtórnym mierzone w ilości próbek. Jak można wnioskować z \ref{eq::fxlms_sta
 największym ograniczeniem szybkości adaptacji algorytmu jest opóźnienie
 występujące w torze wtórnym.
 
+\subsection{Usprawnienie procesu doboru kroku}
+
+Wnioskując z równań \ref{eq::lms_stab} i \ref{eq::fxlms_stab}, określona przez
+krok $\mu$ stabilność oraz zbieżność algorytmu LMS jest uniwersalnie odwrotnie
+proporcjonalna do długości filtra $L$ oraz mocy sygnału referencyjnego
+$P_{x}(n)$. Jako, że długość filtra $L$ jest stała, istotnym ograniczniem na
+dobór kroku jest wartość $P_{x}(n)$, która typowo zmienia się adekwatnie do
+sygnału referencyjnego $x(n)$. Zmiany mocy $P_{x}(n)$ w trakcie działania
+algorytmu mogą spowodować, że początkowo dobrany krok przestaje być poprawny, co
+skutkuje gorszą zbieżnością lub nawet destabilizacją adaptacji
+\cite{bib:kuo_morgan}.
+
+\par Aby rozwiązać problem wpływu mocy sygnał wyjściowego na proces uczenia
+algorytmu, krok $\mu$ przy każdej iteracji może zostać znormalizowany w oparciu
+o estymację mocy sygnału $x(n)$
+\begin{equation}
+    \mu(n) = \frac{\alpha}{L\hat{P}_x(n)}
+    \label{eq::mupx}
+\end{equation}
+
+gdzie $\alpha$ jest nowo zdefiniowanym, znormalizowanym krokiem algorytmu
+spełnającym założenie
+\begin{equation}
+    0 < \alpha < 2
+\end{equation}
+
+Matematycznie dowieść można, że optymalna wartość kroku $\alpha$ w przypadku
+braku zakłóceń dana jest jako
+\begin{equation}
+    \alpha_{opt} = \frac{E\left[|y(n) - \hat{y}(n)|^2\right]}{E\left[|e(n)|^2\right]} = 1
+\end{equation}
+
+W celu wyznaczenia $\hat{P}_x(n)$ można posłużyć się metodą opartą na
+zostosowaniu prostokątnego okna o długości $M$
+\begin{equation}
+    \hat{P}_x(n) = \frac{1}{M}\sum_{m = 0}^{M - 1} x^2(n - m)
+    \label{eq::px}
+\end{equation}
+
+Równanie \ref{eq::px} w przypadku dobrania $M = L$ może zostać sprowadzone do
+postaci
+\begin{equation}
+    \hat{P}_x(n) = \frac{1}{L}\sum_{l = 0}^{L - 1} x^2(n - l) \
+        = \frac{\textbf{x}^T(n)\textbf{x}(n)}{L}
+    \label{eq::pxL}
+\end{equation}
+
+Podstawiając \ref{eq::pxL} do \ref{eq::mupx} otrzymuje się
+\begin{equation}
+    \mu(n) = \frac{\alpha}{\textbf{x}^T(n)\textbf{x}(n)}
+    \label{eq::mun}
+\end{equation}
+
+Ostatecznie, podstawiając \ref{eq::mun} do \ref{eq::lms} otrzymuje się
+zmodyfikowane równanie aktualizacji parametrów
+\begin{equation}
+    \textbf{w}(n + 1) = \textbf{w}(n) + \mu(n)\textbf{x}(n)e(n) 
+        = \textbf{w}(n) + \alpha\frac{\textbf{x}(n)}{\textbf{x}^T(n)\textbf{x}(n)}e(n)
+    \label{eq::nlms}
+\end{equation}
+
+Dzięki tym działaniom, dobór kroku $\alpha$ jest uniezależniony od mocy sygnału
+$x(n)$. Z powodu zastosowanej normalizacji, algorytm z tak wprowadzoną
+modyfikacją przyjęło się nazywać znormalizowanym algorytmem NLMS (ang.
+\textit{Normalized LMS}, NLMS) i jest on również znany jako \textit{Metoda
+Kaczmarza} lub \textit{Metoda Uczenia Rekurencyjnego} \cite{bib:figwer}.
+
+\par Normalizację kroku, definującą algorytm NLMS można zastosować w algorytmie
+FXLMS, otrzymując następujące równiania
+\begin{equation}
+    \textbf{w}(n + 1) = \textbf{w}(n) + \mu(n)\textbf{x'}(n)e(n) 
+        = \textbf{w}(n) + \alpha\frac{\textbf{x'}(n)}{\textbf{x'}^T(n)\textbf{x'}(n)}e(n)
+    \label{eq::fxnlms_a}
+\end{equation}
+\begin{equation}
+    \textbf{x'}(n) = s(n) \ast \textbf{x}(n)
+    \label{eq::fxnlms_b}
+\end{equation}
+
+Tak określony algorytm nie posiada ogólnie przyjętej nazwy, dlatego postępując
+zgodnie z konwencją nazewnictwa modyfikacji algorytmu LMS, autor odwołując się
+do równań \ref{eq::fxnlms_a} i \ref{eq::fxnlms_b} będzie używał akronimu FXNLMS
+(\textit{Filtered X Normalised Least Mean Squares}). Zaktualizowany o
+normalizację danych wejściowych schemat systemu ANC przedstawiono na rysunku
+\ref{analysis::scheme_6}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_6.png}
+    \caption{Schemat systemu ANC z normalizacją danych wejściowych}
+    \label{analysis::scheme_6}
+\end{figure}
+
 \subsection{Metody identyfikacji toru wtórnego}
 
 Metod stosowane do identyfikacji toru wtórnego można podzielić na dwie
@@ -554,8 +648,8 @@ opisano poniżej:
         \hat{s}(n) = \frac{R_{xy}(n)}{\lambda^2}
     \end{equation}
 
-    Na wejście identyfikowanego procesu podaje się szum losowy o wariancji
-    $\lambda^2$, przez który dzielona jest funkcja korelacji wzajemnej
+    Na wejście identyfikowanego procesu podaje się sygnał identyfikujący o
+    wariancji $\lambda^2$, przez który dzielona jest funkcja korelacji wzajemnej
     $R_{xy}(n)$ wejścia obiektu $x(n)$ i wyjścia $y(n)$. Uzyskaną w ten sposób
     odpowiedź impulsową ogarnicza się do długości, której wartość można określić
     wizualnie na podstawie przebiegu funkcji $\hat{s}(n)$ i jest to typowo
@@ -577,7 +671,14 @@ opisano poniżej:
 
 \end{enumerate}
 
-Schemat eksperymentu identyfikacji metodami offline przedstawiono na rysunku
+Do identyfikacji obligatoryjne jest dobranie odpowiedniego sygnału wejściowego.
+W analizowanym przypadku dobrymi sygnałami są takie, których widmo jest płaskie,
+czyli ich składowe częstotliwościowe są równomiernie rozłożone w całym paśmie
+zainteresowań. Przykładami takich sygnałów może szum biały o wariancji
+$\lambda^2$ i sygnał wielosinusoidalny, będący sumą sygnałów sinusoidalnych, z
+których każdy jest okresowy wewnątrz okna czasowego o wybranej długości
+\cite{bib:figwer}. \\\\
+\par Schemat eksperymentu identyfikacji metodami offline przedstawiono na rysunku
 \ref{analysis::offline_ident}:
 
 \begin{figure}[H]
@@ -587,7 +688,7 @@ Schemat eksperymentu identyfikacji metodami offline przedstawiono na rysunku
     \label{analysis::offline_ident}
 \end{figure}
 
-W tym przypadku
+Bezpośrednio ze schematu \ref{analysis::offline_ident} można zapisać
 \begin{equation}
     e(n) = y'(n) = v(n) \ast s(n)
 \end{equation}
@@ -599,9 +700,7 @@ $e(n)$ w tym przypadku jest wynikiem filtracji sygnału $v(n)$ przez
 transmitancję toru wtórnego $S(z^{-1})$. Przeprowadzając identyfikację zalecane
 jest, aby przeprowadzić kilka eksperymentów i końcową odpowiedź impulsową
 $\hat{s}(n)$ uzyskać poprzez uśrednienie rezultatów uzyskanych w poszczególnych
-eksperymentach.
-
-\par Należy mieć na uwadze, że na charakterystykę torów akustycznych wpływa
+eksperymentach. Należy mieć na uwadze, że na charakterystykę torów akustycznych wpływa
 wiele czynników, które w trakcie pracy systemu mogły ulec zmianie i jeżeli
 istnieje podejrzenie że tak się stało, to proces identyfikacji należy powtórzyć.
 W przeciwnym wypadku, adaptacja będzie przebiegała gorzej, a system spełniał

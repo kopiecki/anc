@@ -21,81 +21,82 @@
 \contentsline {subsection}{\numberline {2.2.2}Algorytm LMS}{11}{subsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.2.3}Wpływ toru wtórnego}{13}{subsection.2.2.3}%
 \contentsline {subsection}{\numberline {2.2.4}Algorytm FXLMS}{15}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}Metody identyfikacji toru wtórnego}{17}{subsection.2.2.5}%
-\contentsline {chapter}{\numberline {3}Założenia i proponowane rozwiązanie}{19}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Wymagania projektowe}{19}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Część sprzętowa}{20}{subsection.3.1.1}%
-\contentsline {subsubsection}{Cele projektowe}{20}{section*.19}%
-\contentsline {subsubsection}{Wymagania sekcji zasilania}{20}{section*.20}%
-\contentsline {subsubsection}{Wymagania wejściowych sekcji analogowych}{21}{section*.21}%
-\contentsline {subsubsection}{Wymagania wyjściowych sekcji analogowych}{21}{section*.22}%
-\contentsline {subsubsection}{Wymagania sekcji przetworników}{21}{section*.23}%
-\contentsline {subsubsection}{Wymagania protokołu cyfrowego}{22}{section*.24}%
-\contentsline {subsubsection}{Wymagania mikrofonów}{22}{section*.25}%
-\contentsline {subsubsection}{Wymagania zestawów głośnikowych}{22}{section*.26}%
-\contentsline {subsubsection}{Wymagania platformy obliczeniowej}{23}{section*.27}%
-\contentsline {subsection}{\numberline {3.1.2}Część programowa}{23}{subsection.3.1.2}%
-\contentsline {subsubsection}{Cele projektowe}{23}{section*.28}%
-\contentsline {subsubsection}{Wymagania systemu operacyjnego}{24}{section*.29}%
-\contentsline {subsubsection}{Wymagania aplikacji}{24}{section*.30}%
-\contentsline {section}{\numberline {3.2}Architektura systemu}{24}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Wykorzystane narzędzia}{26}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Implementacja części sprzętowej}{27}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Urządzenia zewnętrzne}{28}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Mikrofony}{28}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Zestaw głośnikowy}{29}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Platforma obliczeniowa}{29}{subsection.4.1.3}%
-\contentsline {section}{\numberline {4.2}Zasilanie}{30}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Sekcja wejściowa}{30}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Symetryzacja szyn zasilających}{32}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Zasilanie domeny cyfrowej}{34}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Referencja domeny analogowo-cyfrowej}{35}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Generacja składowej stałej}{35}{subsection.4.2.5}%
-\contentsline {section}{\numberline {4.3}Wejściowe tory analogowe}{36}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Wejście zbalansowane}{36}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Początkowa filtracja i saturacja}{37}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Wzmocnienie różnicowe}{38}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Filtracja antyaliasingowa}{39}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}Pozycjonowanie}{42}{subsection.4.3.5}%
-\contentsline {subsection}{\numberline {4.3.6}Filtr końcowy i saturacja}{43}{subsection.4.3.6}%
-\contentsline {subsection}{\numberline {4.3.7}Pełen schemat sekcji}{44}{subsection.4.3.7}%
-\contentsline {section}{\numberline {4.4}Wyjściowe tory analogowe}{44}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Filtracja początkowa}{44}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Wzmocnienie}{45}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Filtracja rekonstrukcyjna}{46}{subsection.4.4.3}%
-\contentsline {subsection}{\numberline {4.4.4}Symetryzacja}{46}{subsection.4.4.4}%
-\contentsline {subsection}{\numberline {4.4.5}Filtracja końcowa}{47}{subsection.4.4.5}%
-\contentsline {subsection}{\numberline {4.4.6}Pełen schemat sekcji}{47}{subsection.4.4.6}%
-\contentsline {section}{\numberline {4.5}Sekcja cyfrowa}{48}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Interfejs cyfrowy}{48}{subsection.4.5.1}%
-\contentsline {subsubsection}{Metody komunikacji}{48}{section*.56}%
-\contentsline {subsection}{\numberline {4.5.2}Interakcja z przetwornikami}{50}{subsection.4.5.2}%
-\contentsline {subsubsection}{Przetworniki analogowo-cyfrowe}{52}{section*.64}%
-\contentsline {subsubsection}{Przetworniki cyfrowo-analogowe}{53}{section*.65}%
-\contentsline {section}{\numberline {4.6}Dodatkowe kwestie sprzętowe}{53}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Implementacja części programowej}{57}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Rozszerzenia czasu rzeczywistego}{57}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Problemy jądra Linux w kontekście real-time}{57}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Zestaw łatek PREEMPT\_RT}{59}{subsection.5.1.2}%
-\contentsline {section}{\numberline {5.2}System operacyjny}{61}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Środkowisko pracy}{62}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Przygotowanie nośnika}{63}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Programy rozruchowe}{63}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Jądro Linux}{64}{subsection.5.2.4}%
-\contentsline {subsection}{\numberline {5.2.5}Drzewo urządzeń}{65}{subsection.5.2.5}%
-\contentsline {subsection}{\numberline {5.2.6}System plików}{66}{subsection.5.2.6}%
-\contentsline {section}{\numberline {5.3}Aplikacja}{67}{section.5.3}%
-\contentsline {section}{\numberline {5.4}System ALSA}{68}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Główna pętla programowa}{69}{section.5.5}%
-\contentsline {chapter}{\numberline {6}Testy i badania}{71}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Weryfikacja części sprzętowej}{71}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Sekcja zasilania}{72}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Wyjściowe sekcje analogowe i przetworniki}{72}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Wejściowe sekcje analogowe i przetworniki}{74}{subsection.6.1.3}%
-\contentsline {section}{\numberline {6.2}Badania procesu ANC}{76}{section.6.2}%
-\contentsline {chapter}{\numberline {7}Podsumowanie}{77}{chapter.7}%
-\contentsline {chapter}{Bibliografia}{81}{chapter*.90}%
-\contentsline {chapter}{Spis skrótów i symboli}{85}{appendix*.91}%
+\contentsline {subsection}{\numberline {2.2.5}Usprawnienie procesu doboru kroku}{17}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}Metody identyfikacji toru wtórnego}{19}{subsection.2.2.6}%
+\contentsline {chapter}{\numberline {3}Założenia i proponowane rozwiązanie}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Wymagania projektowe}{21}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Część sprzętowa}{22}{subsection.3.1.1}%
+\contentsline {subsubsection}{Cele projektowe}{22}{section*.20}%
+\contentsline {subsubsection}{Wymagania sekcji zasilania}{22}{section*.21}%
+\contentsline {subsubsection}{Wymagania wejściowych sekcji analogowych}{23}{section*.22}%
+\contentsline {subsubsection}{Wymagania wyjściowych sekcji analogowych}{23}{section*.23}%
+\contentsline {subsubsection}{Wymagania sekcji przetworników}{23}{section*.24}%
+\contentsline {subsubsection}{Wymagania protokołu cyfrowego}{24}{section*.25}%
+\contentsline {subsubsection}{Wymagania mikrofonów}{24}{section*.26}%
+\contentsline {subsubsection}{Wymagania zestawów głośnikowych}{24}{section*.27}%
+\contentsline {subsubsection}{Wymagania platformy obliczeniowej}{25}{section*.28}%
+\contentsline {subsection}{\numberline {3.1.2}Część programowa}{25}{subsection.3.1.2}%
+\contentsline {subsubsection}{Cele projektowe}{25}{section*.29}%
+\contentsline {subsubsection}{Wymagania systemu operacyjnego}{26}{section*.30}%
+\contentsline {subsubsection}{Wymagania aplikacji}{26}{section*.31}%
+\contentsline {section}{\numberline {3.2}Architektura systemu}{26}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Wykorzystane narzędzia}{28}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Implementacja części sprzętowej}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Urządzenia zewnętrzne}{30}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Mikrofony}{30}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Zestaw głośnikowy}{31}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Platforma obliczeniowa}{31}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Zasilanie}{32}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Sekcja wejściowa}{32}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Symetryzacja szyn zasilających}{34}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Zasilanie domeny cyfrowej}{36}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Referencja domeny analogowo-cyfrowej}{37}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Generacja składowej stałej}{37}{subsection.4.2.5}%
+\contentsline {section}{\numberline {4.3}Wejściowe tory analogowe}{38}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Wejście zbalansowane}{38}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Początkowa filtracja i saturacja}{39}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Wzmocnienie różnicowe}{40}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Filtracja antyaliasingowa}{41}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Pozycjonowanie}{44}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Filtr końcowy i saturacja}{45}{subsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.3.7}Pełen schemat sekcji}{46}{subsection.4.3.7}%
+\contentsline {section}{\numberline {4.4}Wyjściowe tory analogowe}{46}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Filtracja początkowa}{46}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Wzmocnienie}{47}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Filtracja rekonstrukcyjna}{48}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Symetryzacja}{48}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}Filtracja końcowa}{49}{subsection.4.4.5}%
+\contentsline {subsection}{\numberline {4.4.6}Pełen schemat sekcji}{49}{subsection.4.4.6}%
+\contentsline {section}{\numberline {4.5}Sekcja cyfrowa}{50}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Interfejs cyfrowy}{50}{subsection.4.5.1}%
+\contentsline {subsubsection}{Metody komunikacji}{50}{section*.57}%
+\contentsline {subsection}{\numberline {4.5.2}Interakcja z przetwornikami}{52}{subsection.4.5.2}%
+\contentsline {subsubsection}{Przetworniki analogowo-cyfrowe}{54}{section*.65}%
+\contentsline {subsubsection}{Przetworniki cyfrowo-analogowe}{55}{section*.66}%
+\contentsline {section}{\numberline {4.6}Dodatkowe kwestie sprzętowe}{55}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Implementacja części programowej}{59}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Rozszerzenia czasu rzeczywistego}{59}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Problemy jądra Linux w kontekście real-time}{59}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Zestaw łatek PREEMPT\_RT}{61}{subsection.5.1.2}%
+\contentsline {section}{\numberline {5.2}System operacyjny}{63}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Środkowisko pracy}{64}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Przygotowanie nośnika}{65}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Programy rozruchowe}{65}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Jądro Linux}{66}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}\textit {Device tree}}{67}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}System plików}{68}{subsection.5.2.6}%
+\contentsline {section}{\numberline {5.3}Aplikacja}{69}{section.5.3}%
+\contentsline {section}{\numberline {5.4}System ALSA - biblioteka \textit {libasound}}{70}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Główna pętla programowa}{72}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Testy i badania}{75}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Weryfikacja części sprzętowej}{75}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Sekcja zasilania}{76}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Wyjściowe sekcje analogowe i przetworniki}{76}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Wejściowe sekcje analogowe i przetworniki}{78}{subsection.6.1.3}%
+\contentsline {section}{\numberline {6.2}Badania procesu ANC}{80}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Podsumowanie}{81}{chapter.7}%
+\contentsline {chapter}{Bibliografia}{85}{chapter*.92}%
+\contentsline {chapter}{Spis skrótów i symboli}{89}{appendix*.93}%
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
@@ -130,6 +131,6 @@
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
-\contentsline {chapter}{Pliki uzupełniające}{87}{appendix*.92}%
-\contentsline {chapter}{Spis rysunków}{90}{appendix*.93}%
-\contentsline {chapter}{Spis tabel}{91}{appendix*.94}%
+\contentsline {chapter}{Pliki uzupełniające}{91}{appendix*.94}%
+\contentsline {chapter}{Spis rysunków}{94}{appendix*.95}%
+\contentsline {chapter}{Spis tabel}{95}{appendix*.96}%

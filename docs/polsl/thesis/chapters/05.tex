@@ -202,23 +202,23 @@ Opis poszczególnych etapów przedstawiono poniżej:
     najwięcej miejsca do pamięci DDR. Po załadowaniu, przekazuje mu pełną
     kontrolę. 
 
-    \item Trzeci etap rozruchowy - ładuje jądro wraz z drzewem urządzeń do
+    \item Trzeci etap rozruchowy - ładuje jądro wraz z \textit{device tree} do
     pamięci DDR oraz inicjalizuje peryferia, które mogą zostać do tego
     wykorzystane (I2C, NAND, FLASH, Ethernet). Proces ładowania należy
     odpowiednio skonfigurować, wskazując programowi miejsce, w który znajduje
     się obraz jądra oraz adres w pamięci, do którego ma je załadować.
     Konfiguracji można dokonywać statycznie, poprzez uprzednio przygotowany plik
-    (uEnv.txt, uboot.env) lub dynamicznie, wpisując polecenia na etapie
-    działania programu.
+    (\textit{uEnv.txt}, \textit{uboot.env}) lub dynamicznie, wpisując polecenia
+    na etapie działania programu.
 
     \item Jądro - wykonuje, planuje i zarządza procesami. Jest pośrednikiem
     między interakcjami ze sprzętem (peryferiami), kontrolując je za
     pośrednictwem sterowników, które mogą być osadzone statycznie lub ładowane
     dynamicznie w postaci modułów. Po uruchomieniu i przeprowadzeniu procesu
     inicjalizacji, włącza programy startowe i umożliwia użytkownikowi pracę.
-    Zadania wykonywane przez jądro zawierają się w tak zwanym trybie jądra (ang.
-    \textit{kernel space}), która tworzy osobną przestrzeń adresową niedostępną
-    dla aplikacji użytkownika. 
+    Zadania wykonywane przez jądro zawierają się w tak zwanej przetrzenii jądra
+    (ang. \textit{kernel space}), która tworzy osobną przestrzeń adresową
+    niedostępną dla aplikacji użytkownika. 
 
     \item Główny system plików - zawiera zestaw plików i katalogów, niezbędnych
     do działania systemu. Z tego miejsca wychodzą pozostałe struktury katalogów,
@@ -298,12 +298,13 @@ podzielić na trzy główne kroki:
 Platforma BeagleBone Black, jako że jest popularnym układem, posiada już
 odpowiednio przygotowane pliki konfiguracyjne dla drugiego etapu budowania, więc
 dodatkowa ingerencja w proces konfiguracji nie jest wymagana. Wynikiem
-pomyślnego zbudowania programu są pliki MLO i u-boot.img, będące odpowiednio
-drugim i trzecim programem rozruchowym. Po wgraniu plików na partycję rozruchową
-nośnika i uruchomieniu ładowania, trzeci program rozruchowy przedstawi się linią
-poleceń i wymagane będzie wpisanie kilku komend, informujących program, skąd i
-gdzie ma załadować pliki jądra systemu. Po zapisaniu konfiguracji, programy
-rozruchowe nie wymagają dodatkowych modyfikacji.
+pomyślnego zbudowania programu są pliki \textit{MLO} i \textit{u-boot.img},
+będące odpowiednio drugim i trzecim programem rozruchowym. Po wgraniu plików na
+partycję rozruchową nośnika i uruchomieniu ładowania, trzeci program rozruchowy
+przedstawi się linią poleceń i wymagane będzie wpisanie kilku komend,
+informujących program, skąd i gdzie ma załadować pliki jądra systemu. Po
+zapisaniu konfiguracji, programy rozruchowe nie wymagają dodatkowych
+modyfikacji.
 
 \subsection{Jądro Linux}
 
@@ -332,14 +333,13 @@ skorzystać z gotowo połatanego jądra, wystarczy ściągnąć odpowiednią wer
 przeprowadzić na niej znany już wcześniej proces budowania, którego wynikiem
 będzie plik zImage, następnie ładowany na partycję systemową nośnika.
 
-\subsection{Drzewo urządzeń}
+\subsection{\textit{Device tree}}
 
 Wraz z plikami jądra, na partycji systemowej nośnika musi znaleźć się plik
 informujący system o rozmieszczeniu i konfiguracji urządzeń nie posiadających
 automatycznej metody wykrywania. Mechanizmem stosowanym do tego celu we
-wbudowanych systemach operacyjnych GNU/Linux jest drzewo urządzeń (ang.
-\textit{device tree}). \par Praca z drzewem urządzeń sprowadza się do
-następujących plików 
+wbudowanych systemach operacyjnych GNU/Linux jest \textit{device tree},
+z którym praca sprowadza się do modyfikacji następujących plików 
 
 \begin{itemize}
 
@@ -360,13 +360,13 @@ jednego rodzica, za wyjątkiem węzła \textit{root}, który jest węzłem nadrz
 Węzły mogą się do siebie nawzajem odwoływać jak i modyfikować swoją zawartość,
 dlatego z matematycznego punktu widzenia, drzewo urządzeń jest tak właściwie
 grafem acyklicznym. \par Kody źródłowe jądra Linux posiadają gotowo przygotowane
-pliki źródłowe drzewa urządzeń dla większości obsługiwanych platform, w tym
+pliki źródłowe \textit{.dts} dla większości obsługiwanych platform, w tym
 wykorzystanej. Sporządzona układ pomiarowy, obsługiwany przez interfejs McASP,
-nie posiada mechanizmu automatycznego wykrywania, dlatego niezbędne jest
-zadeklarowanie go w drzewie urządzeń, wraz z niezbędną konfiguracją interfejsu
-McASP, który domyślnie nie jest zdefiniowany. W tym celu, napisany został
-dodatkowy plik nagłówkowy dodany do głównego pliku źródłowego drzewa urządzeń, z
-opisem niezbędnej konfiguracji, której zawartość jest następująca:
+nie posiada mechanizmu automatycznego wykrywania, dlatego niezbędna jest jego
+deklaracja wraz z niezbędną konfiguracją interfejsu McASP, który domyślnie nie
+jest zdefiniowany. W tym celu, napisany został dodatkowy plik nagłówkowy
+\textit{.dtsi} dodany do głównego pliku źródłowego \textit{.dts} z opisem
+niezbędnej konfiguracji, której zawartość jest następująca:
 \begin{enumerate}
 
     \item Zdefiniowanie pinów McASP - płytka BeagleBone Black wspiera wiele
@@ -450,8 +450,8 @@ opisem niezbędnej konfiguracji, której zawartość jest następująca:
 
 \end{enumerate}
 
-Tak przygotowane źródła drzewa urządzeń można poddać procesowi budowania i
-wynikowy plik umieścić obok obrazu jądra na partycji systemowej nośnika.
+Tak przygotowane źródła można poddać procesowi budowania i wynikowy plik
+umieścić obok obrazu jądra na partycji systemowej nośnika.
 
 \subsection{System plików}
 
@@ -483,26 +483,26 @@ wchodzące w bezpośredni skład aplikacji i są to moduły, które napisano
 samodzielnie. Można z nich wyróżnić:
 \begin{itemize}
 
-    \item Bilbioteka \textit{libdsp} - tworzy ją implementacja filtracji
+    \item Bilbiotekę \textit{libdsp} - tworzy ją implementacja filtracji
     cyfrowej opartej na modelu FIR (nagłówek \textit{fir.h}) oraz algorytmu LMS
-    (nagłówek \textit{lms.h}).
+    (nagłówek \textit{lms.h} i \textit{nlms.h}).
 
-    \item Biblioteka \textit{libsignal} - tworzy ją implementacja generatorów
+    \item Bibliotekę \textit{libsignal} - tworzy ją implementacja generatorów
     standardowych sygnałów wykorzystywanych do symulacji źródła hałasu,
     testowania i identyfikacji (sygnały periodyczne, szumy). 
 
-    \item Biblioteka \textit{libsc} - opakowuje funkcje zewnętrznej biblioteki
+    \item Bibliotekę \textit{libsc} - opakowuje funkcje zewnętrznej biblioteki
     \textit{libasound} w celu uzyskania wyższego poziomu abstrakcji. Udostępnia
     funkcje pozwalające na interakcje z urządzeniami dźwiękowymi w systemie.
 
 \end{itemize}
 
 Kolorem zielonym zaznaczono moduł zewnętrzny, będącą w tym przypadku biblioteką
-\textit{libasound} udostępnianą przez środowisko ALSA, które jest wykorzystanym
+\textit{libasound}, udostępnianą przez środowisko ALSA, które jest wykorzystanym
 programowym systemem obsługi dźwięku. Na czerwono przedstawiono kontener z
 modułami jądra Linux, z którymi komunikuje się system ALSA.
 
-\section{System ALSA}
+\section{System ALSA - biblioteka \textit{libasound}}
 
 System ALSA (ang. \textit{Advanced Linux Sound Architecture}) jest głównym
 środowiskiem kontrolującym urządzenia dźwiękowe w systemie operacyjnym GNU/Linux
@@ -564,15 +564,36 @@ bajtów. Deklarując rozmiar bufora na dwa fragmenty $n_f = 2$, wynikowo otrzymu
 się latencję $T_L = 93$ ms. Latencja dla stałego rozmiaru próbki jest więc
 odwrotnie proporcjonalna do częstotliwości próbkowania i proporcjonalna do
 rozmiaru bufora. \par Ze zmniejszaniem latencji wiąże się szereg problemów.
-Deklarując coraz to mniejsze rozmiary buforów, zwiększa się ilość przerwań na
+Deklarując coraz to mniejsze rozmiary fragmentów, zwiększa się ilość przerwań na
 transfery próbek, co powoduje zwiększenie zużycia procesora, zmniejszając
-responsywność pozostałych aplikacji działających w systemie. Projektując system
-ANC wymagana jest minimalizacja opóźnień w torach przetwarzania, dlatego w celu
-uzyskania jak najmniejszej latencji, możliwe jest zwiększenie priorytetu i
-sposobu planowania procesu przetwarzania audio z wykorzystaniem rozszerzeń czasu
-rzeczywistego, co zostanie zbadane w późniejszych etapach pracy.
+responsywność pozostałych aplikacji działających w systemie. Minimalny rozmiar
+fragmentu zdefiniowany jest w sterownikach jądra obsługujących interfejsy
+cyfrowe komunikujace się ze wspierającymi je kartami dźwiekowymi i dla McASP
+wynosi on \textbf{64 bajty}. Analogicznie zdefiniowane są dostępne
+częstotliwości próbkowania, które dla wykorzystywanego protokołu wynoszą
+\textbf{minimalnie 8 kHz i maksymalnie 192 kHz}. Projektując system ANC wymagana
+jest minimalizacja opóźnień w torach przetwarzania, dlatego w celu uzyskania jak
+najmniejszej latencji porządane jest, aby przy odpowiednio dobranej
+częstotliwości próbkowania długość fragmentu była jak najmniejsza. W tym celu,
+autor lekko zmodyfikował kody źródłowe sterowników McASP, zmieniając definicję
+minimalnej długości fragmentów do \textbf{8 bajtów}. Powodem, dla którego
+przyjęto taką wartość jest ograniczenie nakładane przez sterownik DMA
+realizujący transfery pomiędzy przestrzeniami jądra, a użytkownika i jego
+minimalną długość trasferu, wynoszącą również 8 bajtów. Ograniczenia
+nakładane na częstotliwości próbkowania pozostawiono bez zmian.
 
 \section{Główna pętla programowa}
+
+Przebieg operacji w głównej pętli programowej przedstawiono na schemacie
+\ref{sw::app_flow}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graf/sw/app_flow.png}
+    \caption{Przebieg operacji - pętla ANC}
+    \label{sw::app_flow}
+\end{figure}
+
 
 Proces działania pętli realizującej aktywne tłumienie hałasu można przedstawić
 następującymi krokami:
