@@ -12,14 +12,17 @@ def read_file(name):
         return np.array([int(x) for x in f.readlines()]).astype('uint16')
 
 def xcorr(x):
+    n = len(x)
     mean = np.mean(x)
     x = x - mean
-    sxx = np.correlate(x, x, 'full')[len(x) - 1:]
+    sxx = np.correlate(x, x, 'full')[n - 1:]
     sxx /= np.max(sxx)
 
-    plt.plot(sxx, linewidth=2)
+    plt.plot(sxx, linewidth=4)
     plt.xlabel(r"$\tau$")
     plt.ylabel(r"$S_{xx}(\tau)$")
+    plt.xticks([0, (n - 1) / 2, n - 1])
+    plt.yticks([0, 0.25, 0.5, 0.75, 1])
     plt.grid()
 
 
@@ -60,11 +63,12 @@ def test():
     prng = rand()
 
     x = np.array([])
-    for _ in range(1024):
+    for _ in range(4096):
         x = np.append(x, prng())
 
     plt.subplot(2, 1, 1)
     compute_and_plot_psd(x, 8e3)
+    
     plt.subplot(2, 1, 2)
     xcorr(x)
 
@@ -72,13 +76,16 @@ def test():
 
 
 if __name__ == "__main__":
-    r, xor = read_file("randn.csv"), read_file("xorshift.csv")
+    font = {'size'   : 34}
+    plt.rc('font', **font)
+
+    xor = read_file("xorshift.csv")
+    mean = np.mean(xor)
+    xor = xor - mean
 
     plt.subplot(2, 1, 1)
-    compute_and_plot_psd(r, 1, 2**8)
-    compute_and_plot_psd(xor, 1, 2**8)
+    compute_and_plot_psd(xor, 2, 2**9)
     plt.subplot(2, 1, 2)
-    xcorr(r)
     xcorr(xor)
     plt.show()
 

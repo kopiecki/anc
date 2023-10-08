@@ -65,16 +65,19 @@
 \contentsline {figure}{\numberline {5.7}{\ignorespaces Proces uruchomienia systemu operacyjnego\relax }}{63}{figure.caption.78}%
 \contentsline {figure}{\numberline {5.8}{\ignorespaces Diagram aplikacji\relax }}{69}{figure.caption.80}%
 \contentsline {figure}{\numberline {5.9}{\ignorespaces Podział bufora sterownika\relax }}{70}{figure.caption.81}%
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Przebieg operacji - pętla ANC\relax }}{72}{figure.caption.82}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Porównanie operacji wektorowych\relax }}{72}{figure.caption.82}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Przykładowy LFSR\relax }}{74}{figure.caption.84}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Funkcja autokorelacji i GWM sygnału z generatora \textit {xoroshiro16++}\relax }}{75}{figure.caption.85}%
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Przebieg operacji - pętla ANC\relax }}{75}{figure.caption.86}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Sporządzona płytka drukowana\relax }}{75}{figure.caption.83}%
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Pomiary wzmacniacza wyjściowej sekcji analogowej\relax }}{76}{figure.caption.85}%
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Pomiary filtra wyjściowej sekcji analogowej\relax }}{77}{figure.caption.86}%
-\contentsline {figure}{\numberline {6.4}{\ignorespaces Wyjście różnicowe wyjściowej sekcji analogowej\relax }}{78}{figure.caption.87}%
-\contentsline {figure}{\numberline {6.5}{\ignorespaces Pomiary wejściowego toru analogowego dla $f_s = 200$ Hz\relax }}{78}{figure.caption.88}%
-\contentsline {figure}{\numberline {6.6}{\ignorespaces Gęstość widmowa mocy pomiaru dla $f_s = 200$ Hz\relax }}{79}{figure.caption.89}%
-\contentsline {figure}{\numberline {6.7}{\ignorespaces Pomiary wejściowego toru analogowego dla $f_s = 500$ Hz\relax }}{79}{figure.caption.90}%
-\contentsline {figure}{\numberline {6.8}{\ignorespaces Gęstość widmowa mocy pomiaru dla $f_s = 200$ Hz\relax }}{80}{figure.caption.91}%
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Sporządzona płytka drukowana\relax }}{77}{figure.caption.87}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Pomiary wzmacniacza wyjściowej sekcji analogowej\relax }}{78}{figure.caption.89}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Pomiary filtra wyjściowej sekcji analogowej\relax }}{79}{figure.caption.90}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Wyjście różnicowe wyjściowej sekcji analogowej\relax }}{80}{figure.caption.91}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Pomiary wejściowego toru analogowego dla $f_s = 200$ Hz\relax }}{80}{figure.caption.92}%
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Gęstość widmowa mocy pomiaru dla $f_s = 200$ Hz\relax }}{81}{figure.caption.93}%
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Pomiary wejściowego toru analogowego dla $f_s = 500$ Hz\relax }}{81}{figure.caption.94}%
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Gęstość widmowa mocy pomiaru dla $f_s = 200$ Hz\relax }}{82}{figure.caption.95}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \babel@toc {british}{}\relax 

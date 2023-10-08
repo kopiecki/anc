@@ -127,6 +127,22 @@
     \field{year}{2002}
   \endentry
 
+  \entry{bib:cpp}{online}{}
+    \list{publisher}{1}{%
+      {cppreference}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{title}{C/C++ documentation}
+    \verb{url}
+    \verb https://en.cppreference.com/w/c/numeric/random
+    \endverb
+    \field{urlday}{03}
+    \field{urlmonth}{10}
+    \field{urlyear}{2023}
+  \endentry
+
   \entry{bib:ti_anc}{online}{}
     \list{publisher}{1}{%
       {Texas Instruments}%
@@ -288,6 +304,26 @@
       {USA}%
     }
     \field{year}{1995}
+  \endentry
+
+  \entry{bib:rand}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=LST}{%
+         family={Lavavej},
+         familyi={L\bibinitperiod},
+         given={Stephan\bibnamedelima T.},
+         giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LST1}
+    \strng{fullhash}{LST1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{booktitle}{GoingNative 2013}
+    \field{title}{rand() Considered Harmful}
+    \field{year}{2013}
   \endentry
 
   \entry{bib:mic}{online}{}
@@ -755,6 +791,22 @@
     \field{year}{2021}
     \field{urlday}{23}
     \field{urlmonth}{07}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{bib:prng}{online}{}
+    \list{publisher}{1}{%
+      {unimi}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{X}
+    \field{sortinithash}{X}
+    \field{title}{xoshiro/xoroshiro generators and the PRNG shootout}
+    \verb{url}
+    \verb https://prng.di.unimi.it/
+    \endverb
+    \field{urlday}{03}
+    \field{urlmonth}{10}
     \field{urlyear}{2023}
   \endentry
 \enddatalist

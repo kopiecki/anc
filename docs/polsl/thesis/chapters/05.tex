@@ -484,7 +484,7 @@ samodzielnie. Można z nich wyróżnić:
 \begin{itemize}
 
     \item Bilbiotekę \textit{libdsp} - tworzy ją implementacja filtracji
-    cyfrowej opartej na modelu FIR (nagłówek \textit{fir.h}) oraz algorytmu LMS
+    cyfrowej opartej na modelu FIR (nagłówek \textit{fir.h}) oraz algorytmów LMS
     (nagłówek \textit{lms.h} i \textit{nlms.h}).
 
     \item Bibliotekę \textit{libsignal} - tworzy ją implementacja generatorów
@@ -581,6 +581,162 @@ przyjęto taką wartość jest ograniczenie nakładane przez sterownik DMA
 realizujący transfery pomiędzy przestrzeniami jądra, a użytkownika i jego
 minimalną długość trasferu, wynoszącą również 8 bajtów. Ograniczenia
 nakładane na częstotliwości próbkowania pozostawiono bez zmian.
+
+\section{Biblioteki użytkownika}
+
+\subsection{Biblioteka \textit{libdsp}}
+
+Implementacja algorytmów cyfrowego przetwarzania sygnałów została wykonana z w
+sposób pozwalający na wykorzystanie dostępnych na module Sitara AM3358 układów
+umożliwiajacych sprzętowe wykonanie operacji zmiennoprzecinkowych
+(\textit{Floating Point Unit}, FPU), oraz przetwarzanie strumieniowe
+(\textit{Single Instruction, Multiple Data}, SIMD). Wykorzystanie tych modułów
+wiąże się z deklaracją dodatkowych flag przekazywanych kompulatorowi i w
+przypadku pakietu GCC są to:
+\begin{itemize} 
+    \item \textit{-ffast-math, -ftree-vectorize} - dla obliczeń wektorowych
+    (wykorzystanie SIMD)
+    \item \textit{-mfpu=neon, -mhard-float} - dla sprzętowych obliczeń
+    zmiennoprzecinkowych (FPU)
+\end{itemize}
+
+Poza flagami kompilacji, w przypadku wykorzystania SIMD ważne jest, aby program
+napisany był w sposób pozwalający kompilatorowi na jak najczęstsze wykorzystanie
+operacji wektorowych. Przykładowe porównanie operacji dodawania bez i z
+wykorzystaniem koprocesora SIMD przedstawiono na rysunkach \ref{sw::simd}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{graf/sw/non_simd.png}
+        \caption{Operacja wektorowa bez SIMD}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=0.75\textwidth]{graf/sw/simd.png}
+        \caption{Operacja wektorowa z SIMD}
+    \end{subfigure}
+        \caption{Porównanie operacji wektorowych}
+        \label{sw::simd}
+\end{figure}
+
+Należy zwrócić uwagę, że wektorowo można wykonać jedynie niektóre proste
+operacje arytmetyczne i wymaganiem jest, aby operandy były umiejscowione w
+ciągłym obszarze pamięci. Możliwe do urównoleglenia pętle w procesie tłumaczenia
+kodu programu na kod maszynowy zostaną zastąpione pojedynczymi instrukcjami
+koprocesora, więc pisząc kod należy pamiętać, żeby projektowane pętle nie
+posiadały dodatkowej logiki, a w szczególności tej operującej na poszczególnych
+indeksach wykorzystanych tablic (wektorów). Chcąc zweryfikować, czy kompilator
+poprawnie przewidział zamiary programisty i wykorzystał instrukcje SIMD, należy
+prześledzić wygenerowany kod asemblera w poszukiwaniu tłumaczeń pętli i
+zweryfikować, czy faktycznie zostały zastąpione instrukacji SIMD, które w
+przypadku architektury NEON\textsuperscript{TM} objawią się przykładowo jako
+rozkazy \textit{vadd} dla dodawania i \textit{vmult} dla mnożenia. \par Napisana
+biblioteka została zweryfikowana pod kątem wykorzystania SIMD i rezultat
+przykładowego testu filtracji przedstawiono w tabeli \ref{tab::simd_test}:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|| c | c | c | c ||} 
+        \hline
+        \textbf{Długość filtra} & \textbf{Ilość iteracji} & \textbf{Czas, bez
+        SIMD} & \textbf{Czas, z SIMD} \\
+        [0.5ex] \hline\hline
+        128 & 10e6 & 27.389 s& 4.460 s\\ 
+        \hline\hline
+    \end{tabular}
+
+    \caption{Test wykorzystania SIMD}
+    \label{tab::simd_test}
+\end{table}
+
+Jak można zauważyć bezpośrednio z \ref{tab::simd_test}, wykorzystanie SIMD w tym
+przypadku zwiększa prędkość obliczeń około sześciokrotnie.
+
+\subsection{Biblioteka \textit{libsignal}}
+
+Poza standardowymi sygnałami okresowymi wykorzystywanymi do testów i symulacji,
+kwestią wartą poruszenia jest generator wykorzystywany w procesie identyfikacji
+toru wtórnego. Jako sygnał identyfikujący wybrano losowy szum biały, którego
+podstawowa implementacja może opierać się na wykorzystaniu funkcji
+\textit{rand()} z biblioteki standardowej języka C. Funkcja \textit{rand()}
+wykorzystywana jest do generacji liczby pseudolosowej z przedziału 0 do wartości
+RAND\_MAX, która zależy od implementacji bilblioteki na daną architekturę
+\cite{bib:cpp}. \par Funkcja \textit{rand()}, będąca implementacją generatora
+liczb pseudolosowych napisana jest w oparciu o liniowy generator kongruencjalny
+(ang. \textit{Linear congruential generator}, LCG), który nie słynie z dobrej
+jakości w porównaniu z innymi generatorami liczb pseudolosowych \cite{bib:rand}.
+Z głównych mankamentów generatora \textit{rand()} można wyróżnić:
+\begin{itemize}
+    \item \textbf{Przedział generacji jest zdefiniowany przez bibliotekę i tylko
+    w tym przedziale liczby generowane są równomiernie} - w przypadku, kiedy
+    RAND\_MAX zdefiniowany jest jako maksymalny zakres 32 bitowy, a użytkownik
+    chce wygenerować losową liczbę 16 bitową, to wygenerowana liczba pochodzi z
+    rozkładu nierównomiernego \cite{bib:rand}.
+    \item \textbf{Stan generatora inicjalizowany jest globanie} - 
+    niemożliwym jest wykorzystanie kilku instancji silnika w jednej aplikacji,
+    co znacząco komplikuje pracę, kiedy programista chce urównoleglić
+    niektóre operacje \cite{bib:rand}.
+    \item \textbf{Jakość implementacji jest wątpliwa} - generatory LCG słyną z
+    niskiej losowości bitów mniej znaczących w porównaniu z bardziej znaczącymi.
+    Liczby generowane za pomocą tych generatorów mogą tworzyć widoczne struktury
+    kratowe lub płaskie, co bardzo dobrze widać w przypadku generatora RANDU
+    \cite{bib:rand}. Dodatkowo sprawdzono, że typowe implementacji LCG zazwyczaj
+    wypadają bardzo źle w testach losowości statystycznej \cite{bib:prng} 
+\end{itemize}
+
+Mając na uwadze problemy wyszczególnione wyżej, w celu generacji sygnału
+identyfikującego posłużono się klasą generatorów będącą podzbiorem generatorów
+działających na bazie rejestru przesuwnego z liniowym sprzężeniem zwrotnym (ang.
+\textit{Linear Feedback Shift Register}, LFSR). W literaturze
+\cite{bib:kuo_morgan} \cite{bib:figwer} można spotkać się z sygnałami PRBS (ang.
+\textit{Pseudorandom binary sequence}), które generowane są właśnie z ich
+wykorzystaniem. Przykładowy, ugólniony sposób działania generatorów tej klasy
+przedstawiono na rysunku \ref{sw::lfsr}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graf/sw/lfsr.png}
+    \caption{Przykładowy LFSR}
+    \label{sw::lfsr}
+\end{figure}
+
+Na jakość generatora działającego w oparciu LFSR wpływ mają numery bitów
+wykorzystywane do obliczenia nowego stanu, rodzaj i ilość operacji na nich
+przeprowadzanych oraz stan początkowy (ang. \textit{seed}). Jak można zauważyć z
+\ref{sw::lfsr}, dla stanu początkowego 0 generator nie będzie działał poprawnie.
+Okres w którym generowane liczby się nie duplikują zdefiniowany jest przez
+liczbę bitów $M$ i wynosi
+\begin{equation}
+    T = 2^{M} - 1
+\end{equation}
+
+Istnieje wiele podzbiorów generatorów implementowanych w oparciu o LFSR. Jednym
+z nich są generatory oparte na kombinacji alternatywy rozłącznej, przesunięcia
+i/lub rotacji aktualnego stanu rejestru do obliczenia kolejnego. Omawiany
+podzbiór, ze względu na wykorzystywane operacje, przyjęło się nazywać
+generatorami \textit{xorshift} i cieszą się one wysokim uznaniem w literaturze
+\cite{bib:prng} ze względu na niskie zużycie zasobów do wykonania obliczeń oraz
+dużą losowość, weryfikowaną na podstawie testów statystycznych z biblioteki
+TestU01. 
+\par W bibliotece \textit{libsignal} zdecydowano się na implementację 16
+bitowego generatora \textit{xoroshiro16++}, działającego z wykorzystaniem
+kombinacji alternatywy rozłącznej, rotacji, przesunięcie bitowego i rotacji,
+gdzie wyjście jest dodatkowo poddawane transformacji nieliniowej z
+wykorzystaniem dodawania. Generator przechodzi wszystkie testy statystycznej
+losowości ze zbioru TestU01, a jego funkcję autokorelacji i gęstość widmową mocy
+obliczoną z wykorzystaniem metody Welch'a dla $N = 4096$ próbek przedstawiono na
+rysunku \ref{sw::prng_psd}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graf/sw/prng_psd.png}
+    \caption{Funkcja autokorelacji i GWM sygnału z generatora
+    \textit{xoroshiro16++}}
+    \label{sw::prng_psd}
+\end{figure}
 
 \section{Główna pętla programowa}
 

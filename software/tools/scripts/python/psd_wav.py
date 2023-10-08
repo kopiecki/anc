@@ -8,8 +8,11 @@ from scipy.io import wavfile
 def compute_and_plot_psd(data, fs, seg=2**10):
     f, p_den = welch(data, fs=fs, window='hann', nperseg=seg)
 
-    plt.plot(f, 10*np.log10(p_den), linewidth=4, label="PSD")
+    plt.plot(f[1:-2], 10*np.log10(p_den)[1:-2], linewidth=4, label="PSD")
     plt.xlabel('f, Hz')
+    plt.xticks([0, 0.5, 1])
+    plt.yticks([82, 84, 86, 88, 90])
+
     plt.ylabel('PSD')
     plt.grid()
 
