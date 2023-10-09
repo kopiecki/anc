@@ -569,18 +569,19 @@ transfery próbek, co powoduje zwiększenie zużycia procesora, zmniejszając
 responsywność pozostałych aplikacji działających w systemie. Minimalny rozmiar
 fragmentu zdefiniowany jest w sterownikach jądra obsługujących interfejsy
 cyfrowe komunikujace się ze wspierającymi je kartami dźwiekowymi i dla McASP
-wynosi on \textbf{64 bajty}. Analogicznie zdefiniowane są dostępne
+wynosi on \textbf{64 ramek}. Analogicznie zdefiniowane są dostępne
 częstotliwości próbkowania, które dla wykorzystywanego protokołu wynoszą
 \textbf{minimalnie 8 kHz i maksymalnie 192 kHz}. Projektując system ANC wymagana
 jest minimalizacja opóźnień w torach przetwarzania, dlatego w celu uzyskania jak
 najmniejszej latencji porządane jest, aby przy odpowiednio dobranej
 częstotliwości próbkowania długość fragmentu była jak najmniejsza. W tym celu,
 autor lekko zmodyfikował kody źródłowe sterowników McASP, zmieniając definicję
-minimalnej długości fragmentów do \textbf{8 bajtów}. Powodem, dla którego
+minimalnej długości fragmentów do \textbf{8 ramek}. Powodem, dla którego
 przyjęto taką wartość jest ograniczenie nakładane przez sterownik DMA
 realizujący transfery pomiędzy przestrzeniami jądra, a użytkownika i jego
-minimalną długość trasferu, wynoszącą również 8 bajtów. Ograniczenia
-nakładane na częstotliwości próbkowania pozostawiono bez zmian.
+minimalną długość trasferu, wynoszącą 64 bajtów (ramka składająca się z dwóch 16
+bitowych próbek ma również 64 bajty). Ograniczenia nakładane na częstotliwości
+próbkowania pozostawiono bez zmian.
 
 \section{Biblioteki użytkownika}
 
@@ -727,12 +728,12 @@ kombinacji alternatywy rozłącznej, rotacji, przesunięcie bitowego i rotacji,
 gdzie wyjście jest dodatkowo poddawane transformacji nieliniowej z
 wykorzystaniem dodawania. Generator przechodzi wszystkie testy statystycznej
 losowości ze zbioru TestU01, a jego funkcję autokorelacji i gęstość widmową mocy
-obliczoną z wykorzystaniem metody Welch'a dla $N = 4096$ próbek przedstawiono na
+obliczoną z wykorzystaniem metody Welch'a dla $N = 16382$ próbek przedstawiono na
 rysunku \ref{sw::prng_psd}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/sw/prng_psd.png}
+    \includegraphics[width=0.8\textwidth]{graf/sw/prng_psd.png}
     \caption{Funkcja autokorelacji i GWM sygnału z generatora
     \textit{xoroshiro16++}}
     \label{sw::prng_psd}
@@ -750,52 +751,61 @@ Przebieg operacji w głównej pętli programowej przedstawiono na schemacie
     \label{sw::app_flow}
 \end{figure}
 
-
-Proces działania pętli realizującej aktywne tłumienie hałasu można przedstawić
-następującymi krokami:
-
+Częstotliwość próbkowania układu, jak opisywano w sekcji dotyczącej systemu
+ASLA, jest ograniczona przez sterowniki jądra i zamyka się w przedziale od 8 do
+192 kHz. Korzystając z założenia, że układ pracuje na hałasach do częstotliwości
+500 Hz, będącej również częstotliwością graniczną filtrów sekcji analogowej,
+wejściowe dane można poddawać procesowi decymacji, otrzymując w ten sposób $f'_s
+= \frac{f_s}{M}$. Należy zwrócić uwagę, że częstotliwość próbkowania $f'_s$
+istnieje tylko w pętli przetwarzającej poszczególne próbki, a przetworniki
+pracują w dalszym ciągu na częstotliwości $f_s$. Decymacja pozwala na $M$ krotne
+zmniejszenie opóźnienia w torze cyfrowym, wynikającego z buforowania fragmentów,
+więc przykładowo, dla najniższego możliwego rozmiaru fragmentu $n_{f,min} = 8$
+ramek i dzielnika $M = 4$ otrzymuje się opóźnienie 2 ramek, czyli 64 bajtów w
+przypadku dwóch kanałów i próbek liczących 16 bitów. \par Proces przetwarzania,
+przedstawiony na rysunku \ref{sw::app_flow} można opisać następująco:
 \begin{enumerate}
-
-    \item Zebranie sygnałów $x(n)$ i $e(n)$ z mikrofonu referencyjnego i błędu.
-    Odczyt odbywa się z wykorzystaniem metod udostępnianych przez bibliotekę
-    \textit{libsc}, która wywołuje określone funkcje systemu ALSA poprzez
-    bibliotekę \textit{libasound}.
-
-    \item Obliczenie antyhałasu $y_{an}(n)$ zgodnie z zależnością \ref{eq::fir},
-    wykorzystując implementację filtracji modelem FIR biblioteki
-    \textit{libdsp}.
-
-    \item Jeżeli źródło hałasu jest symulowane, obliczenie kolejnego wektora
-    próbek $y_{n}(n)$ z wykorzystaniem generatorów sygnałów biblioteki
-    \textit{libsignal}.
-
-    \item Równoczesne zapisanie antyhałasu i hałasu (jeżeli źródło jest
-    symulowane) do karty dźwiekowej z wykorzystaniem  biblioteki \textit{libsc}.
-
-    \item Przefiltrowanie odczytanego sygnału $x(n)$ przez zidentyfikowaną
-    odpowiedź impulsową toru wtórnego $\hat{S}(z^{-1})$ zgodnie z zależnością
-    \ref{eq::fir} z wykorzystaniem biblioteki \textit{libdsp}.
-
-    \item Aktualizacja parametrów filtra adaptacyjnego $W(z^{-1})$ zgodnie z
-    zależnością \ref{eq::lms} wykorzystując implementację algorytmu LMS
-    biblioteki \textit{libdsp}.
-
+    \item Skalowanie (normalizacja) próbki $x(i)$ do zakresu $[-1, 1]$.
+    \item Wpisanie próbki $x(i)$ do bufora cyklicznego.
+    \item Filtracja danych w buforze cyklicznym przez adaptacyjny filtr
+    $W(z^{-1})$, otrzymując wynikowo sygnał $y(i)$, będacy sygnałem wyjściowym
+    trafiający na głośnik.
+    \item Filtracja danych w buforze cyklicznym przez filtr $S(z^{-1})$ będący
+    zidentyfikowaną odpowiedzią impulsową toru wtórnego i otrzymanie wynikowo
+    próbki $x'(i)$.
+    \item Wpisanie próbki $x'(i)$ do bufora cyklicznego.
+    \item Skalowanie (normalizacja) próbki $e(i)$ do zakresu $[-1, 1]$.
+    \item Aktualizacja wag filtra $W(z^{-1})$ zgodnie z algorytmem NLMS.
+    \item Skalowanie próbki wyjściowej $y(i)$ do zakresu 16 bitowego.
+    \item $M$ krotne podtrzymanie obliczonej próbki, w celu powrócenia do
+    częstotliwości pracy przetworników.
+    \item Zapisanie $M$ próbek $\textbf{y}(i)$ do bufora wyjściowego,
+    będacego obszarem w pamięci przekazywanym do sterownika jądra.
 \end{enumerate}
 
-Kroki 5 i 6 realizują algorytm FXLMS i mogą być wykonane przed krokiem 4. \\
-\par Inicjalizacja pętli ANC zaczyna się od konfiguracji rozszerzeń czasu
-rzeczywistego. Konfigurowany jest planista, któremu podaje się odpowiednią
-wytyczną oraz tworzony jest wątek, któremu nakłada się odpowiedni priorytet,
-gdzie dodatkowo można jawnie skonfigurować dziedziczenie priorytetów. W tak
-skonfigurowanym wątku uruchamiania jest pętla ANC. Ograniczeniem czasowym
-przetwarzania danych w pętli jest czas potrzebny na zbuforowanie fragmentu (lub
-fragmentów), którego rozmiar, wraz z częstotliwością próbkowania, jest
-parametrem konfiguracyjnym. Typowo, deklarując rozmiar bufora na dwa fragmenty,
-przerwanie informujące o możliwości odczytania/zapisania danych konfigurowane
-jest w taki sposób, aby wystąpiło w momencie odczytania/zapisania jednego
-fragmentu. Deklarując rozmiar odczytu/zapisu na pełen bufor, funkcja odblokuje
-się w momencie wystąpienia przerwania, gdzie pozostały fragment w buforze będzie
-odczytywany/zapisywany równolegle do działającej aplikacji. Takie działanie daje
-okno czasowe na realizację potrzebnych obliczeń, zapewniając ciągłość
-odtwarzanych danych.
+Schemat \ref{sw::app_flow} został wykonany w sposób mający na celu wizualizację
+przebiegu wykonywania obliczeń, które następują po sobie w odpowiedniej
+kolejności. Na czas przetwarzania nałożone jest istotne ograniczenie wynikające
+ze sposobu realizacji transferów. W celu minimalizacji latencji, \textbf{długość
+bufora została określona na dwa fragmenty}, więc bezpośrednio po odczycie
+pierwszego (generacji przerwania przez sterownik DMA, informującego o odczytanym
+fragmencie), wszystkie obliczenia muszą zamknąć się w czasie potrzebnym do
+zbuforowania kolejnego. Jeżeli czas zostanie przekroczony, pętla przetwarzania
+zostanie przerwana stanem \textit{buffer underrun}, informującym o zbyt późnym
+zapisie, ponieważ karty są ze sobą zsynchronizowane (operacje odczytu/zapisu
+buforów następują po sobie). Ograniczenia na czas przetwarzania implikują
+ograniczenia na złożoność obliczeń w pętli, przykładowo długości wykorzystanych
+filtrów. Przy odpowiednio długich filtrach może nastąpić sytuacja, w której
+obliczenia nie zamykają się w odpowiednim czasie. W takiej sytuacji, aby
+zapewnić ciągłość transferów, należy albo zmniejszyć długość filtrów, albo
+zwiększyć rozmiar fragmentu. Zwiekszenie rozmiaru fragmentu powoduje więcej
+czasu na przetwarzanie (dłuższy okres buforowania), ale również większe
+opóźnienia. Wpływ częstotliwości próbkowania, długości fragmentów oraz filtrów
+zostanie szerzej zbadany w sekcji badań, dlatego na tym etapie można stwierdzić,
+że parametr. \par Parametrami konfiguracyjnymi deklarowanymi przez użytkownika
+oprogramowania jest częstotliwość próbkowania $f_s$, krotność decymacji $M$
+(należy pamietać, żeby była adekwatna do $f_s$) długość filtrów $W(z^{-1})$ i
+$S(z^{-1})$, długość fragmentu $n_f$ oraz krok algorytmu NLMS $\alpha$. Poza
+parametrami numerycznymi, konfiguracji również podlega poziom priorytetu oraz
+wytyczna planisty procesu.
 

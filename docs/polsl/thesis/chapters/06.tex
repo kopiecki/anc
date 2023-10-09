@@ -54,7 +54,6 @@ problem, który nie wpływa drastycznie na pracę pozostałych sekcji, ponieważ
 zasilanie później jest filtrowane i stabilizowane przez liniowy regulator
 napięcia niskiego spadku. Pozostałe wartości mieszczą się w wyspecyfikowanych
 zakresach.
-% TODO DK: Dopisać w przypadku rozwikłanej zagadki 
 
 \subsection{Wyjściowe sekcje analogowe i przetworniki}
 
@@ -70,9 +69,9 @@ przedstawiono na rysunku \ref{ver::gain_out}:
 \end{figure}
 
 Przebieg zielony przedstawia wyjście, a żółty wejście wzmacniacza
-\ref{hw::gain_out}. Jak można zauważyć, wzmocnienie jest zawyżone, lecz mimo
-wszystko sygnał wejściowy o pełnym zakresie przetwornika nie powoduje saturacji
-i pozostawia bezpieczny zakres 2 V. \par Pomiary wejść i wyjść filtra
+\ref{hw::gain_out}. Jak można zauważyć, wzmocnienie dość dobrze pokrywa się z
+obliczoną teoretycznie wartością $k \approx 4$, nie powoduje saturacji i
+pozostawia bezpieczny zakres 2 V. \par Pomiary wejść i wyjść filtra
 \ref{hw::filt} dla wejściowych sinusów o częstotliwościach 100 Hz i 500 Hz oraz
 amplitudach równych połowie zakresu przetwornika przedstawiono na rysunkach
 \ref{ver::filter}:
@@ -131,8 +130,8 @@ bezpośrednio przy membranie w cichym pokoju.
 Przebieg zielony przedstawia wejście przetwornika analogowo-cyfrowego, a żółty
 wyjście wzmacniacza \ref{hw::op_diff}. Sygnał na wejściu przetwornika jest
 odpowiednio przesunięty o dodaną składową stałą, a w amplitudy obu sygnałów są
-takie same. Gęstość widmową mocy obliczoną metodą Welcha z oknem Hanna
-przedstawiono na rysunku \ref{ver::200hz_in_psd}:
+takie same. Gęstość widmową mocy obliczoną metodą Welcha z oknem Hanna dla $f_s
+= 8$ kHz przedstawiono na rysunku \ref{ver::200hz_in_psd}:
 
 \begin{figure}[H]
     \centering
@@ -161,7 +160,7 @@ wyjście wzmacniacza \ref{hw::op_diff}. Poza obserwacjami, które są analogiczn
 jak w punkcie wyżej, można zaobserwować, że filtr \ref{hw::filt} w tej sekcji
 zachowuje się zgodniej z obliczeniami. Tłumienie dla sygnału o częstotliwości
 granicznej wynosi około 3.22 dB. Gęstość widmową mocy obliczoną metodą Welcha z
-oknem Hanna przedstawiono na rysunku \ref{ver::500hz_in_psd}:
+oknem Hanna dla $f_s = 8$ kHz przedstawiono na rysunku \ref{ver::500hz_in_psd}:
 
 \begin{figure}[H]
     \centering
@@ -172,6 +171,59 @@ oknem Hanna przedstawiono na rysunku \ref{ver::500hz_in_psd}:
 
 Nagrany sinus jest mniejszej mocy niż na \ref{ver::500hz_in_psd}, a jego
 najbliższe harmoniczne mniej widoczne, co może być spodowowane kombinacją
-tłumienia filtra i wykorzystanym nagraniem.
+tłumienia filtra i jakością wykorzystanego nagrania.
 
-\section{Badania procesu ANC}
+\section{Weryfikacja części programowej}
+
+Sporządzony układ, stanowiący wykorzystane do badań stanowisko pomiarowe
+przedstawiono na rysunku \ref{ver::test_stage}:
+
+\subsection{Identyfikacja toru wtórnego}
+
+Aby zweryfikować teoretyczne założenie dotyczące długości opóźnienia 
+dla różnych czasów buforowań, identyfikację przeprowadzono
+dla rozmiarów fragmentów określonych
+\begin{equation}
+    n_f(i) = 8i \qquad \text{dla } i = 1, 2, 3
+\end{equation}
+
+Sygnałe wejściowe generowano za pomocą generatora \textit{xorshiro16++}, a
+eksperymenty przeprowadzano za pomocą metody korelacyjnej w pięciosekundowym
+oknie. Zidentyfikowane odpowiedzi impulsowe przedstawiono na rysunku
+\ref{ver::ident}:
+
+\subsection{Badania procesu ANC}
+
+Pomiary przeprowadzono na sygnałach wejściowych zdefiniowanych poniżej:
+\begin{enumerate}
+    \item Sinusoidy o częstotliwościach określonych zależnością:
+    \begin{equation}
+        f(i) = 100i \qquad \text{dla } \quad i = 1, 2, 3
+    \end{equation}
+    \item Sumy dwóch sygnałów sinusoidalnych o częstotliwościach 
+    \begin{equation}
+        f_0 = 120 \text{ Hz}, \qquad f_1 = 160 \text{ Hz}
+    \end{equation}
+    \item Sygnał losowy wygenerowany generatorem \textit{xoroshiro16++}
+\end{enumerate}
+
+Dla każdego sygnału starano utrzymać się nateżenie w okolicach 83 dB SPL, a
+pomiary wykonano w pięciosekundowym oknie. Z parametrów poddawanych ocenie
+wyróżniono:
+\begin{itemize}
+    \item Wielkość kroku adaptacji algorytmu NLMS $\alpha$
+    \item Długość filtrów $W(z^{-1})$ i $S(z^{-1})$
+    \item Długość fragmentu $n_f$
+    \item Częstotliwość próbkowania $f_s$
+    \item Poziom priorytetu i wytyczna planisty
+\end{itemize}
+
+Oceny poszczególnych wpływów realizowano dla stałych wartości pozostałych, co
+oznacza, że przykładowo badając wpływ wielkości kroku adaptacji, pozostałe
+parametry są stałe.
+
+\subsubsection{Wpływ wielkości kroku}
+\subsubsection{Wpływ długości filtrów}
+\subsubsection{Wpływ rozmiaru fragmentu}
+\subsubsection{Wpływ częstotliwości próbkowania}
+\subsubsection{Wpływ rozszerzeń czasu rzeczywistego}

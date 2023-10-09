@@ -96,10 +96,17 @@
 \contentsline {subsection}{\numberline {6.1.1}Sekcja zasilania}{78}{subsection.6.1.1}%
 \contentsline {subsection}{\numberline {6.1.2}Wyjściowe sekcje analogowe i przetworniki}{78}{subsection.6.1.2}%
 \contentsline {subsection}{\numberline {6.1.3}Wejściowe sekcje analogowe i przetworniki}{80}{subsection.6.1.3}%
-\contentsline {section}{\numberline {6.2}Badania procesu ANC}{82}{section.6.2}%
-\contentsline {chapter}{\numberline {7}Podsumowanie}{83}{chapter.7}%
-\contentsline {chapter}{Bibliografia}{87}{chapter*.96}%
-\contentsline {chapter}{Spis skrótów i symboli}{91}{appendix*.97}%
+\contentsline {section}{\numberline {6.2}Weryfikacja części programowej}{82}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Identyfikacja toru wtórnego}{82}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Badania procesu ANC}{83}{subsection.6.2.2}%
+\contentsline {subsubsection}{Wpływ wielkości kroku}{83}{section*.96}%
+\contentsline {subsubsection}{Wpływ długości filtrów}{83}{section*.97}%
+\contentsline {subsubsection}{Wpływ rozmiaru fragmentu}{83}{section*.98}%
+\contentsline {subsubsection}{Wpływ częstotliwości próbkowania}{83}{section*.99}%
+\contentsline {subsubsection}{Wpływ rozszerzeń czasu rzeczywistego}{83}{section*.100}%
+\contentsline {chapter}{\numberline {7}Podsumowanie}{85}{chapter.7}%
+\contentsline {chapter}{Bibliografia}{89}{chapter*.101}%
+\contentsline {chapter}{Spis skrótów i symboli}{93}{appendix*.102}%
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
@@ -134,6 +141,6 @@
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
-\contentsline {chapter}{Pliki uzupełniające}{93}{appendix*.98}%
-\contentsline {chapter}{Spis rysunków}{97}{appendix*.99}%
-\contentsline {chapter}{Spis tabel}{99}{appendix*.100}%
+\contentsline {chapter}{Pliki uzupełniające}{95}{appendix*.103}%
+\contentsline {chapter}{Spis rysunków}{99}{appendix*.104}%
+\contentsline {chapter}{Spis tabel}{99}{appendix*.105}%
