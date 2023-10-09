@@ -706,3 +706,70 @@ istnieje podejrzenie że tak się stało, to proces identyfikacji należy powtó
 W przeciwnym wypadku, adaptacja będzie przebiegała gorzej, a system spełniał
 swoje zadanie mniej efektywnie. Typowo, proces identyfikacji toru wtórnego
 realizuje się w procesie inicjalizującym, na początku działania systemu.
+
+\subsection{Neutralizacja sprzężenia - możliwe usprawnienie}
+Jak wspominano wcześniej, częstą przyczyną destabilizacji układów ANC może być
+wpływ generowanego antyhałasu na mierzony sygnał referencyjny, który
+interferując z hałasem pierwotnym, zaburza pomiar wejścia. Taka sytuacja
+powoduje pojawienie się dodatkowej pętli sprzężenia zwrotnego, którą
+uwzględniono na rysunku \ref{analysis::feedback}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.64\textwidth]{graf/analysis/feedback.png}
+    \caption{Schemat systemu ANC z uwzględnieniem dodatkowego sprzężenia}
+    \label{analysis::feedback}
+\end{figure}
+
+Transmitancja $F(z^{-1})$, podobnie jak $S(z^{-1})$ znajduje się na pograniczu
+domen sygnałowych, ponieważ składają się na nią układy elektroniczne, jak i
+droga akustyczna, którą propaguje się antyhałas docierając do mikrofonu
+referencyjnego. Istnienie $F(z^{-1})$ może spowodować niestacjonarność sygnału
+$x(n)$ podczas adaptacji filtra $W(z^{-1})$, co z kolei może zdestabilizować
+system. Jedną z najprostszych metod niwelacji powstałego sprzężenia jest
+zastosowanie dodatkowego filtra, kompensującego jego wpływ na sygnał $x(n)$.
+Taki objekt przyjęło się nazywać filtrem neutralizującym \cite{bib:kuo_morgan} i 
+zaktualizowany z jego uwzględnieniem schemat przedstawiono na rysunku
+\ref{analysis::feed_canc}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{graf/analysis/feed_canc.png}
+    \caption{Schemat systemu ANC z niwelacją sprzężenia}
+    \label{analysis::feed_canc}
+\end{figure}
+
+Transmitancja $\hat{F}(z^{-1})$, analogicznie jak $\hat{S}(z^{-1})$, stanowi
+zidentyfikowany obiekt $F(z^{-1})$. Jeżeli $F(z^{-1}) = \hat{F}(z^{-1})$, to
+wpływ sprzężenia pozostaje całkowicie zneutralizowany. Sygnał $x(n)$ wchodzący
+na wejście filtra $\hat{S}(z^{-1})$ przyjmuje postać
+\begin{equation}
+    x(n) = u(n) - \sum_{m = 0}^{M - 1}\hat{f_m}y(n - m - 1)
+\end{equation}
+
+gdzie $u(n)$ jest nowo oznaczonym sygnałem referencyjnym, $M$ jest długością
+zidentyfikowanego filtra $\hat{F}(z^{-1})$, a $\hat{f}_m$ jego zidentyfikowaną
+odpowiedzią impulsową. Należy zauważyć, że w schemacie wprowadzono dodatkowe
+opóźnienie o jedną próbkę przed blokiem zidentyfikowanego toru sprzężenia. Jest
+to spowodowane faktem, że w czasie kiedy system zbiera próbkę sygnału
+referencyjnego zaznaczonego na schemacie jako $u(n)$, to wyjście filtra
+$W(z^{-1})$ nie jest jeszcze obliczone. \par Transmitancję $F(z^{-1})$ można
+identyfikować w operciu o te same metody co $S(z^{-1})$. Schemat eksperymentu
+identyfikacji przyjmuje w tym przypadku postać jak na rysunku
+\ref{analysis::feedback_ident}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graf/analysis/feedback_ident.png}
+    \caption{Identyfikacja sprzężenia}
+    \label{analysis::feedback_ident}
+\end{figure}
+
+Sprzężenie można również niwelować fizycznie, ustawiając głośniki i mikrofony w
+odpowednich odstępach i kierunkach, tak, aby jak najmniej na siebie wpływały, co
+autor wykonał w fizycznej implemetancji projektowanego układu. W późniejszych
+badaniach nie zauważono znaczących wpływów sprzężenia na stabilność i jakość
+tłumienia, dlatego programową niwelację sprzężenia potraktowano na tym etapie
+jako dodatek i możliwe usprawnienie w sytuacji, kiedy projekt będzie rozwijany w
+przyszłości.
+
