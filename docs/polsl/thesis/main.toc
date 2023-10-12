@@ -100,14 +100,14 @@
 \contentsline {section}{\numberline {6.2}Weryfikacja części programowej}{84}{section.6.2}%
 \contentsline {subsection}{\numberline {6.2.1}Identyfikacja toru wtórnego}{84}{subsection.6.2.1}%
 \contentsline {subsection}{\numberline {6.2.2}Badania procesu ANC}{85}{subsection.6.2.2}%
-\contentsline {subsubsection}{Wpływ wielkości kroku}{85}{section*.99}%
-\contentsline {subsubsection}{Wpływ długości filtrów}{85}{section*.100}%
-\contentsline {subsubsection}{Wpływ rozmiaru fragmentu}{85}{section*.101}%
-\contentsline {subsubsection}{Wpływ częstotliwości próbkowania}{85}{section*.102}%
-\contentsline {subsubsection}{Wpływ rozszerzeń czasu rzeczywistego}{85}{section*.103}%
+\contentsline {subsubsection}{Wpływ wielkości kroku}{86}{section*.101}%
+\contentsline {subsubsection}{Wpływ długości filtrów}{86}{section*.102}%
+\contentsline {subsubsection}{Wpływ rozmiaru fragmentu}{86}{section*.103}%
+\contentsline {subsubsection}{Wpływ częstotliwości próbkowania}{86}{section*.104}%
+\contentsline {subsubsection}{Wpływ rozszerzeń czasu rzeczywistego}{86}{section*.105}%
 \contentsline {chapter}{\numberline {7}Podsumowanie}{87}{chapter.7}%
-\contentsline {chapter}{Bibliografia}{91}{chapter*.104}%
-\contentsline {chapter}{Spis skrótów i symboli}{95}{appendix*.105}%
+\contentsline {chapter}{Bibliografia}{91}{chapter*.106}%
+\contentsline {chapter}{Spis skrótów i symboli}{95}{appendix*.107}%
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
@@ -142,6 +142,6 @@
 \babel@toc {polish}{}\relax 
 \babel@toc {british}{}\relax 
 \babel@toc {polish}{}\relax 
-\contentsline {chapter}{Pliki uzupełniające}{97}{appendix*.106}%
-\contentsline {chapter}{Spis rysunków}{101}{appendix*.107}%
-\contentsline {chapter}{Spis tabel}{103}{appendix*.108}%
+\contentsline {chapter}{Pliki uzupełniające}{97}{appendix*.108}%
+\contentsline {chapter}{Spis rysunków}{101}{appendix*.109}%
+\contentsline {chapter}{Spis tabel}{103}{appendix*.110}%

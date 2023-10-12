@@ -180,17 +180,34 @@ przedstawiono na rysunku \ref{ver::test_stage}:
 
 \subsection{Identyfikacja toru wtórnego}
 
-Aby zweryfikować teoretyczne założenie dotyczące długości opóźnienia 
-dla różnych czasów buforowań, identyfikację przeprowadzono
-dla rozmiarów fragmentów określonych
-\begin{equation}
-    n_f(i) = 8i \qquad \text{dla } i = 1, 2, 3
-\end{equation}
-
-Sygnałe wejściowe generowano za pomocą generatora \textit{xorshiro16++}, a
+Aby zweryfikować wpływ rozmiaru fragmentów na długość opóźnienia, identyfikację
+przeprowadzono dla $n_f = 8$ i $n_f = 24$, a następnie $n_f = 64$ i $n_f = 128$.
+Sygnały wejściowe wygenerowano za pomocą generatora \textit{xorshiro16++}, a
 eksperymenty przeprowadzano za pomocą metody korelacyjnej w pięciosekundowym
-oknie. Zidentyfikowane odpowiedzi impulsowe przedstawiono na rysunku
-\ref{ver::ident}:
+oknie. Zidentyfikowane odpowiedzi impulsowe ograniczone do dwustu wartości dla
+pierwszej pary oraz trzystu wartości dla drugiej przedstawiono na rysunkach
+\ref{ver::ident_0} i \ref{ver::ident_1}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graf/verification/ident_0.png}
+    \caption{Zidentyfikowana odpowiedź impulsowa - wpływ długości fragmentów 1}
+    \label{ver::ident_0}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graf/verification/ident_1.png}
+    \caption{Zidentyfikowana odpowiedź impulsowa - wpływ długości fragmentów 2}
+    \label{ver::ident_1}
+\end{figure}
+
+Jak można zauważyć z \ref{ver::ident_0} i \ref{ver::ident_1}, buforowanie
+(długość fragmentu) wpływa na zidentyfikowaną odpowiedź impulsową, opóźniając ją
+o ilość próbek równą długości fragmentu. Poza opóźnieniem wynikającym z
+buforowania, na przebiegu odpowiedzi impulsowej można zaobserwować wpływ torów
+analogowych, objawiający się dodatkowym opóźnieniem, wynikającym głównie z
+filtracji.
 
 \subsection{Badania procesu ANC}
 

@@ -289,24 +289,22 @@ void ident(char* buffer, int r)
 
         uint16_t* r_samples = (uint16_t*)buffer;
 
-        for (int i = 0; i < r; i += 4) {
-                if (init) {
-                        const uint16_t e = r_samples[i * channels + 0] << 4;
-                        const uint16_t x = r_samples[i * channels + 1] << 4;
+        for (int i = 0; i < r; i += 1) {
+                const uint16_t e = r_samples[i * channels + 0] << 4;
+                const uint16_t x = r_samples[i * channels + 1] << 4;
 
-                        error_buffer[cnt] = normalize(e);
-                        x_buffer[cnt]     = normalize(x);
-                }
+                error_buffer[cnt] = normalize(e);
+                x_buffer[cnt]     = normalize(x);
 
                 uint16_t y          = prng_xorshift();
                 noise_buffer[cnt++] = normalize(y);
 
-                unsigned dec_cnt = 4;
+                unsigned dec_cnt = 1;
                 while (dec_cnt--) {
                         for (int j = 0; j < bps; j++)
                                 *(samples[0] + j) = (y >> j * 8) & 0xff;
                         samples[0] += steps[0];
-                        y = signal_generate(&white_noise, NULL, 0);
+                        y = prng_xorshift();
                 }
         }
 
@@ -997,22 +995,6 @@ int main(int argc, char* argv[])
                 return 0;
         }
 
-        /* initialize the filter sweep variables */
-        if (effect) {
-                fs = (float)rate;
-                BW = FILTER_BANDWIDTH;
-
-                lfo  = 0;
-                dlfo = 2. * M_PI * FILTERSWEEP_LFO_FREQ / fs;
-
-                x[0] = (float*)malloc(channels * sizeof(float));
-                x[1] = (float*)malloc(channels * sizeof(float));
-                x[2] = (float*)malloc(channels * sizeof(float));
-                y[0] = (float*)malloc(channels * sizeof(float));
-                y[1] = (float*)malloc(channels * sizeof(float));
-                y[2] = (float*)malloc(channels * sizeof(float));
-        }
-
         cap_avail_max = 0;
         pbk_fill_min  = latency * 2;
 
@@ -1137,13 +1119,13 @@ int main(int argc, char* argv[])
                                                cap_avail_max);
                                 }
                         }
+                        init = 1;
                         if ((r = readbuf(
                                      chandle, buffer, cap_avail, &frames_in, &in_max))
                             < 0)
                                 ok = 0;
                         else {
-                                if (effect)
-                                        anc(buffer, r);
+                                ident(buffer, r);
                                 if (writebuf(phandle, buffer, r, &frames_out) < 0)
                                         ok = 0;
                         }

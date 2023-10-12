@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  10 OCT 2023 01:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  12 OCT 2023 23:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2775,8 +2775,27 @@ Package pdftex.def Info: graf/verification/500hz_psd_in.png  used on input line
 LaTeX Warning: Reference `ver::test_stage' on page 84 undefined on input line 1
 79.
 
+<graf/verification/ident_0.png, id=1535, 2592.68625pt x 1312.15219pt>
+File: graf/verification/ident_0.png Graphic file (type png)
+<use graf/verification/ident_0.png>
+Package pdftex.def Info: graf/verification/ident_0.png  used on input line 193.
 
-LaTeX Warning: Reference `ver::ident' on page 84 undefined on input line 193.
+(pdftex.def)             Requested size: 455.24411pt x 230.3909pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[84 <./graf/verification/500hz_psd_in.png (PNG copy)>]
+<graf/verification/ident_1.png, id=1543, 2543.75343pt x 1306.12968pt>
+File: graf/verification/ident_1.png Graphic file (type png)
+<use graf/verification/ident_1.png>
+Package pdftex.def Info: graf/verification/ident_1.png  used on input line 200.
+
+(pdftex.def)             Requested size: 455.24411pt x 233.73796pt.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2786,7 +2805,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[84 <./graf/verification/500hz_psd_in.png (PNG copy)>]) (./chapters/07.tex
+[85 <./graf/verification/ident_0.png (PNG copy)> <./graf/verification/ident_1.p
+ng (PNG copy)>]) (./chapters/07.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -2795,20 +2815,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[85]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[86
+[86]
+Rozdzia\l  7.
+) [87
 
 ]
-Rozdzia\l  7.
-) [87]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -2968,16 +2979,16 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 8C4526E25C070D413B85B1D30CEA2B23;14569.
+(rerunfilecheck)             Checksum: D415E48DCBD92330615A3939F4D9578F;14569.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46873 strings out of 480139
- 1025645 string characters out of 5893693
- 1765256 words of memory out of 5000000
- 63421 multiletter control sequences out of 15000+600000
+ 46889 strings out of 480139
+ 1026115 string characters out of 5893693
+ 1765469 words of memory out of 5000000
+ 63434 multiletter control sequences out of 15000+600000
  559146 words of font info for 73 fonts, out of 8000000 for 9000
  79 hyphenation exceptions out of 8191
  89i,12n,92p,1916b,3460s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2997,10 +3008,10 @@ mf/fonts/type1/public/lm/lmri8.pfb></usr/share/texmf/fonts/type1/public/lm/lmss
 onts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.p
 fb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmtt12.pfb>
-Output written on main.pdf (111 pages, 5459600 bytes).
+Output written on main.pdf (111 pages, 5797350 bytes).
 PDF statistics:
- 1971 PDF objects out of 2073 (max. 8388607)
- 1680 compressed objects within 17 object streams
- 555 named destinations out of 1000 (max. 500000)
- 1068 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1980 PDF objects out of 2073 (max. 8388607)
+ 1687 compressed objects within 17 object streams
+ 556 named destinations out of 1000 (max. 500000)
+ 1078 words of extra memory for PDF output out of 10000 (max. 10000000)
 

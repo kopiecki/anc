@@ -11,7 +11,7 @@
 int file_helpers_write_buf(
         const char* name,
         char delimiter,
-        const uint16_t* const buffer,
+        const float* const buffer,
         size_t size,
         bool append)
 {
@@ -21,14 +21,14 @@ int file_helpers_write_buf(
         }
 
         for (size_t i = 0u; i < size; i++)
-                fprintf(file, "%d%c", buffer[i], delimiter);
+                fprintf(file, "%f%c", buffer[i], delimiter);
         if (delimiter != '\n')
                 fprintf(file, "%c", '\n');
 
         return fclose(file);
 }
 
-int file_helpers_read_buf(const char* name, uint16_t* const buffer)
+int file_helpers_read_buf(const char* name, float* const buffer)
 {
         FILE* file = fopen(name, "r");
         if (file == NULL)
@@ -37,7 +37,7 @@ int file_helpers_read_buf(const char* name, uint16_t* const buffer)
         char* line = NULL;
         size_t size, i = 0u;
         while ((getline(&line, &size, file)) > 0)
-                sscanf(line, "%d", &buffer[i++]);
+                sscanf(line, "%f", &buffer[i++]);
 
         return (int)i;
 }
