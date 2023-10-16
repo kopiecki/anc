@@ -52,7 +52,7 @@ static inline float signal_noise_calc(struct signal* const self)
         return (rand() % (upper - lower + 1)) + lower;
 }
 
-static uint16_t signal_generator_template(
+static float signal_generator_template(
         struct signal* const self,
         float (*calculation)(struct signal* const self),
         uint16_t* const buffer,
@@ -76,36 +76,31 @@ static float (*signal_calculators[])(struct signal* const self) = {
         signal_noise_calc,
 };
 
-uint16_t signal_generate(
+float signal_generate(
         struct signal* const self, uint16_t* const buffer, size_t size)
 {
         return signal_generator_template(
                 self, signal_calculators[self->type], buffer, size);
 }
 
-void signal_generate_sum(
+float signal_generate_sum(
         struct signal* signals[], uint8_t num_of_signals, float* buffer, size_t size)
 {
         float max = 1;
         float min = -1;
 
-        for (size_t i = 0u; i < size; i++) {
-                uint16_t y = 0;
-                for (uint8_t j = 0u; j < num_of_signals; ++j) {
-                        y += signal_generator_template(
-                                signals[j],
-                                signal_calculators[signals[j]->type],
-                                NULL,
-                                1u);
-                }
-
-                if (y > max)
-                        max = y;
-                else if (y < min)
-                        min = y;
-
-                buffer[i] = signal_normalize(y, min, max);
+        uint16_t y = 0;
+        for (uint8_t j = 0u; j < num_of_signals; ++j) {
+                y += signal_generator_template(
+                        signals[j], signal_calculators[signals[j]->type], NULL, 1u);
         }
+
+        if (y > max)
+                max = y;
+        else if (y < min)
+                min = y;
+
+        return signal_normalize(y, min, max);
 }
 
 void signal_initialize_noise(void)

@@ -543,11 +543,11 @@ buforze cyklicznym sterownika. W przypadku zapiywania danych, może dojść do
 sytuacji odwrotnej, czyli bufor cykliczny całkowicie się opróżni, kiedy dane nie
 są odpowiednio szybko wysyłane. Opisywane sytuacje odpowiednio przyjęło się
 nazywać \textit{buffer overrun} i \textit{buffer underrun} i ich pojawienie się
-zazwyczaj skutkuje przerwami w nagraniach/odtworzeniach. \par Ważną kwestią
-związaną z przetwarzaniem sygnałów audio jest latencja, która w tym kontekście
-informuje o czasie, który jest potrzebny na przetworzenie danych w systemie od
-momentu ich wprowadzenia do momentu ich wypuszczenia. W nomenklaturze systemu
-ALSA, zdefiniowana jest zależnością
+zazwyczaj skutkuje przerwami w nagraniach/odtworzeniach. \par Bardzo znaczącą
+kwestią związaną z przetwarzaniem sygnałów audio jest latencja, która w
+omawianym kontekście informuje o czasie, który jest potrzebny na przetworzenie
+danych w systemie od momentu ich wprowadzenia do momentu ich wypuszczenia. W
+nomenklaturze systemu ALSA, zdefiniowana jest zależnością
 \begin{equation}
     T_L = \frac{n_fL_{fb}}{f_sL_{sb}}
     \label{eq::alsa_latency}
@@ -564,25 +564,20 @@ bajtów. Deklarując rozmiar bufora na dwa fragmenty $n_f = 2$, wynikowo otrzymu
 się latencję $T_L = 93$ ms. Latencja dla stałego rozmiaru próbki jest więc
 odwrotnie proporcjonalna do częstotliwości próbkowania i proporcjonalna do
 rozmiaru bufora. \par Ze zmniejszaniem latencji wiąże się szereg problemów.
-Deklarując coraz to mniejsze rozmiary fragmentów, zwiększa się ilość przerwań na
-transfery próbek, co powoduje zwiększenie zużycia procesora, zmniejszając
-responsywność pozostałych aplikacji działających w systemie. Minimalny rozmiar
-fragmentu zdefiniowany jest w sterownikach jądra obsługujących interfejsy
-cyfrowe komunikujace się ze wspierającymi je kartami dźwiekowymi i dla McASP
-wynosi on \textbf{64 ramek}. Analogicznie zdefiniowane są dostępne
-częstotliwości próbkowania, które dla wykorzystywanego protokołu wynoszą
-\textbf{minimalnie 8 kHz i maksymalnie 192 kHz}. Projektując system ANC wymagana
-jest minimalizacja opóźnień w torach przetwarzania, dlatego w celu uzyskania jak
-najmniejszej latencji porządane jest, aby przy odpowiednio dobranej
-częstotliwości próbkowania długość fragmentu była jak najmniejsza. W tym celu,
-autor lekko zmodyfikował kody źródłowe sterowników McASP, zmieniając definicję
-minimalnej długości fragmentów do \textbf{8 ramek}. Powodem, dla którego
-przyjęto taką wartość jest ograniczenie nakładane przez sterownik DMA
-realizujący transfery pomiędzy przestrzeniami jądra, a użytkownika i jego
-minimalną długość trasferu, wynoszącą 64 bajtów (ramka składająca się z dwóch 16
-bitowych próbek ma również 64 bajty). Ograniczenia nakładane na częstotliwości
-próbkowania pozostawiono bez zmian.
-
+Deklarując coraz to mniejsze rozmiary fragmentów i większe częstotliwości
+próbkowania, zwiększa się ilość przerwań na transfery próbek, co powoduje
+zwiększenie zużycia procesora, zmniejszając responsywność pozostałych aplikacji
+działających w systemie. Dodatkowo, okno czasowe pozwalające na wykonanie
+obliczeń w pętli przetwarzania skraca się, ponieważ czas potrzebny na
+zbuforowanie fragmentu jest krótszy. Minimalny rozmiar fragmentu zdefiniowany
+jest w sterownikach jądra obsługujących interfejsy cyfrowe komunikujace się ze
+wspierającymi je kartami dźwiekowymi i dla McASP wynosi on \textbf{32 ramek}.
+Analogicznie zdefiniowane są dostępne częstotliwości próbkowania, które dla
+wykorzystywanego protokołu wynoszą \textbf{minimalnie 8 kHz i maksymalnie 192
+kHz}. Projektując system ANC wymagana jest minimalizacja opóźnień w torach
+przetwarzania, dlatego w tym celu porządane jest, aby rozmiaru fragmentu i
+częstotliwości próbkowania dobrać w sposób zapewniający jak najniższą latencję,
+ale również pozwalający na zdążenie z wykonaniem przetwarzania.
 \section{Biblioteki użytkownika}
 
 \subsection{Biblioteka \textit{libdsp}}
@@ -610,13 +605,13 @@ wykorzystaniem koprocesora SIMD przedstawiono na rysunkach \ref{sw::simd}:
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
-        \includegraphics[width=0.6\textwidth]{graf/sw/non_simd.png}
+        \includegraphics[width=0.8\textwidth]{graf/sw/non_simd.png}
         \caption{Operacja wektorowa bez SIMD}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
-        \includegraphics[width=0.75\textwidth]{graf/sw/simd.png}
+        \includegraphics[width=0.9\textwidth]{graf/sw/simd.png}
         \caption{Operacja wektorowa z SIMD}
     \end{subfigure}
         \caption{Porównanie operacji wektorowych}
@@ -721,15 +716,14 @@ podzbiór, ze względu na wykorzystywane operacje, przyjęło się nazywać
 generatorami \textit{xorshift} i cieszą się one wysokim uznaniem w literaturze
 \cite{bib:prng} ze względu na niskie zużycie zasobów do wykonania obliczeń oraz
 dużą losowość, weryfikowaną na podstawie testów statystycznych z biblioteki
-TestU01. 
-\par W bibliotece \textit{libsignal} zdecydowano się na implementację 16
-bitowego generatora \textit{xoroshiro16++}, działającego z wykorzystaniem
+TestU01. \par W bibliotece \textit{libsignal} zdecydowano się na implementację
+16 bitowego generatora \textit{xoroshiro16++}, działającego z wykorzystaniem
 kombinacji alternatywy rozłącznej, rotacji, przesunięcie bitowego i rotacji,
 gdzie wyjście jest dodatkowo poddawane transformacji nieliniowej z
 wykorzystaniem dodawania. Generator przechodzi wszystkie testy statystycznej
-losowości ze zbioru TestU01, a jego funkcję autokorelacji i gęstość widmową mocy
-obliczoną z wykorzystaniem metody Welch'a dla $N = 16382$ próbek przedstawiono na
-rysunku \ref{sw::prng_psd}:
+losowości ze zbioru TestU01, a jego znormalziowaną funkcję autokorelacji i
+gęstość widmową mocy obliczoną z wykorzystaniem metody Welch'a dla $N = 16382$
+próbek przedstawiono na rysunku \ref{sw::prng_psd}:
 
 \begin{figure}[H]
     \centering

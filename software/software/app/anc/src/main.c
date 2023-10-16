@@ -1,33 +1,3 @@
-/*
- *  Latency test program
- *
- *     Author: Jaroslav Kysela <perex@perex.cz>
- *
- *     Author of bandpass filter sweep effect:
- *	       Maarten de Boer <mdeboer@iua.upf.es>
- *
- *  This small demo program can be used for measuring latency between
- *  capture and playback. This latency is measured from driver (diff when
- *  playback and capture was started). Scheduler is set to SCHED_RR.
- *
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- *USA
- *
- */
-
 #include <errno.h>
 #include <getopt.h>
 #include <math.h>
@@ -64,8 +34,8 @@ char* cdevice           = "hw:0,0";
 snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
 int rate                = 22050;
 int channels            = 2;
-int buffer_size         = 0;    /* auto */
-int period_size         = 0;    /* auto */
+int buffer_size         = 0;
+int period_size         = 0;
 int latency_min         = 32;   /* in frames / 2 */
 int latency_max         = 2048; /* in frames / 2 */
 int loop_sec            = 30;   /* seconds */
@@ -88,110 +58,54 @@ static size_t cnt                      = 0;
 static bool init                       = 0;
 snd_pcm_channel_area_t* areas;
 
-#define FIFO_SIZE (1 << 24u)
+#define FIFO_SIZE (1 << 16)
 static struct circ_fifo x_fifo, fx_fifo;
 
-#define PRIMARY_ORDER 124u
+#define PRIMARY_ORDER 128
 static float primary_w[PRIMARY_ORDER] = {0u};
 
-#define SECONDARY_ORDER (60)
+#define SECONDARY_ORDER (64)
 static float secondary_w[] = {
-        5.385724848310277646e-03,  3.101870702836740257e-03,
-        -1.077019633825816291e-03, -2.266822236866447831e-03,
-        -4.690822821854922532e-03, -8.524576448472103926e-03,
-        -6.187959381275889154e-03, 1.706913165211359140e-03,
-        4.900860847600583409e-03,  7.534780665903634570e-04,
-        -1.133965695747724640e-03, 3.256921532855976652e-03,
-        6.630987236161364415e-03,  1.838533135897459786e-02,
-        5.180880561365763110e-02,  5.051887917111830967e-02,
-        -3.818279708369756720e-02, -1.256173534279129422e-01,
-        -1.006044556135156504e-01, -1.052669704988149282e-02,
-        3.183064945363811571e-02,  1.988925057837438726e-02,
-        1.309386304258209482e-02,  2.440340390509575241e-02,
-        3.049620861179961478e-02,  3.146441595230090038e-02,
-        3.909890646479651649e-02,  4.405936869243948922e-02,
-        3.509471705778596101e-02,  1.943878219639954413e-02,
-        5.319333777364381941e-03,  -7.555965963449269573e-03,
-        -1.645095911592946852e-02, -1.771943445948450518e-02,
-        -1.672819423355558985e-02, -2.118784552813607683e-02,
-        -2.951847315005206099e-02, -3.313605938937500689e-02,
-        -2.937505851014457145e-02, -2.208861874187805982e-02,
-        -1.445861577297363407e-02, -7.469257958799425251e-03,
-        -3.816453973895580533e-03, -6.282254911589880107e-03,
-        -1.017878315179856878e-02, -4.801394836693878738e-03,
-        1.054440618599228330e-02,  2.264940865325961589e-02,
-        2.328886593150069836e-02,  1.912935021089515880e-02,
-        1.685958222139336340e-02,  1.446366655904479659e-02,
-        9.043179429676187139e-03,  2.897542016119879216e-03,
-        -5.767735517960037887e-04, -1.995688790553199529e-03,
-        -1.909243100033610006e-03, 6.056296134159896592e-04,
-        4.831186444712284693e-03,  6.694355156303927190e-03,
+        -3.904347372680037507e-04, -6.192878168980888278e-04,
+        -2.552233479961603553e-03, -2.531947662310832584e-03,
+        1.109862504397741327e-03,  2.852419714877457279e-03,
+        3.283971444998644599e-04,  -2.415276083383730097e-03,
+        -2.854829929979355811e-03, -3.124732482318026520e-03,
+        -3.243248041526515090e-03, -1.436559362207794587e-03,
+        6.126339785817249556e-03,  3.162024252589732548e-02,
+        7.003094733321542364e-02,  5.236998131128845629e-02,
+        -5.581983432253975752e-02, -1.452167751365895099e-01,
+        -1.108116916125592849e-01, -1.373330920920329441e-02,
+        3.175557450035244172e-02,  2.110230880769686443e-02,
+        1.567235696030271075e-02,  3.193712153312294050e-02,
+        4.461614195845725606e-02,  4.407956116378725087e-02,
+        4.010439600318575076e-02,  3.449281221139748055e-02,
+        2.489527163213290165e-02,  1.228659196095667309e-02,
+        -1.870168873682312221e-03, -1.211153131092565678e-02,
+        -1.293170598370599854e-02, -9.648245620481084653e-03,
+        -1.152028870740258622e-02, -1.862383547231319381e-02,
+        -2.519647284978277293e-02, -2.713530793372702019e-02,
+        -2.332994605389321005e-02, -1.671448510652268765e-02,
+        -1.100041992558333827e-02, -6.878523863843527195e-03,
+        -6.211471277369920094e-03, -9.829841601437277337e-03,
+        -9.271059332512121900e-03, 2.772189020478061944e-03,
+        1.636652582627808050e-02,  1.718972140358976386e-02,
+        9.120876061592366607e-03,  4.751704343863791431e-03,
+        5.649623944221474764e-03,  4.682878053070878982e-03,
+        -1.082380336541661050e-03, -4.367307381428502458e-03,
+        1.069504058640105343e-03,  1.022056057794891101e-02,
+        1.248450536912641164e-02,  7.001989638006430802e-03,
+        1.858540552801294645e-03,  2.872623266055876479e-03,
+        6.230063560174561345e-03,  6.066955512263962763e-03,
+        4.199478679197191089e-03,  4.339415838667845353e-03,
 };
 
-#define LMS_STEP 0.001
-
-static struct signal sine_200hz = {
-        .amplitude          = UINT16_MAX,
-        .frequency          = 200.0,
-        .sampling_frequency = 8000 / 4,
-        .type               = SIGNAL_TYPE_SINE,
-        .phase              = 0,
-};
-
-static struct signal white_noise = {
-        .amplitude          = UINT16_MAX,
-        .frequency          = 200.0,
-        .sampling_frequency = 8000 / 4,
-        .type               = SIGNAL_TYPE_NOISE,
-        .phase              = 0,
-};
+#define LMS_STEP 1
+#define GAIN     UINT16_MAX
 
 static inline uint16_t to_u16(float sample)
 {
-        return (sample * INT16_MAX) + INT16_MAX;
-}
-
-static void generate_sine(snd_pcm_uframes_t offset, int count, double* _phase)
-{
-        unsigned char* samples[channels];
-        int steps[channels];
-        int format_bits     = snd_pcm_format_width(format);
-        unsigned int maxval = (1 << (format_bits - 1)) - 1;
-        int bps             = format_bits / 8; /* bytes per sample */
-        int phys_bps        = snd_pcm_format_physical_width(format) / 8;
-
-        /* verify and prepare the contents of areas */
-        for (int chn = 0; chn < channels; chn++) {
-                if ((areas[chn].first % 8) != 0) {
-                        printf("areas[%u].first == %u, aborting...\n",
-                               chn,
-                               areas[chn].first);
-                        exit(EXIT_FAILURE);
-                }
-                samples[chn] = /*(signed short *)*/ (
-                        ((unsigned char*)areas[chn].addr)
-                        + (areas[chn].first / 8));
-                if ((areas[chn].step % 16) != 0) {
-                        printf("areas[%u].step == %u, aborting...\n",
-                               chn,
-                               areas[chn].step);
-                        exit(EXIT_FAILURE);
-                }
-                steps[chn] = areas[chn].step / 8;
-                samples[chn] += offset * steps[chn];
-        }
-        /* fill the channel areas */
-        while (count-- > 0) {
-                uint16_t res = signal_generate(&sine_200hz, NULL, 0);
-                for (int chn = 0; chn < channels; chn++) {
-                        if (chn == 0) {
-                                for (int i = 0; i < bps; i++)
-                                        *(samples[chn] + i) =
-                                                (res >> i * 8) & 0xff;
-                                samples[chn] += steps[chn];
-                        }
-                }
-        }
+        return (sample * GAIN) + UINT16_MAX / 2;
 }
 
 static inline float normalize(uint16_t sample)
@@ -246,18 +160,20 @@ void anc(char* buffer, int r)
                         dsp_fir(&x_fifo, secondary_w, SECONDARY_ORDER, 0);
                 circ_fifo_write(&fx_fifo, fx);
 
-                dsp_lms(primary_w, e_n, LMS_STEP, &fx_fifo, PRIMARY_ORDER, 0);
-
-                unsigned dec_cnt = 4;
-                while (dec_cnt--) {
-                        const uint16_t y_dac = to_u16(y);
-                        for (int i = 0; i < bps; i++)
-                                *(samples[0] + i) = (y_dac >> i * 8) & 0xff;
-                        samples[0] += steps[0];
+                if (init) {
+                        dsp_nlms(primary_w, e_n, LMS_STEP, &fx_fifo, PRIMARY_ORDER, 0);
+                        unsigned dec_cnt = 4;
+                        while (dec_cnt--) {
+                                const uint16_t y_dac = to_u16(y);
+                                for (int i = 0; i < bps; i++)
+                                        *(samples[0] + i) =
+                                                (y_dac >> i * 8) & 0xff;
+                                samples[0] += steps[0];
+                        }
                 }
         }
 
-        printf("%d\n", r);
+        init = true;
 }
 
 void ident(char* buffer, int r)
@@ -289,17 +205,19 @@ void ident(char* buffer, int r)
 
         uint16_t* r_samples = (uint16_t*)buffer;
 
-        for (int i = 0; i < r; i += 1) {
-                const uint16_t e = r_samples[i * channels + 0] << 4;
-                const uint16_t x = r_samples[i * channels + 1] << 4;
+        for (int i = 0; i < r; i += 4) {
+                if (init) {
+                        const uint16_t e = r_samples[i * channels + 0] << 4;
+                        const uint16_t x = r_samples[i * channels + 1] << 4;
 
-                error_buffer[cnt] = normalize(e);
-                x_buffer[cnt]     = normalize(x);
+                        error_buffer[cnt] = normalize(e);
+                        x_buffer[cnt]     = normalize(x);
+                }
 
                 uint16_t y          = prng_xorshift();
                 noise_buffer[cnt++] = normalize(y);
 
-                unsigned dec_cnt = 1;
+                unsigned dec_cnt = 4;
                 while (dec_cnt--) {
                         for (int j = 0; j < bps; j++)
                                 *(samples[0] + j) = (y >> j * 8) & 0xff;
@@ -658,8 +576,8 @@ void gettimestamp(snd_pcm_t* handle, snd_timestamp_t* timestamp)
 void setscheduler(void)
 {
         struct sched_param sched_param;
-        int policy          = SCHED_RR;
-        const char* spolicy = "Round Robin";
+        int policy          = SCHED_FIFO;
+        const char* spolicy = "FIFO";
 
         if (strcasecmp(sched_policy, "fifo") == 0) {
                 policy  = SCHED_FIFO;
@@ -752,14 +670,6 @@ long writebuf(snd_pcm_t* handle, char* buf, long len, size_t* frames)
         return 0;
 }
 
-#define FILTERSWEEP_LFO_CENTER 2000.
-#define FILTERSWEEP_LFO_DEPTH  1800.
-#define FILTERSWEEP_LFO_FREQ   0.2
-#define FILTER_BANDWIDTH       50
-
-/* filter the sweep variables */
-float lfo, dlfo, fs, fc, BW, C, D, a0, a1, a2, b1, b2, *x[3], *y[3];
-
 static ssize_t get_avail(snd_pcm_t* pcm)
 {
         ssize_t avail;
@@ -838,8 +748,7 @@ int main(int argc, char* argv[])
         ssize_t r, cap_avail, cap_avail_max, pbk_fill, pbk_fill_min;
         size_t frames_in, frames_out, in_max;
         timestamp_t tstamp_start;
-        int effect = 0;
-        morehelp   = 0;
+        morehelp = 0;
 
         // file_helpers_read_buf("sec_coeffs.txt", secondary_w);
 
@@ -914,9 +823,6 @@ int main(int argc, char* argv[])
                                 break;
                         case 'y':
                                 usleep_val = atoi(optarg);
-                                break;
-                        case 'e':
-                                effect = 1;
                                 break;
                         case 'n':
                                 resample = 0;
@@ -1056,12 +962,6 @@ int main(int argc, char* argv[])
                                timestamp_diff_micro(&tstamp_start));
                 gettimestamp(phandle, &p_tstamp);
                 gettimestamp(chandle, &c_tstamp);
-#if 0
-		printf("Playback:\n");
-		showstat(phandle, frames_out);
-		printf("Capture:\n");
-		showstat(chandle, frames_in);
-#endif
 
                 ok     = 1;
                 in_max = 0;
@@ -1119,13 +1019,12 @@ int main(int argc, char* argv[])
                                                cap_avail_max);
                                 }
                         }
-                        init = 1;
                         if ((r = readbuf(
                                      chandle, buffer, cap_avail, &frames_in, &in_max))
                             < 0)
                                 ok = 0;
                         else {
-                                ident(buffer, r);
+                                anc(buffer, r);
                                 if (writebuf(phandle, buffer, r, &frames_out) < 0)
                                         ok = 0;
                         }

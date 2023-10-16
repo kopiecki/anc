@@ -156,8 +156,8 @@ Dźwięk odtworzono analogicznie jak w poprzednim pomiarze.
 \end{figure}
 
 Przebieg zielony przedstawia wejście przetwornika analogowo-cyfrowego, a żółty
-wyjście wzmacniacza \ref{hw::op_diff}. Poza obserwacjami, które są analogiczne
-jak w punkcie wyżej, można zaobserwować, że filtr \ref{hw::filt} w tej sekcji
+wyjście wzmacniacza \ref{hw::op_diff}. Poza obserwacjami analogicznymi jak w
+punkcie wyżej, można zaobserwować, że filtr \ref{hw::filt} w tej sekcji
 zachowuje się zgodniej z obliczeniami. Tłumienie dla sygnału o częstotliwości
 granicznej wynosi około 3.22 dB. Gęstość widmową mocy obliczoną metodą Welcha z
 oknem Hanna dla $f_s = 8$ kHz przedstawiono na rysunku \ref{ver::500hz_in_psd}:
@@ -171,76 +171,560 @@ oknem Hanna dla $f_s = 8$ kHz przedstawiono na rysunku \ref{ver::500hz_in_psd}:
 
 Nagrany sinus jest mniejszej mocy niż na \ref{ver::500hz_in_psd}, a jego
 najbliższe harmoniczne mniej widoczne, co może być spodowowane kombinacją
-tłumienia filtra i jakością wykorzystanego nagrania.
+filtracji i jakością nagrania.
 
 \section{Weryfikacja części programowej}
 
 Sporządzony układ, stanowiący wykorzystane do badań stanowisko pomiarowe
-przedstawiono na rysunku \ref{ver::test_stage}:
+przedstawiono na rysunku \ref{ver::stand}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.72\textwidth]{graf/verification/stand.png}
+    \caption{Stanowisko pomiarowe}
+    \label{ver::stand}
+\end{figure}
 
 \subsection{Identyfikacja toru wtórnego}
 
 Aby zweryfikować wpływ rozmiaru fragmentów na długość opóźnienia, identyfikację
-przeprowadzono dla $n_f = 8$ i $n_f = 24$, a następnie $n_f = 64$ i $n_f = 128$.
-Sygnały wejściowe wygenerowano za pomocą generatora \textit{xorshiro16++}, a
-eksperymenty przeprowadzano za pomocą metody korelacyjnej w pięciosekundowym
-oknie. Zidentyfikowane odpowiedzi impulsowe ograniczone do dwustu wartości dla
-pierwszej pary oraz trzystu wartości dla drugiej przedstawiono na rysunkach
-\ref{ver::ident_0} i \ref{ver::ident_1}:
+przeprowadzono dla $n_f = 32$ i $n_f = 64$. Sygnały wejściowe wygenerowano za
+pomocą generatora \textit{xoroshiro16++}, a eksperymenty przeprowadzano za pomocą
+metody korelacyjnej w pięciosekundowym oknie. Zidentyfikowane odpowiedzi
+impulsowe ograniczone do dwustu wartości przedstawiono na rysunku \ref{ver::ident}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/verification/ident_0.png}
-    \caption{Zidentyfikowana odpowiedź impulsowa - wpływ długości fragmentów 1}
-    \label{ver::ident_0}
+    \includegraphics[width=0.65\textwidth]{graf/verification/ident_0.png}
+    \caption{Indentyfikacja toru wtórnego - wpływ $n_f$}
+    \label{ver::ident}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{graf/verification/ident_1.png}
-    \caption{Zidentyfikowana odpowiedź impulsowa - wpływ długości fragmentów 2}
-    \label{ver::ident_1}
-\end{figure}
+Jak można zauważyć z \ref{ver::ident}, buforowanie wpływa na zidentyfikowaną
+odpowiedź impulsową, opóźniając ją o ilość próbek równą długości fragmentu. Poza
+opóźnieniem wynikającym z buforowania, na przebiegu odpowiedzi impulsowej można
+zaobserwować wpływ torów analogowych, objawiający się dodatkowym opóźnieniem,
+wynikającym głównie z filtracji.
 
-Jak można zauważyć z \ref{ver::ident_0} i \ref{ver::ident_1}, buforowanie
-(długość fragmentu) wpływa na zidentyfikowaną odpowiedź impulsową, opóźniając ją
-o ilość próbek równą długości fragmentu. Poza opóźnieniem wynikającym z
-buforowania, na przebiegu odpowiedzi impulsowej można zaobserwować wpływ torów
-analogowych, objawiający się dodatkowym opóźnieniem, wynikającym głównie z
-filtracji.
+\subsection{Badania procesu ANC - wpływ parametrów}
 
-\subsection{Badania procesu ANC}
-
-Pomiary przeprowadzono na sygnałach wejściowych zdefiniowanych poniżej:
+Pomiary przeprowadzono na trzech sygnałach wejściowych zdefiniowanych poniżej:
 \begin{enumerate}
-    \item Sinusoidy o częstotliwościach określonych zależnością:
-    \begin{equation}
-        f(i) = 100i \qquad \text{dla } \quad i = 1, 2, 3
-    \end{equation}
-    \item Sumy dwóch sygnałów sinusoidalnych o częstotliwościach 
-    \begin{equation}
-        f_0 = 120 \text{ Hz}, \qquad f_1 = 160 \text{ Hz}
-    \end{equation}
-    \item Sygnał losowy wygenerowany generatorem \textit{xoroshiro16++}
+    \item Sygnał sinusoidalny o częstotliwości $f = 120$ Hz, którego nagrania
+    mikrofonem błędu przedstawiono na rysunku \ref{ver::sig_sine120hz}:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.65\textwidth]{graf/verification/raw_120hz.png}
+        \caption{Sygnał testowy - sinusoida o $f = 120$ Hz (po przybliżeniu i skalowaniu)}
+        \label{ver::sig_sine120hz}
+    \end{figure} 
+
+    \item Sygnał sinusoidalny o częstotliwości $f = 220$ Hz, którego nagranie
+    mikrofonem błędu przedstawiono na rysunku \ref{ver::sig_sine220hz}:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{graf/verification/raw_220hz.png}
+        \caption{Sygnał testowy - sinusoida o $f = 220$ Hz (po przybliżeniu i skalowaniu)}
+        \label{ver::sig_sine220hz}
+    \end{figure} 
+
+    \item Sumy dwóch sinusoid o częstotliwościach $f_0 = 120$ Hz i $f_1 = 160$
+    Hz, których nagranie mikrofonem błędu przedstawiono na rysunku
+    \ref{ver::sig_sum}:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{graf/verification/raw_sum.png}
+        \caption{Sygnał testowy - suma sinusoid (po przybliżeniu i skalowaniu)}
+        \label{ver::sig_sum}
+    \end{figure} 
 \end{enumerate}
 
-Dla każdego sygnału starano utrzymać się nateżenie w okolicach 83 dB SPL, a
-pomiary wykonano w pięciosekundowym oknie. Z parametrów poddawanych ocenie
-wyróżniono:
-\begin{itemize}
-    \item Wielkość kroku adaptacji algorytmu NLMS $\alpha$
-    \item Długość filtrów $W(z^{-1})$ i $S(z^{-1})$
+Dla każdego sygnału starano utrzymać nateżenie w okolicach 80 dB SPL, badania
+przeprowadzano w oknie czasowym o długości pięciu sekund, a wyniki poddawno
+skalowaniu do zakresu -1 do 1. Z parametrów poddawanych ocenie wyróżniono:
+\begin{enumerate}
+    \item Wielkość kroku adaptacji $\alpha$ algorytmu NLMS 
+    \item Długość  filtra $W(z^{-1})$ 
     \item Długość fragmentu $n_f$
-    \item Częstotliwość próbkowania $f_s$
-    \item Poziom priorytetu i wytyczna planisty
-\end{itemize}
+    \item Częstotliwość próbkowania $f'_s$
+    \item Poziom priorytetu $P$ i wytyczna planisty
+\end{enumerate}
 
-Oceny poszczególnych wpływów realizowano dla stałych wartości pozostałych, co
-oznacza, że przykładowo badając wpływ wielkości kroku adaptacji, pozostałe
-parametry są stałe.
+Oceny wpływów poszczególnych parametrów realizowano dla stałych wartości
+pozostałych. Zestaw parametrów stanowiących punkt referencjny
+do reszty badań przedstawiono w tabeli \ref{tab::ref}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|| c | c | c | c | c | c ||} 
+        \hline
+        $f'_s$, Hz & $n_f$, ramki & $\alpha$ & $L$ & $P$ & Wytyczna planisty \\ 
+        \hline\hline
+        $2000$ & $32$ & 1 & $128$ & 99 & SCHED\_RR \\
+        \hline\hline
+    \end{tabular}
+    \caption{Wybrany zestaw parametrów referencyjnych}
+    \label{tab::ref}
+\end{table}
+
+Aby uniknąć duplikacji wykresów, dla parametrów zdefiniowanych w \ref{tab::ref}
+uzyskane przebiegi błędu $e(n)$ przedstawiono na rysunkach \ref{ver::ref}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/120hz_ref.png}
+        \caption{Sinusoida o $f = 120$ Hz}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/220hz_ref.png}
+        \caption{Sinusoida o $f = 220$ Hz}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/sum_ref.png}
+        \caption{Suma sinusoid o $f_0 = 120$ Hz i $f_1 = 140$ Hz}
+    \end{subfigure}
+       \caption{Przebiegi referencyjne}
+       \label{ver::ref}
+\end{figure}
+
+Jak można wywnioskować z przebiegów \ref{ver::ref}, sinusoidy są idealnie
+tłumione, a czas zbieżności można oszacować na około 0.2 s w obu przypadkach.
+Dlu sumy sinusów algorytm zbiega się zdecydowanie dłużej, czas można oszacować
+na około 0.8 s i sygnał jest również tłumiony idealnie. 
 
 \subsubsection{Wpływ wielkości kroku}
+
+Do badania wpływu wielkości kroku $\alpha$ przyjęto zestaw parametrów
+referencyjnych zgodnie z tabelą \ref{tab::ref}, a krok algorytmu NLMS $\alpha$
+dobierano zgodnie z zależnością
+\begin{equation}
+    \alpha(i) = \frac{i}{5} \qquad \text{dla } i = 1, 2, 3, 4
+\end{equation}
+
+Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
+\ref{ver::alpha_120hz}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_120hz_8.png}
+        \caption{$\alpha = 0.8$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_120hz_6.png}
+        \caption{$\alpha = 0.6$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_120hz_4.png}
+        \caption{$\alpha = 0.4$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_120hz_2.png}
+        \caption{$\alpha = 0.2$}
+    \end{subfigure}
+       \caption{Badania wpływu rozmiaru kroku $\alpha$ - sygnał 1}
+       \label{ver::alpha_120hz}
+\end{figure}
+
+Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
+\ref{ver::alpha_120hz}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_220hz_8.png}
+        \caption{$\alpha = 0.8$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_220hz_6.png}
+        \caption{$\alpha = 0.6$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_220hz_4.png}
+        \caption{$\alpha = 0.4$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_220hz_2.png}
+        \caption{$\alpha = 0.2$}
+    \end{subfigure}
+       \caption{Badania wpływu rozmiaru kroku $\alpha$ - sygnał 2}
+       \label{ver::alpha_120hz}
+\end{figure}
+
+Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
+\ref{ver::alpha_sum}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_sum_8.png}
+        \caption{$\alpha = 0.2$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_sum_6.png}
+        \caption{$\alpha = 0.4$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_sum_4.png}
+        \caption{$\alpha = 0.6$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/alpha_sum_2.png}
+        \caption{$\alpha = 0.8$}
+    \end{subfigure}
+       \caption{Badania wpływu rozmiaru kroku $\alpha$ - sygnał 3}
+       \label{ver::alpha_sum}
+\end{figure}
+
+Jak można zauważyć z przedstawionych przebiegów czasowych, krok $\alpha$
+algorytmu NLMS wpływa na szybkość zbieżności, co pokrywa się z teorią. Szacowane
+czasy zbieżności dla poszczególnych wartości kroku i sygnałów testowych
+przedstawiono w tabeli \ref{tab::alpha}:
+
+\begin{table}[H]
+    \centering
+    \begin{adjustbox}{width=\textwidth}
+        \begin{tabular}{|| c | c | c | c | c | c ||} 
+        \hline
+        Sygnał & $t_z$ dla $\alpha = 1$ & $t_z$ dla $\alpha = 0.8$ & $t_z$ dla
+        $\alpha = 0.6$ & $t_z$ dla $\alpha = 0.4$ & $t_z$ dla $\alpha = 0.2$ \\ 
+        \hline
+        Sinusoida o $f = 120$ Hz & 0.15 & 0.21 & 0.38 & 0.51 & 0.82 \\
+        \hline
+        Sinusoida o $f = 120$ Hz & 0.22 & 0.33 & 0.46 & 0.57 & 1.1 \\
+        \hline
+        Suma sinusoid & 1.01 & 1.67 & 2.21 & 2.59 & 4.76 \\
+        \hline\hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Wybrany zestaw parametrów referencyjnych}
+    \label{tab::ref}
+\end{table}
+
+Zmniejszenie kroku powoduje wolniejsze zbieganie się algorytmu, a największą
+różnicę widać w momencie zmiany kroku z 0.4 na 0.2. Jak można zauważyć z
+\ref{tab::ref}, z sygnałów testowych najwolniej zbiega się suma sinusoid.
+
 \subsubsection{Wpływ długości filtrów}
-\subsubsection{Wpływ rozmiaru fragmentu}
+
+Do badania wpływu długości $L$ filtra $W(z^{-1})$ przyjęto zestaw parametrów
+referencyjnych zgodnie z tabelą \ref{tab::ref}, a wartość $L$ dobierano zgodnie
+z zależnością:
+\begin{equation}
+    L(i) = 2^i \qquad \text{dla } i = 8, 9, 10
+\end{equation}
+
+Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
+\ref{ver::l_120hz}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/l_120hz_256.png}
+        \caption{$L = 256$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/l_120hz_512.png}
+        \caption{$L = 512$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/l_120hz_1024.png}
+        \caption{$L = 1024$}
+    \end{subfigure}
+       \caption{Badania wpływu długości $L$ filtra $W(z^{-1})$ - sygnał 1}
+       \label{ver::l_120hz}
+\end{figure}
+
+Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
+\ref{ver::l_220hz}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/l_220hz_256.png}
+        \caption{$L = 256$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/l_220hz_512.png}
+        \caption{$L = 512$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/l_220hz_1024.png}
+        \caption{$L = 1024$}
+    \end{subfigure}
+       \caption{Badania wpływu długości $L$ filtra $W(z^{-1})$ - sygnał 2}
+       \label{ver::l_220hz}
+\end{figure}
+
+Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
+\ref{ver::l_sum}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/l_sum_256.png}
+        \caption{$L = 256$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/l_sum_512.png}
+        \caption{$L = 512$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/l_sum_1024.png}
+        \caption{$L = 1024$}
+    \end{subfigure}
+       \caption{Badania wpływu długości $L$ filtra $W(z^{-1})$ - sygnał 3}
+       \label{ver::l_sum}
+\end{figure}
+
+Jak można zauważyć z rysunków \ref{ver::l_120hz}, \ref{ver::l_220hz} i
+\ref{ver::l_sum}, długość filtra wpływa nieznacznie na zebrane przebiegi. Czas
+zbieżności jest w przybliżeniu taki sam w przypadku różnych długości $L$
+poszczególnych sygnałów. \par Kwestią znaczącą przy doborze długości $L$ jest
+natomiast czas potrzebny na przetworzenie danych. W czasie pomiarów
+zaobserwowano, że dla $L > 1024$ obliczenia zaczynają trwać zbyt długo, co
+skutkuje przerwami w transmisji, spowodowanymi stanami \textit{xrun\_recovery}
+systemu ALSA (próbki nie są odpowiednio szybko czytane/zapisywane). Takie
+przerwy wpływają destrukcyjnie na działanie systemu i objawiają się
+destabilizacją pętli przetwarzania. 
+
 \subsubsection{Wpływ częstotliwości próbkowania}
-\subsubsection{Wpływ rozszerzeń czasu rzeczywistego}
+
+Do badania wpływu częstotliwości próbkowania $f_s$ przyjęto zestaw parametrów
+referencyjnych zgodnie z tabelą \ref{tab::ref}, a jako nową wartość $f_s$
+przyjęto
+\begin{equation}
+    f_s = 2f_{s,ref} = 16000 \text{ Hz}
+\end{equation}
+
+Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
+\ref{ver::120hz_16khz}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/120hz_128.png}
+    \caption{Badanie wpływu częstotliwości próbkowania - sygnał 1}
+    \label{ver::120hz_16khz}
+\end{figure}
+
+Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
+\ref{ver::220hz_16khz}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/220hz_16000.png}
+    \caption{Badanie wpływu częstotliwości próbkowania - sygnał 2}
+    \label{ver::220hz_16khz}
+\end{figure}
+
+Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
+\ref{ver::sum_16khz}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/sum_16000.png}
+    \caption{Badanie wpływu częstotliwości próbkowania - sygnał 3}
+    \label{ver::sum_16khz}
+\end{figure}
+
+Analizując przebiegi \ref{ver::120hz_16khz}, \ref{ver::220hz_16khz} i
+\ref{ver::sum_16khz} można stwierdzić, że zwiększona częstotliwość próbkowania
+nie spowodowała drastycznych zmian w porównaniu z poprzednią (mniejszą). Czas
+zbieżności dla poszczególnych sygnałów testowych jest zbliżony z rezultatami dla
+$f_s = 2000$ Hz. \par Pomimo, że w zaprojektowanym układzie częstotliwość
+próbkowania nie wpływa znacząco na przebiegi, to jej wzrost objawia się
+mniejszym czasem na wykonanie obliczeń. Dla częstotliwości $f_s > 4000$ system
+zaczyna nie nadążać z ich wykonaniem, co skutkuje, analogicznie jak w przypadku
+zbyt długich filtrów, przerwaniem transmisji. 
+
+\subsubsection{Wpływ rozmiaru fragmentu}
+
+Do badania wpływu rozmiaru fragmentu $n_f$ przyjęto zestaw parametrów
+referencyjnych zgodnie z tabelą \ref{tab::ref}, a jako nową wartość przyjęto
+\begin{equation}
+    n_f = 2n_{f,ref} = 128 \text{ ramek}
+\end{equation}
+
+Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
+\ref{ver::120hz_16khz}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/120hz_16000.png}
+    \caption{Badanie wpływu rozmiaru fragmentu - sygnał 1}
+    \label{ver::120hz_128}
+\end{figure}
+
+Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
+\ref{ver::220hz_16khz}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/220hz_128.png}
+    \caption{Badanie wpływu rozmiaru fragmentu - sygnał 2}
+    \label{ver::220hz_128}
+\end{figure}
+
+Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
+\ref{ver::sum_16khz}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/sum_128.png}
+    \caption{Badanie wpływu rozmiaru fragmentu - sygnał 3}
+    \label{ver::sum_128}
+\end{figure}
+
+Wnioskując z \ref{ver::120hz_128}, \ref{ver::220hz_128} i \ref{ver::sum_128}
+można stwierdzić, że zwiększony rozmiar fragmentu znacząco pogorszył jakość
+tłumienia. Algorytmy zbiegają się dłużej, co jest najbardziej widoczne w
+przypadku sygnału drugiego, dla którego algorytm zbiega się w przybliżeniu trzy
+razy wolniej, niż algorytm z parametrami referencyjnymi. Jak pokazano na rysunku
+\ref{ver::ident}, zwiększony rozmiar fragmentu powoduje większe opóźnienie, co
+może być głównym powodem zaobserwowanego w tej serii badań zachowania.
+
+\subsubsection{Wpływ poziomu priorytetu procesu}
+
+Do badania wpływu poziomu priorytetu $P$ procesu przyjęto zestaw parametrów
+referencyjnych zgodnie z tabelą \ref{tab::ref}, a poziom $P$ dobierano zgodnie z
+zależnością:
+\begin{equation}
+    P(i) = 100\frac{i}{5} \qquad \text{dla } i = 1, 2, 3, 4
+\end{equation}
+
+Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
+\ref{ver::p_120hz}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_120hz_80.png}
+        \caption{$P = 80$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_120hz_60.png}
+        \caption{$P = 60$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_120hz_40.png}
+        \caption{$P = 40$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_120hz_20.png}
+        \caption{$P = 20$}
+    \end{subfigure}
+       \caption{Badania wpływu poziomu priorytetu $P$ - sygnał 1}
+       \label{ver::p_120hz}
+\end{figure}
+
+Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
+\ref{ver::p_120hz}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_220hz_80.png}
+        \caption{$P = 80$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_220hz_60.png}
+        \caption{$P = 60$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_220hz_40.png}
+        \caption{$P = 40$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_220hz_20.png}
+        \caption{$P = 20$}
+    \end{subfigure}
+       \caption{Badania wpływu poziomu priorytetu $P$ - sygnał 2}
+       \label{ver::p_220hz}
+\end{figure}
+
+Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
+\ref{ver::p_sum}:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_sum_80.png}
+        \caption{$P = 80$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_sum_60.png}
+        \caption{$P = 60$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_sum_40.png}
+        \caption{$P = 40$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_sum_20.png}
+        \caption{$P = 20$}
+    \end{subfigure}
+       \caption{Badania wpływu poziomu priorytetu $P$ - sygnał 3}
+       \label{ver::p_sum}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/P_bad_220.png}
+    \caption{Badanie wpływu poziomu priorytetu $P$ - problem z tłumieniem}
+    \label{ver::sum_128}
+\end{figure}
+
+blablabla
+
+\subsection{Dodatkowe badania}
+
+Sygnał losowy wygenerowany generatorem \textit{xoroshiro16++}, którego
+nagranie mikrofonem błędu sygnału przedstawiono na rysunku
+\ref{ver::sig_rand}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/raw_rand.png}
+    \caption{Sygnał testowy - szum losowy (po przybliżeniu i normalizacji)}
+    \label{ver::sig_rand}
+\end{figure}

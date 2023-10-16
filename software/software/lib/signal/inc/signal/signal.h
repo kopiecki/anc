@@ -25,10 +25,10 @@ struct signal {
 };
 
 void signal_initialize_noise(void);
-uint16_t signal_generate(
+float signal_generate(
         struct signal* const self, uint16_t* const buffer, size_t size);
 
-void signal_generate_sum(
+float signal_generate_sum(
         struct signal* signals[],
         uint8_t num_of_signals,
         float* const buffer,

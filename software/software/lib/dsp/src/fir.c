@@ -26,5 +26,9 @@ float dsp_fir(
         unsigned int order,
         unsigned int offset)
 {
-        return __fir(cf->buffer, w, cf->i, cf->mask, order);
+        float y = 0.0f;
+        for (unsigned j = 0u; j < order; j++)
+                y += w[j] * circ_fifo_peek(cf, j);
+
+        return y;
 }

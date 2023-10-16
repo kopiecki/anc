@@ -26,24 +26,20 @@ def ident(x_name, y_name):
     gk = c / np.max(rxx)
 
     logger.info("Estimated coeffs: {}", gk)
-    np.savetxt("sec_coeffs.csv", gk, delimiter=',')
+    np.savetxt("sec_coeffs.csv", gk[0 : 64], delimiter=',')
 
-    return gk[0 : 300]
+    return gk[0 : 64] 
 
 if __name__ == "__main__":
     font = {'size': 34}
     plt.rc('font', **font)
 
-    SAMPLING_HZ = 8000
+    SAMPLING_HZ = 16000
 
-    gk_128 = ident("noise_128.txt", "anc_128.txt")
-    gk_256 = ident("noise_256.txt", "anc_256.txt")
+    gk = ident("noise.txt", "anc.txt")
 
     plt.figure(1)
-    plt.plot(gk_128, linewidth=2, label=r"$n_f = 64$", color = 'b')
-    plt.plot(gk_256, linewidth=2, label=r"$n_f = 128$", color = 'r')
-    plt.axvline(64, color = 'b', linestyle = '--', linewidth=2, label=r"$i = 64$") 
-    plt.axvline(128, color = 'r', linestyle = '--', linewidth=2, label=r"$i = 128$")
+    plt.plot(gk, linewidth=2, label=r"$n_f = 32$", color = 'b')
     plt.xlabel(r"i")
     plt.ylabel(r"$\hat{s}(i)$")
     plt.legend()
