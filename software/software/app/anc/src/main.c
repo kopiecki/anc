@@ -21,33 +21,31 @@
 #define CLOCK_MONOTONIC_RAW CLOCK_MONOTONIC
 #endif
 
-#if defined(__OpenBSD__)
-#define sched_getparam(pid, parm)             (-1)
-#define sched_setscheduler(pid, policy, parm) (-1)
-#endif
+#define LMS_STEP 1
+#define GAIN     UINT16_MAX
 
 typedef struct timespec timestamp_t;
 
-char* sched_policy      = "rr";
-char* pdevice           = "hw:0,0";
-char* cdevice           = "hw:0,0";
-snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
-int rate                = 22050;
-int channels            = 2;
-int buffer_size         = 0;
-int period_size         = 0;
-int latency_min         = 32;   /* in frames / 2 */
-int latency_max         = 2048; /* in frames / 2 */
-int loop_sec            = 30;   /* seconds */
-int block               = 0;    /* block mode */
-int use_poll            = 0;
-int usleep_val          = 0;
-int resample            = 1;
-int sys_latency = 0; /* data I/O: use system timings instead driver wakeups */
-int pos_dump    = 0; /* dump positions */
-int realtime_check = 0;
-unsigned long loop_limit;
-snd_pcm_uframes_t playback_buffer_size;
+static char* sched_policy      = "rr";
+static char* pdevice           = "hw:0,0";
+static char* cdevice           = "hw:0,0";
+static snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
+static int rate                = 22050;
+static int channels            = 2;
+static int buffer_size         = 0;
+static int period_size         = 0;
+static int latency_min         = 32;
+static int latency_max         = 2048;
+static int loop_sec            = 30;
+static int block               = 0;
+static int use_poll            = 0;
+static int usleep_val          = 0;
+static int resample            = 1;
+static int sys_latency         = 0;
+static int pos_dump            = 0;
+static int realtime_check      = 0;
+static unsigned long loop_limit;
+static snd_pcm_uframes_t playback_buffer_size;
 
 snd_output_t* output                   = NULL;
 static float error_buffer[1000 * 1024] = {0};
@@ -66,42 +64,39 @@ static float primary_w[PRIMARY_ORDER] = {0u};
 
 #define SECONDARY_ORDER (64)
 static float secondary_w[] = {
-        -3.904347372680037507e-04, -6.192878168980888278e-04,
-        -2.552233479961603553e-03, -2.531947662310832584e-03,
-        1.109862504397741327e-03,  2.852419714877457279e-03,
-        3.283971444998644599e-04,  -2.415276083383730097e-03,
-        -2.854829929979355811e-03, -3.124732482318026520e-03,
-        -3.243248041526515090e-03, -1.436559362207794587e-03,
-        6.126339785817249556e-03,  3.162024252589732548e-02,
-        7.003094733321542364e-02,  5.236998131128845629e-02,
-        -5.581983432253975752e-02, -1.452167751365895099e-01,
-        -1.108116916125592849e-01, -1.373330920920329441e-02,
-        3.175557450035244172e-02,  2.110230880769686443e-02,
-        1.567235696030271075e-02,  3.193712153312294050e-02,
-        4.461614195845725606e-02,  4.407956116378725087e-02,
-        4.010439600318575076e-02,  3.449281221139748055e-02,
-        2.489527163213290165e-02,  1.228659196095667309e-02,
-        -1.870168873682312221e-03, -1.211153131092565678e-02,
-        -1.293170598370599854e-02, -9.648245620481084653e-03,
-        -1.152028870740258622e-02, -1.862383547231319381e-02,
-        -2.519647284978277293e-02, -2.713530793372702019e-02,
-        -2.332994605389321005e-02, -1.671448510652268765e-02,
-        -1.100041992558333827e-02, -6.878523863843527195e-03,
-        -6.211471277369920094e-03, -9.829841601437277337e-03,
-        -9.271059332512121900e-03, 2.772189020478061944e-03,
-        1.636652582627808050e-02,  1.718972140358976386e-02,
-        9.120876061592366607e-03,  4.751704343863791431e-03,
-        5.649623944221474764e-03,  4.682878053070878982e-03,
-        -1.082380336541661050e-03, -4.367307381428502458e-03,
-        1.069504058640105343e-03,  1.022056057794891101e-02,
-        1.248450536912641164e-02,  7.001989638006430802e-03,
-        1.858540552801294645e-03,  2.872623266055876479e-03,
-        6.230063560174561345e-03,  6.066955512263962763e-03,
-        4.199478679197191089e-03,  4.339415838667845353e-03,
+    -3.904347372680037507e-04, -6.192878168980888278e-04,
+    -2.552233479961603553e-03, -2.531947662310832584e-03,
+    1.109862504397741327e-03,  2.852419714877457279e-03,
+    3.283971444998644599e-04,  -2.415276083383730097e-03,
+    -2.854829929979355811e-03, -3.124732482318026520e-03,
+    -3.243248041526515090e-03, -1.436559362207794587e-03,
+    6.126339785817249556e-03,  3.162024252589732548e-02,
+    7.003094733321542364e-02,  5.236998131128845629e-02,
+    -5.581983432253975752e-02, -1.452167751365895099e-01,
+    -1.108116916125592849e-01, -1.373330920920329441e-02,
+    3.175557450035244172e-02,  2.110230880769686443e-02,
+    1.567235696030271075e-02,  3.193712153312294050e-02,
+    4.461614195845725606e-02,  4.407956116378725087e-02,
+    4.010439600318575076e-02,  3.449281221139748055e-02,
+    2.489527163213290165e-02,  1.228659196095667309e-02,
+    -1.870168873682312221e-03, -1.211153131092565678e-02,
+    -1.293170598370599854e-02, -9.648245620481084653e-03,
+    -1.152028870740258622e-02, -1.862383547231319381e-02,
+    -2.519647284978277293e-02, -2.713530793372702019e-02,
+    -2.332994605389321005e-02, -1.671448510652268765e-02,
+    -1.100041992558333827e-02, -6.878523863843527195e-03,
+    -6.211471277369920094e-03, -9.829841601437277337e-03,
+    -9.271059332512121900e-03, 2.772189020478061944e-03,
+    1.636652582627808050e-02,  1.718972140358976386e-02,
+    9.120876061592366607e-03,  4.751704343863791431e-03,
+    5.649623944221474764e-03,  4.682878053070878982e-03,
+    -1.082380336541661050e-03, -4.367307381428502458e-03,
+    1.069504058640105343e-03,  1.022056057794891101e-02,
+    1.248450536912641164e-02,  7.001989638006430802e-03,
+    1.858540552801294645e-03,  2.872623266055876479e-03,
+    6.230063560174561345e-03,  6.066955512263962763e-03,
+    4.199478679197191089e-03,  4.339415838667845353e-03,
 };
-
-#define LMS_STEP 1
-#define GAIN     UINT16_MAX
 
 static inline uint16_t to_u16(float sample)
 {
@@ -119,21 +114,21 @@ void anc(char* buffer, int r)
         int steps[channels];
         int bps = 16 / 8;
 
-        /* verify and prepare the contents of areas */
         for (int chn = 0; chn < channels; chn++) {
                 if ((areas[chn].first % 8) != 0) {
-                        printf("areas[%u].first == %u, aborting...\n",
-                               chn,
-                               areas[chn].first);
+                        printf(
+                            "areas[%u].first == %u, aborting...\n",
+                            chn,
+                            areas[chn].first);
                         exit(EXIT_FAILURE);
                 }
-                samples[chn] = /*(signed short *)*/ (
-                        ((unsigned char*)areas[chn].addr)
-                        + (areas[chn].first / 8));
+                samples[chn] =
+                    (((unsigned char*)areas[chn].addr) + (areas[chn].first / 8));
                 if ((areas[chn].step % 16) != 0) {
-                        printf("areas[%u].step == %u, aborting...\n",
-                               chn,
-                               areas[chn].step);
+                        printf(
+                            "areas[%u].step == %u, aborting...\n",
+                            chn,
+                            areas[chn].step);
                         exit(EXIT_FAILURE);
                 }
                 steps[chn] = areas[chn].step / 8;
@@ -157,17 +152,18 @@ void anc(char* buffer, int r)
                 y_buffer[cnt++] = y;
 
                 const float fx =
-                        dsp_fir(&x_fifo, secondary_w, SECONDARY_ORDER, 0);
+                    dsp_fir(&x_fifo, secondary_w, SECONDARY_ORDER, 0);
                 circ_fifo_write(&fx_fifo, fx);
 
                 if (init) {
-                        dsp_nlms(primary_w, e_n, LMS_STEP, &fx_fifo, PRIMARY_ORDER, 0);
+                        dsp_nlms(
+                            primary_w, e_n, LMS_STEP, &fx_fifo, PRIMARY_ORDER, 0);
                         unsigned dec_cnt = 4;
                         while (dec_cnt--) {
                                 const uint16_t y_dac = to_u16(y);
                                 for (int i = 0; i < bps; i++)
                                         *(samples[0] + i) =
-                                                (y_dac >> i * 8) & 0xff;
+                                            (y_dac >> i * 8) & 0xff;
                                 samples[0] += steps[0];
                         }
                 }
@@ -180,23 +176,23 @@ void ident(char* buffer, int r)
 {
         unsigned char* samples[channels];
         int steps[channels];
-        int bps = 16 / 8; /* bytes per sample */
+        int bps = 16 / 8;
 
-        /* verify and prepare the contents of areas */
         for (int chn = 0; chn < channels; chn++) {
                 if ((areas[chn].first % 8) != 0) {
-                        printf("areas[%u].first == %u, aborting...\n",
-                               chn,
-                               areas[chn].first);
+                        printf(
+                            "areas[%u].first == %u, aborting...\n",
+                            chn,
+                            areas[chn].first);
                         exit(EXIT_FAILURE);
                 }
-                samples[chn] = /*(signed short *)*/ (
-                        ((unsigned char*)areas[chn].addr)
-                        + (areas[chn].first / 8));
+                samples[chn] =
+                    (((unsigned char*)areas[chn].addr) + (areas[chn].first / 8));
                 if ((areas[chn].step % 16) != 0) {
-                        printf("areas[%u].step == %u, aborting...\n",
-                               chn,
-                               areas[chn].step);
+                        printf(
+                            "areas[%u].step == %u, aborting...\n",
+                            chn,
+                            areas[chn].step);
                         exit(EXIT_FAILURE);
                 }
                 steps[chn] = areas[chn].step / 8;
@@ -251,7 +247,6 @@ long long timestamp_diff_micro(timestamp_t* tstamp)
                 diff.tv_sec  = now.tv_sec - tstamp->tv_sec;
                 diff.tv_nsec = now.tv_nsec - tstamp->tv_nsec;
         }
-        /* microseconds */
         return (diff.tv_sec * 1000000) + ((diff.tv_nsec + 500L) / 1000L);
 }
 
@@ -262,59 +257,63 @@ int setparams_stream(snd_pcm_t* handle, snd_pcm_hw_params_t* params, const char*
 
         err = snd_pcm_hw_params_any(handle, params);
         if (err < 0) {
-                printf("Broken configuration for %s PCM: no configurations "
-                       "available: %s\n",
-                       snd_strerror(err),
-                       id);
+                printf(
+                    "Broken configuration for %s PCM: no configurations "
+                    "available: %s\n",
+                    snd_strerror(err),
+                    id);
                 return err;
         }
         err = snd_pcm_hw_params_set_rate_resample(handle, params, resample);
         if (err < 0) {
-                printf("Resample setup failed for %s (val %i): %s\n",
-                       id,
-                       resample,
-                       snd_strerror(err));
+                printf(
+                    "Resample setup failed for %s (val %i): %s\n",
+                    id,
+                    resample,
+                    snd_strerror(err));
                 return err;
         }
         err = snd_pcm_hw_params_set_access(
-                handle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
+            handle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
         if (err < 0) {
-                printf("Access type not available for %s: %s\n",
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Access type not available for %s: %s\n",
+                    id,
+                    snd_strerror(err));
                 return err;
         }
         err = snd_pcm_hw_params_set_format(handle, params, format);
         if (err < 0) {
-                printf("Sample format not available for %s: %s\n",
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Sample format not available for %s: %s\n",
+                    id,
+                    snd_strerror(err));
                 return err;
         }
         err = snd_pcm_hw_params_set_channels(handle, params, channels);
         if (err < 0) {
-                printf("Channels count (%i) not available for %s: %s\n",
-                       channels,
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Channels count (%i) not available for %s: %s\n",
+                    channels,
+                    id,
+                    snd_strerror(err));
                 return err;
         }
         rrate = rate;
         err   = snd_pcm_hw_params_set_rate_near(handle, params, &rrate, 0);
         if (err < 0) {
-                printf("Rate %iHz not available for %s: %s\n",
-                       rate,
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Rate %iHz not available for %s: %s\n",
+                    rate,
+                    id,
+                    snd_strerror(err));
                 return err;
         }
         if ((int)rrate != rate) {
-                printf("Rate doesn't match (requested %iHz, get %iHz)\n",
-                       rate,
-                       err);
+                printf(
+                    "Rate doesn't match (requested %iHz, get %iHz)\n", rate, err);
                 return -EINVAL;
         }
-        /* we do not want driver wakeups */
         if (sys_latency > 0
             && snd_pcm_hw_params_can_disable_period_wakeup(params)) {
                 err = snd_pcm_hw_params_set_period_wakeup(handle, params, 0);
@@ -327,11 +326,11 @@ int setparams_stream(snd_pcm_t* handle, snd_pcm_hw_params_t* params, const char*
 }
 
 int setparams_bufsize(
-        snd_pcm_t* handle,
-        snd_pcm_hw_params_t* params,
-        snd_pcm_hw_params_t* tparams,
-        snd_pcm_uframes_t bufsize,
-        const char* id)
+    snd_pcm_t* handle,
+    snd_pcm_hw_params_t* params,
+    snd_pcm_hw_params_t* tparams,
+    snd_pcm_uframes_t bufsize,
+    const char* id)
 {
         int err;
         snd_pcm_uframes_t periodsize;
@@ -340,10 +339,11 @@ int setparams_bufsize(
         periodsize = bufsize * 2;
         err = snd_pcm_hw_params_set_buffer_size_near(handle, params, &periodsize);
         if (err < 0) {
-                printf("Unable to set buffer size %li for %s: %s\n",
-                       bufsize * 2,
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Unable to set buffer size %li for %s: %s\n",
+                    bufsize * 2,
+                    id,
+                    snd_strerror(err));
                 return err;
         }
         if (period_size > 0)
@@ -351,45 +351,47 @@ int setparams_bufsize(
         else
                 periodsize /= 2;
         err = snd_pcm_hw_params_set_period_size_near(
-                handle, params, &periodsize, 0);
+            handle, params, &periodsize, 0);
         if (err < 0) {
-                printf("Unable to set period size %li for %s: %s\n",
-                       periodsize,
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Unable to set period size %li for %s: %s\n",
+                    periodsize,
+                    id,
+                    snd_strerror(err));
                 return err;
         }
         return 0;
 }
 
 int setparams_set(
-        snd_pcm_t* handle,
-        snd_pcm_hw_params_t* params,
-        snd_pcm_sw_params_t* swparams,
-        const char* id)
+    snd_pcm_t* handle,
+    snd_pcm_hw_params_t* params,
+    snd_pcm_sw_params_t* swparams,
+    const char* id)
 {
         int err;
         snd_pcm_uframes_t val;
 
         err = snd_pcm_hw_params(handle, params);
         if (err < 0) {
-                printf("Unable to set hw params for %s: %s\n",
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Unable to set hw params for %s: %s\n", id, snd_strerror(err));
                 return err;
         }
         err = snd_pcm_sw_params_current(handle, swparams);
         if (err < 0) {
-                printf("Unable to determine current swparams for %s: %s\n",
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Unable to determine current swparams for %s: %s\n",
+                    id,
+                    snd_strerror(err));
                 return err;
         }
         err = snd_pcm_sw_params_set_start_threshold(handle, swparams, 0x7fffffff);
         if (err < 0) {
-                printf("Unable to set start threshold mode for %s: %s\n",
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Unable to set start threshold mode for %s: %s\n",
+                    id,
+                    snd_strerror(err));
                 return err;
         }
         if (!block)
@@ -398,16 +400,14 @@ int setparams_set(
                 snd_pcm_hw_params_get_period_size(params, &val, NULL);
         err = snd_pcm_sw_params_set_avail_min(handle, swparams, val);
         if (err < 0) {
-                printf("Unable to set avail min for %s: %s\n",
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Unable to set avail min for %s: %s\n", id, snd_strerror(err));
                 return err;
         }
         err = snd_pcm_sw_params(handle, swparams);
         if (err < 0) {
-                printf("Unable to set sw params for %s: %s\n",
-                       id,
-                       snd_strerror(err));
+                printf(
+                    "Unable to set sw params for %s: %s\n", id, snd_strerror(err));
                 return err;
         }
         return 0;
@@ -416,8 +416,7 @@ int setparams_set(
 int setparams(snd_pcm_t* phandle, snd_pcm_t* chandle, int* bufsize)
 {
         int err, last_bufsize = *bufsize;
-        snd_pcm_hw_params_t *pt_params, *ct_params; /* templates with rate,
-                                                       format and channels */
+        snd_pcm_hw_params_t *pt_params, *ct_params;
         snd_pcm_hw_params_t *p_params, *c_params;
         snd_pcm_sw_params_t *p_swparams, *c_swparams;
         snd_pcm_uframes_t p_size, c_size, p_psize, c_psize;
@@ -431,13 +430,15 @@ int setparams(snd_pcm_t* phandle, snd_pcm_t* chandle, int* bufsize)
         snd_pcm_sw_params_alloca(&p_swparams);
         snd_pcm_sw_params_alloca(&c_swparams);
         if ((err = setparams_stream(phandle, pt_params, "playback")) < 0) {
-                printf("Unable to set parameters for playback stream: %s\n",
-                       snd_strerror(err));
+                printf(
+                    "Unable to set parameters for playback stream: %s\n",
+                    snd_strerror(err));
                 exit(0);
         }
         if ((err = setparams_stream(chandle, ct_params, "capture")) < 0) {
-                printf("Unable to set parameters for playback stream: %s\n",
-                       snd_strerror(err));
+                printf(
+                    "Unable to set parameters for playback stream: %s\n",
+                    snd_strerror(err));
                 exit(0);
         }
 
@@ -456,17 +457,19 @@ __again:
                 return -1;
 __set_it:
         if ((err = setparams_bufsize(
-                     phandle, p_params, pt_params, *bufsize, "playback"))
+                 phandle, p_params, pt_params, *bufsize, "playback"))
             < 0) {
-                printf("Unable to set sw parameters for playback stream: %s\n",
-                       snd_strerror(err));
+                printf(
+                    "Unable to set sw parameters for playback stream: %s\n",
+                    snd_strerror(err));
                 exit(0);
         }
         if ((err = setparams_bufsize(
-                     chandle, c_params, ct_params, *bufsize, "capture"))
+                 chandle, c_params, ct_params, *bufsize, "capture"))
             < 0) {
-                printf("Unable to set sw parameters for playback stream: %s\n",
-                       snd_strerror(err));
+                printf(
+                    "Unable to set sw parameters for playback stream: %s\n",
+                    snd_strerror(err));
                 exit(0);
         }
 
@@ -484,8 +487,9 @@ __set_it:
         if (p_psize * 2 < p_size) {
                 snd_pcm_hw_params_get_periods_min(p_params, &val, NULL);
                 if (val > 2) {
-                        printf("playback device does not support 2 periods per "
-                               "buffer\n");
+                        printf(
+                            "playback device does not support 2 periods per "
+                            "buffer\n");
                         exit(0);
                 }
                 goto __again;
@@ -494,20 +498,23 @@ __set_it:
         if (c_psize * 2 < c_size) {
                 snd_pcm_hw_params_get_periods_min(c_params, &val, NULL);
                 if (val > 2) {
-                        printf("capture device does not support 2 periods per "
-                               "buffer\n");
+                        printf(
+                            "capture device does not support 2 periods per "
+                            "buffer\n");
                         exit(0);
                 }
                 goto __again;
         }
         if ((err = setparams_set(phandle, p_params, p_swparams, "playback")) < 0) {
-                printf("Unable to set sw parameters for playback stream: %s\n",
-                       snd_strerror(err));
+                printf(
+                    "Unable to set sw parameters for playback stream: %s\n",
+                    snd_strerror(err));
                 exit(0);
         }
         if ((err = setparams_set(chandle, c_params, c_swparams, "capture")) < 0) {
-                printf("Unable to set sw parameters for playback stream: %s\n",
-                       snd_strerror(err));
+                printf(
+                    "Unable to set sw parameters for playback stream: %s\n",
+                    snd_strerror(err));
                 exit(0);
         }
 
@@ -541,11 +548,12 @@ void showlatency(size_t latency)
         double d;
         latency *= 2;
         d = (double)latency / (double)rate;
-        printf("Trying latency %li frames, %.3fus, %.6fms (%.4fHz)\n",
-               (long)latency,
-               d * 1000000,
-               d * 1000,
-               (double)1 / d);
+        printf(
+            "Trying latency %li frames, %.3fus, %.6fms (%.4fHz)\n",
+            (long)latency,
+            d * 1000000,
+            d * 1000,
+            (double)1 / d);
 }
 
 void showinmax(size_t in_max)
@@ -554,10 +562,11 @@ void showinmax(size_t in_max)
 
         printf("Maximum read: %li frames\n", (long)in_max);
         d = (double)in_max / (double)rate;
-        printf("Maximum read latency: %.3fus, %.6fms (%.4fHz)\n",
-               d * 1000000,
-               d * 1000,
-               (double)1 / d);
+        printf(
+            "Maximum read latency: %.3fus, %.6fms (%.4fHz)\n",
+            d * 1000000,
+            d * 1000,
+            (double)1 / d);
 }
 
 void gettimestamp(snd_pcm_t* handle, snd_timestamp_t* timestamp)
@@ -592,15 +601,17 @@ void setscheduler(void)
         }
         sched_param.sched_priority = sched_get_priority_max(policy);
         if (!sched_setscheduler(0, policy, &sched_param)) {
-                printf("Scheduler set to %s with priority %i...\n",
-                       spolicy,
-                       sched_param.sched_priority);
+                printf(
+                    "Scheduler set to %s with priority %i...\n",
+                    spolicy,
+                    sched_param.sched_priority);
                 fflush(stdout);
                 return;
         }
-        printf("!!!Scheduler set to %s with priority %i FAILED!!!\n",
-               spolicy,
-               sched_param.sched_priority);
+        printf(
+            "!!!Scheduler set to %s with priority %i FAILED!!!\n",
+            spolicy,
+            sched_param.sched_priority);
 }
 
 long timediff(snd_timestamp_t t1, snd_timestamp_t t2)
@@ -630,10 +641,9 @@ long readbuf(snd_pcm_t* handle, char* buf, long len, size_t* frames, size_t* max
                         if ((long)*max < r)
                                 *max = r;
                 }
-                // printf("read = %li\n", r);
         } else {
                 int frame_bytes =
-                        (snd_pcm_format_physical_width(format) / 8) * channels;
+                    (snd_pcm_format_physical_width(format) / 8) * channels;
                 do {
                         r = snd_pcm_readi(handle, buf, len);
                         if (r > 0) {
@@ -643,10 +653,8 @@ long readbuf(snd_pcm_t* handle, char* buf, long len, size_t* frames, size_t* max
                                 if ((long)*max < r)
                                         *max = r;
                         }
-                        // printf("r = %li, len = %li\n", r, len);
                 } while (r >= 1 && len > 0);
         }
-        // showstat(handle, 0);
         return r;
 }
 
@@ -659,10 +667,8 @@ long writebuf(snd_pcm_t* handle, char* buf, long len, size_t* frames)
                 r = snd_pcm_writei(handle, buf, len);
                 if (r == -EAGAIN)
                         continue;
-                // printf("write = %li\n", r);
                 if (r < 0)
                         return r;
-                // showstat(handle, 0);
                 buf += r * frame_bytes;
                 len -= r;
                 *frames += r;
@@ -686,29 +692,30 @@ static ssize_t get_avail(snd_pcm_t* pcm)
 void help(void)
 {
         int k;
-        printf("Usage: latency [OPTION]... [FILE]...\n"
-               "-h,--help      help\n"
-               "-P,--pdevice   playback device\n"
-               "-C,--cdevice   capture device\n"
-               "-m,--min       minimum latency in frames\n"
-               "-M,--max       maximum latency in frames\n"
-               "-U,--updates   I/O updates in milliseconds (0 = off)\n"
-               "-F,--frames    frames to transfer\n"
-               "-f,--format    sample format\n"
-               "-c,--channels  channels\n"
-               "-r,--rate      rate\n"
-               "-B,--buffer    buffer size in frames\n"
-               "-E,--period    period size in frames\n"
-               "-s,--seconds   duration of test in seconds\n"
-               "-b,--block     block mode\n"
-               "-p,--poll      use poll (wait for event - reduces CPU usage)\n"
-               "-y,--usleep    sleep for the specified amount of microseconds "
-               "between\n"
-               "               stream updates (default 0 - off)\n"
-               "-e,--effect    apply an effect (bandpass filter sweep)\n"
-               "-x,--posdump   dump buffer positions\n"
-               "-X,--realtime  do a realtime check (buffering)\n"
-               "-O,--policy    set scheduler policy (RR, FIFO or OTHER)\n");
+        printf(
+            "Usage: latency [OPTION]... [FILE]...\n"
+            "-h,--help      help\n"
+            "-P,--pdevice   playback device\n"
+            "-C,--cdevice   capture device\n"
+            "-m,--min       minimum latency in frames\n"
+            "-M,--max       maximum latency in frames\n"
+            "-U,--updates   I/O updates in milliseconds (0 = off)\n"
+            "-F,--frames    frames to transfer\n"
+            "-f,--format    sample format\n"
+            "-c,--channels  channels\n"
+            "-r,--rate      rate\n"
+            "-B,--buffer    buffer size in frames\n"
+            "-E,--period    period size in frames\n"
+            "-s,--seconds   duration of test in seconds\n"
+            "-b,--block     block mode\n"
+            "-p,--poll      use poll (wait for event - reduces CPU usage)\n"
+            "-y,--usleep    sleep for the specified amount of microseconds "
+            "between\n"
+            "               stream updates (default 0 - off)\n"
+            "-e,--effect    apply an effect (bandpass filter sweep)\n"
+            "-x,--posdump   dump buffer positions\n"
+            "-X,--realtime  do a realtime check (buffering)\n"
+            "-O,--policy    set scheduler policy (RR, FIFO or OTHER)\n");
         printf("Recognized sample formats are:");
         for (k = 0; k < SND_PCM_FORMAT_LAST; ++k) {
                 const char* s = snd_pcm_format_name(k);
@@ -716,29 +723,30 @@ void help(void)
                         printf(" %s", s);
         }
         printf("\n\n");
-        printf("Tip #1 (usable latency with large periods, non-blocking mode, "
-               "good CPU usage,\n"
-               "        superb xrun prevention):\n"
-               "  latency -m 8192 -M 8192 -t 1 -p\n"
-               "Tip #2 (superb latency, non-blocking mode, but heavy CPU "
-               "usage):\n"
-               "  latency -m 128 -M 128\n");
+        printf(
+            "Tip #1 (usable latency with large periods, non-blocking mode, "
+            "good CPU usage,\n"
+            "        superb xrun prevention):\n"
+            "  latency -m 8192 -M 8192 -t 1 -p\n"
+            "Tip #2 (superb latency, non-blocking mode, but heavy CPU "
+            "usage):\n"
+            "  latency -m 128 -M 128\n");
 }
 
 int main(int argc, char* argv[])
 {
         struct option long_option[] = {
-                {"help", 0, NULL, 'h'},     {"pdevice", 1, NULL, 'P'},
-                {"cdevice", 1, NULL, 'C'},  {"min", 1, NULL, 'm'},
-                {"max", 1, NULL, 'M'},      {"updates", 1, NULL, 'U'},
-                {"frames", 1, NULL, 'F'},   {"format", 1, NULL, 'f'},
-                {"channels", 1, NULL, 'c'}, {"rate", 1, NULL, 'r'},
-                {"buffer", 1, NULL, 'B'},   {"period", 1, NULL, 'E'},
-                {"seconds", 1, NULL, 's'},  {"block", 0, NULL, 'b'},
-                {"poll", 0, NULL, 'p'},     {"usleep", 1, NULL, 'y'},
-                {"effect", 0, NULL, 'e'},   {"posdump", 0, NULL, 'x'},
-                {"realtime", 0, NULL, 'X'}, {"policy", 1, NULL, 'O'},
-                {NULL, 0, NULL, 0},
+            {"help", 0, NULL, 'h'},     {"pdevice", 1, NULL, 'P'},
+            {"cdevice", 1, NULL, 'C'},  {"min", 1, NULL, 'm'},
+            {"max", 1, NULL, 'M'},      {"updates", 1, NULL, 'U'},
+            {"frames", 1, NULL, 'F'},   {"format", 1, NULL, 'f'},
+            {"channels", 1, NULL, 'c'}, {"rate", 1, NULL, 'r'},
+            {"buffer", 1, NULL, 'B'},   {"period", 1, NULL, 'E'},
+            {"seconds", 1, NULL, 's'},  {"block", 0, NULL, 'b'},
+            {"poll", 0, NULL, 'p'},     {"usleep", 1, NULL, 'y'},
+            {"effect", 0, NULL, 'e'},   {"posdump", 0, NULL, 'x'},
+            {"realtime", 0, NULL, 'X'}, {"policy", 1, NULL, 'O'},
+            {NULL, 0, NULL, 0},
         };
         snd_pcm_t *phandle, *chandle;
         char* buffer;
@@ -750,16 +758,14 @@ int main(int argc, char* argv[])
         timestamp_t tstamp_start;
         morehelp = 0;
 
-        // file_helpers_read_buf("sec_coeffs.txt", secondary_w);
-
         while (1) {
                 int c;
                 if ((c = getopt_long(
-                             argc,
-                             argv,
-                             "hP:C:m:M:U:F:f:c:r:B:E:s:y:O:bpenxX",
-                             long_option,
-                             NULL))
+                         argc,
+                         argv,
+                         "hP:C:m:M:U:F:f:c:r:B:E:s:y:O:bpenxX",
+                         long_option,
+                         NULL))
                     < 0)
                         break;
                 switch (c) {
@@ -781,7 +787,7 @@ int main(int argc, char* argv[])
                         case 'M':
                                 err = atoi(optarg) / 2;
                                 latency_max =
-                                        latency_min > err ? latency_min : err;
+                                    latency_min > err ? latency_min : err;
                                 break;
                         case 'U':
                                 err         = atoi(optarg);
@@ -790,8 +796,9 @@ int main(int argc, char* argv[])
                         case 'f':
                                 format = snd_pcm_format_value(optarg);
                                 if (format == SND_PCM_FORMAT_UNKNOWN) {
-                                        printf("Unknown format, setting to "
-                                               "default S16_LE\n");
+                                        printf(
+                                            "Unknown format, setting to "
+                                            "default S16_LE\n");
                                         format = SND_PCM_FORMAT_S16_LE;
                                 }
                                 break;
@@ -852,10 +859,9 @@ int main(int argc, char* argv[])
         loop_limit = loop_sec * rate;
         latency    = latency_min - 4;
         buffer     = malloc(
-                (latency_max * 2 * snd_pcm_format_physical_width(format) / 8)
-                * channels);
+            (latency_max * 2 * snd_pcm_format_physical_width(format) / 8)
+            * channels);
 
-        /* I/O updates based on a system timer */
         if (sys_latency > 0) {
                 block    = 0;
                 use_poll = 0;
@@ -865,17 +871,19 @@ int main(int argc, char* argv[])
 
         printf("Playback device is %s\n", pdevice);
         printf("Capture device is %s\n", cdevice);
-        printf("Parameters are %iHz, %s, %i channels, %s mode, use poll %s\n",
-               rate,
-               snd_pcm_format_name(format),
-               channels,
-               block ? "blocking" : "non-blocking",
-               use_poll ? "yes" : "no");
-        printf("Loop limit is %lu frames, minimum latency = %i, maximum "
-               "latency = %i",
-               loop_limit,
-               latency_min * 2,
-               latency_max * 2);
+        printf(
+            "Parameters are %iHz, %s, %i channels, %s mode, use poll %s\n",
+            rate,
+            snd_pcm_format_name(format),
+            channels,
+            block ? "blocking" : "non-blocking",
+            use_poll ? "yes" : "no");
+        printf(
+            "Loop limit is %lu frames, minimum latency = %i, maximum "
+            "latency = %i",
+            loop_limit,
+            latency_min * 2,
+            latency_max * 2);
         if (sys_latency > 0)
                 printf(", I/O updates %ims", sys_latency);
         else if (!block && !use_poll)
@@ -883,19 +891,19 @@ int main(int argc, char* argv[])
         printf("\n");
 
         if ((err = snd_pcm_open(
-                     &phandle,
-                     pdevice,
-                     SND_PCM_STREAM_PLAYBACK,
-                     block ? 0 : SND_PCM_NONBLOCK))
+                 &phandle,
+                 pdevice,
+                 SND_PCM_STREAM_PLAYBACK,
+                 block ? 0 : SND_PCM_NONBLOCK))
             < 0) {
                 printf("Playback open error: %s\n", snd_strerror(err));
                 return 0;
         }
         if ((err = snd_pcm_open(
-                     &chandle,
-                     cdevice,
-                     SND_PCM_STREAM_CAPTURE,
-                     block ? 0 : SND_PCM_NONBLOCK))
+                 &chandle,
+                 cdevice,
+                 SND_PCM_STREAM_CAPTURE,
+                 block ? 0 : SND_PCM_NONBLOCK))
             < 0) {
                 printf("Record open error: %s\n", snd_strerror(err));
                 return 0;
@@ -913,7 +921,7 @@ int main(int argc, char* argv[])
                 areas[chn].addr  = buffer;
                 areas[chn].first = chn * snd_pcm_format_physical_width(format);
                 areas[chn].step =
-                        channels * snd_pcm_format_physical_width(format);
+                    channels * snd_pcm_format_physical_width(format);
         }
 
         int error = circ_fifo_construct(&x_fifo, NULL, FIFO_SIZE);
@@ -958,8 +966,9 @@ int main(int argc, char* argv[])
                         exit(0);
                 }
                 if (realtime_check)
-                        printf("[%lldus] Stream start\n",
-                               timestamp_diff_micro(&tstamp_start));
+                        printf(
+                            "[%lldus] Stream start\n",
+                            timestamp_diff_micro(&tstamp_start));
                 gettimestamp(phandle, &p_tstamp);
                 gettimestamp(chandle, &c_tstamp);
 
@@ -971,13 +980,13 @@ int main(int argc, char* argv[])
                                 poll(NULL, 0, sys_latency);
                                 cap_avail = get_avail(chandle);
                                 if (cap_avail < 0) {
-                                        printf("Avail failed: %s\n",
-                                               snd_strerror(cap_avail));
+                                        printf(
+                                            "Avail failed: %s\n",
+                                            snd_strerror(cap_avail));
                                         ok = 0;
                                         break;
                                 }
                         } else if (use_poll) {
-                                /* use poll to wait for next event */
                                 snd_pcm_wait(chandle, 1000);
                         } else if (!block && usleep_val > 0) {
                                 usleep(usleep_val);
@@ -988,39 +997,41 @@ int main(int argc, char* argv[])
                                 pbk_fill = get_avail(phandle);
                                 if (pbk_fill >= 0)
                                         pbk_fill =
-                                                playback_buffer_size - pbk_fill;
+                                            playback_buffer_size - pbk_fill;
                                 if (cap_avail > cap_avail_max)
                                         cap_avail_max = cap_avail;
                                 if (pbk_fill >= 0 && pbk_fill < pbk_fill_min)
                                         pbk_fill_min = pbk_fill;
                                 if (realtime_check) {
-                                        long long diff = timestamp_diff_micro(
-                                                &tstamp_start);
+                                        long long diff =
+                                            timestamp_diff_micro(&tstamp_start);
                                         long long cap_pos = frames_to_micro(
-                                                frames_in + cap_avail);
+                                            frames_in + cap_avail);
                                         long long pbk_pos = frames_to_micro(
-                                                frames_out - pbk_fill);
-                                        printf("[%lldus] POS: p=%zd (min=%zd, "
-                                               "rt=%lldus) c=%zd (max=%zd, "
-                                               "rt=%lldus)\n",
-                                               diff,
-                                               pbk_fill,
-                                               pbk_fill_min,
-                                               pbk_pos - diff,
-                                               cap_avail,
-                                               cap_avail_max,
-                                               cap_pos - diff);
+                                            frames_out - pbk_fill);
+                                        printf(
+                                            "[%lldus] POS: p=%zd (min=%zd, "
+                                            "rt=%lldus) c=%zd (max=%zd, "
+                                            "rt=%lldus)\n",
+                                            diff,
+                                            pbk_fill,
+                                            pbk_fill_min,
+                                            pbk_pos - diff,
+                                            cap_avail,
+                                            cap_avail_max,
+                                            cap_pos - diff);
                                 } else if (pos_dump) {
-                                        printf("POS: p=%zd (min=%zd), c=%zd "
-                                               "(max=%zd)\n",
-                                               pbk_fill,
-                                               pbk_fill_min,
-                                               cap_avail,
-                                               cap_avail_max);
+                                        printf(
+                                            "POS: p=%zd (min=%zd), c=%zd "
+                                            "(max=%zd)\n",
+                                            pbk_fill,
+                                            pbk_fill_min,
+                                            cap_avail,
+                                            cap_avail_max);
                                 }
                         }
                         if ((r = readbuf(
-                                     chandle, buffer, cap_avail, &frames_in, &in_max))
+                                 chandle, buffer, cap_avail, &frames_in, &in_max))
                             < 0)
                                 ok = 0;
                         else {
@@ -1046,23 +1057,23 @@ int main(int argc, char* argv[])
                         long long mtime = frames_to_micro(frames_in);
                         printf("Elapsed real time: %lldus\n", diff);
                         printf("Elapsed device time: %lldus\n", mtime);
-                        printf("Test time diff (device - real): %lldus\n",
-                               mtime - diff);
+                        printf(
+                            "Test time diff (device - real): %lldus\n",
+                            mtime - diff);
                 }
                 snd_pcm_drop(chandle);
                 snd_pcm_nonblock(phandle, 0);
                 snd_pcm_drain(phandle);
                 snd_pcm_nonblock(phandle, !block ? 1 : 0);
                 if (ok) {
-#if 1
-                        printf("Playback time = %li.%i, Record time = %li.%i, "
-                               "diff = %li\n",
-                               (long)p_tstamp.tv_sec,
-                               (int)p_tstamp.tv_usec,
-                               (long)c_tstamp.tv_sec,
-                               (int)c_tstamp.tv_usec,
-                               timediff(p_tstamp, c_tstamp));
-#endif
+                        printf(
+                            "Playback time = %li.%i, Record time = %li.%i, "
+                            "diff = %li\n",
+                            (long)p_tstamp.tv_sec,
+                            (int)p_tstamp.tv_usec,
+                            (long)c_tstamp.tv_sec,
+                            (int)c_tstamp.tv_usec,
+                            timediff(p_tstamp, c_tstamp));
                         break;
                 }
                 snd_pcm_unlink(chandle);

@@ -338,7 +338,7 @@ Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
 \end{figure}
 
 Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
-\ref{ver::alpha_120hz}:
+\ref{ver::alpha_220hz}:
 
 \begin{figure}[H]
     \centering
@@ -363,7 +363,7 @@ Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
         \caption{$\alpha = 0.2$}
     \end{subfigure}
        \caption{Badania wpływu rozmiaru kroku $\alpha$ - sygnał 2}
-       \label{ver::alpha_120hz}
+       \label{ver::alpha_220hz}
 \end{figure}
 
 Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
@@ -395,10 +395,10 @@ Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
        \label{ver::alpha_sum}
 \end{figure}
 
-Jak można zauważyć z przedstawionych przebiegów czasowych, krok $\alpha$
-algorytmu NLMS wpływa na szybkość zbieżności, co pokrywa się z teorią. Szacowane
-czasy zbieżności dla poszczególnych wartości kroku i sygnałów testowych
-przedstawiono w tabeli \ref{tab::alpha}:
+Jak można zauważyć z rysunków \ref{ver::alpha_120hz}, \ref{ver::alpha_220hz} i
+\ref{ver::alpha_sum}, krok $\alpha$ algorytmu NLMS wpływa na szybkość zbieżności, co
+pokrywa się z teorią. Szacowane czasy zbieżności dla poszczególnych wartości
+kroku i sygnałów testowych przedstawiono w tabeli \ref{tab::alpha}:
 
 \begin{table}[H]
     \centering
@@ -417,7 +417,7 @@ przedstawiono w tabeli \ref{tab::alpha}:
     \end{tabular}
     \end{adjustbox}
     \caption{Wybrany zestaw parametrów referencyjnych}
-    \label{tab::ref}
+    \label{tab::alpha}
 \end{table}
 
 Zmniejszenie kroku powoduje wolniejsze zbieganie się algorytmu, a największą
@@ -563,7 +563,8 @@ $f_s = 2000$ Hz. \par Pomimo, że w zaprojektowanym układzie częstotliwość
 próbkowania nie wpływa znacząco na przebiegi, to jej wzrost objawia się
 mniejszym czasem na wykonanie obliczeń. Dla częstotliwości $f_s > 4000$ system
 zaczyna nie nadążać z ich wykonaniem, co skutkuje, analogicznie jak w przypadku
-zbyt długich filtrów, przerwaniem transmisji. 
+zbyt długich filtrów, przerwaniem transmisji i destabilizacją pętli
+przetwarzania.
 
 \subsubsection{Wpływ rozmiaru fragmentu}
 
@@ -611,7 +612,7 @@ razy wolniej, niż algorytm z parametrami referencyjnymi. Jak pokazano na rysunk
 \ref{ver::ident}, zwiększony rozmiar fragmentu powoduje większe opóźnienie, co
 może być głównym powodem zaobserwowanego w tej serii badań zachowania.
 
-\subsubsection{Wpływ poziomu priorytetu procesu}
+\subsubsection{Wpływ rozszerzeń czasu rzeczywistego}
 
 Do badania wpływu poziomu priorytetu $P$ procesu przyjęto zestaw parametrów
 referencyjnych zgodnie z tabelą \ref{tab::ref}, a poziom $P$ dobierano zgodnie z
@@ -644,6 +645,7 @@ Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
         \centering
         \includegraphics[width=\textwidth]{graf/verification/P_120hz_20.png}
         \caption{$P = 20$}
+        \label{ver::120hz_boom}
     \end{subfigure}
        \caption{Badania wpływu poziomu priorytetu $P$ - sygnał 1}
        \label{ver::p_120hz}
@@ -707,19 +709,72 @@ Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
        \label{ver::p_sum}
 \end{figure}
 
+Jak pokazano na \ref{ver::p_120hz}, \ref{ver::p_220hz} i \ref{ver::p_sum},
+zmniejszanie poziomu priorytetu znacząco pogarsza jakość wynikowego tłumienia.
+Im mniejszy poziom priorytetu, tym algorytm zbiega się dłużej. Dodatkową
+obserwacją jest wpływ priorytetu na początkowe stadia tłumienia. Dla wartości $P
+< 40$ algorytm początkowo generuje sygnał o większym natężeniu, niż tłumiony
+hałas (błąd w początkowych stadiach jest większy niż ten, który przedstawiono na
+przebiegach przy wyłączonym ANC). Mocno wyróżniającym się przebiegiem jest
+\ref{ver::120hz_boom}. Analizując początkowe stadia zbiegania się algorytmu w
+tym przypadku można zauważyć, że został on tymczasowo wytrącony z poprawnego
+zbiegania się i przez pierwsze $0.2$ sekundy algorytm nie był w stanie wytłumić
+hałasu. 
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/P_bad_220.png}
+    \includegraphics[width=0.70\textwidth]{graf/verification/P_bad_220.png}
     \caption{Badanie wpływu poziomu priorytetu $P$ - problem z tłumieniem}
-    \label{ver::sum_128}
+    \label{ver::sum_128_problem}
 \end{figure}
 
-blablabla
+Na rysunku \ref{ver::sum_128_problem} uchwycono sytuację, której często
+doświadczano przeproprowadzając badania dla $P < 20$. Jak można zauyważyć, dla
+bardzo niskich poziomów priorytetów istnieje duża szansa, że algorytm przestaje
+działać i hałas nie jest tłumiony. Później zweryfikowano, w przypadku
+przeprowadzenia dziesięciu pomiarów z tak nisko dobranym $P$, cztery z nich
+skutkują błędnym działaniem systemu.
 
-\subsection{Dodatkowe badania}
+Na rysunkach \ref{ver::fifo} przedstawiono przebiegi uzyskane dla zmiany
+wytycznej planisty z SCHED\_RR na SCHED\_FIFO:
 
-Sygnał losowy wygenerowany generatorem \textit{xoroshiro16++}, którego
-nagranie mikrofonem błędu sygnału przedstawiono na rysunku
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_120hz_fifo.png}
+        \caption{Pierwszy sygnał testowy}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_220hz_fifo.png}
+        \caption{Drugi sygnał testowy}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/P_sum_fifo.png}
+        \caption{Trzeci sygnał testowy}
+    \end{subfigure}
+       \caption{Badania rozszerzeń czasu rzeczywistego - zmiana wytycznej planisty}
+       \label{ver::fifo}
+\end{figure}
+
+Jak można zauważyć z \ref{ver::fifo}, zmiany wytycznej planisty lekko pogorszyła
+zbieżność algorytmów. Tłumienie drugiego i trzeciego sygnału testowego odbywa
+się nieznacznie dłużej niż w przypadku wykorzystania SCHED\_RR. Poza dłuższym
+czasem zbieżności, nie zaobserwowano dodatkowych zmian.
+
+\subsection{Dodatkowe eksperymenty i podsumowanie badań}
+
+Korzystając z zestawu parametrów referencyjnych określonych w tabeli
+\ref{tab::ver}, działanie systemu zostało poddane analizie w oparciu o dwa
+dodatkowe eksperymenty. Pierwszy z nich opierał się na wykorzystaniu sygnału
+testowego, który składał się z pobudzeń sinusoidalnych z zakresu od 100 Hz do
+300 Hz generowanych w pewnych odstępach czasu. Pomiędzy pobudzeniami stosowano
+arbitralne okresy ciszy, manualnie włączając i wyłączając głośnik, stanowiący
+symulowane źródło hałasu w systemie. W drugim eksperymencie, jako hałas
+wykorzystano sygnał losowy wygenerowany generatorem \textit{xoroshiro16++},
+którego nagranie mikrofonem błędu sygnału przedstawiono na rysunku
 \ref{ver::sig_rand}:
 
 \begin{figure}[H]
@@ -728,3 +783,19 @@ nagranie mikrofonem błędu sygnału przedstawiono na rysunku
     \caption{Sygnał testowy - szum losowy (po przybliżeniu i normalizacji)}
     \label{ver::sig_rand}
 \end{figure}
+
+Przebieg błędu $e(n)$ dla pierwszego eksperymentu przedstawiono na rysunku
+\ref{ver::rand_sin}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/anc_rand_sin.png}
+    \caption{Eksperyment - pseudolosowe pobudzenia sinusoidalne}
+    \label{ver::rand_sin}
+\end{figure}
+
+Jak można zauważyć z \ref{ver::rand_sin}, każdy nowo pojawiający się hałas
+tonalny zostaje stłumiony idealnie, a czas zbieżności nie przekracza 1 s. Okresy
+ciszy (hałas nie jest emitowany) nie powodują niechcianych pobudzeń systemu.
+\par Analizując układ dla hałasów totalnych  o innych częstotliwościach niż te,
+które wykorzystano jako sygnały testowe do bania wpływu algorytmów zauważono, że 
