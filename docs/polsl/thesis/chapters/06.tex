@@ -734,8 +734,8 @@ bardzo niskich poziomów priorytetów istnieje duża szansa, że algorytm przest
 działać i hałas nie jest tłumiony. Później zweryfikowano, w przypadku
 przeprowadzenia dziesięciu pomiarów z tak nisko dobranym $P$, cztery z nich
 skutkują błędnym działaniem systemu.
-
-Na rysunkach \ref{ver::fifo} przedstawiono przebiegi uzyskane dla zmiany
+\\
+\par Na rysunkach \ref{ver::fifo} przedstawiono przebiegi uzyskane dla zmiany
 wytycznej planisty z SCHED\_RR na SCHED\_FIFO:
 
 \begin{figure}[H]
@@ -767,7 +767,7 @@ czasem zbieżności, nie zaobserwowano dodatkowych zmian.
 \subsection{Dodatkowe eksperymenty i podsumowanie badań}
 
 Korzystając z zestawu parametrów referencyjnych określonych w tabeli
-\ref{tab::ver}, działanie systemu zostało poddane analizie w oparciu o dwa
+\ref{tab::ref}, działanie systemu zostało poddane analizie w oparciu o dwa
 dodatkowe eksperymenty. Pierwszy z nich opierał się na wykorzystaniu sygnału
 testowego, który składał się z pobudzeń sinusoidalnych z zakresu od 100 Hz do
 300 Hz generowanych w pewnych odstępach czasu. Pomiędzy pobudzeniami stosowano
@@ -784,6 +784,8 @@ którego nagranie mikrofonem błędu sygnału przedstawiono na rysunku
     \label{ver::sig_rand}
 \end{figure}
 
+\subsubsection{Ekperyment - losowe pobudzenia sinusoidalne}
+
 Przebieg błędu $e(n)$ dla pierwszego eksperymentu przedstawiono na rysunku
 \ref{ver::rand_sin}:
 
@@ -795,7 +797,80 @@ Przebieg błędu $e(n)$ dla pierwszego eksperymentu przedstawiono na rysunku
 \end{figure}
 
 Jak można zauważyć z \ref{ver::rand_sin}, każdy nowo pojawiający się hałas
-tonalny zostaje stłumiony idealnie, a czas zbieżności nie przekracza 1 s. Okresy
-ciszy (hałas nie jest emitowany) nie powodują niechcianych pobudzeń systemu.
-\par Analizując układ dla hałasów totalnych  o innych częstotliwościach niż te,
-które wykorzystano jako sygnały testowe do bania wpływu algorytmów zauważono, że 
+tonalny zostaje stłumiony idealnie, a czas zbieżności nie przekracza jednej
+sekundy. Okresy ciszy (hałas nie jest emitowany) nie powodują niechcianych
+pobudzeń systemu. \par Analizując układ dla hałasów totalnych o innych
+częstotliwościach niż te, które wykorzystano jako sygnały testowe do badania
+wpływu algorytmów, zauważono, że system jest w stanie \textbf{tłumić sinusoidy
+do częstotliwości w okolicy 400 Hz}. Poza wyspecyfikowanym pasmem system nie
+działa prawidłowo i zaczyna generować sygnały powodujące większy hałas niż
+wejściowy.
+
+\subsubsection{Eksperyment - hałas losowy}
+Porównanie gęstości widmowej mocy sygnału $e(n)$ w przypadku włączonego i
+wyłączonego ANC dla wejściowego hałasu losowego obliczoną metodą Welcha z oknem
+Hanna dla $f_s = 2$ kHz przedstawiono na rysunku \ref{ver::anc_rand_psd}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graf/verification/anc_rand.png}
+    \caption{Hałas losowy - porównanie gęstości widmowych mocy}
+    \label{ver::anc_rand_psd}
+\end{figure}
+
+Jak można zauważyć z \ref{ver::anc_rand_psd}, system nie działa poprawnie dla
+hałasów losowych. Pomimo, że częstotliwości  $f < 200$ Hz w przypadku włączonego
+ANC są lekko słabsze, to system generuje sygnał, który objawia się wzmocnieniem
+częstotliwości $f > 200$ Hz, co jest mocno wyczuwalne dla słuchacza. \par Takie
+zachowanie systemu można wywnioskować na podstawie przeprowadzonych wcześniej
+badań. Algorytm zbiega się zdecydowanie zbyt wolno, żeby poprawnie reagować na
+szybkozmienny, losowy hałas i jego wykorzystanie w tym przypadku powoduje
+pogorszenie sytuacji i wzmocnienie hałasu w strefie, w której miał być
+niwelowany.
+
+\subsubsection{Podsumowanie badań}
+
+Wpływy poszczególnych parametrów na działanie systemu
+przedstawiono poniżej:
+
+\begin{enumerate}
+    \item Wielkość kroku adaptacji $\alpha$ algorytmu NLMS - decyduje o
+    szybkości zbiegania się algorytmu. System najszybciej zbiega się dla
+    \begin{equation}
+        \alpha_{ref} = \alpha_{opt} = 1
+    \end{equation}
+    
+    i zmniejsza szybkość zbieżności wraz ze zmniejszaniem się kroku.
+    \item Długość filtra $W(z^{-1})$ - nie wpływa znacząco na jakość tłumienia,
+    ale ma duży wpływ na szybkość wykonywania obliczeń. Dla $L > 1024$
+    obliczenia zaczynają trwać zbyt długo, co skutkuje przerwami w transmisji.
+    \item Częstotliwość próbkowania $f'_s$ - podobnie jak długość $L$ filtra
+    $W(z^{-1})$, nie wpływa znacząco na jakość tłumienia, ale im jest większa,
+    tym okno czasowe na wykonanie obliczeń mniejsze. Zweryfikowano, że
+    zaprojektowany układ zaczyna nie nadążać z obliczeniami dla $f'_s > 4000$
+    Hz.
+    \item Długość fragmentu $n_f$ - im większa, tym system działa gorzej.
+    Zwiększenie długości powoduje zwiększenie opóźnienia w torze przetwarzania,
+    co ma mocno negatywny wpływ na jakość tłumienia.
+    \item Poziom priorytetu $P$ - im mniejszy, tym jakość tłumienia gorsza. Dla
+    $P < 20$ system był w stanie przestać działać poprawnie, a nawet się
+    zdestabilizować. Jak wynika z przeprowadzonej analizy rozszerzeń czasu
+    rzeczywistego, poziom priorytetu decyduje o możliwości wywłaszczania
+    procesu, więc w przypadku kiedy jest on wystarczająco mały, duża liczba
+    przerwań pętli ANC może spowodować przetwarzanie danych z opóźnieniami,
+    których czas jest niestacjonarny.
+    \item Wytyczna planisty - w wykonanych badaniach nie zaobserwowano
+    decydującego wpływu, jednak jak można zaobserwować, SCHED\_RR działa
+    nieznacznie lepiej.
+\end{enumerate}
+
+W dodatkowych eksperymentach zweryfikowano, że:
+\begin{enumerate}
+    \item \textbf{System jest w stanie tłumić hałasy tonalne w postaci
+    pojedynczych sinusoid i ich sum dla $f < 400$} - poza tym pasmem, układ
+    zaczyna generować sygnały nie powodujące tłumienia. Poprawnie tłumione są
+    również sygnały składające się z sum sinusoid, jednak warunkiem jest, aby
+    hałas nie zmieniał swojej częstotliwości szybciej niż około 1 s.
+    \item \textbf{System nie jest w stanie tłumić hałasów losowych} - zbieżność
+    algorytmu dla takich sygnałów jest zbyt wolna.
+\end{enumerate}

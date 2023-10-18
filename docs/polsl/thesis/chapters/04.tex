@@ -258,7 +258,7 @@ operacyjne lub dedykowane przetwornice (ang. \textit{buck-boost}). Rozwiązanie
 oparte o skonstruowanie układu inwerterów zostało odrzucone z powodu dodatkowego
 nakładu pracy. Taki system, poza układem odwracającym napięcie (ang.
 \textit{rail splitter}) wymagałby dodatkowego wzmacniacza mocy na wyjściu, co
-jest to spowodowane zapotrzebowaniem prądowym wzmacniaczy, według specyfikacji
+jest spowodowane zapotrzebowaniem prądowym wzmacniaczy, według specyfikacji
 wynoszącym typowo 1.4 mA na układ. Jako, że w projekcie wykorzystywanych jest
 pięć wzmacniaczy operacyjnych na kanał, a kanałów jest cztery, to wymaganiem
 jest, aby wydajność prądowa wykorzystanego generatora ujemnego napięcia wynosiła
@@ -370,7 +370,7 @@ wraz z kondensatorami odsprzęgającymi przedstawiono na rysunku \ref{hw::smps}.
     \label{hw::smps}
 \end{figure}
 
-Warto dodać, że napięcie referencjyjne, prócz przetworników, trafia również na
+Warto dodać, że napięcie referencyjne, prócz przetworników, trafia również na
 ograniczniki diodowe zastosowane w sekcji wejściowych torów analogowych.
 
 \subsection{Generacja składowej stałej}
@@ -482,15 +482,15 @@ zastosowań jest wzmacniacz różnicowy, a jego topologię przedstawiono na rysu
 
 \par Zależność opisująca układ opiera się na wykorzystaniu zasady superpozycji.
 Równanie opisujące wyjście w układu w stosunku do wejścia odwracającego przy
-wirtualnie wyzerowanym wejściu nieodwracającym jest zależnością opisującją
-wzmocnienie wzmacniacza w topologi odwracającej \cite{bib:tietze}, opisaną jako
+wirtualnie wyzerowanym wejściu nieodwracającym jest zależnością opisującą
+wzmocnienie wzmacniacza w topologii odwracającej \cite{bib:tietze}, opisaną jako
 \begin{equation}
     U_{-,wy} = -U_{-,we}\left(\frac{R_f}{R_{1}}\right)
     \label{eq::op_diff_inv}
 \end{equation}
 Wyjście wzmacniacza w stosunku do wejścia nieodwracającego przy wirtualnie
 wyzerowanym wejściu odwracającym jest zdefiniowane zależnością opisującą
-wzmacniacz w topologi nieodwracającej w połączeniu z dzielnikiem występującym na
+wzmacniacz w topologii nieodwracającej w połączeniu z dzielnikiem występującym na
 wejściu nieodwracającym
 \begin{equation}
     U_{+,wy} = U_{+,we}\left(\frac{R_3}{R_2 + R_3}\right)\left(1 + \frac{R_f}{R_1}\right)
@@ -896,7 +896,7 @@ służący do generacji pozostałych.
 Transfery z wykorzystaniem trybu I$^2$S i jego pochodnych realizowane są z
 wykorzystaniem linii zegarowej (ang. \textit{Bit clock}, \textbf{BCLK}),
 selektora kanału (ang. \textit{Frame select}, \textbf{FS}) oraz danych (ang.
-\textit{Serial data}, \textbf{SDATA}). Dane przesyłane są w formacie definującym
+\textit{Serial data}, \textbf{SDATA}). Dane przesyłane są w formacie definiującym
 najbardziej znaczący bit na początku transmisji (ang. \textit{MSB first}),
 której rozpoczęcie definiowane jest przez określony stan selektora kanału
 (\textbf{FS}). Typowo zbocze opadające selektora definuje transmisję kanału
@@ -907,7 +907,7 @@ lewego, a narastające prawego, lecz możliwe są inne konfiguracje.
 narastającym, co powoduje pewne komplikacje, kiedy zapis odbywa się w identyczny
 sposób. Domyślnie, zmiany selektora kanału (\textbf{FS}) odbywają się na
 zboczach opadających. Standardowy tryb posiada charakterystyczne, zdefiniowane w
-standardzie opóźnienie o jeden cylk zegara (\textbf{BCLK}), powodujące, że
+standardzie opóźnienie o jeden cykl zegara (\textbf{BCLK}), powodujące, że
 najbardziej znaczący bit jest odczytywany dopiero na jego drugim zboczu
 narastającym, liczonym od momentu rozpoczęcia transmisji dla określonego kanału.
 Diagram czasowy transmisji z wykorzystaniem trybu I$^2$S w domyślnej
@@ -958,7 +958,7 @@ urządzeń w systemie, co jest niezbędne dla systemu wymagającego stałej
 częstotliwości próbkowania.
 
 \par Kwestią o którą należy zadbać, jest sposób realizacji transferów. W
-przypadku przetworników analogowo-cyfrowych i cyfrowo-analogowych, najcześniej
+przypadku przetworników analogowo-cyfrowych i cyfrowo-analogowych, najwcześniej
 wykorzystywanym interfejsem jest SPI (ang. \textit{Serial Peripheral
 Interface}). Transmisja z użyciem takiego interfejsu odbywa się synchronicznie w
 sposób dwukierunkowy z wykorzystaniem linii danych wyjściowych (ang.
