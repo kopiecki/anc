@@ -49,7 +49,10 @@ Przebieg wywłaszczenia przedstawiono na rysunku \ref{sw::preempt_0}:
 \end{figure}
 
 Jako, że jedynie wywłaszczone mogą zostać zadania pracujące w trybie
-użytkownika, nie trudno wyobrazić sobie sytuację, którą przedstawiono na rysunku
+użytkownika\remark{tego nie rozumiem, od ok. 20 lat zwykłe jądro ma PREEMPT,
+i może być wywłaszczane. Problemem normalnego jądra to jednak są spinlocki,
+które blokują wywłaszczanie, bo realizują taki, najprostszy, mechanizm
+zapobieganiu deadlockom}, nie trudno wyobrazić sobie sytuację, którą przedstawiono na rysunku
 \ref{sw::preempt_1}
 
 \begin{figure}[H]
@@ -82,7 +85,7 @@ Przebieg takiego problemu przedstawiono na rysunku \ref{sw::prior_inv}:
 Krytyczne zadanie \textbf{B} musi uzyskać dostęp do zasobów blokowanych przez
 zadanie \textbf{A} o niższym priorytecie. W celu ich odblokowania, planista
 przełącza kontekst na zadanie \textbf{A}, lecz w czasie jego wykonywania zostaje
-ono wywłaszczone przez zadanie \textbf{B} o wyższym priorytecie.
+ono wywłaszczone przez zadanie \textbf{C} o wyższym priorytecie.
 
 \subsection{Zestaw łatek PREEMPT\_RT}
 
@@ -148,21 +151,28 @@ Poza kwestiami opisanymi wyżej, zestaw łatek PREEMPT\_RT wprowadza wsparcie dl
 
     \item Liczników wysokiej rozdzielczości (ang. \textit{High resolution
     timers}) - wykorzystanie dostępnych sprzętowych liczników do zaplanowania
-    przerwań w dokładnym momencie
+    przerwań w dokładnym momencie\remark{to też bardzo bardzo dawno temu
+    trafiło do mainline}
 
     \item Dodatkowe wytyczne dla planisty:
     \begin{itemize}
         \item SCHED\_FIFO - wszystkie zadania z tym samym priorytetem wykonywane
             są w trybie FIFO (ang. \textit{First in, First out}).
 
+	    \remark{to chyba od zawsze było w mainline}
+
         \item SCHED\_RR - równomierne dzielenie czasu pomiędzy zadania z tym
         samym priorytetem z wykorzystaniem algorytmu karuzelowego (ang.
         \textit{Round robin}).
+	    
+	    \remark{to chyba od zawsze było w mainline}
 
         \item SCHED\_DEADLINE - wspiera dodanie dodatkowych parametrów dla
         zadań, takich jak czas przetwarzania (ang. \textit{computation time}),
         limit czasowy (ang. \textit{deadline}) i okres (czas, w którym tylko
         jedno zadanie może zostać wykonane).
+	    
+	    \remark{to dawnu temu trafiło do mainline}
     \end{itemize}
 \end{itemize}
 
@@ -359,7 +369,7 @@ które przypominają struktury języka C. Węzły posiadają zestaw właściwoś
 jednego rodzica, za wyjątkiem węzła \textit{root}, który jest węzłem nadrzędnym.
 Węzły mogą się do siebie nawzajem odwoływać jak i modyfikować swoją zawartość,
 dlatego z matematycznego punktu widzenia, drzewo urządzeń jest tak właściwie
-grafem acyklicznym. \par Kody źródłowe jądra Linux posiadają gotowo przygotowane
+grafem acyklicznym.\remark{nie do końca, drzewo to graf acykliczny, skierowany i spójny.} \par Kody źródłowe jądra Linux posiadają gotowo przygotowane
 pliki źródłowe \textit{.dts} dla większości obsługiwanych platform, w tym
 wykorzystanej. Sporządzona układ pomiarowy, obsługiwany przez interfejs McASP,
 nie posiada mechanizmu automatycznego wykrywania, dlatego niezbędna jest jego
@@ -703,7 +713,7 @@ Na jakość generatora działającego w oparciu LFSR wpływ mają numery bitów
 wykorzystywane do obliczenia nowego stanu, rodzaj i ilość operacji na nich
 przeprowadzanych oraz stan początkowy (ang. \textit{seed}). Jak można zauważyć z
 \ref{sw::lfsr}, dla stanu początkowego 0 generator nie będzie działał poprawnie.
-Okres w którym generowane liczby się nie duplikują zdefiniowany jest przez
+Maksymalny okres\remark{okres może być krótszy, zależy od wielomianu} w którym generowane liczby się nie duplikują zdefiniowany jest przez
 liczbę bitów $M$ i wynosi
 \begin{equation}
     T = 2^{M} - 1
@@ -711,7 +721,11 @@ liczbę bitów $M$ i wynosi
 
 Istnieje wiele podzbiorów generatorów implementowanych w oparciu o LFSR. Jednym
 z nich są generatory oparte na kombinacji alternatywy rozłącznej, przesunięcia
-i/lub rotacji aktualnego stanu rejestru do obliczenia kolejnego. Omawiany
+i/lub rotacji aktualnego stanu rejestru do obliczenia kolejnego.\remark{
+Tylko, że te generatory nie są LFSR, mają inną strukturę,
+często są tak konstruowane, by działały jak LFSR, który jest tam
+jakby wzrocowy, ale by możliwa była róznoległa implementacja,
+tzn. taka działają na długich słowach} Omawiany
 podzbiór, ze względu na wykorzystywane operacje, przyjęło się nazywać
 generatorami \textit{xorshift} i cieszą się one wysokim uznaniem w literaturze
 \cite{bib:prng} ze względu na niskie zużycie zasobów do wykonania obliczeń oraz
@@ -746,7 +760,7 @@ Przebieg operacji w głównej pętli programowej przedstawiono na schemacie
 \end{figure}
 
 Częstotliwość próbkowania układu, jak opisywano w sekcji dotyczącej systemu
-ASLA, jest ograniczona przez sterowniki jądra i zamyka się w przedziale od 8 do
+ALSA, jest ograniczona przez sterowniki jądra i zamyka się w przedziale od 8 do
 192 kHz. Korzystając z założenia, że układ pracuje na hałasach do częstotliwości
 500 Hz, będącej również częstotliwością graniczną filtrów sekcji analogowej,
 wejściowe dane można poddawać procesowi decymacji, otrzymując w ten sposób $f'_s

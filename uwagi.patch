@@ -1,0 +1,542 @@
+From 5e4a2b66ac4afb685ba1c90d30c2d0a1850645b7 Mon Sep 17 00:00:00 2001
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Date: Mon, 23 Oct 2023 08:21:20 +0200
+Subject: [PATCH] uwagi
+
+---
+ docs/polsl/thesis/chapters/01.tex | 46 +++++++++++++----
+ docs/polsl/thesis/chapters/02.tex | 82 ++++++++++++++++++++++++-------
+ docs/polsl/thesis/chapters/03.tex |  2 +-
+ docs/polsl/thesis/chapters/04.tex | 35 ++++++++++---
+ docs/polsl/thesis/chapters/05.tex | 28 ++++++++---
+ docs/polsl/thesis/main.tex        |  4 +-
+ 6 files changed, 155 insertions(+), 42 deletions(-)
+
+diff --git a/docs/polsl/thesis/chapters/01.tex b/docs/polsl/thesis/chapters/01.tex
+index 829719e..0392d45 100644
+--- a/docs/polsl/thesis/chapters/01.tex
++++ b/docs/polsl/thesis/chapters/01.tex
+@@ -8,11 +8,20 @@ wieku, jednak z powodu braku odpowiednich narzędzi pozwalających na praktyczn
+ implementację rozwiązania w tamtych czasach, znaczące postępy zaczęto obserwować
+ dopiero w latach 80. i 90. XX wieku, kiedy raptowny rozwój technologiczny
+ umożliwił projektowane coraz to dokładniejszych i stabilniejszych układów
+-automatyki \cite{bib:kuo_morgan}. Powodem takiego przebiegu wydarzeń był
++automatyki \cite{bib:kuo_morgan}\remark{nie podoba mi się sformułowanie
++stabilniejsze. Chodzi tutaj pewnie o~takie rzeczy jak stabilność
++parametrów układu sterowania przy zmianach temperatury, z~powodu
++starzenia, i~tak dalej, ale stabilność układu automatyki ma inne
++znaczenie.}. Powodem takiego przebiegu wydarzeń był
+ wyłaniający się zza horyzontu początek epoki cyfrowej, która udowodniła, że z
+ użyciem kodu binarnego można opisać i wpływać na otaczający nas świat z dużą
+ precyzją i elastycznością, nieosiągalną wcześniej w rozwiązaniach opartych
+-jedynie na technice analogowej. Zastosowanie układów cyfrowych w systemach ANC
++jedynie na technice analogowej\remark{i~tak technika cyfrowa jest
++limitowana przez precyzję i~dokładność elektroniki analogowej.
++To co ma największe znaczenie dla układów automatyki to to,
++że w~układach cyfrowych wszelkie błędy przetwarzania są deterministyczne,
++i~można je z~dowolną prezycją kontrolować.}.
++Zastosowanie układów cyfrowych w systemach ANC
+ umożliwiło ich szersze wykorzystanie w praktyce. Znalazły one swoje zastosowanie
+ w redukcji hałasów akustycznych, rozchodzących się w powietrzu w zamkniętej lub
+ otwartej przestrzeni, redukcji hałasów hydroakustycznych, rozchodzących się w
+@@ -22,8 +31,9 @@ zaobserwowano w militariach, między innymi w tłumieniu hałasu akustycznego
+ propagującego się wewnątrz odrzutowca.
+ 
+ \par Jak opisuje prawo Moore'a \cite{bib:moore}, moc obliczeniowa układów
+-cyfrowych w kolejnych latach zwiększa się z zgodnie z trendem wykładniczym i
+-takie zachowanie można zaobserwować do czasów teraźniejszych. Ekstremalna
++cyfrowych\remark{prawo Moore'a dotyczy liczby tranzystorów tranzysotrów,
++nie mocy obliczeniowej} w kolejnych latach zwiększa się z zgodnie z trendem wykładniczym i
++takie zachowanie można zaobserwować do czasów teraźniejszych\remark{i tak ściśle nie jest już zachowane do tej pory}. Ekstremalna
+ miniaturyzacja, optymalizacja zapotrzebowania energetycznego jak i niskie koszta
+ układów cyfrowych spowodowały ich globalizację. Obecnie ANC można zaobserwować
+ na rynku konsumenckim, w postaci słuchawek redukujących hałas z otoczenia,
+@@ -100,7 +110,9 @@ i prędkość rozchodzenia się drgań w ośrodku jest mocno niestacjonarna, Jes
+ spowodowane aktualną temperaturą, wilgotnością powietrza, ciśnieniem jak i
+ rozmieszczeniem oraz typem elementów wokół, absorobujących lub/i odbijających
+ fale akustyczne w określony sposób. Takie zachowanie wymaga, żeby projektowany
+-system był adaptacyjny, co oznacza, że jego działanie będzie odpowiednio
++system był adaptacyjny\remark{nie jest to prawda, układ ze sprzężeniem
++zwrotnym nie musi być adaptacyjny, by radzić sobie z~takimi zmianami},
++co oznacza, że jego działanie będzie odpowiednio
+ korygowane, w zależności od zaobserwowanych zmian charaketerystyki toru, którym
+ propaguje się niechciany sygnał. Adaptacja realizowana jedynie w sposób
+ analogowy, pomimo że możliwa, posiada duże ograniczenia w zakresie elastyczności
+@@ -119,7 +131,9 @@ sprawę, zwiększając nateżenie sygnału, który miał tłumić.
+ Układami cyfrowymi wykorzystywanymi w systemach ANC, ze względu na wymóg
+ przetwarzania sygnałów w czasie rzeczywistym z wysoką precyzją, są specjalnie
+ zaprojektowane do tych celów procesory sygnałowe (DSP, ang. \textit{Digital
+-signal processor}) \cite{bib:ti_anc}. Takie układy w współpracy z przetwornikami
++signal processor}) \cite{bib:ti_anc}\remark{Nie jest to już prawda,
++w dzisiejszych czasach to już zwykłe mikrokontrolery posiadają
++wystarczającą wydajność.}. Takie układy w współpracy z przetwornikami
+ analogowo-cyfrowymi i cyfrowo-analogowymi tworzą klasyczny tor przetwarzania,
+ który przedstawiono na rysunku \ref{intro::processing}:
+ 
+@@ -133,16 +147,30 @@ który przedstawiono na rysunku \ref{intro::processing}:
+ Procesory sygnałowe charakteryzują się budową, która umożliwia sprzętowe
+ wykonanie operacji często występujących w cyfrowym przetwarzaniu sygnałów.
+ Przykładowo, sprzętowo realizowane mogą być operacje filtracji, transformacji
+-Fouriera czy korelacji wzajemnej. Dodatkowo, instrukcje na tego typu jednostkach
++Fouriera czy korelacji wzajemnej\remark{tego typu operacje nie są
++jakoś bardzo typowe dla DSP. To co było najbardziej typowe to:
++szybkie mnożenie w 1 cyklu zegarowym, szybki dostęp do pamięci,
++często możliwość zrobienia dwóch odczytów w pojedynczym cyklu
++zegarowym, i to często z dwóch niezależnych pamięci RAM,
++no i oczywiście trzecia pamięć na kod, pewne rozszerzenia
++jak chodzi o adresowanie, wsparcie dla buforów cyklicznych
++oraz bit reversal dla FFT, no i później wykonywanie wielu instrukcji
++równolegle, początkowo to wiele DSP miało bardzo złożone instrukcje,
++typu jedna instrukcja czyta 2 zmienne z pamięci, mnoży, i dodaje,
++a nawet czasami i robi modyfikację w pamięci, by zaimplementować
++bufor cykliczny}.
++Dodatkowo, instrukcje na tego typu jednostkach
+ obliczeniowych mogą być realizowane są w sposób potokowy (ang.
+ \textit{pipelining}), co pozwala na znaczące przyśpieszenie obliczeń poprzez
+-przetwarzanie równoległe. \par Pomimo, że wykorzystanie procesorów sygnałowych
++przetwarzanie równoległe. \remark{zwykle przetwarznie równoległe
++kojarzys się bardziej z~superskalarnością} \par Pomimo, że
++wykorzystanie procesorów sygnałowych
+ jest z pewnością jednym z najlepszych wyborów przy projektowaniu systemu
+ przetwarzającego sygnały w czasie rzeczywistym, to z takim rozwiązaniem wiąże
+ się szereg problemów:
+ \begin{enumerate}
+ 
+-    \item Wysoka cena i mała dostępność - w większości przypadków zakup musi być
++    \item Wysoka cena i mała dostępność --- \remark{myślnik to `-{-}-', nie `-'}w większości przypadków zakup musi być
+     realizowany przez globalnego dystrybutora elektroniki. Cena takich układów
+     jest wysoka i z racji niskiej popularności, platformy rozwojowe są drogie i
+     słabo dostępne, jeżeli w ogóle istnieją. Oznacza to, że w większości
+diff --git a/docs/polsl/thesis/chapters/02.tex b/docs/polsl/thesis/chapters/02.tex
+index a46adfc..b3e9c7c 100644
+--- a/docs/polsl/thesis/chapters/02.tex
++++ b/docs/polsl/thesis/chapters/02.tex
+@@ -8,8 +8,14 @@ sterowania, z którego można wyróżnić \cite{bib:kuo_morgan}:
+ \begin{enumerate}
+ 
+     \item Sterowanie ze sprzężeniem w przód - hałas jest mierzony przed
+-    dotarciem do aktuatora (głośnika), a następnie mierzony ponownie za
+-    aktuatorem w celu określenia, jak bardzo został wytłumiony.
++    dotarciem do aktuatora (głośnika)\remark{tutaj bardziej istotny jest
++    raczej mikrofon błędu, nie głośnik, i też z tym ,,przed'' to różnie
++    jest. Jest to struktura kompensacji zakłóceń, i po prostu trzeba
++    mierzyć zakłócenie, i to jest istotne, by mierzyć hałas pierwotny
++    z możliwie dużym wyprzedzeniem}, a następnie mierzony ponownie za
++    aktuatorem w celu określenia, jak bardzo został wytłumiony
++    \remark{nie jest to potrzebne, jest to tylko potrzebne do adaptacji,
++    a istnieją układy feed-forward o stałych parametrach.}.
+ 
+     \item Sterowanie ze sprzężeniem w tył - hałas jest mierzony jedynie za
+     aktuatorem i stanowi jedyny pomiar przeprowadzany w systemie.
+@@ -17,7 +23,12 @@ sterowania, z którego można wyróżnić \cite{bib:kuo_morgan}:
+ \end{enumerate}
+ 
+ Hałas występujący przed aktuatorem przyjeło nazywać się hałasem pierwotnym i w
+-nomenklaturze automatyki traktowany jako wejście systemu, gdzie ten mierzony za
++nomenklaturze automatyki traktowany jako wejście systemu\remark{nie
++do końca z tym tak jest, poza tymi wszystkimi uwagami
++do `przed aktuatorem' to jeszcze taka, że wejściem układu
++ANC jest sygnał referencyjny, który jest dźwiękiem
++ze źródła pierwtotnego, który przeszedł już przez pewny
++tor}, gdzie ten mierzony za
+ aktuatorem, nazywany hałasem resztkowym, traktowany jest jak błąd (uchyb).
+ Mikrofon mierzący hałas pierwotny nazywany jest mikrofonem referencyjnym, a ten
+ mierzący hałas resztkowy, mikrofonem błędu. W związku z przyjęciem takiego
+@@ -43,6 +54,11 @@ rysunkach \ref{analysis::structs}.
+        \caption{Porównanie struktur systemów}
+        \label{analysis::structs}
+ \end{figure}
++\remark{te rysunki sugerują jakby to odbywało się w przestrzeni
++otwartej, i jakby po przejściu przez głośnik nagle hałas
++się zmieniał na ten resztkowy, i później był taki sam,
++co nie jest oczywiście prawdą, nawet jakby to wszystko było
++w falowodzie.}
+ 
+ \par Instynktownie można stwierdzić, że skoro systemy ze sprzężeniem w przód
+ opierają swoje działanie na pomiarze dwóch wielkości, to ze względu na większą
+@@ -52,7 +68,7 @@ dodatkowego pomiaru (czujnika), co zwiększa koszta oraz komplikuje strukturę.
+ Dodatkowy pomiar jest też nie zawsze możliwy, więc wybór struktury często jest
+ kompromisem.
+ 
+-\par Projektujac układ ze sprzężeniem w przód można dokonać dodatkowego
++\par Projektując układ ze sprzężeniem w przód można dokonać dodatkowego
+ założenia, które wprowadza możliwe modyfikacje struktury. Opiera się one
+ charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować: 
+ 
+@@ -60,7 +76,8 @@ charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować:
+ 
+     \item \textbf{Hałas szerokopasmowy} - losowy, wywołany przez niespodziewane
+     zaburzenia ośrodka. Jako, że jest losowy, jego energia jest równomiernie
+-    rozprowadzona w całym paśmie częstotliwości.
++    rozprowadzona w całym paśmie częstotliwości.\remark{równomiernie
++    to bardzo rzadko.}
+ 
+     \item \textbf{Hałas wąskopasmowy} - skoncentrowany w specifycznych pasmach. Może być
+     wywołany przez maszyny pracujące w sposób okresowy, przykładowo silniki lub
+@@ -102,7 +119,9 @@ i charakterystykę hałasu, która w tym przypadku może być łatwo symulowana.
+ 
+ \section{Zasada działania}
+ 
+-Diagram \ref{analysis::structs_a} można przedstawić za pomocą uogólnionego
++Diagram \ref{analysis::structs_a}\remark{tutaj ma Pan 2 razy tą
++samą nazwę, i tutaj pojawia się numer z rozdziału 5, a nie
++ten wcześniejszy diagram} można przedstawić za pomocą uogólnionego
+ schematu blokowego \ref{analysis::scheme_0}. W celu łatwiejszej analizy,
+ wszystkie sygnały i układy w systemie potraktowano jako dyskretne, jednak należy
+ mieć na uwadze, że postaci sygnałów są zmieniane na ich napięciowe, akustyczne
+@@ -116,6 +135,10 @@ lub cyfrowe odpowiedniki w trakcie przekraczania domen i wchodzenia w blok
+     \label{analysis::scheme_0}
+ \end{figure}
+ 
++\remark{Jeśli pokazuje na tym schemacie Pan głośnik i mikrofon,
++to być może to za duże uproszczenie, że nie pokazuje Pan
++odpowiednich transmitancji, przynajmniej po stronie akustycznej}
++
+ Transmitancja $P(z^{-1})$ opisuje dynamikę toru, którym porusza się hałas
+ pierwotny i przyjęło się go nazywać torem pierwotnym. Blok \textbf{ANC} na ten
+ moment jest uogólnionym układem elektronicznym, a sygnały występujące na
+@@ -141,7 +164,9 @@ Modelowanie obiektów dynamicznych w treści pracy uogólnione zostaje do filtr
+ SOI (filtr o skończonej odpowiedzi impulsowej, ang. \textit{Finite impulse
+ filter, FIR filter}). Tego typu modele bardzo często stosowane są w
+ zagadanieniach związanych z systemami ANC, głównie ze względu na wygodę. Są
+-zawsze stabilne, łatwe w implementacji jak i posiadają liniową odpowiedź fazową.
++zawsze stabilne, łatwe w implementacji jak i posiadają liniową odpowiedź
++fazową\remark{nie jest to prawda, tak jest tylko dla filtrów
++FIR o~symetrycznych współczynnikach}.
+ Transmitancja takiego modelu (odpowiedź impulsowa) dana jest zależnością
+ \cite{bib:lyons}:
+ \begin{equation}
+@@ -149,7 +174,10 @@ Transmitancja takiego modelu (odpowiedź impulsowa) dana jest zależnością
+     \label{eq::fir}
+ \end{equation}
+ gdzie $w_l$ to współczynnik filtra o numerze $l$ (ang. \textit{tap}), $L$ to
+-rząd filtra (ilość współczynników, długość odpowiedzi impulsowej), a $z^{-l}$ to
++rząd filtra (ilość współczynników\remark{rząd to nie liczba
++współczynników, rząd jest o~1~mniejszy niż liczba współczynników,
++i tam w równaniu powinno być $L$, a nie $L - 1$},
++długość odpowiedzi impulsowej), a $z^{-l}$ to
+ operator opóźnienia o $l$ próbek. \\
+ \par W związku z \ref{eq::fir}, wyjście filtra SOI dane jest
+ \begin{equation}
+@@ -181,7 +209,10 @@ Analizując schemat \ref{analysis::scheme_0} można dojść do logicznego wniosk
+ $P(z^{-1})$, przefiltrowanie przez nią sygnału $x(n)$ oraz odwórcenie znaku
+ wyjścia. Nie jest to jednak proste zadanie, ponieważ tak jak opisywano
+ wcześniej, charakterystyka toru pierwotnego, czyli drogi, którą propaguje się
+-docelowo tłumiony hałas, jest silnie niestacjonarna. W celu identyfikacji
++docelowo tłumiony hałas, jest silnie niestacjonarna\remark{nie
++musi być ona stacjonarna, i~często nie jest, ale żeby była aż
++silnie niestacjonarna?}.
++W celu identyfikacji
+ takiego obiektu niezbędny jest mechanizm pozwalający na bieżącą estymację
+ parametrów, czyli innymi słowy, układ musi się adaptować do zmieniającej się
+ charakterystyki toru podstawowego. Mając to na uwadze, zaktualizowany o filtr
+@@ -203,17 +234,23 @@ niestacjonarnych jest algorytm LMS (ang. \textit{Least mean squares})
+ najniższego spadku (ang. \textit{method of steepest descent}) do minimalizacji
+ błędu średniokwadratowego.
+ 
+-\par Błąd w analizowanym przypadku dany jest
++\par Błąd w analizowanym przypadku dany jest równy:
+ \begin{equation}
+-    e(n) = d(n) - y(n) = d(n) - \textbf{w}^T(n)\textbf{x}(n)
++    e(n) = d(n) - y(n) = d(n) - \textbf{w}^T(n)\textbf{x}(n).
+ \end{equation}
+ 
+-Minimalizując wartość oczekiwaną kwadratu błędu
++\remark{w wielu równaniach brakuje odpowiedniej interpukcji,
++w~poprzednim i kolejnym równaniu poprawiłem, ale trzeba
++poprawić też w~innych.}
++Minimalizując wartość oczekiwaną kwadratu błędu:
+ \begin{equation}
+-    E[e^2(n)] = E[d(n)] - 2\textbf{p}^T\textbf{w}(n) + \textbf{w}^T(n)\textbf{R}\textbf{w}(n)
++    E[e^2(n)] = E[d(n)] - 2\textbf{p}^T\textbf{w}(n) + \textbf{w}^T(n)\textbf{R}\textbf{w}(n),
+ \end{equation}
++\remark{przy $d(n)$ brakuje kwadratu. I też przydało by się tutaj
++cytowanie jakiegoś źródła jeśli się Pan na czymś opiera.
++I też wydaje mi się, że tutaj może brakować pewnych założeń.}
+ 
+-gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej
++\noindent gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej
+ \begin{equation}
+     \textbf{p} \equiv E[d(n)\textbf{x}(n)] = \begin{bmatrix}
+         r_{dx}(0) & r_{dx}(1) & \cdots & r_{dx}(L - 1)
+@@ -315,7 +352,9 @@ Bezpośrednio z \ref{analysis::scheme_2} można zapisać
+ Ideowo, jeżeli $W(z^{-1})$ będzie zbieżny
+ \begin{equation}
+     E(z^{-1}) = 0 \implies P(z^{-1}) = W(z^{-1})
+-\end{equation}
++\end{equation}`
++\remark{Ale $W(z^{-1})$ nigdy nie jest asymptotycznie zbieżny, o~ile
++krok nie dąży do 0.}
+ to gdy $X(z^{-1}) \neq 0$
+ \begin{equation}
+     y(n) = d(n) \implies e(n) = d(n) - y(n) = 0
+@@ -345,6 +384,9 @@ na rysunku \ref{analysis::scheme_3}:
+     \label{analysis::scheme_3}
+ \end{figure}
+ 
++\remark{A dlaczego nie dodał Pan transmitancji związanej z~pomiarem
++$x(n)$? Bo ten tego to P może być nieprzyczynowe.}
++
+ Nowe transmitancje na schemacie \ref{analysis::scheme_3} można opisać
+ następująco:
+ \begin{itemize}
+@@ -587,7 +629,7 @@ Dzięki tym działaniom, dobór kroku $\alpha$ jest uniezależniony od mocy sygn
+ $x(n)$. Z powodu zastosowanej normalizacji, algorytm z tak wprowadzoną
+ modyfikacją przyjęło się nazywać znormalizowanym algorytmem NLMS (ang.
+ \textit{Normalized LMS}, NLMS) i jest on również znany jako \textit{Metoda
+-Kaczmarza} lub \textit{Metoda Uczenia Rekurencyjnego} \cite{bib:figwer}.
++Kaczmarza}\remark{Metoda Kaczmarza to metoda dla $\alpha=1$} lub \textit{Metoda Uczenia Rekurencyjnego} \cite{bib:figwer}.
+ 
+ \par Normalizację kroku, definiującą algorytm NLMS można zastosować w algorytmie
+ FXLMS, otrzymując następujące równiania
+@@ -739,6 +781,9 @@ zaktualizowany z jego uwzględnieniem schemat przedstawiono na rysunku
+     \label{analysis::feed_canc}
+ \end{figure}
+ 
++\remark{nie rozumiem tego $z^{-1}$, jeśli prowadzić Pan coś
++takiego to $F$ i $\hat{F}$ muszą już być różne.}
++
+ Transmitancja $\hat{F}(z^{-1})$, analogicznie jak $\hat{S}(z^{-1})$, stanowi
+ zidentyfikowany obiekt $F(z^{-1})$. Jeżeli $F(z^{-1}) = \hat{F}(z^{-1})$, to
+ wpływ sprzężenia pozostaje całkowicie zneutralizowany. Sygnał $x(n)$ wchodzący
+@@ -753,7 +798,10 @@ odpowiedzią impulsową. Należy zauważyć, że w schemacie wprowadzono dodatko
+ opóźnienie o jedną próbkę przed blokiem zidentyfikowanego toru sprzężenia. Jest
+ to spowodowane faktem, że w czasie kiedy system zbiera próbkę sygnału
+ referencyjnego zaznaczonego na schemacie jako $u(n)$, to wyjście filtra
+-$W(z^{-1})$ nie jest jeszcze obliczone. \par Transmitancję $F(z^{-1})$ można
++$W(z^{-1})$ nie jest jeszcze obliczone.\remark{Tak, ale wtedy
++te sygnały się nie zniosą. I też to żaden problem tak naprawdę,
++bo świat zewnętrzny też jeszcze tego nie widzi, więc $F$ nie może
++być bez opóźnienia.} \par Transmitancję $F(z^{-1})$ można
+ identyfikować w operciu o te same metody co $S(z^{-1})$. Schemat eksperymentu
+ identyfikacji przyjmuje w tym przypadku postać jak na rysunku
+ \ref{analysis::feedback_ident}:
+diff --git a/docs/polsl/thesis/chapters/03.tex b/docs/polsl/thesis/chapters/03.tex
+index 5fc10c2..b7d0637 100644
+--- a/docs/polsl/thesis/chapters/03.tex
++++ b/docs/polsl/thesis/chapters/03.tex
+@@ -88,7 +88,7 @@ mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
+     pracujących w sekcjach analogowych o względnie wysokiej dokładności.
+ 
+     \item W przypadku wyboru mikrofonów pojemnościowych, generacja odpowiedniego
+-    zasilania phantomowego, typowo mieszczącego się w zakresie od +12 do +15 V.
++    zasilania phantomowego, typowo mieszczącego się w zakresie od +12 do +15 V.\remark{najbardziej typowy to $+48$~V}
+ 
+     \item Generacja zasilań dla przetworników i zewnętrznej platformy
+     obliczeniowej.
+diff --git a/docs/polsl/thesis/chapters/04.tex b/docs/polsl/thesis/chapters/04.tex
+index 70fcc96..270daaa 100644
+--- a/docs/polsl/thesis/chapters/04.tex
++++ b/docs/polsl/thesis/chapters/04.tex
+@@ -104,7 +104,7 @@ wchodząc w techniczne szczegóły, z najbardziej znaczących parametrów
+     \item Charakterystyka częstotliwościowa do $\pm 3$ dB - 42.5 do 35000 Hz,
+     płaska.
+ 
+-    \item SNR - poniżej 100 dB.
++    \item SNR - poniżej 100 dB.\remark{poniżej, czyli $-$100~dB też może być?}
+ 
+ \end{enumerate}
+ 
+@@ -247,7 +247,10 @@ mikrofonów.
+ \subsection{Symetryzacja szyn zasilających}
+ 
+ Przetwarzany sygnał akustyczny jest symetryczny wokół zera, więc wymagane jest
+-symetryczne zasilanie dla wzmacniaczy w sekcji torów analogowych, odpowiednio
++symetryczne zasilanie dla wzmacniaczy w sekcji torów analogowych\remark{
++symetryczne zasilanie nie jest wymagane, 
++można też dodać jakieś napięcie stałe, z tym, że jest wtedy
++kolejne napięcie do dobrego filtrowania}, odpowiednio
+ wysokie, aby nie doporowadzać do saturacji ich wyjść. Wybranym zasilaniem jest
+ $\pm$12 V, a szczegóły dotyczące tego wyboru będą dokładniej opisywane w sekcji
+ torów analogowych. \par Autor stosunkowo sporo czasu poświęcił kwesti generacji
+@@ -297,6 +300,18 @@ aplikacyjnych producenta przedstawiono na rysunku \ref{hw::split}.
+     \label{hw::split}
+ \end{figure}
+ 
++\remark{A czy ta pompa odwracająca ładunki nie będzie teraz generowała
++szumu na zasilaniu tego U12? Tzn. czy nie lepiej było zasilić
++tą pompę z +15V wejściowego, przed filtracją LC? I później
++jak chodzi o przetwronicę na 5~V ta sama uwaga. Tzn.
++trzeba też wziąc pod uwagę zakłócenie generowane przez
++prąd jaki pobierają źródła, i te przetwornice pobierają
++pewnie bardzo dużo prądu impulosowo, i wyjdzie Panu,
++że impedancja zasilania na linii +15V będzie musiała
++być bardzo mała. I prościej by było dopuścić
++takie zakłócenia, a potem je po prostu tym filtrem LC
++filtrować.}
++
+ \subsection{Zasilanie domeny cyfrowej}
+ 
+ Celem sekcji jest wygenerowanie napięcia równego 5 V, będącego zasilaniem
+@@ -442,7 +457,9 @@ zmian sygnału wyjściowego. Takie zachowanie opisywane jest przez wskaźnik CMR
+ (ang. \textit{Common-mode rejection ratio}), który zdefiniowany jest jako
+ stosunek wzmocnienia różnicowego do wzmocnienia sygnału zgodnego \cite{bib:art}.
+ Dla wykorzystywanych wzmacniaczy powyżej częstotliwości 100 kHz, CMRR osiąga
+-wartość około 80 dB. \par Zaprojektowany filtr jest dolnoprzepustowym filtrem RC
++wartość około 80 dB.\remark{Tylko, że rzeczywiste CMRR łatwo pogorszyć
++układem przed wzmacniaczem, niezbalansowaniem elementów układu
++wejściowego, i warto by o tym wspomnieć.} \par Zaprojektowany filtr jest dolnoprzepustowym filtrem RC
+ pierwszego rzędu, którego opisuje następująca zależność \cite{bib:tietze}
+ \begin{equation}
+     U_{wy}(s) = U_{we}(s)\frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{R + \frac{1}{Cs}}
+@@ -458,6 +475,8 @@ Dobierając $R = 2$ k$\Omega$ i $C = 10$ nF uzyskano $f_c \approx 7.957$ kHz.
+ Poza filtrem, w sekcji zaimplementowano saturację w postaci ogranicznika
+ diodowego ograniczającego amplitudy sygnału wejściowego do limitu +12 V.
+ Omawiany układ przedstawiono na rysunku \ref{hw::emif}
++\remark{Dobrze też powiedzieć dlaczego nie zdecydowano się to samo
++dla -12~V}
+ 
+ \begin{figure}[H]
+     \centering
+@@ -689,7 +708,9 @@ powstałe w wyniku zastosowanych wzmacniaczy operacyjnych oraz zapewniający
+ lokalny bufor energii dla kondensatora próbkującego wewnątrz przetwornika.
+ Wymagania na taki filtr nie są surowe, ponieważ niechciane pasmo zostało
+ odfiltorwane przez wcześniejszy filtr antyaliasingowy, dlatego zdecydowano się
+-na wartości $R = 1$ k$\Omega$ i $C = 10$ nF, uzyskując w ten sposób $f_c \approx
++na wartości $R = 1$ k$\Omega$ i $C = 10$ nF,\remark{to pewnie
++uzgadnialiśmy wcześniej, że jest dobrze, ale 10 nF to wydaje się
++być mało jako bufor dla ADC} uzyskując w ten sposób $f_c \approx
+ 15.91$ kHz. \par Wejście przetwornika analogowo-cyfrowego należy zabezpieczyć
+ przed napięciami przekraczającymi jego zakres. O układzie realizującym to
+ zadanie wspominano już w sekcji wejścia zbalansowanego, lecz w tym przypadku,
+@@ -787,9 +808,9 @@ Wyjście analogowe projektowane jest z myślą o złączach XLR, co oznacza, że
+ sygnał wyjściowy, tak jak wejściowy, musi być symetryczny (zbalansowany). W celu
+ jego wytworzenia zastosowano układ wzmacniacza operacyjnego w topologii
+ odwracającej z jednostkowym wzmocnieniem \ref{eq::op_diff_inv} ($R_1 = R_f$).
+-Sygnał wyjściowy (-) takiego układu jest odwrócony w fazie względem wejściowego
++Sygnał wyjściowy ($-$)\remark{minus `$-$' to nie `-'} takiego układu jest odwrócony w fazie względem wejściowego
+ (+), co pozwala na uzyskanie symetrycznej pary wyprowadzanej docelowo na złącze
+-XLR. Przy wykorzystaniu takiego układu należy miec na uwadze, że wzmacniacz
++XLR. Przy wykorzystaniu takiego układu należy mieć na uwadze, że wzmacniacz
+ generujący sygnał odwrócony (-) jest elementem nie mającym odpowiednika w torze
+ sygnału nieodwróconego (+). Układy sterujące wyjściem tej sekcji, czyli
+ odpowiednio ostatni wzmacniacz w układzie filtra dla sygnału nieodwróconego (+)
+@@ -797,7 +818,7 @@ oraz wzmacniacz odwracający dla sygnału odwróconego (-) mogą zachowywać si
+ znacząco inaczej. Możliwym rozwiązaniem byłoby dodanie wtórnika napięciowego w
+ ścieżce sygnału nieodwróconego (+), lecz wiązałoby się to z dodatkowymi
+ wzmacniaczami operacyjnymi na kanał wyjściowy. Jako, że wykorzystywanych
+-wzmacniaczy na tym etapie jest już stosunkowo dużo (pięc na kanał), z pomysłu
++wzmacniaczy na tym etapie jest już stosunkowo dużo (pięć na kanał), z pomysłu
+ zrezygnowano, mając świadomość kompromisu. Omawiany fragment schematu
+ przedstawiono na rysunku \ref{hw::synch}:
+ 
+diff --git a/docs/polsl/thesis/chapters/05.tex b/docs/polsl/thesis/chapters/05.tex
+index 7f41db5..55cdf1d 100644
+--- a/docs/polsl/thesis/chapters/05.tex
++++ b/docs/polsl/thesis/chapters/05.tex
+@@ -49,7 +49,10 @@ Przebieg wywłaszczenia przedstawiono na rysunku \ref{sw::preempt_0}:
+ \end{figure}
+ 
+ Jako, że jedynie wywłaszczone mogą zostać zadania pracujące w trybie
+-użytkownika, nie trudno wyobrazić sobie sytuację, którą przedstawiono na rysunku
++użytkownika\remark{tego nie rozumiem, od ok. 20 lat zwykłe jądro ma PREEMPT,
++i może być wywłaszczane. Problemem normalnego jądra to jednak są spinlocki,
++które blokują wywłaszczanie, bo realizują taki, najprostszy, mechanizm
++zapobieganiu deadlockom}, nie trudno wyobrazić sobie sytuację, którą przedstawiono na rysunku
+ \ref{sw::preempt_1}
+ 
+ \begin{figure}[H]
+@@ -82,7 +85,7 @@ Przebieg takiego problemu przedstawiono na rysunku \ref{sw::prior_inv}:
+ Krytyczne zadanie \textbf{B} musi uzyskać dostęp do zasobów blokowanych przez
+ zadanie \textbf{A} o niższym priorytecie. W celu ich odblokowania, planista
+ przełącza kontekst na zadanie \textbf{A}, lecz w czasie jego wykonywania zostaje
+-ono wywłaszczone przez zadanie \textbf{B} o wyższym priorytecie.
++ono wywłaszczone przez zadanie \textbf{C} o wyższym priorytecie.
+ 
+ \subsection{Zestaw łatek PREEMPT\_RT}
+ 
+@@ -148,21 +151,28 @@ Poza kwestiami opisanymi wyżej, zestaw łatek PREEMPT\_RT wprowadza wsparcie dl
+ 
+     \item Liczników wysokiej rozdzielczości (ang. \textit{High resolution
+     timers}) - wykorzystanie dostępnych sprzętowych liczników do zaplanowania
+-    przerwań w dokładnym momencie
++    przerwań w dokładnym momencie\remark{to też bardzo bardzo dawno temu
++    trafiło do mainline}
+ 
+     \item Dodatkowe wytyczne dla planisty:
+     \begin{itemize}
+         \item SCHED\_FIFO - wszystkie zadania z tym samym priorytetem wykonywane
+             są w trybie FIFO (ang. \textit{First in, First out}).
+ 
++	    \remark{to chyba od zawsze było w mainline}
++
+         \item SCHED\_RR - równomierne dzielenie czasu pomiędzy zadania z tym
+         samym priorytetem z wykorzystaniem algorytmu karuzelowego (ang.
+         \textit{Round robin}).
++	    
++	    \remark{to chyba od zawsze było w mainline}
+ 
+         \item SCHED\_DEADLINE - wspiera dodanie dodatkowych parametrów dla
+         zadań, takich jak czas przetwarzania (ang. \textit{computation time}),
+         limit czasowy (ang. \textit{deadline}) i okres (czas, w którym tylko
+         jedno zadanie może zostać wykonane).
++	    
++	    \remark{to dawnu temu trafiło do mainline}
+     \end{itemize}
+ \end{itemize}
+ 
+@@ -359,7 +369,7 @@ które przypominają struktury języka C. Węzły posiadają zestaw właściwoś
+ jednego rodzica, za wyjątkiem węzła \textit{root}, który jest węzłem nadrzędnym.
+ Węzły mogą się do siebie nawzajem odwoływać jak i modyfikować swoją zawartość,
+ dlatego z matematycznego punktu widzenia, drzewo urządzeń jest tak właściwie
+-grafem acyklicznym. \par Kody źródłowe jądra Linux posiadają gotowo przygotowane
++grafem acyklicznym.\remark{nie do końca, drzewo to graf acykliczny, skierowany i spójny.} \par Kody źródłowe jądra Linux posiadają gotowo przygotowane
+ pliki źródłowe \textit{.dts} dla większości obsługiwanych platform, w tym
+ wykorzystanej. Sporządzona układ pomiarowy, obsługiwany przez interfejs McASP,
+ nie posiada mechanizmu automatycznego wykrywania, dlatego niezbędna jest jego
+@@ -703,7 +713,7 @@ Na jakość generatora działającego w oparciu LFSR wpływ mają numery bitów
+ wykorzystywane do obliczenia nowego stanu, rodzaj i ilość operacji na nich
+ przeprowadzanych oraz stan początkowy (ang. \textit{seed}). Jak można zauważyć z
+ \ref{sw::lfsr}, dla stanu początkowego 0 generator nie będzie działał poprawnie.
+-Okres w którym generowane liczby się nie duplikują zdefiniowany jest przez
++Maksymalny okres\remark{okres może być krótszy, zależy od wielomianu} w którym generowane liczby się nie duplikują zdefiniowany jest przez
+ liczbę bitów $M$ i wynosi
+ \begin{equation}
+     T = 2^{M} - 1
+@@ -711,7 +721,11 @@ liczbę bitów $M$ i wynosi
+ 
+ Istnieje wiele podzbiorów generatorów implementowanych w oparciu o LFSR. Jednym
+ z nich są generatory oparte na kombinacji alternatywy rozłącznej, przesunięcia
+-i/lub rotacji aktualnego stanu rejestru do obliczenia kolejnego. Omawiany
++i/lub rotacji aktualnego stanu rejestru do obliczenia kolejnego.\remark{
++Tylko, że te generatory nie są LFSR, mają inną strukturę,
++często są tak konstruowane, by działały jak LFSR, który jest tam
++jakby wzrocowy, ale by możliwa była róznoległa implementacja,
++tzn. taka działają na długich słowach} Omawiany
+ podzbiór, ze względu na wykorzystywane operacje, przyjęło się nazywać
+ generatorami \textit{xorshift} i cieszą się one wysokim uznaniem w literaturze
+ \cite{bib:prng} ze względu na niskie zużycie zasobów do wykonania obliczeń oraz
+@@ -746,7 +760,7 @@ Przebieg operacji w głównej pętli programowej przedstawiono na schemacie
+ \end{figure}
+ 
+ Częstotliwość próbkowania układu, jak opisywano w sekcji dotyczącej systemu
+-ASLA, jest ograniczona przez sterowniki jądra i zamyka się w przedziale od 8 do
++ALSA, jest ograniczona przez sterowniki jądra i zamyka się w przedziale od 8 do
+ 192 kHz. Korzystając z założenia, że układ pracuje na hałasach do częstotliwości
+ 500 Hz, będącej również częstotliwością graniczną filtrów sekcji analogowej,
+ wejściowe dane można poddawać procesowi decymacji, otrzymując w ten sposób $f'_s
+diff --git a/docs/polsl/thesis/main.tex b/docs/polsl/thesis/main.tex
+index d604d64..9e6ca5c 100644
+--- a/docs/polsl/thesis/main.tex
++++ b/docs/polsl/thesis/main.tex
+@@ -82,7 +82,7 @@
+ %%%%%%%%%%
+ 
+ \newcommand{\Supervisor}{dr inż. Krzysztof Mazur}     % dane promotora (bez $\langle$ i $\rangle$)
+-\newcommand{\Title}{Układ aktywnego tłumienia hałasu pod nadzorem jądra systemu Linux z rozszerzeniami real-time}           % tytuł pracy po polsku
++\newcommand{\Title}{Układ aktywnego tłumienia hałasu pod nadzorem jądra systemu Linux z~rozszerzeniami real-time}           % tytuł pracy po polsku
+ \newcommand{\TitleAlt}{Active noise reduction system under the supervision of the Linux kernel with real-time extensions}                     % thesis title in English
+ \newcommand{\Program}{Automatyka i Robotyka}            % kierunek studiów  (bez $\langle$ i $\rangle$)
+ \newcommand{\Specialisation}{Systemy Pomiarowe i Informacyjne}     % specjalność  (bez $\langle$ i $\rangle$)
+@@ -111,6 +111,8 @@
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
++\definecolor{GREEN}{rgb}{0,0.5,0}
++\newcommand{\remark}[1]{{[\color{GREEN}\emph{\footnotesize #1}{}]}}
+ 
+ \begin{document}
+ %\kslistofremarks
+-- 
+2.30.2
+

@@ -8,11 +8,20 @@ wieku, jednak z powodu braku odpowiednich narzędzi pozwalających na praktyczn�
 implementację rozwiązania w tamtych czasach, znaczące postępy zaczęto obserwować
 dopiero w latach 80. i 90. XX wieku, kiedy raptowny rozwój technologiczny
 umożliwił projektowane coraz to dokładniejszych i stabilniejszych układów
-automatyki \cite{bib:kuo_morgan}. Powodem takiego przebiegu wydarzeń był
+automatyki \cite{bib:kuo_morgan}\remark{nie podoba mi się sformułowanie
+stabilniejsze. Chodzi tutaj pewnie o~takie rzeczy jak stabilność
+parametrów układu sterowania przy zmianach temperatury, z~powodu
+starzenia, i~tak dalej, ale stabilność układu automatyki ma inne
+znaczenie.}. Powodem takiego przebiegu wydarzeń był
 wyłaniający się zza horyzontu początek epoki cyfrowej, która udowodniła, że z
 użyciem kodu binarnego można opisać i wpływać na otaczający nas świat z dużą
 precyzją i elastycznością, nieosiągalną wcześniej w rozwiązaniach opartych
-jedynie na technice analogowej. Zastosowanie układów cyfrowych w systemach ANC
+jedynie na technice analogowej\remark{i~tak technika cyfrowa jest
+limitowana przez precyzję i~dokładność elektroniki analogowej.
+To co ma największe znaczenie dla układów automatyki to to,
+że w~układach cyfrowych wszelkie błędy przetwarzania są deterministyczne,
+i~można je z~dowolną prezycją kontrolować.}.
+Zastosowanie układów cyfrowych w systemach ANC
 umożliwiło ich szersze wykorzystanie w praktyce. Znalazły one swoje zastosowanie
 w redukcji hałasów akustycznych, rozchodzących się w powietrzu w zamkniętej lub
 otwartej przestrzeni, redukcji hałasów hydroakustycznych, rozchodzących się w
@@ -22,8 +31,9 @@ zaobserwowano w militariach, między innymi w tłumieniu hałasu akustycznego
 propagującego się wewnątrz odrzutowca.
 
 \par Jak opisuje prawo Moore'a \cite{bib:moore}, moc obliczeniowa układów
-cyfrowych w kolejnych latach zwiększa się z zgodnie z trendem wykładniczym i
-takie zachowanie można zaobserwować do czasów teraźniejszych. Ekstremalna
+cyfrowych\remark{prawo Moore'a dotyczy liczby tranzystorów tranzysotrów,
+nie mocy obliczeniowej} w kolejnych latach zwiększa się z zgodnie z trendem wykładniczym i
+takie zachowanie można zaobserwować do czasów teraźniejszych\remark{i tak ściśle nie jest już zachowane do tej pory}. Ekstremalna
 miniaturyzacja, optymalizacja zapotrzebowania energetycznego jak i niskie koszta
 układów cyfrowych spowodowały ich globalizację. Obecnie ANC można zaobserwować
 na rynku konsumenckim, w postaci słuchawek redukujących hałas z otoczenia,
@@ -100,7 +110,9 @@ i prędkość rozchodzenia się drgań w ośrodku jest mocno niestacjonarna, Jes
 spowodowane aktualną temperaturą, wilgotnością powietrza, ciśnieniem jak i
 rozmieszczeniem oraz typem elementów wokół, absorobujących lub/i odbijających
 fale akustyczne w określony sposób. Takie zachowanie wymaga, żeby projektowany
-system był adaptacyjny, co oznacza, że jego działanie będzie odpowiednio
+system był adaptacyjny\remark{nie jest to prawda, układ ze sprzężeniem
+zwrotnym nie musi być adaptacyjny, by radzić sobie z~takimi zmianami},
+co oznacza, że jego działanie będzie odpowiednio
 korygowane, w zależności od zaobserwowanych zmian charaketerystyki toru, którym
 propaguje się niechciany sygnał. Adaptacja realizowana jedynie w sposób
 analogowy, pomimo że możliwa, posiada duże ograniczenia w zakresie elastyczności
@@ -119,7 +131,9 @@ sprawę, zwiększając nateżenie sygnału, który miał tłumić.
 Układami cyfrowymi wykorzystywanymi w systemach ANC, ze względu na wymóg
 przetwarzania sygnałów w czasie rzeczywistym z wysoką precyzją, są specjalnie
 zaprojektowane do tych celów procesory sygnałowe (DSP, ang. \textit{Digital
-signal processor}) \cite{bib:ti_anc}. Takie układy w współpracy z przetwornikami
+signal processor}) \cite{bib:ti_anc}\remark{Nie jest to już prawda,
+w dzisiejszych czasach to już zwykłe mikrokontrolery posiadają
+wystarczającą wydajność.}. Takie układy w współpracy z przetwornikami
 analogowo-cyfrowymi i cyfrowo-analogowymi tworzą klasyczny tor przetwarzania,
 który przedstawiono na rysunku \ref{intro::processing}:
 
@@ -133,16 +147,30 @@ który przedstawiono na rysunku \ref{intro::processing}:
 Procesory sygnałowe charakteryzują się budową, która umożliwia sprzętowe
 wykonanie operacji często występujących w cyfrowym przetwarzaniu sygnałów.
 Przykładowo, sprzętowo realizowane mogą być operacje filtracji, transformacji
-Fouriera czy korelacji wzajemnej. Dodatkowo, instrukcje na tego typu jednostkach
+Fouriera czy korelacji wzajemnej\remark{tego typu operacje nie są
+jakoś bardzo typowe dla DSP. To co było najbardziej typowe to:
+szybkie mnożenie w 1 cyklu zegarowym, szybki dostęp do pamięci,
+często możliwość zrobienia dwóch odczytów w pojedynczym cyklu
+zegarowym, i to często z dwóch niezależnych pamięci RAM,
+no i oczywiście trzecia pamięć na kod, pewne rozszerzenia
+jak chodzi o adresowanie, wsparcie dla buforów cyklicznych
+oraz bit reversal dla FFT, no i później wykonywanie wielu instrukcji
+równolegle, początkowo to wiele DSP miało bardzo złożone instrukcje,
+typu jedna instrukcja czyta 2 zmienne z pamięci, mnoży, i dodaje,
+a nawet czasami i robi modyfikację w pamięci, by zaimplementować
+bufor cykliczny}.
+Dodatkowo, instrukcje na tego typu jednostkach
 obliczeniowych mogą być realizowane są w sposób potokowy (ang.
 \textit{pipelining}), co pozwala na znaczące przyśpieszenie obliczeń poprzez
-przetwarzanie równoległe. \par Pomimo, że wykorzystanie procesorów sygnałowych
+przetwarzanie równoległe. \remark{zwykle przetwarznie równoległe
+kojarzys się bardziej z~superskalarnością} \par Pomimo, że
+wykorzystanie procesorów sygnałowych
 jest z pewnością jednym z najlepszych wyborów przy projektowaniu systemu
 przetwarzającego sygnały w czasie rzeczywistym, to z takim rozwiązaniem wiąże
 się szereg problemów:
 \begin{enumerate}
 
-    \item Wysoka cena i mała dostępność - w większości przypadków zakup musi być
+    \item Wysoka cena i mała dostępność --- \remark{myślnik to `-{-}-', nie `-'}w większości przypadków zakup musi być
     realizowany przez globalnego dystrybutora elektroniki. Cena takich układów
     jest wysoka i z racji niskiej popularności, platformy rozwojowe są drogie i
     słabo dostępne, jeżeli w ogóle istnieją. Oznacza to, że w większości
