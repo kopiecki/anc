@@ -22,7 +22,7 @@
 #endif
 
 #define LMS_STEP 1
-#define GAIN     UINT16_MAX
+#define GAIN     512
 
 typedef struct timespec timestamp_t;
 
@@ -207,9 +207,9 @@ void ident(char* buffer, int r)
                         const uint16_t x = r_samples[i * channels + 1] << 4;
 
                         error_buffer[cnt] = normalize(e);
-                        x_buffer[cnt]     = normalize(x);
+                        x_buffer[cnt++]     = normalize(x);
                 }
-
+#if 0
                 uint16_t y          = prng_xorshift();
                 noise_buffer[cnt++] = normalize(y);
 
@@ -220,6 +220,7 @@ void ident(char* buffer, int r)
                         samples[0] += steps[0];
                         y = prng_xorshift();
                 }
+#endif
         }
 
         init = true;

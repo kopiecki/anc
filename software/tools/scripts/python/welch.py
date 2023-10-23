@@ -13,14 +13,14 @@ if __name__ == "__main__":
     font = {'size': 34}
     plt.rc('font', **font)
 
-    off = read_file("raw_rand.txt")
-    on = read_file("anc_noise_2.txt")
-
+    off = read_file("anc_raw_noise.txt")
     off -= np.mean(off)
+
+    on = read_file("anc_noise_0.txt")
     on -= np.mean(on)
 
-    compute_and_plot_psd(off, 2000, 2**10, _label="Z ANC")
-    compute_and_plot_psd(on, 2000, 2**10, _label="Bez ANC")
+    compute_and_plot_psd(off, 2000, 2**10, _label="Bez ANC")
+    compute_and_plot_psd(on, 2000, 2**10, _label="Z ANC")
     plt.legend()
     plt.grid()
     plt.show()

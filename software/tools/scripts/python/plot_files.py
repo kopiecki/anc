@@ -23,6 +23,7 @@ def plot(buffer, name, sampling_rate) -> None:
     plt.plot(t, buffer, label=name, linewidth=2)
 
     plt.xlabel("t, s")
+    plt.xlim([0, 2])
     plt.ylabel("e(t)")
     plt.grid()
     plt.show()
