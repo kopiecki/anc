@@ -6,17 +6,17 @@
 najbardziej popularne i~sprawdzone opcje:
 \begin{enumerate}
 
-    \item Zestaw łatek PREEMPT\_RT --- zestaw modyfikacji jądra Linux mających na
+    \item \textbf{Zestaw łatek PREEMPT\_RT} --- zestaw modyfikacji jądra Linux mających na
     celu rozszerzenie standardowych funkcjonalności o~możliwość realizacji zadań
     w~czasie rzeczywistym.
 
-    \item Xenomai --- środowisko programistyczne pracujące wspólnie z~jądrem
+    \item \textbf{Xenomai} --- środowisko programistyczne pracujące wspólnie z~jądrem
     Linux, umożliwiające tworzenie zadań pracujących w~czasie rzeczywistym
     z~deterministycznym czasem realizacji równolegle z~zadaniami jądra.
     Działanie opiera się na stworzeniu mikrojądra obok głównego, obsługującego
     jedynie krytyczne zadania.
 
-    \item RTAI (ang. \textit{Real-Time Application Interface}) - podobnie jak
+    \item \textbf{RTAI} (ang. \textit{Real-Time Application Interface}) - podobnie jak
     Xenomai, zapewnia zestaw interfejsów pozwalających na realizację krytycznych
     zadań z~użyciem drugiego jądra, które w~przeciwieństwie do środowiska
     Xenomai, nie jest realizowane w~architekturze mikrojądra.
@@ -43,21 +43,15 @@ Przebieg wywłaszczenia przedstawiono na rysunku \ref{sw::preempt_0}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/sw/preempt_0.png}
+    \includegraphics[width=\textwidth]{graf/sw/preempt_0.png}
     \caption{Przebieg wywłaszczenia zadania}
     \label{sw::preempt_0}
 \end{figure}
 
 W przypadku jądra bez rozszerzeń czasu rzeczywistego, wywłaszczenie może zostać
 zablokowane przez mechanizm zapobiegania zakleszczeniom, zaimplemtowany
-w~oparciu blokady wirujące (ang. \textit{spinlock}). Z~tego powodu
-
-\remark{tego nie rozumiem, od ok. 20 lat zwykłe jądro ma PREEMPT, i
-może być wywłaszczane. Problemem normalnego jądra to jednak są spinlocki, które
-blokują wywłaszczanie, bo realizują taki, najprostszy, mechanizm zapobieganiu
-deadlockom}, 
-
-nie~trudno wyobrazić sobie sytuację, którą przedstawiono na~rysunku
+w~oparciu blokady wirujące (ang. \textit{spinlock}). Z~tego powodu nie~trudno
+wyobrazić sobie sytuację, którą przedstawiono na~rysunku
 \ref{sw::preempt_1}
 
 \begin{figure}[H]
@@ -82,7 +76,7 @@ Przebieg takiego problemu przedstawiono na rysunku \ref{sw::prior_inv}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/sw/prior_inv.png}
+    \includegraphics[width=\textwidth]{graf/sw/prior_inv.png}
     \caption{Przebieg problemu inwersji priorytetów}
     \label{sw::prior_inv}
 \end{figure}
@@ -109,7 +103,7 @@ z~trybu jądra może zostać rozwiązany jak przedstawiono na~rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/sw/preempt_rt_0.png}
-    \caption{Wywłaszczenie zadania z trybu jądra}
+    \caption{Wywłaszczenie zadania z przestrzeni jądra}
     \label{sw::preempt_rt_0}
 \end{figure}
 
@@ -119,7 +113,7 @@ przedstawiono na rysunku \ref{sw::prior_inh}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/sw/prior_inh.png}
+    \includegraphics[width=0.9\textwidth]{graf/sw/prior_inh.png}
     \caption{Dziedziczenie priorytetu}
     \label{sw::prior_inh}
 \end{figure}
@@ -344,18 +338,15 @@ które przypominają struktury języka C. Węzły posiadają zestaw właściwoś
 jednego rodzica, za wyjątkiem węzła \textit{root}, który jest węzłem nadrzędnym.
 Węzły mogą się do siebie nawzajem odwoływać jak i~modyfikować swoją zawartość,
 dlatego z~matematycznego punktu widzenia, drzewo urządzeń jest tak właściwie
-skierowanym i~spójnym grafem acyklicznym.
-
-\remark{nie do końca, drzewo to graf acykliczny, skierowany i spójny.} 
-
-\par Kody źródłowe jądra Linux posiadają gotowo przygotowane pliki źródłowe
-\textit{.dts} dla większości obsługiwanych platform, w~tym wykorzystanej.
-Sporządzona układ pomiarowy, obsługiwany przez interfejs McASP, nie posiada
-mechanizmu automatycznego wykrywania, dlatego niezbędna jest jego deklaracja
-wraz z~niezbędną konfiguracją interfejsu McASP, który domyślnie nie jest
-zdefiniowany. W~tym celu, napisany został dodatkowy plik nagłówkowy
-\textit{.dtsi} dodany do~głównego pliku źródłowego \textit{.dts} z~opisem
-niezbędnej konfiguracji, której zawartość jest następująca:
+skierowanym i~spójnym grafem acyklicznym. \par Kody źródłowe jądra Linux
+posiadają gotowo przygotowane pliki źródłowe \textit{.dts} dla większości
+obsługiwanych platform, w~tym wykorzystanej. Sporządzona układ pomiarowy,
+obsługiwany przez interfejs McASP, nie posiada mechanizmu automatycznego
+wykrywania, dlatego niezbędna jest jego deklaracja wraz z~niezbędną konfiguracją
+interfejsu McASP, który domyślnie nie jest zdefiniowany. W~tym celu, napisany
+został dodatkowy plik nagłówkowy \textit{.dtsi} dodany do~głównego pliku
+źródłowego \textit{.dts} z~opisem niezbędnej konfiguracji, której zawartość jest
+następująca:
 \begin{enumerate}
 
     \item Zdefiniowanie pinów McASP --- płytka BeagleBone Black wspiera wiele
@@ -685,7 +676,7 @@ przedstawiono na rysunku \ref{sw::lfsr}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/sw/lfsr.png}
+    \includegraphics[width=0.6\textwidth]{graf/sw/lfsr.png}
     \caption{Przykładowy LFSR}
     \label{sw::lfsr}
 \end{figure}
@@ -694,30 +685,16 @@ Na jakość generatora działającego w~oparciu LFSR wpływ mają numery bitów
 wykorzystywane do obliczenia nowego stanu, rodzaj i~ilość operacji na nich
 przeprowadzanych oraz stan początkowy (ang. \textit{seed}). Jak można zauważyć
 z~\ref{sw::lfsr}, dla stanu początkowego 0~generator nie będzie działał
-poprawnie.
-
-Każdy LFSR jest związany z określonym wielomianem i~maksymalny okres,
-
-\remark{okres może być krótszy, zależy od wielomianu} 
-
+poprawnie. Każdy LFSR jest związany z określonym wielomianem i~maksymalny okres,
 w~którym generowane liczby się nie duplikują, ogarniczony jest przez jego
 stopień i~zdefiniowany jest przez liczbę bitów $M$:
-
 \begin{equation}
     T = 2^{M} - 1
 \end{equation}
-
-
-
 Istnieje wiele podzbiorów generatorów implementowanych na bazie LFSR. Jednym
 z~nich są generatory oparte na kombinacji alternatywy rozłącznej, przesunięcia
-i/lub~rotacji aktualnego stanu rejestru do obliczenia kolejnego.
-
-\remark{ Tylko, że te generatory nie są LFSR, mają inną strukturę, często są tak
-konstruowane, by działały jak LFSR, który jest tam jakby wzrocowy, ale by
-możliwa była róznoległa implementacja, tzn. taka działają na długich słowach} ???
-
-Omawiany podzbiór, ze względu na wykorzystywane operacje, przyjęło się nazywać
+i/lub~rotacji aktualnego stanu rejestru do obliczenia kolejnego. Omawiany
+podzbiór, ze względu na wykorzystywane operacje, przyjęło się nazywać
 generatorami \textit{xorshift} i~cieszą się one wysokim uznaniem w~literaturze
 \cite{bib:prng} ze względu na niskie zużycie zasobów do wykonania obliczeń oraz
 dużą losowość, weryfikowaną na podstawie testów statystycznych z biblioteki
@@ -732,7 +709,7 @@ próbek przedstawiono na rysunku \ref{sw::prng_psd}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/sw/prng_psd.png}
+    \includegraphics[width=0.7\textwidth]{graf/sw/prng_psd.png}
     \caption{Funkcja autokorelacji i GWM sygnału z generatora
     \textit{xoroshiro16++}}
     \label{sw::prng_psd}

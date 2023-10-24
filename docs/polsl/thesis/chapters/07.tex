@@ -1,56 +1,60 @@
 \chapter{Podsumowanie}
 
-Okres projektowania i konstruowania wykonanego w ramach projektu systemu był dla
-autora niewątplie czasem niezwykle kształcącym i rozwijającym. System,
-konstruowany i projektowany od fundamentów, pozwolił autorowi na dokładną
+Okres projektowania i~konstruowania wykonanego w~ramach projektu systemu był dla
+autora niewątplie czasem niezwykle kształcącym i~rozwijającym. System,
+konstruowany i~projektowany od fundamentów, pozwolił autorowi na dokładną
 obserwację wpływu poszczególnej decyzji projektowej na finalny sposób działania
 układu. Aby system mógł wykonać swoje zadanie w najprostszej formie, każdy
 element musiał idealnie ze sobą współgrać, więc nawet najmniejsza, błędna
-decyzja projektowa wykonana w fazach początkowych, mogła finalnie spowodować
+decyzja projektowa wykonana w~fazach początkowych, mogła finalnie spowodować
 wiele problemów w fazach finalnych, powodując nawet zakończenie projektu
-fiaskiem. Poprawne działanie systemu z ograniczeniami, które zaobserowowano
-badając działanie dla poszczególnych sygnałów symulujących hałas, jest z
-pewnością wielkim sukcesem i zarazem potwierdzeniem, że nad tego typu układami
-można pracować (z różnymi rezultatami) korzystając z amatorskich,
-ogólnodostępnych i tanich (lub darmowych) rozwiązań. \par Analizując rezultaty
+fiaskiem. Poprawne działanie systemu z~ograniczeniami, które zaobserowowano
+badając działanie dla poszczególnych sygnałów symulujących hałas, jest
+z~pewnością wielkim sukcesem i~zarazem potwierdzeniem, że nad tego typu układami
+można pracować (z~różnymi rezultatami) korzystając z~amatorskich,
+ogólnodostępnych i~tanich (lub darmowych) rozwiązań. \par Analizując rezultaty
 przeprowadzonych badań od razu można stwierdzić, dlaczego wykorzystanie systemu
 operacyjnego, który nie jest systemem czasu rzeczywistego, w przypadku
-projektowania tego typu układów nie jest dobrą i popularną decyzją. Opóźnienia
-wprowadzane przez taki system i trudności związane z synchronizacją peryferiów
+projektowania tego typu układów nie jest dobrą i~popularną decyzją. Opóźnienia
+wprowadzane przez taki system i~trudności związane z~synchronizacją peryferiów
 objawiają się mocno negatywnym wpływem na jakość działania finalnego układu. Jak
-pokazano w sekcji badającej wpływ rozszerzeń czasu rzeczywistego, są one
-obligatoryjne do poprawnego działania układu, bazującego na jadrze Linux.
-Wykorzystanie taki rozszerzeń nie powoduje jednak, że system bazujący na jądrze
-Linux staje się automatycznie systemem czasu rzeczywistego. Opóźnienia, pomimo
-że zmniejszone, dalej występują i ich wpływ dyskredytuje działanie systemu dla
-sygnałów losowych i takich, które szybko zmieniają swoją częstotliwość.
-Adaptacja w przypadku takich sygnałów reaguje zbyt wolno i hałasy nie są
-tłumione poprawnie. Dodatkowo, system ALSA, jako że nie jest przystosowany do
-realizacji krytycznych czasowo operacji wejścia/wyjścia, z racji swojej
-elastyczności nie jest idealnym wyborem przy realizacji systemów ANC. Jego
-głównym zadaniem jest zapewnienie warstwy abstrakcji wykorzystywanej do
-komunikacji z peryferiami audio, umożliwiającej konfigurowanie urządzeń z
-poziomu przestrzeni użytkownika, więc tworzenie pętli regulacji z jego
-wykorzystaniem nie jest z pewnością wyborem optymalnym. \par Pomimo problemów
+pokazano w sekcjach badającej wpływ wykorzystanej łatki PREEMPT\_RT, polepsza
+ona działanie układu w porównaniu z klasycznym jądrem. Wykorzystanie takich
+rozszerzeń nie powoduje jednak, że system bazujący na jądrze Linux staje się
+automatycznie systemem czasu rzeczywistego. Opóźnienia, pomimo że zmniejszone
+i~bardziej deterministyczne, dalej występują i~ich wpływ dyskredytuje działanie
+systemu dla sygnałów losowych i~takich, które szybko zmieniają swoją
+częstotliwość. Adaptacja w przypadku takich sygnałów reaguje zbyt wolno i~hałasy
+nie są tłumione poprawnie. Dodatkowo, system ALSA, jako że~nie jest
+przystosowany do realizacji krytycznych czasowo operacji wejścia/wyjścia,
+z~racji swojej elastyczności nie jest idealnym wyborem przy realizacji systemów
+ANC. Jego głównym zadaniem jest zapewnienie warstwy abstrakcji wykorzystywanej
+do komunikacji z~peryferiami audio, umożliwiającej konfigurowanie urządzeń
+z~poziomu przestrzeni użytkownika, więc tworzenie pętli regulacji z~jego
+wykorzystaniem nie jest z~pewnością wyborem optymalnym. \par Pomimo problemów
 opisanych wyżej, zdaniem autora istnieje kilka sposobów, których wykorzystanie
 może polepszyć działanie systemu. Sterowniki jądra odpowiadające za transfery
 DMA oraz obsługę określonych urządzeń audio można zmodyfikować, zmieniając
 rozmiar fragmentu oraz częstotliwość próbkowania na mniejsze. Docelowo, jeżeli
 udałoby się uzyskać $n_f = 1$ i $f_s = 1$ kHz, pętla przetwarzania mogłaby
 operować na jednej próbce, jak to ma miejsce w typowych implementacjach na
-procesory sygnałowe. Rozmiar fragmentu o wartości jednej ramki spowodowałby
-opóźnienie o jedną ramkę, które jest krytyczne dla jakości działania algorytmu.
-\par Poza modyfikacjami systemowymi, zaimplementowane rozwiązanie można ulepszyć
+procesory sygnałowe i~mikrokontrolery. Rozmiar fragmentu o~wartości jednej ramki
+spowodowałby opóźnienie o~jedną ramkę, które jest krytyczne dla jakości
+działania algorytmu. Z częstotliwością próbkowania również można iść w drugą
+stronę, zwiększając ją wraz z krotnością decymacji w pętli przetwarzania. Takie
+działanie, poza zmniejszeniem opóźnień, może również pozwolić na implementację
+prostszej części analogowej, zmniejszając wymagania na projektowane filtry. \par
+Poza modyfikacjami systemowymi, zaimplementowane rozwiązanie można ulepszyć
 poprzez urównoleglenie operacji przedstawionych na rysunku \ref{sw::app_flow}.
-Równoczesne przetwarzanie sygnałów $x(n)$ i $e(n)$ z pewnością spowoduje szybsze
-działanie pętli przetwarzania, a to można wykorzystać do zwiększenia próbkowania
+Równoczesne przetwarzanie sygnałów $x(n)$ i $e(n)$ z~pewnością spowoduje szybsze
+działanie pętli przetwarzania, a~to można wykorzystać do zwiększenia próbkowania
 lub długości filtrów, jeżeli będzie taka potrzeba. Poza tym, program można
-rozszerzyć o wspomnianą w sekcji analizy tematu metodę niwelowania dodatkowej
-pętli sprzężenia, jeżeli wymagane jest, aby układ działał na hałasach o wyższym
-natężeniu i z ułożeniem sprzętu, powodującym wpływanie sygnału $y(n)$ na $x(n)$.
-W przypadku zaprojektowanej elektorniki, patrząc z perspektywy czasu autor
+rozszerzyć o~wspomnianą w~sekcji analizy tematu metodę niwelowania dodatkowej
+pętli sprzężenia, jeżeli wymagane jest, aby układ działał na hałasach o~wyższym
+natężeniu i~z~ułożeniem sprzętu, powodującym wpływanie sygnału $y(n)$ na $x(n)$.
+W przypadku zaprojektowanej elektorniki, patrząc z~perspektywy czasu autor
 uważa, że wybrane przetworniki mogłyby być mniejszej dokładności (przykładowo 12
-bitowe), a filtry o mniejszym stopniu, powodując mniejsze opóźnienia w torach
+bitowe), a~filtry o~mniejszym stopniu, powodując mniejsze opóźnienia w~torach
 analogowych.
 
 

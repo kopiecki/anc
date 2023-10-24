@@ -7,37 +7,20 @@ sterowania, z~którego można wyróżnić \cite{bib:kuo_morgan}:
 
 \begin{enumerate}
 
-    \item Sterowanie ze sprzężeniem w przód --- hałas jest mierzony przed
-    dotarciem do mikrofonu błędu z~możliwie dużym wyprzedzeniem,
-    
-    \remark{tutaj bardziej istotny jest raczej mikrofon błędu, nie głośnik, i
-też z tym ,,przed'' to różnie jest. Jest to struktura kompensacji zakłóceń,
-    i po prostu trzeba mierzyć zakłócenie, i to jest istotne, by mierzyć hałas
-    pierwotny z możliwie dużym wyprzedzeniem}, 
-    
-    tworząc w~ten sposób strukturę kompensacji zakłóceń. W przypadku realizacji
-    systemu adaptacyjnego, pomiar może zostać wykonany ponownie za mikrofonem
-    błędu, w~celu określenia poziomu tłumienia. 
-    
-    \remark{nie jest to potrzebne, jest to tylko potrzebne do
-    adaptacji, a istnieją układy feed-forward o stałych parametrach.}.
+    \item \textbf{Sterowanie ze sprzężeniem w przód} --- hałas jest mierzony
+    przed dotarciem do mikrofonu błędu z~możliwie dużym wyprzedzeniem, tworząc
+    w~ten sposób strukturę kompensacji zakłóceń.
 
-    \item Sterowanie ze sprzężeniem w tył --- hałas jest mierzony jedynie
+    \item \textbf{Sterowanie ze sprzężeniem w tył} --- hałas jest mierzony
     mikrofonem błędu i~stanowi jedyny pomiar przeprowadzany w systemie.
 
 \end{enumerate}
 
 Hałas występujący przed mikrofonem błędu przyjeło nazywać się hałasem pierwotnym
-i~w~nomenklaturze automatyki traktowany jako sygnał referencyjny,
-
-\remark{nie do końca z tym tak jest, poza tymi wszystkimi uwagami do `przed
-aktuatorem' to jeszcze taka, że wejściem układu ANC jest sygnał referencyjny,
-który jest dźwiękiem ze źródła pierwtotnego, który przeszedł już przez pewny
-tor}, 
-
-gdzie ten mierzony przez mikrofon błędu, nazywany hałasem resztkowym, traktowany
-jest jak błąd (uchyb) W związku z~przyjęciem takiego nazewnictwa, można napisać,
-że systemy ANC ze sprzężeniem w~przód opierają swoje działanie na pomiarze
+i~w~nomenklaturze automatyki traktowany jako sygnał referencyjny, gdzie ten
+mierzony przez mikrofon błędu, nazywany hałasem resztkowym, traktowany jest jak
+błąd (uchyb) W związku z~przyjęciem takiego nazewnictwa, można napisać, że
+systemy ANC ze sprzężeniem w~przód opierają swoje działanie na pomiarze
 referencji i~błędu, a~system ze sprzężeniem w~tył tylko na pomiarze błędu.
 Omawiane struktury w~postaci schematów ideowych przedstawiono na rysunkach
 \ref{analysis::structs}.
@@ -60,23 +43,15 @@ Omawiane struktury w~postaci schematów ideowych przedstawiono na rysunkach
        \label{analysis::structs}
 \end{figure}
 
-\remark{te rysunki sugerują jakby to odbywało się w przestrzeni
-otwartej, i jakby po przejściu przez głośnik nagle hałas
-się zmieniał na ten resztkowy, i później był taki sam,
-co nie jest oczywiście prawdą, nawet jakby to wszystko było
-w falowodzie.}
-
-\par Instynktownie można stwierdzić, że skoro systemy ze sprzężeniem w~przód
-opierają swoje działanie na pomiarze dwóch wielkości, to ze względu na większą
-ilość informacji, sterowanie może zostać wypracowane z większą dokładnością.
-Jest to stwierdzenie poprawne, jednak należy pamiętać, że takie układy wymagają
+Instynktownie można stwierdzić, że skoro systemy ze sprzężeniem w~przód opierają
+swoje działanie na pomiarze dwóch wielkości, to ze względu na większą ilość
+informacji, sterowanie może zostać wypracowane z większą dokładnością. Jest to
+stwierdzenie poprawne, jednak należy pamiętać, że takie układy wymagają
 dodatkowego pomiaru (czujnika), co zwiększa koszta oraz komplikuje strukturę.
 Dodatkowy pomiar jest też nie zawsze możliwy, więc wybór struktury często jest
-kompromisem.
-
-\par Projektując układ ze sprzężeniem w~przód można dokonać dodatkowego
-założenia, które wprowadza możliwe modyfikacje struktury. Opiera się one
-charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować: 
+kompromisem. \par Projektując układ ze sprzężeniem w~przód można dokonać
+dodatkowego założenia, które wprowadza możliwe modyfikacje struktury. Opiera się
+one charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować: 
 
 \begin{enumerate}
 
@@ -84,8 +59,6 @@ charakterystyce hałasu pierwotnego, na podstawie której można zdefiniować:
     niespodziewane zaburzenia ośrodka. Jako, że jest losowy, jego energia jest
     dość równo rozprowadzona w całym paśmie częstotliwości.
     
-    \remark{równomiernie to bardzo rzadko.}
-
     \item \textbf{Hałas wąskopasmowy} --- skoncentrowany w specifycznych
     pasmach. Może być wywołany przez maszyny pracujące w sposób okresowy,
     przykładowo silniki lub obracające się wały. W związku, że praca takich
@@ -126,16 +99,12 @@ i~charakterystykę hałasu, która w~tym przypadku może być łatwo symulowana.
 
 \section{Zasada działania}
 
-Diagram \ref{analysis::structs_a}
-
-\remark{tutaj ma Pan 2 razy tą samą nazwę, i tutaj pojawia się numer z rozdziału
-5, a nie ten wcześniejszy diagram} 
-
-można przedstawić za pomocą uogólnionego schematu blokowego
-\ref{analysis::scheme_0}. W celu łatwiejszej analizy, wszystkie sygnały i~układy
-w~systemie potraktowano jako dyskretne, jednak należy mieć na uwadze, że postaci
-sygnałów są zmieniane na ich napięciowe, akustyczne lub cyfrowe odpowiedniki
-w~trakcie przekraczania domen i~wchodzenia w blok \textbf{ANC}.
+Diagram \ref{analysis::structs_a} można przedstawić za pomocą uogólnionego
+schematu blokowego \ref{analysis::scheme_0}. W celu łatwiejszej analizy,
+wszystkie sygnały i~układy w~systemie potraktowano jako dyskretne, jednak należy
+mieć na uwadze, że postaci sygnałów są zmieniane na ich napięciowe, akustyczne
+lub cyfrowe odpowiedniki w~trakcie przekraczania domen i~wchodzenia w blok
+\textbf{ANC}.
 
 \begin{figure}[H]
     \centering
@@ -143,10 +112,6 @@ w~trakcie przekraczania domen i~wchodzenia w blok \textbf{ANC}.
     \caption{Wyprowadzenie schematu systemu ANC, 0}
     \label{analysis::scheme_0}
 \end{figure}
-
-\remark{Jeśli pokazuje na tym schemacie Pan głośnik i mikrofon,
-to być może to za duże uproszczenie, że nie pokazuje Pan
-odpowiednich transmitancji, przynajmniej po stronie akustycznej}
 
 Transmitancja $P(z^{-1})$ opisuje dynamikę toru, którym porusza się hałas
 pierwotny i~przyjęło się go nazywać torem pierwotnym. Blok \textbf{ANC} na ten
@@ -169,25 +134,14 @@ SOI (filtr o skończonej odpowiedzi impulsowej, ang. \textit{Finite impulse
 filter, FIR filter}). Tego typu modele bardzo często stosowane są
 w~zagadanieniach związanych z systemami ANC, głównie ze względu na wygodę. Są
 zawsze stabilne, łatwe w~implementacji jak i~posiadają liniową odpowiedź fazową,
-w~przypadku symetrii współczynników.
-
-\remark{nie jest to prawda, tak jest tylko dla filtrów FIR o~symetrycznych
-współczynnikach}. 
-
-Transmitancja takiego modelu (odpowiedź impulsowa) dana jest
-zależnością \cite{bib:lyons}:
+w~przypadku symetrii współczynników. \par Transmitancja takiego modelu
+(odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
 \begin{equation}
     K(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L} w_lz^{-l},
     \label{eq::fir}
 \end{equation}
 gdzie $w_l$ to współczynnik filtra o~numerze $l$ (ang. \textit{tap}), $L$ to
-długość odpowiedzi impulsowej,
-
-\remark{rząd to nie liczba współczynników, rząd
-jest o~1~mniejszy niż liczba współczynników, i tam w równaniu powinno być $L$, a
-nie $L - 1$}
-
-a~$z^{-l}$ to operator opóźnienia o~$l$ próbek. \\
+długość odpowiedzi impulsowej, a~$z^{-l}$ to operator opóźnienia o~$l$ próbek.
 \par W związku z \ref{eq::fir}, wyjście filtra SOI dane jest:
 \begin{equation}
         y(n) = \sum_{l = 0}^{L - 1}w_lx(n - l) \implies y(n) = \textbf{w}^T\textbf{x}(n),
@@ -218,20 +172,16 @@ Analizując schemat \ref{analysis::scheme_0} można dojść do logicznego wniosk
 $P(z^{-1})$, przefiltrowanie przez nią sygnału $x(n)$ oraz odwórcenie znaku
 wyjścia. Nie jest to jednak proste zadanie, ponieważ tak jak opisywano
 wcześniej, charakterystyka toru pierwotnego, czyli drogi, którą propaguje się
-docelowo tłumiony hałas, może być niestacjonarna.
-
-\remark{nie musi być ona
-stacjonarna, i~często nie jest, ale żeby była aż silnie niestacjonarna?}
-
-W celu identyfikacji takiego obiektu niezbędny jest mechanizm pozwalający na
-bieżącą estymację parametrów, czyli innymi słowy, układ musi się adaptować do
-zmieniającej się charakterystyki toru podstawowego. Mając to na uwadze,
-zaktualizowany o~filtr $W(z^{-1})$, będący bieżącą estymacją obiektu
-$P(z^{-1})$, schemat blokowy przedstawiono na rysunku \ref{analysis::scheme_1}:
+docelowo tłumiony hałas, może być niestacjonarna. W celu identyfikacji takiego
+obiektu niezbędny jest mechanizm pozwalający na bieżącą estymację parametrów,
+czyli innymi słowy, układ musi się adaptować do zmieniającej się charakterystyki
+toru podstawowego. Mając to na uwadze, zaktualizowany o~filtr $W(z^{-1})$,
+będący bieżącą estymacją obiektu $P(z^{-1})$, schemat blokowy przedstawiono na
+rysunku \ref{analysis::scheme_1}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_1.png}
+    \includegraphics[width=0.60\textwidth]{graf/analysis/scheme_1.png}
     \caption{Wyprowadzenie schematu systemu ANC, 1}
     \label{analysis::scheme_1}
 \end{figure}
@@ -242,27 +192,17 @@ Techniką często wykorzystywaną do bieżącej estymacji parametrów obieków
 niestacjonarnych jest algorytm LMS (ang. \textit{Least mean squares})
 \cite{bib:figwer}. Jego działanie opiera się na zastosowaniu gradientowej metody
 najniższego spadku (ang. \textit{method of steepest descent}) do minimalizacji
-błędu średniokwadratowego.
-
-\par Błąd w analizowanym przypadku dany jest równy:
+błędu średniokwadratowego. \par Błąd w analizowanym przypadku jest równy:
 \begin{equation}
     e(n) = d(n) - y(n) = d(n) - \textbf{w}^T(n)\textbf{x}(n).
 \end{equation}
-
-\remark{w wielu równaniach brakuje odpowiedniej interpukcji, w~poprzednim i
-kolejnym równaniu poprawiłem, ale trzeba poprawić też w~innych.} 
-
 Jeżeli założy się, że wektor $\textbf{w}(n)$ jest sekwencją deterministyczną, to
 minimalizując wartość oczekiwaną kwadratu błędu \cite{bib:kuo_morgan}:
 \begin{equation}
     E[e^2(n)] = E[d^2(n)] - 2\textbf{p}^T\textbf{w}(n) + \textbf{w}^T(n)\textbf{R}\textbf{w}(n),
 \end{equation}
 
-\remark{przy $d(n)$ brakuje kwadratu. I też przydało by się tutaj
-cytowanie jakiegoś źródła jeśli się Pan na czymś opiera.
-I też wydaje mi się, że tutaj może brakować pewnych założeń.}
-
-\noindent gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej:
+gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej:
 \begin{equation}
     \textbf{p} \equiv E[d(n)\textbf{x}(n)] = \begin{bmatrix}
         r_{dx}(0) & r_{dx}(1) & \cdots & r_{dx}(L - 1)
@@ -364,9 +304,7 @@ Bezpośrednio z \ref{analysis::scheme_2} można zapisać:
 Ideowo, jeżeli $W(z^{-1})$ będzie w przybliżeniu zbieżny:
 \begin{equation}
     E(z^{-1}) = 0 \implies P(z^{-1}) = W(z^{-1}),
-\end{equation}`
-\remark{Ale $W(z^{-1})$ nigdy nie jest asymptotycznie zbieżny, o~ile
-krok nie dąży do 0.}
+\end{equation}
 to gdy $X(z^{-1}) \neq 0$:
 \begin{equation}
     y(n) = d(n) \implies e(n) = d(n) - y(n) = 0.
@@ -396,19 +334,18 @@ na rysunku \ref{analysis::scheme_3}:
     \label{analysis::scheme_3}
 \end{figure}
 
-\remark{A dlaczego nie dodał Pan transmitancji związanej z~pomiarem
-$x(n)$? Bo ten tego to P może być nieprzyczynowe.} ???
-
 Nowe transmitancje na schemacie \ref{analysis::scheme_3} można opisać
 następująco:
+
 \begin{itemize}
 
-\item $S'(z^{-1})$ --- reprezentuje dynamikę toru od wyjścia filtru adaptacyjnego
-$W(z^{-1})$ do węzła sumacyjnego w domenie akustycznej. Z~elementów wchodzących
-w~jego skład można wyróżnić przetwornik cyfrowo-analogowy, filtr rekonstrukcjny,
-wzmacniacz mocy, głośnik i~tor od głośnika do punktu interferencji. Jako, że tor
-składa się z~elementów elektronicznych jak i~akustycznych, jego obecność na
-schemacie zaznaczono na pograniczu domen.
+\item $S'(z^{-1})$ --- reprezentuje dynamikę toru od wyjścia filtru
+adaptacyjnego $W(z^{-1})$ do węzła sumacyjnego w domenie akustycznej.
+Z~elementów wchodzących w~jego skład można wyróżnić przetwornik
+cyfrowo-analogowy, filtr rekonstrukcjny, wzmacniacz mocy, głośnik i~tor od
+głośnika do punktu interferencji. Jako, że tor składa się z~elementów
+elektronicznych jak i~akustycznych, jego obecność na schemacie zaznaczono na
+pograniczu domen.
 
 \item $R(z^{-1})$ --- reprezentuje dynamikę toru od węzła sumacyjnego w~domenie
 akustycznej do wejścia algorymu adaptacyjnego. W~jego skład wchodzi tor dźwięku
@@ -640,11 +577,8 @@ zmodyfikowane równanie aktualizacji parametrów:
 Dzięki tym działaniom, dobór kroku $\alpha$ jest uniezależniony od mocy sygnału
 $x(n)$. Z~powodu zastosowanej normalizacji, algorytm z~tak wprowadzoną
 modyfikacją przyjęło się nazywać znormalizowanym algorytmem NLMS (ang.
-\textit{Normalized LMS}, NLMS) i~jest on również znany jako \remark{Metoda
-Kaczmarza to metoda dla $\alpha=1$} 
-
-\textit{Metoda Uczenia Rekurencyjnego}
-\cite{bib:figwer}.
+\textit{Normalized LMS}, NLMS) i~jest on również znany jako \textit{Metoda
+Uczenia Rekurencyjnego} \cite{bib:figwer}.
 
 \par Normalizację kroku, definiującą algorytm NLMS można zastosować w~algorytmie
 FXLMS, otrzymując następujące równiania
@@ -796,13 +730,10 @@ i~zaktualizowany z~jego uwzględnieniem schemat przedstawiono na rysunku
     \label{analysis::feed_canc}
 \end{figure}
 
-\remark{nie rozumiem tego $z^{-1}$, jeśli prowadzić Pan coś
-takiego to $F$ i $\hat{F}$ muszą już być różne.} ???
-
 Transmitancja $\hat{F}(z^{-1})$, analogicznie jak $\hat{S}(z^{-1})$, stanowi
 zidentyfikowany obiekt $F(z^{-1})$. Jeżeli $F(z^{-1}) = \hat{F}(z^{-1})$, to
 wpływ sprzężenia pozostaje całkowicie zneutralizowany. Sygnał $x(n)$ wchodzący
-na wejście filtra $\hat{S}(z^{-1})$ przyjmuje postać
+na wejście filtra $\hat{S}(z^{-1})$ przyjmuje postać:
 \begin{equation}
     x(n) = u(n) - \sum_{m = 0}^{M - 1}\hat{f_m}y(n - m - 1),
 \end{equation}
@@ -813,15 +744,10 @@ odpowiedzią impulsową. Należy zauważyć, że w~schemacie wprowadzono dodatko
 opóźnienie o~jedną próbkę przed blokiem zidentyfikowanego toru sprzężenia. Jest
 to spowodowane faktem, że w~czasie kiedy system zbiera próbkę sygnału
 referencyjnego zaznaczonego na schemacie jako $u(n)$, to wyjście filtra
-$W(z^{-1})$ nie jest jeszcze obliczone.
-
-\remark{Tak, ale wtedy te sygnały się nie zniosą. I też to żaden problem tak
-naprawdę, bo świat zewnętrzny też jeszcze tego nie widzi, więc $F$ nie może być
-bez opóźnienia.} 
-
-\par Transmitancję $F(z^{-1})$ można identyfikować w~operciu o~te same metody co
-$S(z^{-1})$. Schemat eksperymentu identyfikacji przyjmuje w~tym przypadku postać
-jak na rysunku \ref{analysis::feedback_ident}:
+$W(z^{-1})$ nie jest jeszcze obliczone. \par Transmitancję $F(z^{-1})$ można
+identyfikować w~operciu o~te same metody co $S(z^{-1})$. Schemat eksperymentu
+identyfikacji przyjmuje w~tym przypadku postać jak na rysunku
+\ref{analysis::feedback_ident}:
 
 \begin{figure}[H]
     \centering

@@ -21,8 +21,8 @@
 #define CLOCK_MONOTONIC_RAW CLOCK_MONOTONIC
 #endif
 
-#define LMS_STEP 1
-#define GAIN     512
+#define LMS_STEP 0.4
+#define GAIN     4000
 
 typedef struct timespec timestamp_t;
 
@@ -62,8 +62,8 @@ static struct circ_fifo x_fifo, fx_fifo;
 #define PRIMARY_ORDER 128
 static float primary_w[PRIMARY_ORDER] = {0u};
 
-#define SECONDARY_ORDER (64)
-static float secondary_w[] = {
+#define SECONDARY_ORDER (66)
+static float secondary_w[] = {0,0,
     -3.904347372680037507e-04, -6.192878168980888278e-04,
     -2.552233479961603553e-03, -2.531947662310832584e-03,
     1.109862504397741327e-03,  2.852419714877457279e-03,

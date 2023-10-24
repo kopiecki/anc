@@ -96,10 +96,6 @@ wchodząc w techniczne szczegóły, z~najbardziej znaczących parametrów
     \item Charakterystyka częstotliwościowa do $\pm 3$ dB --- 42.5 do 35000 Hz,
     płaska.
     \item SNR --- powyżej 100 dB.
-    
-    \remark{poniżej, czyli $-$100~dB też może być?}
-
-
 \end{enumerate}
 
 \subsection{Platforma obliczeniowa}
@@ -242,39 +238,34 @@ mikrofonów.
 
 Przetwarzany sygnał akustyczny jest symetryczny wokół zera, więc jednym
 z~możliwych rozwiązań jest generacja symetrycznego zasilania dla wzmacniaczy w
-sekcji torów analogowych,
-
-\remark{symetryczne zasilanie nie jest wymagane, można też dodać jakieś
-napięcie stałe, z tym, że jest wtedy kolejne napięcie do dobrego filtrowania}, 
-
-odpowiednio wysokiego, aby nie doporowadzać do saturacji ich wyjść. Wybranym
-zasilaniem jest $\pm$12 V, a~szczegóły dotyczące tego wyboru będą dokładniej
-opisywane w~sekcji torów analogowych. \par Autor stosunkowo sporo czasu
-poświęcił kwesti generacji ujemnego zasilania. W~literaturze \cite{bib:art}
-\cite{bib:tietze} opisanych jest wiele sposobów implementacji tego typu układów,
-z~czego najbardziej popularnymi są inwertery napięciowe zaimplementowane
-w~oparciu o wzmacniacze operacyjne lub dedykowane przetwornice (ang.
-\textit{buck-boost}). Rozwiązanie oparte o~skonstruowanie układu inwerterów
-zostało odrzucone z~powodu dodatkowego nakładu pracy. Taki system, poza układem
-odwracającym napięcie (ang. \textit{rail splitter}) wymagałby dodatkowego
-wzmacniacza mocy na wyjściu, co jest spowodowane zapotrzebowaniem prądowym
-wzmacniaczy, według specyfikacji wynoszącym typowo 1.4 mA na układ. Jako, że w
-projekcie wykorzystywanych jest pięć wzmacniaczy operacyjnych na kanał, a
-kanałów jest cztery, to wymaganiem jest, aby wydajność prądowa wykorzystanego
-generatora ujemnego napięcia wynosiła 28 mA. Opcja wyboru dedykowanej
-przetwornicy została odrzucona z powodu niskiej dostępności układów zgodnych
-z~założoną specyfikacją na rynku. \par Wynikowo zdecydowano się na wykorzystanie
-układu odwracającej pompy ładunków, który spełnia wszystkie założenia
-projektowe~i jest wydajna prądowo (maksymalny pobierany prąd równy 100 mA).
-Minusem układu jest mała dokładność napięcia wyjściowego z~fluktuacjami, które
-według dokumentacji \cite{bib:ltc3261} dla wybranego trybu pracy wyniosą 10 mV.
-Dodatkowo, układ generuje spadek napięcia w zależności od wyjściowego prądu,
-który w~przypadku 30 mA wyniesie około 750 mV. Dopuszczenie takiego napięcia na
-wzmacniacze w~sekcji analogowej jest niedopuszczalne, między innymi zważając na
-wskaźnik PSRR, który dla wybranych wzmacniaczy wynosi około 40 dB dla
-częstotliwości 500 kHz \cite{bib:tl071} oraz niską dokładność. W związku z~tym,
-napięcie wyjściowe pompy ładunków należy filtrować i~stabilizować. Jako filtr
-zastosowano ponownie układ LC (rzeczywisty RLC) o~niższej częstotliwości
+sekcji torów analogowych, odpowiednio wysokiego, aby nie doporowadzać do
+saturacji ich wyjść. Wybranym zasilaniem jest $\pm$12 V, a~szczegóły dotyczące
+tego wyboru będą dokładniej opisywane w~sekcji torów analogowych. \par
+Stosunkowo sporo czasu poświęcono kwesti generacji ujemnego zasilania.
+W~literaturze \cite{bib:art} \cite{bib:tietze} opisanych jest wiele sposobów
+implementacji tego typu układów, z~czego najbardziej popularnymi są inwertery
+napięciowe zaimplementowane w~oparciu o wzmacniacze operacyjne lub dedykowane
+przetwornice (ang. \textit{buck-boost}). Rozwiązanie oparte o~skonstruowanie
+układu inwerterów zostało odrzucone z~powodu dodatkowego nakładu pracy. Taki
+system, poza układem odwracającym napięcie (ang. \textit{rail splitter})
+wymagałby dodatkowego wzmacniacza mocy na wyjściu, co jest spowodowane
+zapotrzebowaniem prądowym wzmacniaczy, według specyfikacji wynoszącym typowo 1.4
+mA na układ. Jako, że w projekcie wykorzystywanych jest pięć wzmacniaczy
+operacyjnych na kanał, a kanałów jest cztery, to wymaganiem jest, aby wydajność
+prądowa wykorzystanego generatora ujemnego napięcia wynosiła 28 mA. Wyborów
+dedykowanej przetwornicy został odrzucony z powodu niskiej dostępności układów
+zgodnych z~założoną specyfikacją na rynku. \par Wynikowo zdecydowano się na
+wykorzystanie układu odwracającej pompy ładunków, który spełnia wszystkie
+założenia projektowe~i jest wydajna prądowo (maksymalny pobierany prąd równy 100
+mA). Minusem układu jest mała dokładność napięcia wyjściowego z~fluktuacjami,
+które według dokumentacji \cite{bib:ltc3261} dla wybranego trybu pracy wyniosą
+10 mV. Dodatkowo, układ generuje spadek napięcia w zależności od wyjściowego
+prądu, który w~przypadku 30 mA wyniesie około 750 mV. Dopuszczenie takiego
+napięcia na wzmacniacze w~sekcji analogowej jest niedopuszczalne, między innymi
+zważając na wskaźnik PSRR, który dla wybranych wzmacniaczy wynosi około 40 dB
+dla częstotliwości 500 kHz \cite{bib:tl071} oraz niską dokładność. W związku
+z~tym, napięcie wyjściowe pompy ładunków należy filtrować i~stabilizować. Jako
+filtr zastosowano ponownie układ LC (rzeczywisty RLC) o~niższej częstotliwości
 rezonansowej, ponieważ celem jest filtracja fluktuacji wprowadzanych przez pompę
 ładunków. Dla dobranego $L = 3.3 \text{ }\mu$H i $C = 57 \text{ }\mu$F uzyskano
 $f_c \approx 12.18$ kHz oraz warunek na rezystancję cewki $R \approx 170 \text{
@@ -292,22 +283,10 @@ dobierane były według not aplikacyjnych producenta przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.97\textwidth]{graf/hw/split.png}
+    \includegraphics[width=0.8\textwidth]{graf/hw/split.png}
     \caption{Symetryzacja szyn zasilających}
     \label{hw::split}
 \end{figure}
-
-\remark{A czy ta pompa odwracająca ładunki nie będzie teraz generowała
-szumu na zasilaniu tego U12? Tzn. czy nie lepiej było zasilić
-tą pompę z +15V wejściowego, przed filtracją LC? I później
-jak chodzi o przetwronicę na 5~V ta sama uwaga. Tzn.
-trzeba też wziąc pod uwagę zakłócenie generowane przez
-prąd jaki pobierają źródła, i te przetwornice pobierają
-pewnie bardzo dużo prądu impulosowo, i wyjdzie Panu,
-że impedancja zasilania na linii +15V będzie musiała
-być bardzo mała. I prościej by było dopuścić
-takie zakłócenia, a potem je po prostu tym filtrem LC
-filtrować.} pewnie tak...
 
 \subsection{Zasilanie domeny cyfrowej}
 
@@ -325,9 +304,9 @@ wykorzystano układ impulsowej przetwornicy napięcia (\textbf{SMPS}, ang.
 \textit{Switched mode power supply}), który jest tani, prosty w implementacji
 oraz zapewnia wysoką wydajność prądową, według dokumentacji wynoszącą do 3 A
 \cite{bib:tps562209}. \par Zależność opisująca napięcie wyjściowe wykorzystanego
-układu podana jest przez producenta i~zdefiniowana jest poniższym równaniem
+układu podana jest przez producenta i~zdefiniowana jest poniższym równaniem:
 \begin{equation} 
-    U_{out} = 0.765 \cdot (1 + \frac{R_1}{R_2})
+    U_{out} = 0.765 \cdot (1 + \frac{R_1}{R_2}).
     \label{eq::smps}
 \end{equation}
 Jak opisywano w sekcji dotyczącej filtracji i~stabilizacji zasilania
@@ -457,14 +436,9 @@ Dla wykorzystywanych wzmacniaczy powyżej częstotliwości 100 kHz, CMRR osiąga
 wartość około 80 dB. Rzeczywiste CMRR, poza obecnością wysokoczęstotliwościowych
 szumów w~sygnale wejściowym można również pogorszyć niezbalansowaniem układów
 przed wzmacniaczem, co należy mieć na uwadze projektując układ składający się
-z~szeregowego połączenia układów scalonych.
-
-\remark{Tylko, że rzeczywiste CMRR łatwo pogorszyć
-układem przed wzmacniaczem, niezbalansowaniem elementów układu
-wejściowego, i warto by o tym wspomnieć.} 
-
-\par Zaprojektowany filtr jest dolnoprzepustowym filtrem RC
-pierwszego rzędu, którego opisuje następująca zależność \cite{bib:tietze}:
+z~szeregowego połączenia układów scalonych. \par Zaprojektowany filtr jest
+dolnoprzepustowym filtrem RC pierwszego rzędu, którego opisuje następująca
+zależność \cite{bib:tietze}:
 \begin{equation}
     U_{wy}(s) = U_{we}(s)\frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{R + \frac{1}{Cs}}
         \implies K(s) = \frac{1}{RCs + 1},
@@ -475,13 +449,9 @@ Stała czasowa $\tau$ oraz częstotliwość odcięcia 3 dB dane są zależności
     \tau = RC, \quad f_c = \frac{1}{2\pi RC}.
 \end{equation}
 Dobierając $R = 2$ k$\Omega$ i $C = 10$ nF uzyskano $f_c \approx 7.957$ kHz.
-\newpage
 Poza filtrem, w~sekcji zaimplementowano saturację w~postaci ogranicznika
 diodowego ograniczającego amplitudy sygnału wejściowego do limitu +12 V.
-Omawiany układ przedstawiono na rysunku \ref{hw::emif}
-
-\remark{Dobrze też powiedzieć dlaczego nie zdecydowano się to samo dla -12~V}
-???
+Omawiany układ przedstawiono na rysunku \ref{hw::emif}.
 
 \begin{figure}[H]
     \centering
@@ -507,8 +477,8 @@ zastosowań jest wzmacniacz różnicowy, a~jego topologię przedstawiono na rysu
 \par Zależność opisująca układ opiera się na wykorzystaniu zasady superpozycji.
 Równanie opisujące wyjście w~układu w~stosunku do wejścia odwracającego przy
 wirtualnie wyzerowanym wejściu nieodwracającym jest zależnością opisującą
-wzmocnienie wzmacniacza w~topologii odwracającej \cite{bib:tietze}, opisaną jako
-\begin{equation}:
+wzmocnienie wzmacniacza w~topologii odwracającej \cite{bib:tietze}, opisaną jako:
+\begin{equation}
     U_{-,wy} = -U_{-,we}\left(\frac{R_f}{R_{1}}\right).
     \label{eq::op_diff_inv}
 \end{equation}
@@ -642,7 +612,7 @@ Charakterystykę amplitudową i~fazową układu przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{graf/hw/freqs.png}
+    \includegraphics[width=0.8\textwidth]{graf/hw/freqs.png}
     \caption{Charakterystyka aplitudowa i~fazowa układu filtra}
     \label{hw::freqs}
 \end{figure}
@@ -712,18 +682,13 @@ powstałe w~wyniku zastosowanych wzmacniaczy operacyjnych oraz zapewniający
 lokalny bufor energii dla kondensatora próbkującego wewnątrz przetwornika.
 Wymagania na taki filtr nie są surowe, ponieważ niechciane pasmo zostało
 odfiltorwane przez wcześniejszy filtr antyaliasingowy, dlatego zdecydowano się
-na wartości $R = 1$ k$\Omega$ i $C = 10$ nF,
-
-\remark{to pewnie uzgadnialiśmy wcześniej, że jest dobrze, ale 10 nF to wydaje
-się być mało jako bufor dla ADC} ???
-
-uzyskując w~ten sposób $f_c \approx 15.91$ kHz. \par Wejście przetwornika
-analogowo-cyfrowego należy zabezpieczyć przed napięciami przekraczającymi jego
-zakres. O~układzie realizującym to zadanie wspominano już w~sekcji wejścia
-zbalansowanego, lecz w~tym przypadku, limiter ogranicza amplitudy sygnału
-wejściowego do zakresu przetwornika. Z~tego wynika, że diody w~układzie będą
-połączone z~zasilaniem +5 V i~masą (0 V). \par Omawiany układ przedstawiono na
-rysunku \ref{hw::safe}:
+na wartości $R = 1$ k$\Omega$ i $C = 10$ nF, uzyskując w~ten sposób $f_c \approx
+15.91$ kHz. \par Wejście przetwornika analogowo-cyfrowego należy zabezpieczyć
+przed napięciami przekraczającymi jego zakres. O~układzie realizującym to
+zadanie wspominano już w~sekcji wejścia zbalansowanego, lecz w~tym przypadku,
+limiter ogranicza amplitudy sygnału wejściowego do zakresu przetwornika. Z~tego
+wynika, że diody w~układzie będą połączone z~zasilaniem +5 V i~masą (0 V). \par
+Omawiany układ przedstawiono na rysunku \ref{hw::safe}:
 
 \begin{figure}[H]
     \centering
@@ -815,20 +780,19 @@ Wyjście analogowe projektowane jest z myślą o złączach XLR, co oznacza, że
 sygnał wyjściowy, tak jak wejściowy, musi być symetryczny (zbalansowany). W celu
 jego wytworzenia zastosowano układ wzmacniacza operacyjnego w topologii
 odwracającej z jednostkowym wzmocnieniem \ref{eq::op_diff_inv} ($R_1 = R_f$).
-Sygnał wyjściowy ($-$)\remark{minus `$-$' to nie `-'} takiego układu jest
-odwrócony w fazie względem wejściowego ($+$), co pozwala na uzyskanie
-symetrycznej pary wyprowadzanej docelowo na złącze XLR. Przy wykorzystaniu
-takiego układu należy mieć na uwadze, że wzmacniacz generujący sygnał odwrócony
-($-$) jest elementem nie mającym odpowiednika w~torze sygnału nieodwróconego
-($+$). Układy sterujące wyjściem tej sekcji, czyli odpowiednio ostatni
-wzmacniacz w układzie filtra dla sygnału nieodwróconego ($+$) oraz wzmacniacz
-odwracający dla sygnału odwróconego ($-$) mogą zachowywać się znacząco inaczej.
-Możliwym rozwiązaniem byłoby dodanie wtórnika napięciowego w~ścieżce sygnału
-nieodwróconego ($+$), lecz wiązałoby się to z~dodatkowymi wzmacniaczami
-operacyjnymi na kanał wyjściowy. Jako, że~wykorzystywanych wzmacniaczy na tym
-etapie jest już stosunkowo dużo (pięć na kanał), z~pomysłu zrezygnowano, mając
-świadomość kompromisu. Omawiany fragment schematu przedstawiono na rysunku
-\ref{hw::synch}:
+Sygnał wyjściowy ($-$) takiego układu jest odwrócony w fazie względem
+wejściowego ($+$), co pozwala na uzyskanie symetrycznej pary wyprowadzanej
+docelowo na złącze XLR. Przy wykorzystaniu takiego układu należy mieć na uwadze,
+że wzmacniacz generujący sygnał odwrócony ($-$) jest elementem nie mającym
+odpowiednika w~torze sygnału nieodwróconego ($+$). Układy sterujące wyjściem tej
+sekcji, czyli odpowiednio ostatni wzmacniacz w układzie filtra dla sygnału
+nieodwróconego ($+$) oraz wzmacniacz odwracający dla sygnału odwróconego ($-$)
+mogą zachowywać się znacząco inaczej. Możliwym rozwiązaniem byłoby dodanie
+wtórnika napięciowego w~ścieżce sygnału nieodwróconego ($+$), lecz wiązałoby się
+to z~dodatkowymi wzmacniaczami operacyjnymi na kanał wyjściowy. Jako,
+że~wykorzystywanych wzmacniaczy na tym etapie jest już stosunkowo dużo (pięć na
+kanał), z~pomysłu zrezygnowano, mając świadomość kompromisu. Omawiany fragment
+schematu przedstawiono na rysunku \ref{hw::synch}:
 
 \begin{figure}[H]
     \centering

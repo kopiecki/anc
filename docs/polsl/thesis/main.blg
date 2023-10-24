@@ -1,0 +1,70 @@
+This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: biblatex.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: main-blx.bib
+Database file #2: biblio/biblio.bib
+Warning--entry type for "bib:ana_ada" isn't style-file defined
+--line 306 of file biblio/biblio.bib
+Warning--entry type for "bib:rand" isn't style-file defined
+--line 317 of file biblio/biblio.bib
+Biblatex version: 3.17
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+You've used 35 entries,
+            6399 wiz_defined-function locations,
+            1377 strings with 13309 characters,
+and the built_in function-call counts, 180239 in all, are:
+= -- 10209
+> -- 8541
+< -- 1623
++ -- 8819
+- -- 6250
+* -- 9256
+:= -- 17882
+add.period$ -- 0
+call.type$ -- 35
+change.case$ -- 844
+chr.to.int$ -- 620
+cite$ -- 68
+duplicate$ -- 18028
+empty$ -- 16014
+format.name$ -- 894
+if$ -- 34047
+int.to.chr$ -- 0
+int.to.str$ -- 89
+missing$ -- 0
+newline$ -- 807
+num.names$ -- 1247
+pop$ -- 11241
+preamble$ -- 1
+purify$ -- 883
+quote$ -- 0
+skip$ -- 6075
+stack$ -- 0
+substring$ -- 17037
+swap$ -- 5067
+text.length$ -- 926
+text.prefix$ -- 34
+top$ -- 1
+type$ -- 1176
+warning$ -- 0
+while$ -- 1752
+width$ -- 0
+write$ -- 773
+(There were 2 warnings)
