@@ -6,11 +6,11 @@ Wstępne koncepcje systemów realizujących aktywne tłumienie hałasu (ang.
 \textit{Active noise control}, ANC) zaczęły pojawiać się już w~latach 30. XX
 wieku, jednak z~powodu braku odpowiednich narzędzi pozwalających na praktyczną
 implementację rozwiązania w~tamtych czasach, znaczące postępy zaczęto obserwować
-dopiero w latach 80. i 90. XX wieku, kiedy raptowny rozwój technologiczny
+dopiero w latach 80. i~90. XX wieku, kiedy raptowny rozwój technologiczny
 umożliwił projektowane coraz to dokładniejszych i~bardziej niezawodnych układów
 automatyki \cite{bib:kuo_morgan} Powodem takiego przebiegu wydarzeń był
 wyłaniający się zza horyzontu początek epoki cyfrowej, która udowodniła, że
-z~użyciem kodu binarnego można opisać i~wpływać na otaczający nas świat z dużą
+z~użyciem kodu binarnego można opisać i~wpływać na otaczający nas świat z~dużą
 precyzją i~elastycznością, wynikającą głównie z~determinizmu błędów
 przetwarzania, na których wielkość projektant ma pełen wpływ. Zastosowanie
 układów cyfrowych w~systemach ANC umożliwiło ich szersze wykorzystanie
@@ -69,7 +69,7 @@ rozległych, grubych i~wykonanych ze specjalnych materiałów, mocno absorbując
 niechciany hałas, barier akustycznych. \par Zważając na powyższe, systemy ANC
 wykorzystywane są głównie w~celu tłumienia hałasów niskoczęstotliwościowych,
 tam, gdzie rozwiązania pasywne są najmniej efektywne. Typowe pasmo zainteresowań
-zamyka się w~przedziale \textbf{od 50 do 500 Hz} \cite{bib:kuo_morgan}. Niskie
+zamyka się w~przedziale \textbf{od 50 Hz do 500 Hz} \cite{bib:kuo_morgan}. Niskie
 częstotliwości powodują, że wymagania czasowe i~koszta nałożone na system ANC są
 z~reguły mniejsze, próbkowanie może odbywać się rzadziej, co skutkuje dłuższym
 czasem na wykonanie obliczeń i~wypracowaniem sterowania. Typowo, jeżeli hałas
@@ -78,7 +78,7 @@ w~przypadku hałasów szerokopasmowych lub losowych, tłumienie jest zazwyczaj g
 o~połowę. Zakres poziomu ciśnienia akustycznego (ang. \textit{Sound pressure
 level}, \textbf{SPL}) jest dobierany na podstawie charakterystyki źródła 
 i~zazwyczaj, ze względu na parametry typowego hałasu i~stosowanych urządzeń,
-zamyka się w~przedziale \textbf{od 80 do 100 dB SPL}.
+zamyka się w~przedziale \textbf{od 80 dB SPL do 100 dB SPL}.
 
 \subsection{Idea przewodnia}
 
@@ -106,7 +106,7 @@ projektowany system był adaptacyjny co oznacza, że jego działanie będzie
 odpowiednio korygowane, w~zależności od zaobserwowanych zmian charaketerystyki
 toru, którym propaguje się niechciany sygnał. Adaptacja realizowana jedynie
 w~sposób analogowy, pomimo że możliwa, posiada duże ograniczenia w zakresie
-elastyczności i precyzyjności \cite{bib:ana_ada}, dlatego pożądane jest, aby
+elastyczności i~precyzyjności \cite{bib:ana_ada}, dlatego pożądane jest, aby
 w~systemach tego typu wykorzystać układy cyfrowe, próbkujące sygnały z~czujników
 oraz przetwarzające je z~wykorzystaniem odpowiednich algorytmów przetwarzania.
 Układy cyfrowe przeznaczonego do tego celu muszą być odpowiednio szybkie
@@ -136,7 +136,7 @@ rysunku \ref{intro::processing}:
 Procesory sygnałowe charakteryzują się budową, która umożliwia sprzętowe
 wykonanie operacji często występujących w cyfrowym przetwarzaniu sygnałów.
 Przykładowo, na tego typu jednostkach istnieje możliwość wykonania operacji
-mnożenia i~odczytu z dwóch niezależnych pamięci RAM w~jednym cyklu zegarowym,
+mnożenia i~odczytu z~dwóch niezależnych pamięci RAM w~jednym cyklu zegarowym,
 bufory cykliczne mogą być zaimplementowane na poziomie sprzętowym wraz ze
 wsparciem dla operacji często wykorzystywanych w~liczeniu szybkiej transformaty
 Fouriera (odwracanie bitów, ang. \textit{bit reversal}). Dodatkowo, instrukcje
@@ -149,7 +149,7 @@ projektowaniu systemu przetwarzającego sygnały w~czasie rzeczywistym, to z~tak
 rozwiązaniem wiąże się szereg problemów:
 \begin{enumerate}
 
-    \item \textbf{Wysoka cena i mała dostępność} --- w~większości przypadków
+    \item \textbf{Wysoka cena i~mała dostępność} --- w~większości przypadków
     zakup musi być realizowany przez globalnego dystrybutora elektroniki. Cena
     takich układów jest wysoka i~z racji niskiej popularności, platformy
     rozwojowe są drogie i~słabo dostępne, jeżeli w~ogóle istnieją. Oznacza to,
@@ -183,9 +183,9 @@ rozwiązaniem wiąże się szereg problemów:
 Wymagania stawiane sprzętowi i~oprogramowaniu w systemach ANC są surowe
 i~ograniczające. W raz zaimplementowanym rozwiązaniu zazwyczaj trudno wprowadzać
 modyfikacje, a~środowisko programistyczne w~którym się pracuje jest trudne,
-zamknięte i~nieskalowalne. Z powodu tych ograniczeń wysunięty został cel
+zamknięte i~nieskalowalne. z~powodu tych ograniczeń wysunięty został cel
 projektu, polegający na skonstruowaniu układu realizującego aktywne tłumienie
-hałasu z wykorzystaniem ogólnodostępnych i~otwartoźródłowych rozwiązań, takich
+hałasu z~wykorzystaniem ogólnodostępnych i~otwartoźródłowych rozwiązań, takich
 jak popularna i~tania platforma obliczeniowa z~załadowanym systemem operacyjnym
 wyposażonym w~jądro Linux, udostępniającym zestaw bibliotek pozwalających na
 komunikacją z~peryferiami po określonych protokołach cyfrowych. Jądro systemu
@@ -215,13 +215,13 @@ pracy można opisać następująco:
     wyprowadzeniem schematu blokowego systemu implementowanego w~dalszej części
     pracy.
 
-    \item Rozdział 3, Założenia i proponowane rozwiązanie --- opisanie założeń
+    \item Rozdział 3, Założenia i~proponowane rozwiązanie --- opisanie założeń
     funkcjonalnych stawianych projektowanemu układowi z~podzieleniem na część
     sprzętową i~programową oraz przedstawienie proponowanego rozwiązania
     z~opisem na ich podstawie.
 
     \item Rozdział 4, Implementacja części sprzętowej --- szczegółowy opis
-    implementacji zaprojektowanej i sporządzonej elektroniki z podziałem na
+    implementacji zaprojektowanej i~sporządzonej elektroniki z~podziałem na
     określone sekcje.
 
     \item Rozdział 5, Implementacji części programowej --- szczegółowy opis
@@ -231,7 +231,7 @@ pracy można opisać następująco:
     \item Rozdział 6, Testy i~badania --- zweryfikowanie poprawności
     sporządzonego rozwiązania poprzez pomiary zasilania, analizę przebiegów
     czasowych określonych sygnałów analogowych oraz cyfrowych. Przeprowadzenie
-    badań z użyciem pełnego systemu na rzeczywistych lub symulowanych sygnałach,
+    badań z~użyciem pełnego systemu na rzeczywistych lub symulowanych sygnałach,
     ocena wydajności oraz ocena wpływu wybranych parametrów i~konfiguracji na
     wynikowe tłumienie wraz z~komentarzem.
 

@@ -12,7 +12,7 @@ def compute_and_plot_psd(data, fs, seg=2**10, _label=None):
     plt.plot(f[1:-2], 10*np.log10(p_den)[1:-2], linewidth=4,
              label="PSD" if _label is None else _label)
     plt.xlabel('f, Hz')
-    plt.ylabel('PSD')
+    plt.ylabel('PSD, dB')
 
     return f, p_den
 

@@ -26,7 +26,7 @@ najbardziej popularne i~sprawdzone opcje:
 Dokonując analizy dostępnych opcji zdecydowano się na wykorzystanie zestawu
 łatek PREEMPT\_RT. Xenomai i~RTAI, mimo że bardzo cenione i~często
 wykorzystywane nawet w~rozwiązaniach komercyjnych, cechują się wysokim progiem
-wejścia i~praca z nimi wymaga dużego nakładu czasowego. 
+wejścia i~praca z~nimi wymaga dużego nakładu czasowego. 
 
 \subsection{Problemy jądra Linux w kontekście real-time}
 
@@ -38,7 +38,7 @@ szeregowanie i~obsłużenie zadań na podstawie ich priorytetu. Planista decyduj
 o~przydziale czasu procesora na wykonanie zadań, które może przełączać
 w~zależności od aktualnego zdażenia lub ustalonego planu. Standardowo, jądro
 Linux zapewnia mechanizm wywłaszczenia (ang. \textit{preemption}) zadania
-z~trybu użytkownia przez zadania o~wyższym priorytecie lub przerwania sprzętowe.
+z~trybu użytkownia przez~zadania o~wyższym priorytecie lub przerwania sprzętowe.
 Przebieg wywłaszczenia przedstawiono na rysunku \ref{sw::preempt_0}:
 
 \begin{figure}[H]
@@ -103,7 +103,7 @@ z~trybu jądra może zostać rozwiązany jak przedstawiono na~rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/sw/preempt_rt_0.png}
-    \caption{Wywłaszczenie zadania z przestrzeni jądra}
+    \caption{Wywłaszczenie zadania z~przestrzeni jądra}
     \label{sw::preempt_rt_0}
 \end{figure}
 
@@ -148,7 +148,7 @@ obsłudze przerwania, a~wątkowej przedstawiono na rysunkach \ref{sw::hw_irq}:
 Jako, że PREEMPT\_RT jest zestawem łatek jądra Linux, obsługa funkcjonalności,
 które oferuje, opiera się na wykorzystaniu zestawu funkcji udostępnianych przez
 POSIX. Konfiguracja krytycznego zadania i~planisty odbywa się poprzez funkcje
-zdefiniowane w nagłówkach \textit{pthread.h} i \textit{sched.h}.
+zdefiniowane w nagłówkach \textit{pthread.h} i~\textit{sched.h}.
 
 \section{System operacyjny}
 
@@ -171,7 +171,7 @@ Opis poszczególnych etapów przedstawiono poniżej:
     z~uprawnieniami tylko do odczytu, z~której procesor bezpośrednio po
     uruchomieniu zaczyna wykonywać instrukcje.
     Po inicjalizacji, jego zadaniem jest załadowanie następnego w~koleji
-    programu rozruchowego (plik SPL lub MLO) z pamięci zewnętrznej (eMMC, karta
+    programu rozruchowego (plik SPL lub MLO) z~pamięci zewnętrznej (eMMC, karta
     microSD) lub przez określony protokół cyfrowy (SPI, UART) do~wewnętrznej
     pamięci SRAM procesora. Jako, że~program znajduje się w~pamięci tylko do
     odczytu, nie podlega modyfikacji.
@@ -240,7 +240,7 @@ poszczególnych partycji przedstawiono poniżej:
     \item Partycja systemowa --- zawiera pliki jądra systemu i~drzewa urządzeń.
     Wymagany jest system plików EXT4.
 
-    \item Partycja z głównym systemem plików --- zawiera wypakowany główny system
+    \item Partycja z~głównym systemem plików --- zawiera wypakowany główny system
     plików systemu. Wymagany jest system plików EXT4.
 
 \end{enumerate}
@@ -293,7 +293,7 @@ budowanego systemu w oparciu o~narzędzie \textit{menuconfig}, jednak domyślny
 plik konfiguracyjny, opisujący wybraną platformę na potrzeby realizowanego
 projektu jest wystarczający. \par Jedyną zmianą, którą wprowadzono w~kodach
 źródłowych jądra było dodanie prostego sterownika obsługującego zaprojektowaną
-płytkę drukowaną na bazie kodeku PCM5102A \cite{bib:sitara}. Z najbardziej
+płytkę drukowaną na bazie kodeku PCM5102A \cite{bib:sitara}. z~najbardziej
 znaczących kwestii, sterownik zawiera deklarację struktury opisującą
 konfigurację płytki dla transferów wejściowych i~wyjściowych (wspierane formaty,
 liczba kanałów) oraz funkcję, która umożliwia jego załadowanie i~widoczność w
@@ -322,7 +322,7 @@ z~którym praca sprowadza się do modyfikacji następujących plików
 
 \begin{itemize}
 
-    \item Pliki z kodem źródłowym (rozszerzenie \textit{.dts})
+    \item Pliki z~kodem źródłowym (rozszerzenie \textit{.dts})
 
     \item Pliki nagłówkowe (rozszerzenie \textit{.dtsi})
 
@@ -399,7 +399,7 @@ następująca:
 
     \item Zdefiniowanie węzła zegara i~przypisanie go sygnałowi \textbf{AHCLK} ---
     jego domyślna częstotliwość wynosi 24.576 MHz i~na jego podstawie generowane
-    są pozostałe zegary interfejsu McASP (\textbf{ACLKX} i \textbf{FSX})
+    są pozostałe zegary interfejsu McASP (\textbf{ACLKX} i~\textbf{FSX})
 
     \item Zdefiniowanie węzła opisującego sporzadzoną płytkę drukowaną - wymaga
     odwołania do zmodyfikowanego sterownika kodeka PCM5102A, którego opisano w
@@ -553,7 +553,7 @@ zbuforowanie fragmentu jest krótszy. Minimalny rozmiar fragmentu zdefiniowany
 jest w sterownikach jądra obsługujących interfejsy cyfrowe komunikujace się ze
 wspierającymi je kartami dźwiekowymi i~dla McASP wynosi on \textbf{32 ramek}.
 Analogicznie zdefiniowane są dostępne częstotliwości próbkowania, które dla
-wykorzystywanego protokołu wynoszą \textbf{minimalnie 8 kHz i maksymalnie 192
+wykorzystywanego protokołu wynoszą \textbf{minimalnie 8 kHz i~maksymalnie 192
 kHz}. Projektując system ANC wymagana jest minimalizacja opóźnień w~torach
 przetwarzania, dlatego w~tym celu porządane jest, aby rozmiaru fragmentu
 i~częstotliwości próbkowania dobrać w~sposób zapewniający jak najniższą
@@ -592,7 +592,7 @@ i~z~wykorzystaniem koprocesora SIMD przedstawiono na rysunkach \ref{sw::simd}:
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=0.9\textwidth]{graf/sw/simd.png}
-        \caption{Operacja wektorowa z SIMD}
+        \caption{Operacja wektorowa z~SIMD}
     \end{subfigure}
         \caption{Porównanie operacji wektorowych}
         \label{sw::simd}
@@ -619,7 +619,7 @@ SIMD i~rezultat przykładowego testu filtracji przedstawiono w~tabeli
     \begin{tabular}{|| c | c | c | c ||} 
         \hline
         \textbf{Długość filtra} & \textbf{Ilość iteracji} & \textbf{Czas, bez
-        SIMD} & \textbf{Czas, z SIMD} \\
+        SIMD} & \textbf{Czas, z~SIMD} \\
         [0.5ex] \hline\hline
         128 & 10e6 & 27.389 s& 4.460 s\\ 
         \hline\hline
@@ -647,7 +647,7 @@ liczb pseudolosowych napisana jest w~oparciu o~liniowy generator kongruencjalny
 jakości w~porównaniu z~innymi generatorami liczb pseudolosowych \cite{bib:rand}.
 Z głównych mankamentów generatora \textit{rand()} można wyróżnić:
 \begin{itemize}
-    \item \textbf{Przedział generacji jest zdefiniowany przez bibliotekę i tylko
+    \item \textbf{Przedział generacji jest zdefiniowany przez bibliotekę i~tylko
     w tym przedziale liczby generowane są równomiernie} --- w~przypadku, kiedy
     RAND\_MAX zdefiniowany jest jako maksymalny zakres 32 bitowy, a~użytkownik
     chce wygenerować losową liczbę 16 bitową, to wygenerowana liczba pochodzi
@@ -667,7 +667,7 @@ Z głównych mankamentów generatora \textit{rand()} można wyróżnić:
 
 Mając na uwadze problemy wyszczególnione wyżej, w~celu generacji sygnału
 identyfikującego posłużono się klasą generatorów będącą podzbiorem generatorów
-działających na bazie rejestru przesuwnego z liniowym sprzężeniem zwrotnym (ang.
+działających na bazie rejestru przesuwnego z~liniowym sprzężeniem zwrotnym (ang.
 \textit{Linear Feedback Shift Register}, LFSR). W~literaturze
 \cite{bib:kuo_morgan} \cite{bib:figwer} można spotkać się z~sygnałami PRBS (ang.
 \textit{Pseudorandom binary sequence}), które generowane są właśnie z~ich
@@ -685,7 +685,7 @@ Na jakość generatora działającego w~oparciu LFSR wpływ mają numery bitów
 wykorzystywane do obliczenia nowego stanu, rodzaj i~ilość operacji na nich
 przeprowadzanych oraz stan początkowy (ang. \textit{seed}). Jak można zauważyć
 z~\ref{sw::lfsr}, dla stanu początkowego 0~generator nie będzie działał
-poprawnie. Każdy LFSR jest związany z określonym wielomianem i~maksymalny okres,
+poprawnie. Każdy LFSR jest związany z~określonym wielomianem i~maksymalny okres,
 w~którym generowane liczby się nie duplikują, ogarniczony jest przez jego
 stopień i~zdefiniowany jest przez liczbę bitów $M$:
 \begin{equation}
@@ -697,7 +697,7 @@ i/lub~rotacji aktualnego stanu rejestru do obliczenia kolejnego. Omawiany
 podzbiór, ze względu na wykorzystywane operacje, przyjęło się nazywać
 generatorami \textit{xorshift} i~cieszą się one wysokim uznaniem w~literaturze
 \cite{bib:prng} ze względu na niskie zużycie zasobów do wykonania obliczeń oraz
-dużą losowość, weryfikowaną na podstawie testów statystycznych z biblioteki
+dużą losowość, weryfikowaną na podstawie testów statystycznych z~biblioteki
 TestU01. \par W~bibliotece \textit{libsignal} zdecydowano się na implementację
 16 bitowego generatora \textit{xoroshiro16++}, działającego z~wykorzystaniem
 kombinacji alternatywy rozłącznej, rotacji, przesunięcie bitowego i~rotacji,
@@ -710,7 +710,7 @@ próbek przedstawiono na rysunku \ref{sw::prng_psd}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/sw/prng_psd.png}
-    \caption{Funkcja autokorelacji i GWM sygnału z generatora
+    \caption{Funkcja autokorelacji i~GWM sygnału z~generatora
     \textit{xoroshiro16++}}
     \label{sw::prng_psd}
 \end{figure}

@@ -17,10 +17,10 @@
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Wyprowadzenie schematu systemu ANC, 3\relax }}{13}{figure.caption.15}%
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Wyprowadzenie schematu systemu ANC, 4\relax }}{15}{figure.caption.16}%
 \contentsline {figure}{\numberline {2.8}{\ignorespaces Schemat systemu ANC\relax }}{16}{figure.caption.17}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Schemat systemu ANC z normalizacją danych wejściowych\relax }}{18}{figure.caption.18}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Schemat systemu ANC z~normalizacją danych wejściowych\relax }}{18}{figure.caption.18}%
 \contentsline {figure}{\numberline {2.10}{\ignorespaces Schemat eksperymentu identyfikacji metodami offline\relax }}{20}{figure.caption.19}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Schemat systemu ANC z uwzględnieniem dodatkowego sprzężenia\relax }}{21}{figure.caption.20}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Schemat systemu ANC z niwelacją sprzężenia\relax }}{21}{figure.caption.21}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Schemat systemu ANC z~uwzględnieniem dodatkowego sprzężenia\relax }}{21}{figure.caption.20}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Schemat systemu ANC z~niwelacją sprzężenia\relax }}{21}{figure.caption.21}%
 \contentsline {figure}{\numberline {2.13}{\ignorespaces Identyfikacja sprzężenia\relax }}{22}{figure.caption.22}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Architektura zaprojektowanego systemu\relax }}{29}{figure.caption.35}%
@@ -41,7 +41,7 @@
 \contentsline {figure}{\numberline {4.14}{\ignorespaces Charakterystyka aplitudowa i~fazowa układu filtra\relax }}{45}{figure.caption.49}%
 \contentsline {figure}{\numberline {4.15}{\ignorespaces Filtr antyaliasingowy\relax }}{46}{figure.caption.50}%
 \contentsline {figure}{\numberline {4.16}{\ignorespaces Układ pozycjonujący\relax }}{47}{figure.caption.51}%
-\contentsline {figure}{\numberline {4.17}{\ignorespaces Filtr dolnoprzepustowy i limiter\relax }}{47}{figure.caption.52}%
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Filtr dolnoprzepustowy i~limiter\relax }}{47}{figure.caption.52}%
 \contentsline {figure}{\numberline {4.18}{\ignorespaces Pełen schemat wejściowej sekcji analogowej\relax }}{48}{figure.caption.53}%
 \contentsline {figure}{\numberline {4.19}{\ignorespaces Schemat blokowy wyjściowego toru analogowego\relax }}{48}{figure.caption.54}%
 \contentsline {figure}{\numberline {4.20}{\ignorespaces Wejściowy filtr pasmowoprzepustowy\relax }}{49}{figure.caption.55}%
@@ -62,7 +62,7 @@
 \contentsline {figure}{\numberline {5.1}{\ignorespaces Przebieg wywłaszczenia zadania\relax }}{62}{figure.caption.75}%
 \contentsline {figure}{\numberline {5.2}{\ignorespaces Przebieg wywłaszczenia zadania w sytuacji wywołania systemowego\relax }}{62}{figure.caption.76}%
 \contentsline {figure}{\numberline {5.3}{\ignorespaces Przebieg problemu inwersji priorytetów\relax }}{63}{figure.caption.77}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Wywłaszczenie zadania z przestrzeni jądra\relax }}{63}{figure.caption.78}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Wywłaszczenie zadania z~przestrzeni jądra\relax }}{63}{figure.caption.78}%
 \contentsline {figure}{\numberline {5.5}{\ignorespaces Dziedziczenie priorytetu\relax }}{64}{figure.caption.79}%
 \contentsline {figure}{\numberline {5.6}{\ignorespaces Porównanie obsługi przerwań sprzętowych\relax }}{64}{figure.caption.80}%
 \contentsline {figure}{\numberline {5.7}{\ignorespaces Proces uruchomienia systemu operacyjnego\relax }}{65}{figure.caption.81}%
@@ -70,7 +70,7 @@
 \contentsline {figure}{\numberline {5.9}{\ignorespaces Podział bufora sterownika\relax }}{72}{figure.caption.84}%
 \contentsline {figure}{\numberline {5.10}{\ignorespaces Porównanie operacji wektorowych\relax }}{74}{figure.caption.85}%
 \contentsline {figure}{\numberline {5.11}{\ignorespaces Przykładowy LFSR\relax }}{76}{figure.caption.87}%
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Funkcja autokorelacji i GWM sygnału z generatora \textit {xoroshiro16++}\relax }}{76}{figure.caption.88}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Funkcja autokorelacji i~GWM sygnału z~generatora \textit {xoroshiro16++}\relax }}{76}{figure.caption.88}%
 \contentsline {figure}{\numberline {5.13}{\ignorespaces Przebieg operacji - pętla ANC\relax }}{77}{figure.caption.89}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {6.1}{\ignorespaces Sporządzona płytka drukowana\relax }}{79}{figure.caption.90}%
@@ -82,31 +82,31 @@
 \contentsline {figure}{\numberline {6.7}{\ignorespaces Pomiary wejściowego toru analogowego dla $f_s = 500$ Hz\relax }}{83}{figure.caption.97}%
 \contentsline {figure}{\numberline {6.8}{\ignorespaces Gęstość widmowa mocy pomiaru dla $f_s = 500$ Hz\relax }}{84}{figure.caption.98}%
 \contentsline {figure}{\numberline {6.9}{\ignorespaces Stanowisko pomiarowe\relax }}{84}{figure.caption.99}%
-\contentsline {figure}{\numberline {6.10}{\ignorespaces Indentyfikacja toru wtórnego - wpływ $n_f$\relax }}{85}{figure.caption.100}%
+\contentsline {figure}{\numberline {6.10}{\ignorespaces Indentyfikacja toru wtórnego --- wpływ $n_f$\relax }}{85}{figure.caption.100}%
 \contentsline {figure}{\numberline {6.11}{\ignorespaces Przebiegi referencyjne\relax }}{85}{figure.caption.101}%
-\contentsline {figure}{\numberline {6.12}{\ignorespaces Suma sinusoid o $f_0 = 120$ Hz i $f_1 = 160$ Hz\relax }}{86}{figure.caption.102}%
+\contentsline {figure}{\numberline {6.12}{\ignorespaces Suma sinusoid o $f_0 = 120$ Hz i~$f_1 = 160$ Hz\relax }}{86}{figure.caption.102}%
 \contentsline {figure}{\numberline {6.13}{\ignorespaces Przebiegi $e(n)$ dla sygnałów testowych\relax }}{87}{figure.caption.104}%
-\contentsline {figure}{\numberline {6.14}{\ignorespaces Badania wpływu rozmiaru kroku $\alpha $ - sygnał 1\relax }}{88}{figure.caption.106}%
-\contentsline {figure}{\numberline {6.15}{\ignorespaces Badania wpływu rozmiaru kroku $\alpha $ - sygnał 2\relax }}{88}{figure.caption.107}%
+\contentsline {figure}{\numberline {6.14}{\ignorespaces Badania wpływu rozmiaru kroku $\alpha $ --- sygnał 1\relax }}{88}{figure.caption.106}%
+\contentsline {figure}{\numberline {6.15}{\ignorespaces Badania wpływu rozmiaru kroku $\alpha $ --- sygnał 2\relax }}{88}{figure.caption.107}%
 \contentsline {figure}{\numberline {6.16}{\ignorespaces Badania wpływu rozmiaru kroku $\alpha $ - sygnał 3\relax }}{89}{figure.caption.108}%
-\contentsline {figure}{\numberline {6.17}{\ignorespaces Badania wpływu długości $L$ filtra $W(z^{-1})$ - sygnał 1\relax }}{90}{figure.caption.111}%
-\contentsline {figure}{\numberline {6.18}{\ignorespaces Badania wpływu długości $L$ filtra $W(z^{-1})$ - sygnał 2\relax }}{90}{figure.caption.112}%
-\contentsline {figure}{\numberline {6.19}{\ignorespaces Badania wpływu długości $L$ filtra $W(z^{-1})$ - sygnał 3\relax }}{91}{figure.caption.113}%
-\contentsline {figure}{\numberline {6.20}{\ignorespaces Badanie wpływu częstotliwości próbkowania - sygnał 1\relax }}{92}{figure.caption.115}%
-\contentsline {figure}{\numberline {6.21}{\ignorespaces Badanie wpływu częstotliwości próbkowania - sygnał 2\relax }}{92}{figure.caption.116}%
-\contentsline {figure}{\numberline {6.22}{\ignorespaces Badanie wpływu częstotliwości próbkowania - sygnał 3\relax }}{92}{figure.caption.117}%
-\contentsline {figure}{\numberline {6.23}{\ignorespaces Badanie wpływu rozmiaru fragmentu - sygnał 1\relax }}{93}{figure.caption.119}%
-\contentsline {figure}{\numberline {6.24}{\ignorespaces Badanie wpływu rozmiaru fragmentu - sygnał 2\relax }}{94}{figure.caption.120}%
-\contentsline {figure}{\numberline {6.25}{\ignorespaces Badanie wpływu rozmiaru fragmentu - sygnał 3\relax }}{94}{figure.caption.121}%
-\contentsline {figure}{\numberline {6.26}{\ignorespaces Badania wpływu poziomu priorytetu $P$ - sygnał 1\relax }}{95}{figure.caption.123}%
-\contentsline {figure}{\numberline {6.27}{\ignorespaces Badania wpływu poziomu priorytetu $P$ - sygnał 2\relax }}{95}{figure.caption.124}%
-\contentsline {figure}{\numberline {6.28}{\ignorespaces Badania wpływu poziomu priorytetu $P$ - sygnał 3\relax }}{96}{figure.caption.125}%
-\contentsline {figure}{\numberline {6.29}{\ignorespaces Badania rozszerzeń czasu rzeczywistego - zmiana wytycznej planisty\relax }}{96}{figure.caption.126}%
-\contentsline {figure}{\numberline {6.30}{\ignorespaces Eksperyment - pseudolosowe pobudzenia sinusoidalne\relax }}{97}{figure.caption.128}%
-\contentsline {figure}{\numberline {6.31}{\ignorespaces Sygnał testowy - szum losowy (po przybliżeniu i normalizacji)\relax }}{98}{figure.caption.130}%
-\contentsline {figure}{\numberline {6.32}{\ignorespaces Eksperyment - sygnał losowy\relax }}{98}{figure.caption.131}%
-\contentsline {figure}{\numberline {6.33}{\ignorespaces Eksperyment - hałas generowany przez pracujące młyny kulowe\relax }}{99}{figure.caption.133}%
-\contentsline {figure}{\numberline {6.34}{\ignorespaces Eksperyment - hałas generowany przez pracujące pompy wody\relax }}{99}{figure.caption.134}%
+\contentsline {figure}{\numberline {6.17}{\ignorespaces Badania wpływu długości $L$ filtra $W(z^{-1})$ --- sygnał 1\relax }}{90}{figure.caption.111}%
+\contentsline {figure}{\numberline {6.18}{\ignorespaces Badania wpływu długości $L$ filtra $W(z^{-1})$ --- sygnał 2\relax }}{90}{figure.caption.112}%
+\contentsline {figure}{\numberline {6.19}{\ignorespaces Badania wpływu długości $L$ filtra $W(z^{-1})$ --- sygnał 3\relax }}{91}{figure.caption.113}%
+\contentsline {figure}{\numberline {6.20}{\ignorespaces Badanie wpływu częstotliwości próbkowania --- sygnał 1\relax }}{92}{figure.caption.115}%
+\contentsline {figure}{\numberline {6.21}{\ignorespaces Badanie wpływu częstotliwości próbkowania --- sygnał 2\relax }}{92}{figure.caption.116}%
+\contentsline {figure}{\numberline {6.22}{\ignorespaces Badanie wpływu częstotliwości próbkowania --- sygnał 3\relax }}{92}{figure.caption.117}%
+\contentsline {figure}{\numberline {6.23}{\ignorespaces Badanie wpływu rozmiaru fragmentu --- sygnał 1\relax }}{93}{figure.caption.119}%
+\contentsline {figure}{\numberline {6.24}{\ignorespaces Badanie wpływu rozmiaru fragmentu --- sygnał 2\relax }}{94}{figure.caption.120}%
+\contentsline {figure}{\numberline {6.25}{\ignorespaces Badanie wpływu rozmiaru fragmentu --- sygnał 3\relax }}{94}{figure.caption.121}%
+\contentsline {figure}{\numberline {6.26}{\ignorespaces Badania wpływu poziomu priorytetu $P$ --- sygnał 1\relax }}{95}{figure.caption.123}%
+\contentsline {figure}{\numberline {6.27}{\ignorespaces Badania wpływu poziomu priorytetu $P$ --- sygnał 2\relax }}{95}{figure.caption.124}%
+\contentsline {figure}{\numberline {6.28}{\ignorespaces Badania wpływu poziomu priorytetu $P$ --- sygnał 3\relax }}{96}{figure.caption.125}%
+\contentsline {figure}{\numberline {6.29}{\ignorespaces Badania rozszerzeń czasu rzeczywistego --- zmiana wytycznej planisty\relax }}{96}{figure.caption.126}%
+\contentsline {figure}{\numberline {6.30}{\ignorespaces Eksperyment --- pseudolosowe pobudzenia sinusoidalne\relax }}{97}{figure.caption.128}%
+\contentsline {figure}{\numberline {6.31}{\ignorespaces Sygnał testowy --- szum losowy (po przybliżeniu i~normalizacji)\relax }}{98}{figure.caption.130}%
+\contentsline {figure}{\numberline {6.32}{\ignorespaces Sygnał losowy --- pierwszy eksperyment\relax }}{98}{figure.caption.131}%
+\contentsline {figure}{\numberline {6.33}{\ignorespaces Eksperyment --- hałas generowany przez pracujące młyny kulowe\relax }}{99}{figure.caption.133}%
+\contentsline {figure}{\numberline {6.34}{\ignorespaces Eksperyment --- hałas generowany przez pracujące pompy wody\relax }}{99}{figure.caption.134}%
 \contentsline {figure}{\numberline {6.35}{\ignorespaces Eksperyment - jądro bez łatek PREEMPT\_RT\relax }}{100}{figure.caption.136}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

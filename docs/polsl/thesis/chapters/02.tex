@@ -45,7 +45,7 @@ Omawiane struktury w~postaci schematów ideowych przedstawiono na rysunkach
 
 Instynktownie można stwierdzić, że skoro systemy ze sprzężeniem w~przód opierają
 swoje działanie na pomiarze dwóch wielkości, to ze względu na większą ilość
-informacji, sterowanie może zostać wypracowane z większą dokładnością. Jest to
+informacji, sterowanie może zostać wypracowane z~większą dokładnością. Jest to
 stwierdzenie poprawne, jednak należy pamiętać, że takie układy wymagają
 dodatkowego pomiaru (czujnika), co zwiększa koszta oraz komplikuje strukturę.
 Dodatkowy pomiar jest też nie zawsze możliwy, więc wybór struktury często jest
@@ -90,7 +90,7 @@ i~neutralizacja jej wpływu w sposób programowy lub sprzętowy.
     \label{analysis::systems}
 \end{figure}
 
-Każda z przedstawionych struktur różni się od siebie znacząco na poziomie
+Każda z~przedstawionych struktur różni się od siebie znacząco na poziomie
 sprzętowym jak i~programowym. Grubszą czcionką na diagramie
 \ref{analysis::systems} zaznaczono strukturę, którą zdecydowano się wybrać do
 dalszej analizy z~myślą o~finalnej implementacji i~jest to
@@ -132,7 +132,7 @@ schemacie można opisać następująco:
 Modelowanie obiektów dynamicznych w~treści pracy uogólnione zostaje do filtrów
 SOI (filtr o skończonej odpowiedzi impulsowej, ang. \textit{Finite impulse
 filter, FIR filter}). Tego typu modele bardzo często stosowane są
-w~zagadanieniach związanych z systemami ANC, głównie ze względu na wygodę. Są
+w~zagadanieniach związanych z~systemami ANC, głównie ze względu na wygodę. Są
 zawsze stabilne, łatwe w~implementacji jak i~posiadają liniową odpowiedź fazową,
 w~przypadku symetrii współczynników. \par Transmitancja takiego modelu
 (odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
@@ -142,7 +142,7 @@ w~przypadku symetrii współczynników. \par Transmitancja takiego modelu
 \end{equation}
 gdzie $w_l$ to współczynnik filtra o~numerze $l$ (ang. \textit{tap}), $L$ to
 długość odpowiedzi impulsowej, a~$z^{-l}$ to operator opóźnienia o~$l$ próbek.
-\par W związku z \ref{eq::fir}, wyjście filtra SOI dane jest:
+\par W związku z~\ref{eq::fir}, wyjście filtra SOI dane jest:
 \begin{equation}
         y(n) = \sum_{l = 0}^{L - 1}w_lx(n - l) \implies y(n) = \textbf{w}^T\textbf{x}(n),
 \end{equation}
@@ -276,7 +276,7 @@ przyjęło się stosować estymację $\lambda_{max}$ na podstawie śladu macierz
     P_x \equiv r_{xx}(0) = E[x^2(n)],
 \end{equation}
 
-w związku z czym:
+w związku z~czym:
 \begin{equation}
     0 < \mu < \frac{2}{LP_x},
     \label{eq::lms_stab}
@@ -297,7 +297,7 @@ $W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2
     \label{analysis::scheme_2}
 \end{figure}
 
-Bezpośrednio z \ref{analysis::scheme_2} można zapisać:
+Bezpośrednio z~\ref{analysis::scheme_2} można zapisać:
 \begin{equation}
     E(z^{-1}) = D(z^{-1}) - Y(z^{-1}) = P(z^{-1})W(z^{-1}) - W(z^{-1})X(z^{-1}).
 \end{equation}
@@ -316,7 +316,7 @@ Zerowy błąd świadczy o idealnym tłumieniu hałasu.
 
 Podejście realizowane do tej pory można określić jako naiwne, ponieważ nie
 uwzględniono w nim wpływu dodatkowych obiektów dynamicznych występujących
-w~systemie. Sygnały $x(n)$ i~$e(n)$ mierzone są za pomocą mikrofonów i sygnał
+w~systemie. Sygnały $x(n)$ i~$e(n)$ mierzone są za pomocą mikrofonów i~sygnał
 akustyczny, docierając do nich, musi przebyć pewną drogę. Dodatkowo, w~domenie
 elektronicznej występuje szereg układów przetwarzających, takich jak filtry,
 wzmacniacze i~przetworniki. Finalnie, wygenerowane wyjście układu musi
@@ -370,7 +370,7 @@ natomiast drugim jest tak zwany tor wtórny, zdefiniowany jako:
     \label{eq::s}
 \end{equation}
 
-Mając na uwadze \ref{eq::p} i \ref{eq::s}, zależność definiująca błąd
+Mając na uwadze \ref{eq::p} i~\ref{eq::s}, zależność definiująca błąd
 $E(z^{-1})$ zostaje zmodyfikowana do postaci:
 \begin{equation}
     E(z^{-1}) = R(z^{-1})\left[P'(z^{-1}) - S'(z^{-1})W(z^{-1})\right]X(z^{-1}).
@@ -382,7 +382,7 @@ Jeżeli $W(z^{-1})$ jest zbieżne, to w tym przypadku:
     \label{eq::adapt}
 \end{equation}
 
-Bezpośrednio z zależności \ref{eq::adapt} można wywnioskować, że zadaniem filtru
+Bezpośrednio z~zależności \ref{eq::adapt} można wywnioskować, że zadaniem filtru
 adaptacyjnego $W(z^{-1})$ w takiej sytuacji jest nie tylko bieżąca estymacja
 parametrów toru $P(z^{-1})$, ale również biężąca estymacja parametrów toru
 $S'(z^{-1})$ wraz z~jego odwróceniem. Jest to mocno problematyczne, ponieważ:
@@ -469,7 +469,7 @@ otrzymane zostanie zmodyfikowane równanie aktualizacji współczynników:
     \label{eq::fxlms_b}
 \end{equation}
 
-Z równań \ref{eq::fxlms_a} i \ref{eq::fxlms_b} bezpośrednio wynika, że jeżeli za
+Z równań \ref{eq::fxlms_a} i~\ref{eq::fxlms_b} bezpośrednio wynika, że jeżeli za
 filtrem adaptacyjnym znajduje się dodatkowa transmitancja, to musi ona pojawić
 się w torze wejściowym algorytmu. Innymi słowy, wektor wejściowy $x(n)$ musi być
 filtrowany przez transmitancję na wyjściu filtra, skąd bierze się nazwa
@@ -484,7 +484,7 @@ zmodyfikować do postaci:
     \textbf{x'}(n) = \hat{s}(n) \ast \textbf{x}(n),
 \end{equation}
 
-Schemat systemu z wykorzystaniem algorytmu FXLMS przedstawiono na rysunku
+Schemat systemu z~wykorzystaniem algorytmu FXLMS przedstawiono na rysunku
 \ref{analysis::scheme_5}:
 
 \begin{figure}[H]
@@ -494,7 +494,7 @@ Schemat systemu z wykorzystaniem algorytmu FXLMS przedstawiono na rysunku
     \label{analysis::scheme_5}
 \end{figure}
 
-Jeżeli $W(z^{-1})$ zmienia się wolno, to filtry $W(z^{-1})$ i $S(z^{-1})$ można
+Jeżeli $W(z^{-1})$ zmienia się wolno, to filtry $W(z^{-1})$ i~$S(z^{-1})$ można
 ze sobą połączyć. Wtedy, jeżeli $\hat{S}(z^{-1}) = S(z^{-1})$, to schemat
 \ref{analysis::scheme_5} można znacząco uprościć, usuwając filtr $S(z^{-1})$ z
 toru wyjścia filtru $W(z^{-1})$ i~podstawiając $S(z^{-1})$ za $\hat{S}(z^{-1})$.
@@ -515,7 +515,7 @@ występujące w~torze wtórnym.
 
 \subsection{Usprawnienie procesu doboru kroku}
 
-Wnioskując z równań \ref{eq::lms_stab} i~\ref{eq::fxlms_stab}, określona przez
+Wnioskując z~równań \ref{eq::lms_stab} i~\ref{eq::fxlms_stab}, określona przez
 krok $\mu$ stabilność oraz zbieżność algorytmu LMS jest uniwersalnie odwrotnie
 proporcjonalna do długości filtra $L$ oraz mocy sygnału referencyjnego
 $P_{x}(n)$. Jako, że długość filtra $L$ jest stała, istotnym ograniczniem na
@@ -602,7 +602,7 @@ o~normalizację danych wejściowych schemat systemu ANC przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_6.png}
-    \caption{Schemat systemu ANC z normalizacją danych wejściowych}
+    \caption{Schemat systemu ANC z~normalizacją danych wejściowych}
     \label{analysis::scheme_6}
 \end{figure}
 
@@ -666,7 +666,7 @@ Do identyfikacji obligatoryjne jest dobranie odpowiedniego sygnału wejściowego
 W analizowanym przypadku dobrymi sygnałami są takie, których widmo jest płaskie,
 czyli ich składowe częstotliwościowe są równomiernie rozłożone w~całym paśmie
 zainteresowań. Przykładami takich sygnałów może szum biały o~wariancji
-$\lambda^2$ i sygnał wielosinusoidalny, będący sumą sygnałów sinusoidalnych, z
+$\lambda^2$ i~sygnał wielosinusoidalny, będący sumą sygnałów sinusoidalnych, z
 których każdy jest okresowy wewnątrz okna czasowego o wybranej długości
 \cite{bib:figwer}. \\\\
 \par Schemat eksperymentu identyfikacji metodami offline przedstawiono na rysunku
@@ -708,7 +708,7 @@ uwzględniono na rysunku \ref{analysis::feedback}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.64\textwidth]{graf/analysis/feedback.png}
-    \caption{Schemat systemu ANC z uwzględnieniem dodatkowego sprzężenia}
+    \caption{Schemat systemu ANC z~uwzględnieniem dodatkowego sprzężenia}
     \label{analysis::feedback}
 \end{figure}
 
@@ -726,7 +726,7 @@ i~zaktualizowany z~jego uwzględnieniem schemat przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{graf/analysis/feed_canc.png}
-    \caption{Schemat systemu ANC z niwelacją sprzężenia}
+    \caption{Schemat systemu ANC z~niwelacją sprzężenia}
     \label{analysis::feed_canc}
 \end{figure}
 
