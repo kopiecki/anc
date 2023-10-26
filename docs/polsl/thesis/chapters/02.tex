@@ -94,8 +94,7 @@ Każda z~przedstawionych struktur różni się od siebie znacząco na poziomie
 sprzętowym jak i~programowym. Grubszą czcionką na diagramie
 \ref{analysis::systems} zaznaczono strukturę, którą zdecydowano się wybrać do
 dalszej analizy z~myślą o~finalnej implementacji i~jest to
-\textbf{szerokopasmowe ANC ze sprzężeniem w przód}, głównie ze względu na źródło
-i~charakterystykę hałasu, która w~tym przypadku może być łatwo symulowana\remark{tej łatwości symulacji to nie rozumiem.}.
+\textbf{szerokopasmowe ANC ze sprzężeniem w przód}.
 
 \section{Zasada działania}
 
@@ -109,10 +108,7 @@ lub cyfrowe odpowiedniki w~trakcie przekraczania domen i~wchodzenia w blok
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_0.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 0.\remark{te rysunki dobrze
-	by było jakoś lepiej ponazywać, a nie, że 0, 1, 2, \ldots
-	I jeszcze na końcu są rysunki o tej samej nazwie.
-	A bez sensownych nazw to spis rysunków traci sens.}}
+    \caption{Wyprowadzenie schematu ANC --- uogólnienie}
     \label{analysis::scheme_0}
 \end{figure}
 
@@ -135,12 +131,9 @@ schemacie można opisać następująco:
 Modelowanie obiektów dynamicznych w~treści pracy uogólnione zostaje do filtrów
 SOI (filtr o skończonej odpowiedzi impulsowej, ang. \textit{Finite impulse
 filter, FIR filter}). Tego typu modele bardzo często stosowane są
-w~zagadanieniach związanych z~systemami ANC, głównie ze względu na wygodę. Są
-zawsze stabilne, łatwe w~implementacji jak i~posiadają liniową odpowiedź fazową,
-w~przypadku symetrii współczynników.\remark{tylko, że obiekty
-akustyczne nie będą miały symetrycznych współczynników, więc
-trudno mówić, że to jest jakiś plus modeli FIR.} \par Transmitancja takiego modelu
-(odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
+w~zagadanieniach związanych z~systemami ANC, głównie ze względu na wygodę,
+ponieważ są zawsze stabilne i łatwe w~implementacji. \par Transmitancja takiego
+modelu (odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
 \begin{equation}
     K(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L} w_lz^{-l},
     \label{eq::fir}
@@ -185,7 +178,7 @@ rysunku \ref{analysis::scheme_1}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.60\textwidth]{graf/analysis/scheme_1.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 1.}
+    \caption{Wyprowadzenie schematu ANC --- bieżąca estymacja parametrów}
     \label{analysis::scheme_1}
 \end{figure}
 
@@ -213,7 +206,7 @@ minimalizując wartość oczekiwaną kwadratu błędu \cite{bib:kuo_morgan}:
 \begin{equation}
     r_{dx}(k) \equiv E[d(n)x(n - k)],
 \end{equation}
-\noindent \remark{kontynuacja akapitu musi być bez wcięcia}a \textbf{R} jest macierzą autokorelacji sygnału wejściowego $x(n)$:
+\noindent \textbf{R} jest macierzą autokorelacji sygnału wejściowego $x(n)$:
 \begin{equation}
     \textbf{R} \equiv E[\textbf{x}(n)\textbf{x}^T(n)] = 
     \begin{bmatrix}
@@ -228,14 +221,14 @@ minimalizując wartość oczekiwaną kwadratu błędu \cite{bib:kuo_morgan}:
     r_{xx}(k) \equiv E[x(n)x(n - k)],
 \end{equation}
 
-metodą najniższego spadku, otrzymuje się równanie aktualizacji parametrów:
+\noindent metodą najniższego spadku, otrzymuje się równanie aktualizacji parametrów:
 
 \begin{equation}
     \textbf{w}(n + 1) = \textbf{w}(n) + \mu\textbf{x}(n)e(n),
     \label{eq::lms}
 \end{equation}
 
-gdzie \textbf{w}(n) to wektor obliczonych współczynników filtra w~chwili $n$:
+\noindent gdzie \textbf{w}(n) to wektor obliczonych współczynników filtra w~chwili $n$:
 \begin{equation}
         \textbf{w}(n) \equiv \begin{bmatrix}
             w(n)_0 \quad
@@ -244,8 +237,7 @@ gdzie \textbf{w}(n) to wektor obliczonych współczynników filtra w~chwili $n$:
             w(n)_{L - 1}
         \end{bmatrix}^T,
 \end{equation}
-
-a \textbf{x}(n) to wektor wejść w~chwili $n$:
+\noindent a \textbf{x}(n) to wektor wejść w~chwili $n$:
 \begin{equation}
         \textbf{x}(n) \equiv \begin{bmatrix}
             x(n) \quad
@@ -263,13 +255,13 @@ zdefiniowanym:
     \label{eq::lms_const}
 \end{equation}
 
-gdzie $\lambda_{max}$ zdefiniowana jest jako maksymalna wartość własna macierzy
+\noindent gdzie $\lambda_{max}$ zdefiniowana jest jako maksymalna wartość własna macierzy
 \textbf{R} \ref{eq::auto_corr_mat}. \\
-Zastosowanie warunku stabilności w formie \ref{eq::lms_const} jest niepraktyczne
-z~powodu problematycznych obliczeń $\lambda_{max}$ dla dużych rzędów filtra
-$W(z^{-1})$. W związku z~tym, w praktycznym kryterium stabilności algorytmu LMS
-przyjęło się stosować estymację $\lambda_{max}$ na podstawie śladu macierzy
-\textbf{R} \cite{bib:kuo_morgan}:
+\par Zastosowanie warunku stabilności w formie \ref{eq::lms_const} jest
+niepraktyczne z~powodu problematycznych obliczeń $\lambda_{max}$ dla dużych
+rzędów filtra $W(z^{-1})$. W związku z~tym, w praktycznym kryterium stabilności
+algorytmu LMS przyjęło się stosować estymację $\lambda_{max}$ na podstawie śladu
+macierzy \textbf{R} \cite{bib:kuo_morgan}:
 \begin{equation}
     \lambda_{max} \leq \sum_{l = 0}^{L - 1}\lambda_l = Lr_{xx}(0) = LP_x,
 \end{equation}
@@ -277,13 +269,13 @@ przyjęło się stosować estymację $\lambda_{max}$ na podstawie śladu macierz
     P_x \equiv r_{xx}(0) = E[x^2(n)],
 \end{equation}
 
-w związku z~czym:
+\noindent w związku z~czym:
 \begin{equation}
     0 < \mu < \frac{2}{LP_x},
     \label{eq::lms_stab}
 \end{equation}
 
-i dla sygnałów o rozkładzie normalnym:
+\noindent i dla sygnałów o rozkładzie normalnym:
 \begin{equation}
     0 < \mu < \frac{2}{3LP_x},
 \end{equation}
@@ -294,7 +286,7 @@ $W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_2.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 2.}
+    \caption{Wyprowadzenie schematu ANC --- algortm LMS}
     \label{analysis::scheme_2}
 \end{figure}
 
@@ -306,7 +298,7 @@ Ideowo, jeżeli $W(z^{-1})$ będzie w przybliżeniu zbieżny:
 \begin{equation}
     E(z^{-1}) = 0 \implies P(z^{-1}) = W(z^{-1}),
 \end{equation}
-to gdy $X(z^{-1}) \neq 0$:
+\noindent to gdy $X(z^{-1}) \neq 0$:
 \begin{equation}
     y(n) = d(n) \implies e(n) = d(n) - y(n) = 0.
 \end{equation}
@@ -331,7 +323,7 @@ na rysunku \ref{analysis::scheme_3}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_3.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 3.}
+    \caption{Wyprowadzenie schematu ANC --- dodatkowe transmitancje}
     \label{analysis::scheme_3}
 \end{figure}
 
@@ -365,7 +357,7 @@ zdefiniowany tor podstawowy, tym razem określony jako:
     \label{eq::p}
 \end{equation}
 
-natomiast drugim jest tak zwany tor wtórny, zdefiniowany jako:
+\noindent natomiast drugim jest tak zwany tor wtórny, zdefiniowany jako:
 \begin{equation}
     S(z^{-1}) = S'(z^{-1})R(z^{-1}).
     \label{eq::s}
@@ -411,7 +403,7 @@ rysunku \ref{analysis::scheme_4}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_4.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 4.}
+    \caption{Wyprowadzenie schematu ANC --- uproszczenie o wspólny składnik}
     \label{analysis::scheme_4}
 \end{figure}
 
@@ -437,7 +429,7 @@ filtru adaptacyjnego $W(z^{-1})$. Błąd w~takim przypadku można zdefiniować j
     \label{eq::fxlms_error}
 \end{equation}
 
-gdzie $\textbf{w}(n)$ to wektor współczynników filtra $W(z^{-1})$ w~chwili $n$:
+\noindent gdzie $\textbf{w}(n)$ to wektor współczynników filtra $W(z^{-1})$ w~chwili $n$:
 \begin{equation}
     \textbf{w} \equiv \begin{bmatrix}
         w_0(n) \quad
@@ -447,7 +439,7 @@ gdzie $\textbf{w}(n)$ to wektor współczynników filtra $W(z^{-1})$ w~chwili $n
     \end{bmatrix}^T,
 \end{equation}
 
-\textbf{x}(n) to wektor wejść w chwili $n$:
+\noindent \textbf{x}(n) to wektor wejść w chwili $n$:
 \begin{equation}
     \textbf{x}(n) \equiv \begin{bmatrix}
         x(n) \quad
@@ -457,7 +449,7 @@ gdzie $\textbf{w}(n)$ to wektor współczynników filtra $W(z^{-1})$ w~chwili $n
     \end{bmatrix}^T,
 \end{equation}
 
-a $s(n)$ to odpowiedź impulsowa toru wtórnego $S(n^{-1})$ w~chwili $n$. Operator
+\noindent a $s(n)$ to odpowiedź impulsowa toru wtórnego $S(n^{-1})$ w~chwili $n$. Operator
 $\ast$ oznacza konwolucję liniową, czyli filtrację. \\
 \par Jeżeli dla błędu \ref{eq::fxlms_error} zostanie wyprowadzony algorytm LMS,
 otrzymane zostanie zmodyfikowane równanie aktualizacji współczynników:
@@ -509,7 +501,7 @@ wtórnego. Maksymalny krok ograniczony jest przez:
     \label{eq::fxlms_stab}
 \end{equation}
 
-gdzie $P_{x'} = E[x'^2(n)]$, a $\Delta$ to opóźnienie występujące w~torze
+\noindent gdzie $P_{x'} = E[x'^2(n)]$, a $\Delta$ to opóźnienie występujące w~torze
 wtórnym mierzone w~ilości próbek. Jak można wnioskować z~\ref{eq::fxlms_stab},
 największym ograniczeniem szybkości adaptacji algorytmu jest opóźnienie
 występujące w~torze wtórnym.
@@ -534,10 +526,10 @@ o~estymację mocy sygnału $x(n)$:
     \label{eq::mupx}
 \end{equation}
 
-gdzie $\alpha$ jest nowo zdefiniowanym, znormalizowanym krokiem algorytmu
+\noindent gdzie $\alpha$ jest nowo zdefiniowanym, znormalizowanym krokiem algorytmu
 spełnającym założenie
 \begin{equation}
-    0 < \alpha < 2
+    0 < \alpha < 2.
 \end{equation}
 
 Matematycznie dowieść można, że optymalna wartość kroku $\alpha$ w przypadku
@@ -549,21 +541,18 @@ braku zakłóceń dana jest jako:
 W celu wyznaczenia $\hat{P}_x(n)$ można posłużyć się metodą opartą na
 zostosowaniu prostokątnego okna o długości $M$:
 \begin{equation}
-    \hat{P}_x(n) = \frac{1}{M}\sum_{m = 0}^{M - 1} x^2(n - m),
+    \hat{P}_x(n) = \frac{1}{M}\sum_{m = 0}^{M - 1} x^2(n - m).
     \label{eq::px}
 \end{equation}
 
-Równanie \ref{eq::px} w przypadku dobrania $M = L$ \remark{to podejście
-to chyba wymaga stacjonarności, NLMS jest też dobry dla niestacjonarnych,
-i tam po prostu przy normalizacji M musi się równać L.} może zostać sprowadzone do
-postaci:
+Równanie \ref{eq::px} dla $M = L$ może zostać sprowadzone do postaci:
 \begin{equation}
     \hat{P}_x(n) = \frac{1}{L}\sum_{l = 0}^{L - 1} x^2(n - l) \
         = \frac{\textbf{x}^T(n)\textbf{x}(n)}{L},
     \label{eq::pxL}
 \end{equation}
 
-Podstawiając \ref{eq::pxL} do \ref{eq::mupx} otrzymuje się:
+\noindent i podstawiając \ref{eq::pxL} do \ref{eq::mupx} otrzymuje się:
 \begin{equation}
     \mu(n) = \frac{\alpha}{\textbf{x}^T(n)\textbf{x}(n)}.
     \label{eq::mun}
@@ -584,7 +573,7 @@ modyfikacją przyjęło się nazywać znormalizowanym algorytmem NLMS (ang.
 Uczenia Rekurencyjnego} \cite{bib:figwer}.
 
 \par Normalizację kroku, definiującą algorytm NLMS można zastosować w~algorytmie
-FXLMS, otrzymując następujące równiania
+FXLMS, otrzymując następujące równiania:
 \begin{equation}
     \textbf{w}(n + 1) = \textbf{w}(n) + \mu(n)\textbf{x'}(n)e(n) 
         = \textbf{w}(n) + \alpha\frac{\textbf{x'}(n)}{\textbf{x'}^T(n)\textbf{x'}(n)}e(n),
@@ -637,20 +626,17 @@ opisano poniżej:
 \begin{enumerate}
 
     \item Identyfikację odpowiedzi impulsowej metoda korelacyjną
-    \cite{bib:figwer}
+    \cite{bib:figwer}:
     \begin{equation}
         \hat{s}(n) = \frac{R_{xy}(n)}{\lambda^2}.
     \end{equation}
 
-    Na wejście identyfikowanego procesu podaje się sygnał identyfikujący
-    o~wariancji $\lambda^2$\remark{brakuje to chyba założenia,
-    że ten sygnał identyfikacyjny musi być biały. Natomiast
-    w metodzie korelacyjnej wcale nie musi, tylko wtedy jest
-    do rozwiązania układ równań.}, przez który dzielona jest funkcja korelacji
-    wzajemnej $R_{xy}(n)$ wejścia obiektu $x(n)$ i~wyjścia $y(n)$. Uzyskaną
-    w~ten sposób odpowiedź impulsową ogarnicza się do długości, której wartość
-    można określić wizualnie na podstawie przebiegu funkcji $\hat{s}(n)$ i~jest
-    to typowo moment, w~którym osiąga ona małe wartości (wygasza się).
+    Na wejście identyfikowanego procesu podaje się sygnał identyfikujący będący
+    białym szumem o~wariancji $\lambda^2$, przez który dzielona jest funkcja
+    korelacji wzajemnej $R_{xy}(n)$ wejścia obiektu $x(n)$ i~wyjścia $y(n)$.
+    Uzyskaną w~ten sposób odpowiedź impulsową ogarnicza się do długości, której
+    wartość można określić wizualnie na podstawie przebiegu funkcji $\hat{s}(n)$
+    i~jest to typowo moment, w~którym osiąga ona małe wartości (wygasza się).
 
     \item Wykorzystanie doświadczalnego estymatora transmitancji
     \cite{bib:stoica}:
@@ -744,15 +730,15 @@ na wejście filtra $\hat{S}(z^{-1})$ przyjmuje postać:
     x(n) = u(n) - \sum_{m = 0}^{M - 1}\hat{f_m}y(n - m - 1),
 \end{equation}
 
-gdzie $u(n)$ jest nowo oznaczonym sygnałem referencyjnym, $M$ jest długością
-zidentyfikowanego filtra $\hat{F}(z^{-1})$, a $\hat{f}_m$ jego zidentyfikowaną
-odpowiedzią impulsową. Należy zauważyć, że w~schemacie wprowadzono dodatkowe
-opóźnienie o~jedną próbkę przed blokiem zidentyfikowanego toru sprzężenia. Jest
-to spowodowane faktem, że w~czasie kiedy system zbiera próbkę sygnału
-referencyjnego zaznaczonego na schemacie jako $u(n)$, to wyjście filtra
-$W(z^{-1})$ nie jest jeszcze obliczone. \par Transmitancję $F(z^{-1})$ można
-identyfikować w~operciu o~te same metody co $S(z^{-1})$. Schemat eksperymentu
-identyfikacji przyjmuje w~tym przypadku postać jak na rysunku
+\noindent gdzie $u(n)$ jest nowo oznaczonym sygnałem referencyjnym, $M$ jest
+długością zidentyfikowanego filtra $\hat{F}(z^{-1})$, a $\hat{f}_m$ jego
+zidentyfikowaną odpowiedzią impulsową. Należy zauważyć, że w~schemacie
+wprowadzono dodatkowe opóźnienie o~jedną próbkę przed blokiem zidentyfikowanego
+toru sprzężenia. Jest to spowodowane faktem, że w~czasie kiedy system zbiera
+próbkę sygnału referencyjnego zaznaczonego na schemacie jako $u(n)$, to wyjście
+filtra $W(z^{-1})$ nie jest jeszcze obliczone. \par Transmitancję $F(z^{-1})$
+można identyfikować w~operciu o~te same metody co $S(z^{-1})$. Schemat
+eksperymentu identyfikacji przyjmuje w~tym przypadku postać jak na rysunku
 \ref{analysis::feedback_ident}:
 
 \begin{figure}[H]

@@ -525,12 +525,12 @@ Jak można zauważyć z rysunków \ref{ver::l_120hz}, \ref{ver::l_220hz} i
 zbieżności jest w przybliżeniu taki sam w przypadku różnych długości $L$
 poszczególnych sygnałów. \par Kwestią znaczącą przy doborze długości $L$ jest
 natomiast czas potrzebny na przetworzenie danych. W czasie pomiarów
-zaobserwowano, że dla $L > 1024$ obliczenia zaczynają trwać zbyt długo, co
-skutkuje przerwami w transmisji, spowodowanymi stanami \textit{xrun\_recovery}
-systemu ALSA (próbki nie są odpowiednio szybko czytane/zapisywane). Takie
-przerwy wpływają destrukcyjnie na działanie systemu i objawiają się
-destabilizacją pętli przetwarzania, co skutkuje generacją dodatkowego hałasu
-przez głośnik wyjściowy.
+zaobserwowano, że dla długości filtra większej niż 1024 obliczenia zaczynają
+trwać zbyt długo, co skutkuje przerwami w transmisji, spowodowanymi stanami
+\textit{xrun\_recovery} systemu ALSA (próbki nie są odpowiednio szybko
+czytane/zapisywane). Takie przerwy wpływają destrukcyjnie na działanie systemu i
+objawiają się destabilizacją pętli przetwarzania, co skutkuje generacją
+dodatkowego hałasu przez głośnik wyjściowy.
 
 \subsubsection{Wpływ częstotliwości próbkowania}
 
@@ -538,96 +538,83 @@ Do badania wpływu częstotliwości próbkowania $f_s$ przyjęto zestaw parametr
 referencyjnych zgodnie z tabelą \ref{tab::ref}, a~jako nową wartość $f_s$
 przyjęto:
 \begin{equation}
-    f_s = 2f_{s,ref} = 16000 \text{ Hz}.
+    f_s = 2f_{s,\text{ref}} = 16000 \text{ Hz}.
 \end{equation}
 
-Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
-\ref{ver::120hz_16khz}:
+Rezultaty dla wybranych sygnałów testowych przedstawiono na rysunkach
+\ref{ver::16_khz}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/120hz_128.png}
-    \caption{Badanie wpływu częstotliwości próbkowania --- sygnał 1}
-    \label{ver::120hz_16khz}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/120hz_128.png}
+        \caption{Pierwszy sygnał testowy}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/220hz_16000.png}
+        \caption{Drugi sygnał testowy}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/sum_16000.png}
+        \caption{Trzeci sygnał testowy}
+    \end{subfigure}
+        \caption{Badania wpływu częstotliwości próbkowania}
+        \label{ver::16_khz}
 \end{figure}
 
-Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
-\ref{ver::220hz_16khz}:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/220hz_16000.png}
-    \caption{Badanie wpływu częstotliwości próbkowania --- sygnał 2}
-    \label{ver::220hz_16khz}
-\end{figure}
-
-Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
-\ref{ver::sum_16khz}:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/sum_16000.png}
-    \caption{Badanie wpływu częstotliwości próbkowania --- sygnał 3}
-    \label{ver::sum_16khz}
-\end{figure}
-
-Analizując przebiegi \ref{ver::120hz_16khz}, \ref{ver::220hz_16khz} i
-\ref{ver::sum_16khz} można stwierdzić, że zwiększona częstotliwość próbkowania
-nie spowodowała drastycznych zmian w porównaniu z~poprzednią (mniejszą). Czas
-zbieżności dla poszczególnych sygnałów testowych jest zbliżony z~rezultatami dla
-$f'_s = 2000$ Hz. \par Pomimo, że w~zaprojektowanym układzie częstotliwość
-próbkowania nie wpływa znacząco na przebiegi, to~jej wzrost objawia się
-mniejszym czasem na wykonanie obliczeń. Dla częstotliwości $f_s > 4000$ system
-zaczyna nie nadążać z~ich wykonaniem, co skutkuje, analogicznie jak w przypadku
-zbyt długich filtrów, przerwaniem transmisji i~destabilizacją pętli
-przetwarzania.
+Analizując przebiegi \ref{ver::16_khz} można stwierdzić, że zwiększona
+częstotliwość próbkowania nie spowodowała drastycznych zmian w porównaniu
+z~poprzednią (mniejszą). Czas zbieżności dla poszczególnych sygnałów testowych
+jest zbliżony z~rezultatami dla $f'_s = 2000$~Hz. \par Pomimo, że
+w~zaprojektowanym układzie częstotliwość próbkowania nie wpływa znacząco na
+przebiegi, to~jej wzrost objawia się mniejszym czasem na wykonanie obliczeń. Dla
+częstotliwości większej niż 4000 Hz system zaczyna nie nadążać z~ich wykonaniem,
+co skutkuje, analogicznie jak w przypadku zbyt długich filtrów, przerwaniem
+transmisji i~destabilizacją pętli przetwarzania.
 
 \subsubsection{Wpływ rozmiaru fragmentu}
 
 Do badania wpływu rozmiaru fragmentu $n_f$ przyjęto zestaw parametrów
-referencyjnych zgodnie z tabelą \ref{tab::ref}, a~jako nową wartość przyjęto
+referencyjnych zgodnie z tabelą \ref{tab::ref}, a~jako nową wartość $n_f$
+przyjęto:
 \begin{equation}
-    n_f = 2n_{f,ref} = 128 \text{ ramek}
+    n_f = 2n_{f,\text{ref}} = 128 \text{ ramek}.
 \end{equation}
 
-Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
-\ref{ver::120hz_16khz}:
+Rezultaty dla wybranych sygnałów testowych przedstawiono na rysunkach
+\ref{ver::nf128}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/verification/120hz_16000.png}
-    \caption{Badanie wpływu rozmiaru fragmentu --- sygnał 1}
-    \label{ver::120hz_128}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/120hz_16000.png}
+        \caption{Pierwszy sygnał testowy}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/220hz_128.png}
+        \caption{Drugi sygnał testowy}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graf/verification/sum_128.png}
+        \caption{Trzeci sygnał testowy}
+    \end{subfigure}
+        \caption{Badania wpływu rozmiaru fragmentu}
+       \label{ver::nf128}
 \end{figure}
 
-Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
-\ref{ver::220hz_16khz}:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/220hz_128.png}
-    \caption{Badanie wpływu rozmiaru fragmentu --- sygnał 2}
-    \label{ver::220hz_128}
-\end{figure}
-
-Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
-\ref{ver::sum_16khz}:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/sum_128.png}
-    \caption{Badanie wpływu rozmiaru fragmentu --- sygnał 3}
-    \label{ver::sum_128}
-\end{figure}
-
-Wnioskując z~\ref{ver::120hz_128}, \ref{ver::220hz_128} i~\ref{ver::sum_128}
-można stwierdzić, że zwiększony rozmiar fragmentu znacząco pogorszył jakość
-tłumienia. Algorytmy zbiegają się dłużej, co jest najbardziej widoczne
-w~przypadku sygnału drugiego, dla którego algorytm zbiega się w~przybliżeniu
-trzy razy wolniej, niż algorytm z~parametrami referencyjnymi. Jak pokazano na
-rysunku \ref{ver::ident}, zwiększony rozmiar fragmentu powoduje większe
-opóźnienie, co może być głównym powodem zaobserwowanego w tej serii badań
-zachowania.
+Wnioskując z~\ref{ver::nf128} można stwierdzić, że zwiększony rozmiar fragmentu
+znacząco pogorszył jakość tłumienia. Algorytmy zbiegają się dłużej, co jest
+najbardziej widoczne w~przypadku sygnału drugiego, dla którego algorytm zbiega
+się w~przybliżeniu trzy razy wolniej, niż algorytm z~parametrami referencyjnymi.
+Jak pokazano na rysunku \ref{ver::ident}, zwiększony rozmiar fragmentu powoduje
+większe opóźnienie, co może być głównym powodem zaobserwowanego w tej serii
+badań zachowania.
 
 \subsubsection{Wpływ poziomu priorytetu}
 
@@ -635,7 +622,7 @@ Do badania wpływu poziomu priorytetu $P$ procesu przyjęto zestaw parametrów
 referencyjnych zgodnie z tabelą \ref{tab::ref}, a poziom $P$ dobierano zgodnie
 z~zależnością:
 \begin{equation}
-    P(i) = 100\frac{i}{5} \qquad \text{dla } i = 1, 2, 3, 4
+    P(i) = 100\frac{i}{5}, \qquad \text{dla } i = 1, 2, 3, 4.
 \end{equation}
 
 Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
@@ -727,7 +714,7 @@ Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
 \end{figure}
 
 \par Na rysunkach \ref{ver::fifo} przedstawiono przebiegi uzyskane dla zmiany
-wytycznej planisty z SCHED\_RR na SCHED\_FIFO:
+wytycznej planisty z~SCHED\_RR na SCHED\_FIFO:
 
 \begin{figure}[H]
     \centering
@@ -760,13 +747,23 @@ z~wykorzystaniem polecenia \textit{top} zaobserwowano, że prócz procesu o~nazw
 \textit{migration/0}, odpowiadającego za dystrybucję czasu pracy pomiędzy
 rdzenie procesora oraz tych, odpowiadających za obsługę przerwań (procesy
 \textit{irq/*}), żadne inne nie posiadają priorytetu większego niż $P = 20$.
-\par Zmiany wytycznej planisty lekko pogorszyła zbieżność algorytmu, co
-przedstawiono na rysunkach \ref{ver::fifo}. Tłumienie drugiego i~trzeciego
+\par Analizując rysunki \ref{ver::p_120hz}, \ref{ver::p_220hz}
+i~\ref{ver::p_sum} dokładniej można jednak zadać pytanie, dlaczego przebiegi nie
+są całkowicie identyczne, skoro w analizowanej sytuacji nic w systemie nie
+powinno wpływać na jakość działania algorytmu. Jednym z możliwych powodów jest
+zmienność stanu środowiska, w którym przeprowadzano pomiary. Jako, że
+pomieszczenie, w którym ustawiony jest system, nie jest całkowicie odizolowane
+od świata zewnętrznego, wpływ na pomiar mogą mieć zmiany wilgotności powietrza,
+ciśnienia jak i temperatury. W działającym systemie poszczególne elementy
+elektroniczne rozpraszają część energii poprzez ciepło, co w szczególności
+zaobserwowano dla głośników, których wbudowany wzmacniacz mocy w trakcie badań
+mocno się nagrzewał. Wpływ omawianych kwestii zdaniem autora powoduje, że
+przeprowadzone po sobie pomiary, nawet jeżeli konfiguracja jest identyczna, nie
+są całkowicie identyczne, a przebiegi mogą nieznacznie się od siebie różnić.
+\par Zmiany wytycznej planisty lekko pogorszyła zbieżność algorytmu,
+co przedstawiono na rysunkach \ref{ver::fifo}. Tłumienie drugiego i~trzeciego
 sygnału testowego odbywa się nieznacznie dłużej niż w~przypadku wykorzystania
 SCHED\_RR. Poza dłuższym czasem zbieżności, nie zaobserwowano dodatkowych zmian.
-\remark{A ma Pan jakiś pomysł dlaczego w ogóle widać jakieś zmiany? Bo
-teoretycznie jeśli nic innego nie ma tego samego priorytetu
-co Pan program, to różnic nie powinno być.}
 
 \subsection{Dodatkowe eksperymenty i~podsumowanie badań}
 
@@ -781,7 +778,7 @@ przedstawiono na rysunku \ref{ver::rand_sin}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/anc_rand_sin.png}
+    \includegraphics[width=0.8\textwidth]{graf/verification/anc_rand_sin.png}
     \caption{Eksperyment --- pseudolosowe pobudzenia sinusoidalne}
     \label{ver::rand_sin}
 \end{figure}
@@ -804,7 +801,7 @@ błędu sygnału przedstawiono na rysunku \ref{ver::sig_rand}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/raw_rand.png}
+    \includegraphics[width=0.7\textwidth]{graf/verification/raw_rand.png}
     \caption{Sygnał testowy --- szum losowy (po przybliżeniu i~normalizacji)}
     \label{ver::sig_rand}
 \end{figure}
@@ -815,18 +812,18 @@ Hanna dla $f'_s = 2$ kHz przedstawiono na rysunku \ref{ver::anc_rand_psd}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/verification/anc_rand_0.png}
+    \includegraphics[width=\textwidth]{graf/verification/anc_rand_0.png}
     \caption{Sygnał losowy --- pierwszy eksperyment}
     \label{ver::anc_rand_psd}
 \end{figure}
 
 Jak można zauważyć z \ref{ver::anc_rand_psd}, system nie działa poprawnie dla
-hałasów losowych. Takie zachowanie systemu można wywnioskować na podstawie
+hałasów losowych. Takie zachowanie układu można wywnioskować na podstawie
 przeprowadzonych wcześniej badań, z których wynika, że algorytm zbiega się
 zdecydowanie zbyt wolno, żeby poprawnie reagować na szybkozmienny, pseudolosowy
 sygnał wejściowy. W przypadku włączonego systemu, pasmo do 500 Hz jest w wielu
 miejscach o większej mocy, niż w przypadku wyłączonego, co świadczy o tym, że
-włączone ANC w tym przypadku tylko pogarsza sprawę.
+włączone ANC tylko pogarsza sprawę i powoduje większy hałas.
 
 \subsubsection{Eksperyment --- hałasy rzeczywiste}
 
@@ -839,7 +836,7 @@ rysunku \ref{ver::mlyny}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/mlyny.png}
+    \includegraphics[width=\textwidth]{graf/verification/mlyny.png}
     \caption{Eksperyment --- hałas generowany przez pracujące młyny kulowe}
     \label{ver::mlyny}
 \end{figure}
@@ -849,7 +846,7 @@ w analogiczny sposób przedstawiono na rysunku \ref{ver::pompy}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/verification/anc_opc.png}
+    \includegraphics[width=\textwidth]{graf/verification/anc_opc.png}
     \caption{Eksperyment --- hałas generowany przez pracujące pompy wody}
     \label{ver::pompy}
 \end{figure}
@@ -898,7 +895,9 @@ Jednym z najbardziej znaczących powodów, dla którego system mógł zacząć
 zachowywać się znacząco gorzej, jest domyślny priorytet, który jest nadawany
 procesowi, wynoszący $P = 0$. Proces z~takim priorytetem jest łatwo
 wywłaszczalny przez inne (z większym), co z pewnością powoduje problemy
-z~synchronizacją w trakcie działania algorytmu.
+z~synchronizacją w trakcie działania algorytmu. Przeprowadzając dodatkowe
+pomiary stwierdzono, że~w~przypadku realizacji dziesięciu eksperymentów, cztery
+z nich skutkowały niedeterministycznym działaniem systemu.
 
 \subsubsection{Podsumowanie badań}
 
@@ -907,29 +906,34 @@ przedstawiono poniżej:
 
 \begin{enumerate}
     \item Wielkość kroku adaptacji $\alpha$ algorytmu NLMS --- decyduje
-    o~szybkości zbiegania się algorytmu. System najszybciej zbiega się dla:
+    o~szybkości zbiegania się algorytmu. Algorytm najszybciej zbiega się dla:
     \begin{equation}
         \alpha_{ref} = 0.1,
     \end{equation}
-    staje się niestabilny dla większego i~zmniejsza szybkość zbieżności wraz
-    z~jego zmniejszaniem.
+    staje się niestabilny dla większych wartości i zbiega się wolniej dla
+    mniejszych wartości. 
 
     \item Długość filtra $W(z^{-1})$ --- nie wpływa znacząco na jakość
-    tłumienia, ale ma duży wpływ na szybkość wykonywania obliczeń. Dla $L >
-    1024$ obliczenia zaczynają trwać zbyt długo, co skutkuje przerwami
-    w~transmisji.
-    \item Częstotliwość próbkowania $f'_s$ --- podobnie jak długość $L$ filtra
+    tłumienia, ale ma duży wpływ na szybkość wykonywania obliczeń. Dla długości
+    większych niż 1024 obliczenia zaczynają trwać zbyt długo, co skutkuje
+    przerwami w~transmisji i destabilizacją pętli przetwarzania.
+
+    \item Częstotliwość próbkowania $f'_s$ --- podobnie jak długość filtra
     $W(z^{-1})$, nie wpływa znacząco na jakość tłumienia, ale im jest większa,
     tym okno czasowe na wykonanie obliczeń mniejsze. Zweryfikowano,
-    że~zaprojektowany układ zaczyna nie nadążać z~obliczeniami dla $f'_s > 4000$
-    Hz.
+    że~zaprojektowany układ zaczyna nie nadążać z~obliczeniami dla
+    częstotliwości większej niż 4000 Hz (z uwzględnieniem czterokrotnej
+    decymacji).
+
     \item Długość fragmentu $n_f$ --- im większa, tym system działa gorzej.
     Zwiększenie długości powoduje zwiększenie opóźnienia w~torze przetwarzania,
     co ma mocno negatywny wpływ na jakość tłumienia.
+
     \item Poziom priorytetu $P$ --- do momentu, jeżeli nie przekracza się
     poziomu, w~którym pracują inne procesy w systemie, nie powoduje znaczących
     zmian. Poza tym poziomem, który dla przeprowadzonych pomiarów zdefiniowany
     był na $P = 20$, istnieje szansa, że algorytm się rozsynchronizuje.
+
     \item Wytyczna planisty --- w~wykonanych badaniach nie zaobserwowano
     decydującego wpływu, jednak jak można zaobserwować, SCHED\_RR działa
     nieznacznie lepiej.

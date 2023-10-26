@@ -64,7 +64,7 @@ Czułość mikrofonów informuje o~wartości napięcia dla danego ciśnienia
 aktustycznego i~opisuje ją zależność:
 \begin{equation} 
         S_{\text{dBV}} = 20 \text{log}_{10} \frac{S_{\text{mV/Pa}}}{U_{\text{ref}}},
-        \qquad U_{ref} = 1000 \text{ }\frac{\text{mV}}{\text{Pa}}.
+        \qquad U_{\text{ref}} = 1000 \text{ }\frac{\text{mV}}{\text{Pa}}.
 \end{equation}
 
 Na podstawie tego parametru dobiera się wzmocnienie przedwzmacniacza
@@ -79,7 +79,8 @@ powinno odpowiadać maksymalnemu zakresowi 2.5 V\remark{nie do końca,
 a~2.5~V to musi być maksymalna wartość}, co pozwala na obliczenie
 wzmocnienia:
 \begin{equation}
-        k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{0.0525} = 47.6190 \approx 42 \text{ dB},
+        k = \frac{U_{\text{out}}}{U_{\text{mic}}} = 
+            \frac{2.5}{0.0525} = 47.6190 \approx 42 \text{ dB},
         \label{eq::k_preamp}
 \end{equation}
 
@@ -129,7 +130,7 @@ Diagram dystrybucji zasilania przedstawiono na rysunku \ref{hw::power_dist}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{graf/hw/power_dist.png}
+    \includegraphics[width=0.7\textwidth]{graf/hw/power_dist.png}
     \caption{Diagram dystrybucji zasilania}
     \label{hw::power_dist}
 \end{figure}
@@ -158,7 +159,7 @@ elektronicznych jest zastosowanie dolnoprzepustowego filtru LC
 i~zapewnienie bufora do dalszych konwersji. Taki filtr opisany jest zależnością,
 wynikającą z uogólnionego równania dzielnika napięciowego:
 \begin{equation}
-    U_{wy}(s) = U_{we}(s) \frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{Ls + \frac{1}{Cs}}
+    U_{wy}(s) = U_{\text{we}}(s) \frac{Z_1}{Z_1 + Z_2} = U_{we}(s)\frac{\frac{1}{Cs}}{Ls + \frac{1}{Cs}}
         \implies K_{LC}(s) = \frac{1}{LCs^2 + 1}.
     \label{eq:lc_lp}
 \end{equation}
@@ -184,15 +185,12 @@ układem RLC, określonym zależnością:
 Rezystor w takim układzie wprowadza tłumienie, z~czego wynika współczynnik
 tłumienia oraz dobroć. Wielkości te określone są odpowiednio:
 \begin{equation}
-    \zeta = \frac{1}{2Q} = \frac{1}{2R\sqrt{\frac{C}{L}}}, \qquad
+    \zeta = \frac{1}{2Q}, \qquad
     \label{eq::zeta}
 \end{equation}
 \begin{equation}
     Q = \frac{1}{R}\sqrt{\frac{L}{C}}.
 \end{equation}
-\remark{czy ten wzór u góry jest na pewno dobry? Bo z niego
-wynika $2Q = 2R \sqrt{\frac{C}{L}}$, co nie zgadza się
-z tym drugim, a drugi jest na pewno dobry.}
 
 Współczynnik tłumienia może znajdować się w~czterech typach zakresów:
 \begin{enumerate}
@@ -214,7 +212,7 @@ które nie jest tłumione (możliwe płaskie) \cite{bib:lc}. Podstawiając $\zet
     C = \frac{1}{\omega_0 R\sqrt{2}}.
 \end{equation}
 
-Jako rezystancję przyjmuje się rezystancję wewnętrzną cewki\remark{nie zawsze, bo czasami dodaje się specjalnie opornik, by ją zwiększyć, lub mieć lepiej kontrolowaną, cewki często mają $\pm30\%$}. W~zaprojektowanym
+Jako rezystancję przyjęto rezystancję wewnętrzną cewki. W~zaprojektowanym
 układzie $L = 4.7 \text{ }\mu$H i~$C = 1080 \text{ }\mu$F, z~czego wynika $f_c
 \approx 2.47$ kHz oraz warunek na rezystancję cewki:
 \begin{equation}
@@ -288,7 +286,7 @@ dobierane były według not aplikacyjnych producenta przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graf/hw/split.png}
+    \includegraphics[width=0.9\textwidth]{graf/hw/split.png}
     \caption{Symetryzacja szyn zasilających}
     \label{hw::split}
 \end{figure}
@@ -311,7 +309,7 @@ oraz zapewnia wysoką wydajność prądową, według dokumentacji wynoszącą do
 \cite{bib:tps562209}. \par Zależność opisująca napięcie wyjściowe wykorzystanego
 układu podana jest przez producenta i~zdefiniowana jest poniższym równaniem:
 \begin{equation} 
-    U_{out} = 0.765 \cdot (1 + \frac{R_1}{R_2}).
+    U_{\text{out}} = 0.765 \cdot (1 + \frac{R_1}{R_2}).
     \label{eq::smps}
 \end{equation}
 Jak opisywano w sekcji dotyczącej filtracji i~stabilizacji zasilania
@@ -342,13 +340,13 @@ Wykorzystane przetworniki wymagają zasilania referencyjnego, na bazie którego
 przeprowadzane są konwersje. W~przypadku przetworników cyfrowo-analogowych,
 zależność wynosi \cite{bib:ad7680}:
 \begin{equation}
-    U_{out} = \frac{DU_{ref}}{2^{N}},
+    U_{out} = \frac{DU_{\text{ref}}}{2^{N}},
 \end{equation}
 gdzie $D$ to dane załadowane do rejestru przetwornika, a~$N$ to rozdzielczość.
 \par W przypadku przetwornika analogowo-cyfrowego, referencja wpływa
 bezpośrednio na rozmiar kwantu \cite{bib:ad5541}:
 \begin{equation}
-    q = \frac{U_{ref}}{2^{N}}.
+    q = \frac{U_{\text{ref}}}{2^{N}}.
 \end{equation}
 
 Z powyższych równań wynika, że sygnał referencyjny musi być bardzo dokładny. Aby
@@ -358,13 +356,13 @@ obciążeniem równym 30 mA \cite{bib:ref195}, wystarczającym dla wykorzystanyc
 przetworników. Zakres wejściowych napięć układu zawiera się w przedziale od -0.3
 V do +18 V, więc wejściowe napięcie (równe +12 V) jest odpowiednie. Omawiany
 układ wraz z~kondensatorami odsprzęgającymi przedstawiono na rysunku
-\ref{hw::smps}.
+\ref{hw::ref}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/hw/ref.png}
+    \includegraphics[width=0.9\textwidth]{graf/hw/ref.png}
     \caption{Referencja domeny analogowo-cyfrowej}
-    \label{hw::smps}
+    \label{hw::ref}
 \end{figure}
 
 Warto dodać, że napięcie referencyjne, prócz przetworników, trafia również na
@@ -387,7 +385,7 @@ przedstawiono na rysunku \ref{hw::off}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{graf/hw/off.png}
+    \includegraphics[width=0.6\textwidth]{graf/hw/off.png}
     \caption{Układ napięcia odniesienia}
     \label{hw::off}
 \end{figure}
@@ -646,19 +644,19 @@ dzielnik napięciowy złożony z~rezystorów $R_1$ i~$R_2$. To implikuje zmianę
 równania \ref{eq::op_diff_ninv} na klasyczną zależność opisującą wzmocnienie
 wzmacniacza w~topologii nieodwracającej \cite{bib:tietze}:
 \begin{equation}
-    U_{+,wy} = U_{+,we}\left(1 + \frac{R_f}{R_1}\right).
+    U_{+,\text{wy}} = U_{+,\text{we}}\left(1 + \frac{R_f}{R_1}\right).
     \label{eq::op_ninv}
 \end{equation}
-Zależność opisująca wyjście ze względu na wejście $U_{-,we}$ pozostaje
+Zależność opisująca wyjście ze względu na wejście $U_{-,\text{we}}$ pozostaje
 niezmienna. \par Zważając na powyższe, wyjście układu wynikające z~zasady
 superpozycji jest opisane zmodyfikowaną zależnością \ref{eq::op_diff}:
 \begin{equation}
-    U_{wy} = U_{+, we} - U_{-,wy} = U_{+, we}\left(1 + \frac{R_f}{R_1}\right) - 
-        U_{-, we}\left(\frac{R_f}{R_1}\right).
+    U_{\text{wy}} = U_{+, \text{we}} - U_{-,\text{wy}} = U_{+, \text{we}}\left(1 + \frac{R_f}{R_1}\right) - 
+        U_{-, \text{we}}\left(\frac{R_f}{R_1}\right).
 \end{equation}
 Dla arbitralnej wartości $R_f = R_1$ otrzymuje się:
 \begin{equation}
-    U_{wy} = 2U_{+, we} - U_{-, we}.
+    U_{wy} = 2U_{+, \text{we}} - U_{-, \text{we}}.
     \label{eq::offset}
 \end{equation}
 
@@ -666,10 +664,10 @@ Chcąc uzyskać stałe przesunięcie sygnału $U_{-, we}$ o~środek zakresu
 przetwornika $U_c = 2.5$ V uzyskuje się warunek na pierwszy składnik równania
 \ref{eq::offset}:
 \begin{equation}
-    2U_{+,we} = 2.5 \text{ V} \implies U_{+, we} = 1.25 \text{ V}.
+    2U_{+,\text{we}} = 2.5 \text{ V} \implies U_{+, \text{we}} = 1.25 \text{ V}.
 \end{equation}
 
-Jak można zauważyć z~równiania \ref{eq::offset} sygnał $U_{-, we}$ zostaje w tym
+Jak można zauważyć z~równiania \ref{eq::offset} sygnał $U_{-, \text{we}}$ zostaje w tym
 etapie odwrócony. Omawiany układ wraz z~kondensatorem pełniącym rolę lokalnego
 bufora składowej stałej przedstawiono na rysunku \ref{hw::offset}.
 
@@ -699,7 +697,7 @@ Omawiany układ przedstawiono na rysunku \ref{hw::safe}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.55\textwidth]{graf/hw/safe.png}
-    \caption{Filtr dolnoprzepustowy i~limiter\remark{KiCAD umożliwia zapis schematów jako pdf, jakoś wtedy byłaby dużo lepsza.}}
+    \caption{Filtr dolnoprzepustowy i~limiter}
     \label{hw::safe}
 \end{figure}
 
