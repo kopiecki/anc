@@ -300,7 +300,7 @@ przedstawiono na rysunkach \ref{ver::ref_sig}.
         \includegraphics[width=\textwidth]{graf/verification/alpha_sum_01.png}
         \caption{Przebieg $e(n)$ dla 3 sygnału testowego}
     \end{subfigure}
-       \caption{Przebiegi $e(n)$ dla sygnałów testowych}
+       \caption{Przebiegi referencyjne $e(n)$ dla sygnałów testowych}
        \label{ver::ref_sig}
 \end{figure}
 
@@ -523,14 +523,17 @@ Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
 Jak można zauważyć z rysunków \ref{ver::l_120hz}, \ref{ver::l_220hz} i
 \ref{ver::l_sum}, długość filtra wpływa nieznacznie na zebrane przebiegi. Czas
 zbieżności jest w przybliżeniu taki sam w przypadku różnych wartości $L$ dla
-poszczególnych sygnałów. \par Kwestią znaczącą przy doborze wartości $L$ jest
-natomiast czas potrzebny na przetworzenie danych. W czasie pomiarów
-zaobserwowano, że dla długości filtra większej niż 1024 ($L > 1024$) obliczenia
-zaczynają trwać zbyt długo, co skutkuje przerwami w transmisji, spowodowanymi
-stanami \textit{xrun\_recovery} systemu ALSA (próbki nie są odpowiednio szybko
-czytane/zapisywane). Takie przerwy wpływają destrukcyjnie na działanie systemu i
-objawiają się destabilizacją pętli przetwarzania, co skutkuje generacją
-dodatkowego hałasu przez głośnik wyjściowy.
+poszczególnych sygnałów testowych. \par Kwestią znaczącą przy doborze wartości
+$L$ jest natomiast długość okna czasowego w którym przetwarzane są dane.
+Zwiększenie wartości $L$ powoduje zwiększenie ilości obliczeń w pętli
+przetwarzania (więcej obliczeń na wykonanie filtracji i obliczenie algorytmu
+NLMS) i w czasie pomiarów zaobserwowano, że dla długości filtra $W(z^{-1})$
+większej niż 1024 ($L > 1024$) obliczenia zaczynają trwać zbyt długo, co
+skutkuje przerwami w transmisji, spowodowanymi stanami \textit{xrun\_recovery}
+systemu ALSA (próbki nie są odpowiednio szybko czytane/zapisywane). Takie
+przerwy wpływają destrukcyjnie na działanie systemu i objawiają się
+destabilizacją pętli przetwarzania, co skutkuje generacją dodatkowego hałasu
+przez głośnik mający emitować antyhałas.
 
 \subsubsection{Wpływ częstotliwości próbkowania}
 
@@ -538,7 +541,7 @@ Do badania wpływu częstotliwości próbkowania $f_s$ przyjęto zestaw parametr
 referencyjnych zgodnie z tabelą \ref{tab::ref}, a~jako nową wartość $f_s$
 przyjęto:
 \begin{equation}
-    f_s = 2f_{s,\text{ref}} = 16000 \text{ Hz}.
+    f'_s = 2f'_{s,\text{ref}} = 4000 \text{ Hz}.
 \end{equation}
 
 Rezultaty dla wybranych sygnałów testowych przedstawiono na rysunkach
@@ -567,13 +570,17 @@ Rezultaty dla wybranych sygnałów testowych przedstawiono na rysunkach
 
 Analizując przebiegi \ref{ver::16_khz} można stwierdzić, że zwiększona
 częstotliwość próbkowania nie spowodowała drastycznych zmian w porównaniu
-z~poprzednią (mniejszą). Czas zbieżności dla poszczególnych sygnałów testowych
-jest zbliżony z~rezultatami dla $f'_s = 2000$~Hz. \par Pomimo, że
-w~zaprojektowanym układzie częstotliwość próbkowania nie wpływa znacząco na
-przebiegi, to~jej wzrost objawia się mniejszym czasem na wykonanie obliczeń. Dla
-częstotliwości większej niż 4000 Hz system zaczyna nie nadążać z~ich wykonaniem,
-co skutkuje, analogicznie jak w przypadku zbyt długich filtrów, przerwaniem
-transmisji i~destabilizacją pętli przetwarzania.
+z~poprzednią (mniejszą). Czas zbieżności algorytmu dla poszczególnych sygnałów
+testowych jest zbliżony z~rezultatami uzyskanymi na przebiegach referencyjnych
+dla $f'_s = 2000$~Hz.\par Pomimo, że w~zaprojektowanym układzie częstotliwość
+próbkowania nie wpływa znacząco na przebiegi, to~jej wzrost objawia się
+mniejszym czasem na wykonanie obliczeń. W trakcie badań krotność decymacji
+pozostawała niezmienna, więc w związku z dwukrotnym zwiększeniem częstotliwości
+próbkowania, ilość obliczeń w pętli przetwarzania również zwiększyła się
+dwukrotnie. Zaobserwowano, że~dla częstotliwości większej niż 4000 Hz ($f's >
+4000$ Hz) system zaczyna nie nadążać z wykonywaniem obliczeń, co~skutkuje,
+analogicznie jak w~przypadku zbyt długich filtrów, przerwaniem transmisji
+i~destabilizacją pętli przetwarzania.
 
 \subsubsection{Wpływ rozmiaru fragmentu}
 
@@ -614,7 +621,12 @@ najbardziej widoczne w~przypadku sygnału drugiego, dla którego algorytm zbiega
 się w~przybliżeniu trzy razy wolniej, niż algorytm z~parametrami referencyjnymi.
 Jak pokazano na rysunku \ref{ver::ident}, zwiększony rozmiar fragmentu powoduje
 większe opóźnienie, co może być głównym powodem zaobserwowanego w tej serii
-badań zachowania.
+badań zachowania. \par Realizując badania dla innej wielkości fragmentu należy
+pamiętać o wpływie rozmiaru omawianego parametru na charakterystykę toru
+wtórnego. Identyfikacyję odpowiedzi impulsowej toru wtórnego trzeba
+przeprowadzić ponownie dla nowej wartości parametru i taką samą procedurę należy
+wykonać również dla nowej wartości próbkowania $f's$, co oczywiście wykonano,
+realizując poprzednią serię badań.
 
 \subsubsection{Wpływ poziomu priorytetu}
 
@@ -746,24 +758,32 @@ pracujących w systemie. Analizując rozkład procesów podczas działania pętl
 z~wykorzystaniem polecenia \textit{top} zaobserwowano, że prócz procesu o~nazwie
 \textit{migration/0}, odpowiadającego za dystrybucję czasu pracy pomiędzy
 rdzenie procesora oraz tych, odpowiadających za obsługę przerwań (procesy
-\textit{irq/*}), żadne inne nie posiadają priorytetu większego niż $P = 20$.
-\par Analizując rysunki \ref{ver::p_120hz}, \ref{ver::p_220hz}
+\textit{irq/*}), żadne inne nie posiadają priorytetu większego niż $P = 20$, z
+czego wynika, że proces ANC nie może zostać wywłaszczony przez inny pracujący
+równolegle. \par Analizując rysunki \ref{ver::p_120hz}, \ref{ver::p_220hz}
 i~\ref{ver::p_sum} dokładniej można jednak zadać pytanie, dlaczego przebiegi nie
 są całkowicie identyczne, skoro w analizowanej sytuacji nic w systemie nie
 powinno wpływać na jakość działania algorytmu. Jednym z możliwych powodów jest
 zmienność stanu środowiska, w którym przeprowadzano pomiary. Jako, że
 pomieszczenie, w którym ustawiony jest system, nie jest całkowicie odizolowane
 od świata zewnętrznego, wpływ na pomiar mogą mieć zmiany wilgotności powietrza,
-ciśnienia jak i temperatury. W działającym systemie poszczególne elementy
-elektroniczne rozpraszają część energii poprzez ciepło, co w szczególności
-zaobserwowano dla głośników, których wbudowany wzmacniacz mocy w trakcie badań
-mocno się nagrzewał. Wpływ omawianych kwestii zdaniem autora powoduje, że
-przeprowadzone po sobie pomiary, nawet jeżeli konfiguracja jest identyczna, nie
-są całkowicie identyczne, a przebiegi mogą nieznacznie się od siebie różnić.
-\par Zmiany wytycznej planisty lekko pogorszyła zbieżność algorytmu,
-co przedstawiono na rysunkach \ref{ver::fifo}. Tłumienie drugiego i~trzeciego
-sygnału testowego odbywa się nieznacznie dłużej niż w~przypadku wykorzystania
-SCHED\_RR. Poza dłuższym czasem zbieżności, nie zaobserwowano dodatkowych zmian.
+ciśnienia, temperatury jak i aktualne rozmieszczenie elementów. W działającym
+systemie poszczególne układy elektroniczne rozpraszają część energii poprzez
+ciepło, co w szczególności zaobserwowano w przypadku głośników, których
+wbudowany wzmacniacz mocy w trakcie badań mocno się nagrzewał, powodując
+rozgrzanie obudowy głośnika. Dodatkową, wartą przedstawienia sytuacją, była chęć
+przeprowadzenia pomiaru kiedy zapomniano zamknąć drzwi do pomieszczenia, w
+którym odbywały się badania. Wpływ otwarych drzwi został natychmiastowo
+zauważony na uzyskanych w tamtym czasie rezultatach, które znacząco odbiegały od
+pozostałych i pozostawiały sporo do życzenia w kwestii pokrywania się z
+założeniami teoretycznymi. Sumarycznie, omawianych kwestie zdaniem autora
+powodują, że przeprowadzone po sobie pomiary, nawet jeżeli konfiguracja jest
+taka sama, nie są całkowicie identyczne, a przebiegi mogą nieznacznie się od
+siebie różnić. \par Zmiany wytycznej planisty lekko pogorszyła zbieżność
+algorytmu, co przedstawiono na rysunkach \ref{ver::fifo}. Tłumienie drugiego
+i~trzeciego sygnału testowego odbywa się nieznacznie dłużej niż w~przypadku
+wykorzystania SCHED\_RR. Poza dłuższym czasem zbieżności, nie zaobserwowano
+dodatkowych zmian.
 
 \subsection{Dodatkowe eksperymenty i~podsumowanie badań}
 

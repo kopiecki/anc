@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  26 OCT 2023 23:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  27 OCT 2023 00:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -3036,23 +3036,20 @@ f/verification/l_220hz_256.png (PNG copy)> <./graf/verification/l_220hz_512.png
 File: graf/verification/120hz_128.png Graphic file (type png)
 <use graf/verification/120hz_128.png>
 Package pdftex.def Info: graf/verification/120hz_128.png  used on input line 55
-1.
+4.
 (pdftex.def)             Requested size: 223.07211pt x 117.52934pt.
 <graf/verification/220hz_16000.png, id=1658, 2540.74219pt x 1321.93875pt>
 File: graf/verification/220hz_16000.png Graphic file (type png)
 <use graf/verification/220hz_16000.png>
 Package pdftex.def Info: graf/verification/220hz_16000.png  used on input line 
-556.
+559.
 (pdftex.def)             Requested size: 223.07211pt x 116.04454pt.
 <graf/verification/sum_16000.png, id=1659, 2570.10187pt x 1359.57938pt>
 File: graf/verification/sum_16000.png Graphic file (type png)
 <use graf/verification/sum_16000.png>
 Package pdftex.def Info: graf/verification/sum_16000.png  used on input line 56
-1.
+4.
 (pdftex.def)             Requested size: 223.07211pt x 118.0003pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3068,23 +3065,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 File: graf/verification/120hz_16000.png Graphic file (type png)
 <use graf/verification/120hz_16000.png>
 Package pdftex.def Info: graf/verification/120hz_16000.png  used on input line 
-594.
+601.
 (pdftex.def)             Requested size: 223.07211pt x 120.92592pt.
 <graf/verification/220hz_128.png, id=1671, 2571.6075pt x 1349.79282pt>
 File: graf/verification/220hz_128.png Graphic file (type png)
 <use graf/verification/220hz_128.png>
-Package pdftex.def Info: graf/verification/220hz_128.png  used on input line 59
-9.
+Package pdftex.def Info: graf/verification/220hz_128.png  used on input line 60
+6.
 (pdftex.def)             Requested size: 223.07211pt x 117.06853pt.
 <graf/verification/sum_128.png, id=1672, 2491.05656pt x 1344.52313pt>
 File: graf/verification/sum_128.png Graphic file (type png)
 <use graf/verification/sum_128.png>
-Package pdftex.def Info: graf/verification/sum_128.png  used on input line 604.
+Package pdftex.def Info: graf/verification/sum_128.png  used on input line 611.
 
 (pdftex.def)             Requested size: 223.07211pt x 120.38638pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3100,28 +3094,28 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 File: graf/verification/P_120hz_80.png Graphic file (type png)
 <use graf/verification/P_120hz_80.png>
 Package pdftex.def Info: graf/verification/P_120hz_80.png  used on input line 6
-35.
+47.
 (pdftex.def)             Requested size: 223.07211pt x 114.86409pt.
 <graf/verification/P_120hz_60.png, id=1685, 2579.88844pt x 1333.98375pt>
 File: graf/verification/P_120hz_60.png Graphic file (type png)
 <use graf/verification/P_120hz_60.png>
 Package pdftex.def Info: graf/verification/P_120hz_60.png  used on input line 6
-40.
+52.
 (pdftex.def)             Requested size: 223.07211pt x 115.33101pt.
 <graf/verification/P_120hz_40.png, id=1686, 2536.97812pt x 1321.93875pt>
 File: graf/verification/P_120hz_40.png Graphic file (type png)
 <use graf/verification/P_120hz_40.png>
 Package pdftex.def Info: graf/verification/P_120hz_40.png  used on input line 6
-45.
+57.
 (pdftex.def)             Requested size: 223.07211pt x 116.22607pt.
 <graf/verification/P_120hz_20.png, id=1687, 2537.73094pt x 1331.72531pt>
 File: graf/verification/P_120hz_20.png Graphic file (type png)
 <use graf/verification/P_120hz_20.png>
 Package pdftex.def Info: graf/verification/P_120hz_20.png  used on input line 6
-50.
+62.
 (pdftex.def)             Requested size: 223.07211pt x 117.04588pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1715) has occurred while \output is active []
 
 
 
@@ -3138,48 +3132,48 @@ _128.png (PNG copy)> <./graf/verification/sum_128.png (PNG copy)>]
 File: graf/verification/P_220hz_80.png Graphic file (type png)
 <use graf/verification/P_220hz_80.png>
 Package pdftex.def Info: graf/verification/P_220hz_80.png  used on input line 6
-65.
+77.
 (pdftex.def)             Requested size: 223.07211pt x 116.61884pt.
 <graf/verification/P_220hz_60.png, id=1697, 2547.5175pt x 1351.29843pt>
 File: graf/verification/P_220hz_60.png Graphic file (type png)
 <use graf/verification/P_220hz_60.png>
 Package pdftex.def Info: graf/verification/P_220hz_60.png  used on input line 6
-70.
+82.
 (pdftex.def)             Requested size: 223.07211pt x 118.31255pt.
 <graf/verification/P_220hz_40.png, id=1698, 2512.13531pt x 1344.52313pt>
 File: graf/verification/P_220hz_40.png Graphic file (type png)
 <use graf/verification/P_220hz_40.png>
 Package pdftex.def Info: graf/verification/P_220hz_40.png  used on input line 6
-75.
+87.
 (pdftex.def)             Requested size: 223.07211pt x 119.38112pt.
 <graf/verification/P_220hz_20.png, id=1699, 2581.39406pt x 1349.04pt>
 File: graf/verification/P_220hz_20.png Graphic file (type png)
 <use graf/verification/P_220hz_20.png>
 Package pdftex.def Info: graf/verification/P_220hz_20.png  used on input line 6
-80.
+92.
 (pdftex.def)             Requested size: 223.07211pt x 116.57095pt.
 <graf/verification/P_sum_80.png, id=1701, 2539.23656pt x 1336.24219pt>
 File: graf/verification/P_sum_80.png Graphic file (type png)
 <use graf/verification/P_sum_80.png>
-Package pdftex.def Info: graf/verification/P_sum_80.png  used on input line 694
+Package pdftex.def Info: graf/verification/P_sum_80.png  used on input line 706
 .
 (pdftex.def)             Requested size: 223.07211pt x 117.3817pt.
 <graf/verification/P_sum_60.png, id=1702, 2551.28156pt x 1364.84906pt>
 File: graf/verification/P_sum_60.png Graphic file (type png)
 <use graf/verification/P_sum_60.png>
-Package pdftex.def Info: graf/verification/P_sum_60.png  used on input line 699
+Package pdftex.def Info: graf/verification/P_sum_60.png  used on input line 711
 .
 (pdftex.def)             Requested size: 223.07211pt x 119.33237pt.
 <graf/verification/P_sum_40.png, id=1703, 2568.59625pt x 1346.78156pt>
 File: graf/verification/P_sum_40.png Graphic file (type png)
 <use graf/verification/P_sum_40.png>
-Package pdftex.def Info: graf/verification/P_sum_40.png  used on input line 704
+Package pdftex.def Info: graf/verification/P_sum_40.png  used on input line 716
 .
 (pdftex.def)             Requested size: 223.07211pt x 116.95122pt.
 <graf/verification/P_sum_20.png, id=1704, 2523.4275pt x 1309.89375pt>
 File: graf/verification/P_sum_20.png Graphic file (type png)
 <use graf/verification/P_sum_20.png>
-Package pdftex.def Info: graf/verification/P_sum_20.png  used on input line 709
+Package pdftex.def Info: graf/verification/P_sum_20.png  used on input line 721
 .
 (pdftex.def)             Requested size: 223.07211pt x 115.78668pt.
 
@@ -3200,19 +3194,19 @@ copy)> <./graf/verification/P_220hz_60.png (PNG copy)> <./graf/verification/P_2
 File: graf/verification/P_120hz_fifo.png Graphic file (type png)
 <use graf/verification/P_120hz_fifo.png>
 Package pdftex.def Info: graf/verification/P_120hz_fifo.png  used on input line
- 723.
+ 735.
 (pdftex.def)             Requested size: 223.07211pt x 118.89009pt.
 <graf/verification/P_220hz_fifo.png, id=1713, 2527.94438pt x 1323.44438pt>
 File: graf/verification/P_220hz_fifo.png Graphic file (type png)
 <use graf/verification/P_220hz_fifo.png>
 Package pdftex.def Info: graf/verification/P_220hz_fifo.png  used on input line
- 728.
+ 740.
 (pdftex.def)             Requested size: 223.07211pt x 116.78253pt.
 <graf/verification/P_sum_fifo.png, id=1714, 2502.34875pt x 1336.24219pt>
 File: graf/verification/P_sum_fifo.png Graphic file (type png)
 <use graf/verification/P_sum_fifo.png>
 Package pdftex.def Info: graf/verification/P_sum_fifo.png  used on input line 7
-33.
+45.
 (pdftex.def)             Requested size: 223.07211pt x 119.11479pt.
 
 
@@ -3232,11 +3226,8 @@ ifo.png (PNG copy)>]
 File: graf/verification/anc_rand_sin.png Graphic file (type png)
 <use graf/verification/anc_rand_sin.png>
 Package pdftex.def Info: graf/verification/anc_rand_sin.png  used on input line
- 781.
+ 801.
 (pdftex.def)             Requested size: 364.19667pt x 199.52655pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3250,7 +3241,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <graf/verification/raw_rand.png, id=1739, 2569.34906pt x 1335.48938pt>
 File: graf/verification/raw_rand.png Graphic file (type png)
 <use graf/verification/raw_rand.png>
-Package pdftex.def Info: graf/verification/raw_rand.png  used on input line 804
+Package pdftex.def Info: graf/verification/raw_rand.png  used on input line 824
 .
 (pdftex.def)             Requested size: 318.66948pt x 165.63158pt.
 
@@ -3268,12 +3259,12 @@ rand.png (PNG copy)>]
 File: graf/verification/anc_rand_0.png Graphic file (type png)
 <use graf/verification/anc_rand_0.png>
 Package pdftex.def Info: graf/verification/anc_rand_0.png  used on input line 8
-15.
+35.
 (pdftex.def)             Requested size: 455.24411pt x 237.223pt.
 <graf/verification/mlyny.png, id=1750, 2559.5625pt x 1343.0175pt>
 File: graf/verification/mlyny.png Graphic file (type png)
 <use graf/verification/mlyny.png>
-Package pdftex.def Info: graf/verification/mlyny.png  used on input line 839.
+Package pdftex.def Info: graf/verification/mlyny.png  used on input line 859.
 (pdftex.def)             Requested size: 455.24411pt x 238.86372pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -3291,7 +3282,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <graf/verification/anc_opc.png, id=1759, 2584.40532pt x 1343.0175pt>
 File: graf/verification/anc_opc.png Graphic file (type png)
 <use graf/verification/anc_opc.png>
-Package pdftex.def Info: graf/verification/anc_opc.png  used on input line 849.
+Package pdftex.def Info: graf/verification/anc_opc.png  used on input line 869.
 
 (pdftex.def)             Requested size: 455.24411pt x 236.56854pt.
 
@@ -3308,19 +3299,19 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <graf/verification/bad_120.png, id=1768, 2494.82062pt x 1319.68031pt>
 File: graf/verification/bad_120.png Graphic file (type png)
 <use graf/verification/bad_120.png>
-Package pdftex.def Info: graf/verification/bad_120.png  used on input line 877.
+Package pdftex.def Info: graf/verification/bad_120.png  used on input line 897.
 
 (pdftex.def)             Requested size: 223.07211pt x 117.98077pt.
 <graf/verification/bad_220.png, id=1769, 2545.25906pt x 1341.51187pt>
 File: graf/verification/bad_220.png Graphic file (type png)
 <use graf/verification/bad_220.png>
-Package pdftex.def Info: graf/verification/bad_220.png  used on input line 882.
+Package pdftex.def Info: graf/verification/bad_220.png  used on input line 902.
 
 (pdftex.def)             Requested size: 223.07211pt x 117.55803pt.
 <graf/verification/bad_sum.png, id=1770, 2582.14688pt x 1336.24219pt>
 File: graf/verification/bad_sum.png Graphic file (type png)
 <use graf/verification/bad_sum.png>
-Package pdftex.def Info: graf/verification/bad_sum.png  used on input line 887.
+Package pdftex.def Info: graf/verification/bad_sum.png  used on input line 907.
 
 (pdftex.def)             Requested size: 223.07211pt x 115.42432pt.
 
@@ -3527,7 +3518,7 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 Here is how much of TeX's memory you used:
  47416 strings out of 480139
  1041248 string characters out of 5893693
- 1767829 words of memory out of 5000000
+ 1767840 words of memory out of 5000000
  63832 multiletter control sequences out of 15000+600000
  579453 words of font info for 94 fonts, out of 8000000 for 9000
  79 hyphenation exceptions out of 8191
@@ -3549,7 +3540,7 @@ ts/type1/public/lm/lmss12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/
 type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on main.pdf (127 pages, 26041050 bytes).
+Output written on main.pdf (127 pages, 26042366 bytes).
 PDF statistics:
  2260 PDF objects out of 2487 (max. 8388607)
  1885 compressed objects within 19 object streams
