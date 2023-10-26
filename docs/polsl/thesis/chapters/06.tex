@@ -522,12 +522,12 @@ Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
 
 Jak można zauważyć z rysunków \ref{ver::l_120hz}, \ref{ver::l_220hz} i
 \ref{ver::l_sum}, długość filtra wpływa nieznacznie na zebrane przebiegi. Czas
-zbieżności jest w przybliżeniu taki sam w przypadku różnych długości $L$
-poszczególnych sygnałów. \par Kwestią znaczącą przy doborze długości $L$ jest
+zbieżności jest w przybliżeniu taki sam w przypadku różnych wartości $L$ dla
+poszczególnych sygnałów. \par Kwestią znaczącą przy doborze wartości $L$ jest
 natomiast czas potrzebny na przetworzenie danych. W czasie pomiarów
-zaobserwowano, że dla długości filtra większej niż 1024 obliczenia zaczynają
-trwać zbyt długo, co skutkuje przerwami w transmisji, spowodowanymi stanami
-\textit{xrun\_recovery} systemu ALSA (próbki nie są odpowiednio szybko
+zaobserwowano, że dla długości filtra większej niż 1024 ($L > 1024$) obliczenia
+zaczynają trwać zbyt długo, co skutkuje przerwami w transmisji, spowodowanymi
+stanami \textit{xrun\_recovery} systemu ALSA (próbki nie są odpowiednio szybko
 czytane/zapisywane). Takie przerwy wpływają destrukcyjnie na działanie systemu i
 objawiają się destabilizacją pętli przetwarzania, co skutkuje generacją
 dodatkowego hałasu przez głośnik wyjściowy.
