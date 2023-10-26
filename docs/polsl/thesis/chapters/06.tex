@@ -49,7 +49,7 @@ Pomiary sekcji zasilania przedstawiono w tabeli \ref{tab::psu}:
     \label{tab::psu}
 \end{table}
 
-Jak można zauważyć, zasilanie -15 V jest poza spodziewaną skalą. Jest to
+Jak można zauważyć, zasilanie $-$15 V jest poza spodziewaną skalą. Jest to
 problem, który nie wpływa drastycznie na pracę pozostałych sekcji, ponieważ
 zasilanie później jest filtrowane i~stabilizowane przez liniowy regulator
 napięcia niskiego spadku. Pozostałe wartości mieszczą się w~wyspecyfikowanych
@@ -764,6 +764,9 @@ rdzenie procesora oraz tych, odpowiadających za obsługę przerwań (procesy
 przedstawiono na rysunkach \ref{ver::fifo}. Tłumienie drugiego i~trzeciego
 sygnału testowego odbywa się nieznacznie dłużej niż w~przypadku wykorzystania
 SCHED\_RR. Poza dłuższym czasem zbieżności, nie zaobserwowano dodatkowych zmian.
+\remark{A ma Pan jakiś pomysł dlaczego w ogóle widać jakieś zmiany? Bo
+teoretycznie jeśli nic innego nie ma tego samego priorytetu
+co Pan program, to różnic nie powinno być.}
 
 \subsection{Dodatkowe eksperymenty i~podsumowanie badań}
 

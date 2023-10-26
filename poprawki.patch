@@ -1,0 +1,507 @@
+diff --git a/docs/polsl/thesis/chapters/01.tex b/docs/polsl/thesis/chapters/01.tex
+index b373732..69ae087 100644
+--- a/docs/polsl/thesis/chapters/01.tex
++++ b/docs/polsl/thesis/chapters/01.tex
+@@ -59,7 +59,7 @@ wytłumiać hałasy o~największej energii w~pasmach niskich. Długość fali je
+ odwrotnie proporcjonalna do jej częstotliwości 
+ \cite{bib:resnick}
+ \begin{equation}
+-    \lambda = \frac{v}{f}
++    \lambda = \frac{v}{f},
+ \end{equation}
+ więc wolnozmienna fala akustyczna propagująca w~powietrzu ($v \approx 343$
+ $\frac{\text{m}}{\text{s}}$) o~przykładowej częstotliwości 343 Hz osiągnie
+@@ -93,12 +93,12 @@ wyciszony. Wizualizację fizycznej idei ANC przedstawiono na rysunku
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.6\textwidth]{graf/intro/anc.png}
+-    \caption{Wizualizacja fizycznej idei aktywnej redukcji hałasu}
++    \caption{Wizualizacja fizycznej idei aktywnej redukcji hałasu.}
+     \label{intro::anc}
+ \end{figure}
+ \par Tor, którym porusza się hałas w~omawianej tematyce jest w~większości
+ przypadków zmienny w~czasie, co powoduje, że częstotliwość, amplituda, faza jak
+-i~prędkość rozchodzenia się drgań w~ośrodku jest mocno niestacjonarna, Jest to
++i~prędkość rozchodzenia się drgań w~ośrodku jest mocno niestacjonarna. Jest to
+ spowodowane aktualną temperaturą, wilgotnością powietrza, ciśnieniem jak
+ i~rozmieszczeniem oraz typem elementów wokół, absorobujących lub/i~odbijających
+ fale akustyczne w określony sposób. Takie zachowanie często wymaga, żeby
+@@ -129,7 +129,7 @@ rysunku \ref{intro::processing}:
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=\textwidth]{graf/intro/processing.png}
+-    \caption{Typowy tor przetwarzania}
++    \caption{Typowy tor przetwarzania.}
+     \label{intro::processing}
+ \end{figure}
+ 
+@@ -142,11 +142,23 @@ wsparciem dla operacji często wykorzystywanych w~liczeniu szybkiej transformaty
+ Fouriera (odwracanie bitów, ang. \textit{bit reversal}). Dodatkowo, instrukcje
+ na tego typu jednostkach obliczeniowych mogą być realizowane są w~sposób
+ potokowy (ang. \textit{pipelining}), co pozwala na jednoczesne wykonywanie kilku
+-rozkazów maszynowych (superskalarność), znacząco przyśpieszając obliczenia. \par
++rozkazów maszynowych (superskalarność)\remark{superskalarność i pipelining to dwie różne rzeczy. Chodziło mi o to, że równoległość = superskalarność, a nie pipelining.}, znacząco przyśpieszając obliczenia. \par
+ Pomimo, że wykorzystanie procesorów sygnałowych lub odpowiednio wydajnych
+ mikrokontrolerów jest z~pewnością jednym z~najlepszych wyborów przy
+ projektowaniu systemu przetwarzającego sygnały w~czasie rzeczywistym, to z~takim
+-rozwiązaniem wiąże się szereg problemów:
++rozwiązaniem wiąże się szereg problemów:\remark{tego to teraz nie rozumiem,
++to na czym można by realizować układy ANC, i przecież realizuje
++Pan go na odpowiednio wydajnym mikrokontrolerze, bo AM3358 to
++generalnie mikrokontroler. I ogólnie wiele tych punktów może
++być dość dyskusyjnych. Tzn. były pewne procesory DSP, gdzie
++tworzono je z takim podejściem, że chodzi im tylko o DSP,
++nie projektują tam procesora, by mógł wykonywać różne zadania,
++by zwiększyć wydajność robią bardzo brzydką architekturę,
++co później owocowało bym, że były rzadko stosowane, wymagały
++nietypowych kompilatorów, \ldots I potem np. Texas Instruments
++zaczął robić OMAP, które zawierały ich DSP C6000 oraz ARMa
++dla normalnego kodu, bo ich C6000 to jest tragiczny jak
++chodzi o~normalne kody.}
+ \begin{enumerate}
+ 
+     \item \textbf{Wysoka cena i~mała dostępność} --- w~większości przypadków
+diff --git a/docs/polsl/thesis/chapters/02.tex b/docs/polsl/thesis/chapters/02.tex
+index ac36736..0428d20 100644
+--- a/docs/polsl/thesis/chapters/02.tex
++++ b/docs/polsl/thesis/chapters/02.tex
+@@ -30,16 +30,16 @@ Omawiane struktury w~postaci schematów ideowych przedstawiono na rysunkach
+     \begin{subfigure}[b]{0.49\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{graf/analysis/bb_fw_anc.png}
+-        \caption{ANC ze sprzężeniem w przód}
++        \caption{ANC ze sprzężeniem w przód.}
+         \label{analysis::structs_a}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.49\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{graf/analysis/fb_anc.png}
+-        \caption{ANC ze sprzężeniem w tył}
++        \caption{ANC ze sprzężeniem w tył.}
+     \end{subfigure}
+-       \caption{Porównanie struktur systemów}
++       \caption{Porównanie struktur systemów.}
+        \label{analysis::structs}
+ \end{figure}
+ 
+@@ -86,7 +86,7 @@ i~neutralizacja jej wpływu w sposób programowy lub sprzętowy.
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.8\textwidth]{graf/analysis/systems.png}
+-    \caption{Podział struktur systemów ANC}
++    \caption{Podział struktur systemów ANC.}
+     \label{analysis::systems}
+ \end{figure}
+ 
+@@ -95,7 +95,7 @@ sprzętowym jak i~programowym. Grubszą czcionką na diagramie
+ \ref{analysis::systems} zaznaczono strukturę, którą zdecydowano się wybrać do
+ dalszej analizy z~myślą o~finalnej implementacji i~jest to
+ \textbf{szerokopasmowe ANC ze sprzężeniem w przód}, głównie ze względu na źródło
+-i~charakterystykę hałasu, która w~tym przypadku może być łatwo symulowana.
++i~charakterystykę hałasu, która w~tym przypadku może być łatwo symulowana\remark{tej łatwości symulacji to nie rozumiem.}.
+ 
+ \section{Zasada działania}
+ 
+@@ -109,7 +109,10 @@ lub cyfrowe odpowiedniki w~trakcie przekraczania domen i~wchodzenia w blok
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_0.png}
+-    \caption{Wyprowadzenie schematu systemu ANC, 0}
++    \caption{Wyprowadzenie schematu systemu ANC, 0.\remark{te rysunki dobrze
++	by było jakoś lepiej ponazywać, a nie, że 0, 1, 2, \ldots
++	I jeszcze na końcu są rysunki o tej samej nazwie.
++	A bez sensownych nazw to spis rysunków traci sens.}}
+     \label{analysis::scheme_0}
+ \end{figure}
+ 
+@@ -134,20 +137,21 @@ SOI (filtr o skończonej odpowiedzi impulsowej, ang. \textit{Finite impulse
+ filter, FIR filter}). Tego typu modele bardzo często stosowane są
+ w~zagadanieniach związanych z~systemami ANC, głównie ze względu na wygodę. Są
+ zawsze stabilne, łatwe w~implementacji jak i~posiadają liniową odpowiedź fazową,
+-w~przypadku symetrii współczynników. \par Transmitancja takiego modelu
++w~przypadku symetrii współczynników.\remark{tylko, że obiekty
++akustyczne nie będą miały symetrycznych współczynników, więc
++trudno mówić, że to jest jakiś plus modeli FIR.} \par Transmitancja takiego modelu
+ (odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
+ \begin{equation}
+     K(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L} w_lz^{-l},
+     \label{eq::fir}
+ \end{equation}
+-gdzie $w_l$ to współczynnik filtra o~numerze $l$ (ang. \textit{tap}), $L$ to
++\noindent gdzie $w_l$ to współczynnik filtra o~numerze $l$ (ang. \textit{tap}), $L$ to
+ długość odpowiedzi impulsowej, a~$z^{-l}$ to operator opóźnienia o~$l$ próbek.
+ \par W związku z~\ref{eq::fir}, wyjście filtra SOI dane jest:
+ \begin{equation}
+         y(n) = \sum_{l = 0}^{L - 1}w_lx(n - l) \implies y(n) = \textbf{w}^T\textbf{x}(n),
+ \end{equation}
+-
+-gdzie \textbf{w} to wektor współczynników filtra:
++\noindent gdzie \textbf{w} to wektor współczynników filtra:
+ \begin{equation}
+         \textbf{w} \equiv \begin{bmatrix}
+             w_0 \quad
+@@ -156,15 +160,14 @@ gdzie \textbf{w} to wektor współczynników filtra:
+             w_{L - 1} 
+         \end{bmatrix}^T,
+ \end{equation}
+-
+-a \textbf{x}(n) to wektor wejść w chwili $n$:
++\noindent a \textbf{x}(n) to wektor wejść w chwili $n$:
+ \begin{equation}
+         \textbf{x}(n) \equiv \begin{bmatrix}
+             x(n) \quad
+             x(n - 1) \quad
+             \cdots \quad
+             x(n - L + 1)
+-        \end{bmatrix}^T,
++        \end{bmatrix}^T.
+ \end{equation}
+ 
+ Analizując schemat \ref{analysis::scheme_0} można dojść do logicznego wniosku,
+@@ -182,7 +185,7 @@ rysunku \ref{analysis::scheme_1}:
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.60\textwidth]{graf/analysis/scheme_1.png}
+-    \caption{Wyprowadzenie schematu systemu ANC, 1}
++    \caption{Wyprowadzenie schematu systemu ANC, 1.}
+     \label{analysis::scheme_1}
+ \end{figure}
+ 
+@@ -201,8 +204,7 @@ minimalizując wartość oczekiwaną kwadratu błędu \cite{bib:kuo_morgan}:
+ \begin{equation}
+     E[e^2(n)] = E[d^2(n)] - 2\textbf{p}^T\textbf{w}(n) + \textbf{w}^T(n)\textbf{R}\textbf{w}(n),
+ \end{equation}
+-
+-gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej:
++\noindent gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej:
+ \begin{equation}
+     \textbf{p} \equiv E[d(n)\textbf{x}(n)] = \begin{bmatrix}
+         r_{dx}(0) & r_{dx}(1) & \cdots & r_{dx}(L - 1)
+@@ -211,8 +213,7 @@ gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej:
+ \begin{equation}
+     r_{dx}(k) \equiv E[d(n)x(n - k)],
+ \end{equation}
+-
+-a \textbf{R} jest macierzą autokorelacji sygnału wejściowego $x(n)$:
++\noindent \remark{kontynuacja akapitu musi być bez wcięcia}a \textbf{R} jest macierzą autokorelacji sygnału wejściowego $x(n)$:
+ \begin{equation}
+     \textbf{R} \equiv E[\textbf{x}(n)\textbf{x}^T(n)] = 
+     \begin{bmatrix}
+@@ -293,7 +294,7 @@ $W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_2.png}
+-    \caption{Wyprowadzenie schematu systemu ANC, 2}
++    \caption{Wyprowadzenie schematu systemu ANC, 2.}
+     \label{analysis::scheme_2}
+ \end{figure}
+ 
+@@ -330,7 +331,7 @@ na rysunku \ref{analysis::scheme_3}:
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_3.png}
+-    \caption{Wyprowadzenie schematu systemu ANC, 3}
++    \caption{Wyprowadzenie schematu systemu ANC, 3.}
+     \label{analysis::scheme_3}
+ \end{figure}
+ 
+@@ -410,7 +411,7 @@ rysunku \ref{analysis::scheme_4}:
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_4.png}
+-    \caption{Wyprowadzenie schematu systemu ANC, 4}
++    \caption{Wyprowadzenie schematu systemu ANC, 4.}
+     \label{analysis::scheme_4}
+ \end{figure}
+ 
+@@ -490,7 +491,7 @@ Schemat systemu z~wykorzystaniem algorytmu FXLMS przedstawiono na rysunku
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_5.png}
+-    \caption{Schemat systemu ANC}
++    \caption{Schemat systemu ANC.}
+     \label{analysis::scheme_5}
+ \end{figure}
+ 
+@@ -552,7 +553,9 @@ zostosowaniu prostokątnego okna o długości $M$:
+     \label{eq::px}
+ \end{equation}
+ 
+-Równanie \ref{eq::px} w przypadku dobrania $M = L$ może zostać sprowadzone do
++Równanie \ref{eq::px} w przypadku dobrania $M = L$ \remark{to podejście
++to chyba wymaga stacjonarności, NLMS jest też dobry dla niestacjonarnych,
++i tam po prostu przy normalizacji M musi się równać L.} może zostać sprowadzone do
+ postaci:
+ \begin{equation}
+     \hat{P}_x(n) = \frac{1}{L}\sum_{l = 0}^{L - 1} x^2(n - l) \
+@@ -602,7 +605,7 @@ o~normalizację danych wejściowych schemat systemu ANC przedstawiono na rysunku
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_6.png}
+-    \caption{Schemat systemu ANC z~normalizacją danych wejściowych}
++    \caption{Schemat systemu ANC z~normalizacją danych wejściowych.}
+     \label{analysis::scheme_6}
+ \end{figure}
+ 
+@@ -640,7 +643,10 @@ opisano poniżej:
+     \end{equation}
+ 
+     Na wejście identyfikowanego procesu podaje się sygnał identyfikujący
+-    o~wariancji $\lambda^2$, przez który dzielona jest funkcja korelacji
++    o~wariancji $\lambda^2$\remark{brakuje to chyba założenia,
++    że ten sygnał identyfikacyjny musi być biały. Natomiast
++    w metodzie korelacyjnej wcale nie musi, tylko wtedy jest
++    do rozwiązania układ równań.}, przez który dzielona jest funkcja korelacji
+     wzajemnej $R_{xy}(n)$ wejścia obiektu $x(n)$ i~wyjścia $y(n)$. Uzyskaną
+     w~ten sposób odpowiedź impulsową ogarnicza się do długości, której wartość
+     można określić wizualnie na podstawie przebiegu funkcji $\hat{s}(n)$ i~jest
+@@ -675,7 +681,7 @@ których każdy jest okresowy wewnątrz okna czasowego o wybranej długości
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.7\textwidth]{graf/analysis/offline_ident.png}
+-    \caption{Schemat eksperymentu identyfikacji metodami offline}
++    \caption{Schemat eksperymentu identyfikacji metodami offline.}
+     \label{analysis::offline_ident}
+ \end{figure}
+ 
+@@ -708,7 +714,7 @@ uwzględniono na rysunku \ref{analysis::feedback}:
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.64\textwidth]{graf/analysis/feedback.png}
+-    \caption{Schemat systemu ANC z~uwzględnieniem dodatkowego sprzężenia}
++    \caption{Schemat systemu ANC z~uwzględnieniem dodatkowego sprzężenia.}
+     \label{analysis::feedback}
+ \end{figure}
+ 
+@@ -726,7 +732,7 @@ i~zaktualizowany z~jego uwzględnieniem schemat przedstawiono na rysunku
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.6\textwidth]{graf/analysis/feed_canc.png}
+-    \caption{Schemat systemu ANC z~niwelacją sprzężenia}
++    \caption{Schemat systemu ANC z~niwelacją sprzężenia.}
+     \label{analysis::feed_canc}
+ \end{figure}
+ 
+@@ -752,7 +758,7 @@ identyfikacji przyjmuje w~tym przypadku postać jak na rysunku
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.7\textwidth]{graf/analysis/feedback_ident.png}
+-    \caption{Identyfikacja sprzężenia}
++    \caption{Identyfikacja sprzężenia.}
+     \label{analysis::feedback_ident}
+ \end{figure}
+ 
+diff --git a/docs/polsl/thesis/chapters/03.tex b/docs/polsl/thesis/chapters/03.tex
+index 21ef3a1..d358d2b 100644
+--- a/docs/polsl/thesis/chapters/03.tex
++++ b/docs/polsl/thesis/chapters/03.tex
+@@ -45,7 +45,7 @@ otwartego oprogramowania.
+     poprawne dostarczenie ich na głośniki. Wykorzystywane będą dwa kanały
+     wyjściowe.
+ 
+-    \item Zapewnienie działającej komunikacji z~~ybraną platformą obliczeniową
++    \item Zapewnienie działającej komunikacji z~wybraną platformą obliczeniową
+     poprzez wybrany protokół cyfrowy, przez który przesyłane będą
+     przekonwertowane z~użyciem osadzonych na płytce przetworników
+     analogowo-cyfrowych do domeny cyfrowej wejściowe, pochodzące z~mikrofonów,
+@@ -200,7 +200,7 @@ mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
+ 
+         \item Rozsądna cena i~dobra dostępność.
+ 
+-        \item z~racji, że zrezygnowano z~projektowania końcówki mocy, wymagany
++        \item Z~racji, że zrezygnowano z~projektowania końcówki mocy, wymagany
+         jest wbudowany wzmacniacz. Innymi słowy, zestawy muszą być aktywne.
+     
+         \item Analizowane sygnały są wolnozmienne (pasmo 50 do 500 Hz), więc
+@@ -211,7 +211,7 @@ mikrofony, dwa zestawy głośnikowe oraz wybrana platforma obliczeniowa.
+         \item Rozsądny rozmiar, pozwalający na manipulację położeniem
+         i~kierunkiem.
+     
+-        \item z~uwagi na zakres poziomu akustycznego analizowanych sygnałów,
++        \item Z~uwagi na zakres poziomu akustycznego analizowanych sygnałów,
+         zestaw musi być zdolny do osiągnięcia jego górnego limitu, czyli
+         użytecznego 100 dB SPL.
+ 
+diff --git a/docs/polsl/thesis/chapters/04.tex b/docs/polsl/thesis/chapters/04.tex
+index d3cc991..1826643 100644
+--- a/docs/polsl/thesis/chapters/04.tex
++++ b/docs/polsl/thesis/chapters/04.tex
+@@ -54,10 +54,10 @@ oraz cieszą się dobrymi opiniami. Ich droższym odpowiednikiem jest flagowy
+ Beyerdynamic MM1, a~najbardziej znaczące parametry \cite{bib:behringer}
+ przedstawiono poniżej:
+ \begin{enumerate}
+-    \item Typ --- pojemnościowy, phantom +15 do +48 V.
++    \item Typ --- pojemnościowy, phantom +15~V do +48 V.
+     \item Charakterystyka kierunkowa --- kulista.
+     \item Odpowiedź częstotliwościowa --- relatywnie płaska, z~pofalowaniami
+-    w~paśmie 5 do 10 kHz i~zakresie 20 do 20000 Hz.
++    w~paśmie 5~kHz do 10 kHz i~zakresie 20~Hz do 20000 Hz.
+     \item Czułość --- $15 \text{ }\frac{\text{mV}}{{\text{Pa}}}$.
+ \end{enumerate}
+ Czułość mikrofonów informuje o~wartości napięcia dla danego ciśnienia
+@@ -74,7 +74,9 @@ dB SPL. Pracując na hałasach w zakresie 85 do 105 dB SPL, dla górnej granicy
+ otrzymuje się około 3.5 Pa, czyli odpowiednio około 52.5 mV. W przypadku
+ przetwornika analogowo-cyfrowego pracującego w przedziale od 0 V do 5 V (2.5 V
+ amplitudy sygnału przy nałożonej składowej stałej 2.5 V), 52.5 mV z mikrofonu
+-powinno odpowiadać maksymalnemu zakresowi 2.5 V, co pozwala na obliczenie
++powinno odpowiadać maksymalnemu zakresowi 2.5 V\remark{nie do końca,
++52.5 mV to będzie RMS, dla sinusa 1 kHz zwykle się określa,
++a~2.5~V to musi być maksymalna wartość}, co pozwala na obliczenie
+ wzmocnienia:
+ \begin{equation}
+         k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{0.0525} = 47.6190 \approx 42 \text{ dB},
+@@ -93,7 +95,7 @@ wchodząc w techniczne szczegóły, z~najbardziej znaczących parametrów
+     \textit{woofer, tweeter}).
+     \item Maksymalny zakres poziomu akustycznego --- 103 dB SPL, 106 dB SPL w
+     piku.
+-    \item Charakterystyka częstotliwościowa do $\pm 3$ dB --- 42.5 do 35000 Hz,
++    \item Charakterystyka częstotliwościowa do $\pm 3$ dB --- 42.5~Hz do 35000 Hz,
+     płaska.
+     \item SNR --- powyżej 100 dB.
+ \end{enumerate}
+@@ -188,6 +190,9 @@ tłumienia oraz dobroć. Wielkości te określone są odpowiednio:
+ \begin{equation}
+     Q = \frac{1}{R}\sqrt{\frac{L}{C}}.
+ \end{equation}
++\remark{czy ten wzór u góry jest na pewno dobry? Bo z niego
++wynika $2Q = 2R \sqrt{\frac{C}{L}}$, co nie zgadza się
++z tym drugim, a drugi jest na pewno dobry.}
+ 
+ Współczynnik tłumienia może znajdować się w~czterech typach zakresów:
+ \begin{enumerate}
+@@ -209,7 +214,7 @@ które nie jest tłumione (możliwe płaskie) \cite{bib:lc}. Podstawiając $\zet
+     C = \frac{1}{\omega_0 R\sqrt{2}}.
+ \end{equation}
+ 
+-Jako rezystancję przyjmuje się rezystancję wewnętrzną cewki. W~zaprojektowanym
++Jako rezystancję przyjmuje się rezystancję wewnętrzną cewki\remark{nie zawsze, bo czasami dodaje się specjalnie opornik, by ją zwiększyć, lub mieć lepiej kontrolowaną, cewki często mają $\pm30\%$}. W~zaprojektowanym
+ układzie $L = 4.7 \text{ }\mu$H i~$C = 1080 \text{ }\mu$F, z~czego wynika $f_c
+ \approx 2.47$ kHz oraz warunek na rezystancję cewki:
+ \begin{equation}
+@@ -694,7 +699,7 @@ Omawiany układ przedstawiono na rysunku \ref{hw::safe}:
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.55\textwidth]{graf/hw/safe.png}
+-    \caption{Filtr dolnoprzepustowy i~limiter}
++    \caption{Filtr dolnoprzepustowy i~limiter\remark{KiCAD umożliwia zapis schematów jako pdf, jakoś wtedy byłaby dużo lepsza.}}
+     \label{hw::safe}
+ \end{figure}
+ 
+diff --git a/docs/polsl/thesis/chapters/05.tex b/docs/polsl/thesis/chapters/05.tex
+index 5b00fe5..d6b6395 100644
+--- a/docs/polsl/thesis/chapters/05.tex
++++ b/docs/polsl/thesis/chapters/05.tex
+@@ -238,7 +238,7 @@ poszczególnych partycji przedstawiono poniżej:
+     rozruchowego. Wymagany jest system plików FAT32.
+ 
+     \item Partycja systemowa --- zawiera pliki jądra systemu i~drzewa urządzeń.
+-    Wymagany jest system plików EXT4.
++    Wymagany jest system plików EXT4\remark{nie jest wymagany, Linux obsługuje wiele systemów plików.}.
+ 
+     \item Partycja z~głównym systemem plików --- zawiera wypakowany główny system
+     plików systemu. Wymagany jest system plików EXT4.
+@@ -298,7 +298,7 @@ znaczących kwestii, sterownik zawiera deklarację struktury opisującą
+ konfigurację płytki dla transferów wejściowych i~wyjściowych (wspierane formaty,
+ liczba kanałów) oraz funkcję, która umożliwia jego załadowanie i~widoczność w
+ systemie. W wykorzystanym rozwiązaniu napisany moduł bezpośrednio zastąpił
+-sterownik kodeka PCM5102A, zachowując początkową nazwę, więc dodatkowe
++sterownik kodeka PCM\-5102A, zachowując początkową nazwę, więc dodatkowe
+ modyfikacje w~plikach konfiguracyjnych jądra nie były konieczne. Domyślnie,
+ sterownik kodeka PCM5102A ładowany jest dynamicznie jako moduł, więc po
+ zbudowaniu jądra wymagana jest ich instalacja w~głównym systemie plików.
+@@ -651,18 +651,30 @@ Z głównych mankamentów generatora \textit{rand()} można wyróżnić:
+     w tym przedziale liczby generowane są równomiernie} --- w~przypadku, kiedy
+     RAND\_MAX zdefiniowany jest jako maksymalny zakres 32 bitowy, a~użytkownik
+     chce wygenerować losową liczbę 16 bitową, to wygenerowana liczba pochodzi
+-    z~rozkładu nierównomiernego \cite{bib:rand}.
++    z~rozkładu nierównomiernego \cite{bib:rand}.\remark{nie rozumiem tego,
++    dokumentacja rand() od zawsze mówi jasno, że losuje wartość
++    z 0 do RAND\_MAX, i~powszechnie znane jest, że jak chce się
++    dostać inny zakres to trzeba podzielić i pomnożyć,
++    i nie ma tego problemu, z dokładnością do nieliniwości
++    tego przekształcenia}
+     \item \textbf{Stan generatora inicjalizowany jest globanie} --- 
+     niemożliwym jest wykorzystanie kilku instancji silnika w~jednej aplikacji,
+     co~znacząco komplikuje pracę, kiedy programista chce urównoleglić
+-    niektóre operacje \cite{bib:rand}.
++    niektóre operacje \cite{bib:rand}\remark{od dawna jest też rand\_r()}.
+     \item \textbf{Jakość implementacji jest wątpliwa} --- generatory LCG słyną
+     z~niskiej losowości bitów mniej znaczących w~porównaniu z~bardziej
+     znaczącymi. Liczby generowane za pomocą tych generatorów mogą tworzyć
+     widoczne struktury kratowe lub płaskie, co bardzo dobrze widać w przypadku
+     generatora RANDU \cite{bib:rand}. Dodatkowo sprawdzono, że typowe
+     implementacji LCG zazwyczaj wypadają bardzo źle w testach losowości
+-    statystycznej \cite{bib:prng} 
++    statystycznej \cite{bib:prng}
++    \remark{implementacja LCG zwykle jest przyzwoita, przynajmniej
++    w zakresie założeń, no i w sensownych bibliotekach standardowych.
++    A LCG nie są takie złe, tylko w przypadku rand() jest bardzo
++    źle, bo te założenia przyjęto źle, dano tam bardzo mały stan.
++    Ale też to były inne czasy, mało RAMu, a ten stan ma każdy
++    proces w systemie. Tzn. tutaj nie problem implementacji,
++    a interfejsu, że np. srand() przyjmuje seed jako unsigned int.}
+ \end{itemize}
+ 
+ Mając na uwadze problemy wyszczególnione wyżej, w~celu generacji sygnału
+diff --git a/docs/polsl/thesis/chapters/06.tex b/docs/polsl/thesis/chapters/06.tex
+index 56537a8..4ee8a7d 100644
+--- a/docs/polsl/thesis/chapters/06.tex
++++ b/docs/polsl/thesis/chapters/06.tex
+@@ -49,7 +49,7 @@ Pomiary sekcji zasilania przedstawiono w tabeli \ref{tab::psu}:
+     \label{tab::psu}
+ \end{table}
+ 
+-Jak można zauważyć, zasilanie -15 V jest poza spodziewaną skalą. Jest to
++Jak można zauważyć, zasilanie $-$15 V jest poza spodziewaną skalą. Jest to
+ problem, który nie wpływa drastycznie na pracę pozostałych sekcji, ponieważ
+ zasilanie później jest filtrowane i~stabilizowane przez liniowy regulator
+ napięcia niskiego spadku. Pozostałe wartości mieszczą się w~wyspecyfikowanych
+@@ -764,6 +764,9 @@ rdzenie procesora oraz tych, odpowiadających za obsługę przerwań (procesy
+ przedstawiono na rysunkach \ref{ver::fifo}. Tłumienie drugiego i~trzeciego
+ sygnału testowego odbywa się nieznacznie dłużej niż w~przypadku wykorzystania
+ SCHED\_RR. Poza dłuższym czasem zbieżności, nie zaobserwowano dodatkowych zmian.
++\remark{A ma Pan jakiś pomysł dlaczego w ogóle widać jakieś zmiany? Bo
++teoretycznie jeśli nic innego nie ma tego samego priorytetu
++co Pan program, to różnic nie powinno być.}
+ 
+ \subsection{Dodatkowe eksperymenty i~podsumowanie badań}
+ 
+diff --git a/docs/polsl/thesis/chapters/07.tex b/docs/polsl/thesis/chapters/07.tex
+index fbd2509..16fbe12 100644
+--- a/docs/polsl/thesis/chapters/07.tex
++++ b/docs/polsl/thesis/chapters/07.tex
+@@ -40,14 +40,16 @@ udałoby się uzyskać $n_f = 1$ i~$f_s = 1$ kHz, pętla przetwarzania mogłaby
+ operować na jednej próbce, jak to ma miejsce w typowych implementacjach na
+ procesory sygnałowe i~mikrokontrolery. Rozmiar fragmentu o~wartości jednej ramki
+ spowodowałby opóźnienie o~jedną ramkę, które jest krytyczne dla jakości
+-działania algorytmu. z~częstotliwością próbkowania również można iść w drugą
++działania algorytmu. Z~częstotliwością próbkowania również można iść w drugą
+ stronę, zwiększając ją wraz z~krotnością decymacji w pętli przetwarzania. Takie
+ działanie, poza zmniejszeniem opóźnień, może również pozwolić na implementację
+ prostszej części analogowej, zmniejszając wymagania na projektowane filtry. \par
+ Poza modyfikacjami systemowymi, zaimplementowane rozwiązanie można ulepszyć
+ poprzez urównoleglenie operacji przedstawionych na rysunku \ref{sw::app_flow}.
+ Równoczesne przetwarzanie sygnałów $x(n)$ i~$e(n)$ z~pewnością spowoduje szybsze
+-działanie pętli przetwarzania, a~to można wykorzystać do zwiększenia próbkowania
++działanie pętli przetwarzania\remark{BBB ma tylko 1 procesor, a i też
++tak jak ostatnio mówiliśmy, tutaj nie ma za dużo przetwarzania
++związanego z $e(n)$}, a~to można wykorzystać do zwiększenia próbkowania
+ lub długości filtrów, jeżeli będzie taka potrzeba. Poza tym, program można
+ rozszerzyć o~wspomnianą w~sekcji analizy tematu metodę niwelowania dodatkowej
+ pętli sprzężenia, jeżeli wymagane jest, aby układ działał na hałasach o~wyższym
+@@ -55,6 +57,13 @@ natężeniu i~z~ułożeniem sprzętu, powodującym wpływanie sygnału $y(n)$ na
+ W przypadku zaprojektowanej elektorniki, patrząc z~perspektywy czasu autor
+ uważa, że wybrane przetworniki mogłyby być mniejszej dokładności (przykładowo 12
+ bitowe), a~filtry o~mniejszym stopniu, powodując mniejsze opóźnienia w~torach
+-analogowych.
++analogowych\remark{z tym ostatnim to tak nie do końca. Jeśli chce
++Pan tłumić na określonym poziomie częstotliwości aliasingowe
++to musi mieć Pan jakieś tam opóźnienie, i tak jak kiedyś analizowałem,
++to przy filtrach analogowych optymalny stopień zależy od poziomu.
++I z tego co pamiętam to dla -45 dB optymalny był rząd 6-ty. Pan
++ma jakieś -36 dB, i może faktycznie 4-ty byłby lepszy. Ja to
++sprawdzałem dla filtrach optymalnych pod względem opóźnienia fazowego.
++Dla Butterwortha to może być trochę inaczej.}.
+ 
+ 

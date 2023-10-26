@@ -30,16 +30,16 @@ Omawiane struktury w~postaci schematów ideowych przedstawiono na rysunkach
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{graf/analysis/bb_fw_anc.png}
-        \caption{ANC ze sprzężeniem w przód}
+        \caption{ANC ze sprzężeniem w przód.}
         \label{analysis::structs_a}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{graf/analysis/fb_anc.png}
-        \caption{ANC ze sprzężeniem w tył}
+        \caption{ANC ze sprzężeniem w tył.}
     \end{subfigure}
-       \caption{Porównanie struktur systemów}
+       \caption{Porównanie struktur systemów.}
        \label{analysis::structs}
 \end{figure}
 
@@ -86,7 +86,7 @@ i~neutralizacja jej wpływu w sposób programowy lub sprzętowy.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{graf/analysis/systems.png}
-    \caption{Podział struktur systemów ANC}
+    \caption{Podział struktur systemów ANC.}
     \label{analysis::systems}
 \end{figure}
 
@@ -95,7 +95,7 @@ sprzętowym jak i~programowym. Grubszą czcionką na diagramie
 \ref{analysis::systems} zaznaczono strukturę, którą zdecydowano się wybrać do
 dalszej analizy z~myślą o~finalnej implementacji i~jest to
 \textbf{szerokopasmowe ANC ze sprzężeniem w przód}, głównie ze względu na źródło
-i~charakterystykę hałasu, która w~tym przypadku może być łatwo symulowana.
+i~charakterystykę hałasu, która w~tym przypadku może być łatwo symulowana\remark{tej łatwości symulacji to nie rozumiem.}.
 
 \section{Zasada działania}
 
@@ -109,7 +109,10 @@ lub cyfrowe odpowiedniki w~trakcie przekraczania domen i~wchodzenia w blok
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_0.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 0}
+    \caption{Wyprowadzenie schematu systemu ANC, 0.\remark{te rysunki dobrze
+	by było jakoś lepiej ponazywać, a nie, że 0, 1, 2, \ldots
+	I jeszcze na końcu są rysunki o tej samej nazwie.
+	A bez sensownych nazw to spis rysunków traci sens.}}
     \label{analysis::scheme_0}
 \end{figure}
 
@@ -134,20 +137,21 @@ SOI (filtr o skończonej odpowiedzi impulsowej, ang. \textit{Finite impulse
 filter, FIR filter}). Tego typu modele bardzo często stosowane są
 w~zagadanieniach związanych z~systemami ANC, głównie ze względu na wygodę. Są
 zawsze stabilne, łatwe w~implementacji jak i~posiadają liniową odpowiedź fazową,
-w~przypadku symetrii współczynników. \par Transmitancja takiego modelu
+w~przypadku symetrii współczynników.\remark{tylko, że obiekty
+akustyczne nie będą miały symetrycznych współczynników, więc
+trudno mówić, że to jest jakiś plus modeli FIR.} \par Transmitancja takiego modelu
 (odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
 \begin{equation}
     K(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L} w_lz^{-l},
     \label{eq::fir}
 \end{equation}
-gdzie $w_l$ to współczynnik filtra o~numerze $l$ (ang. \textit{tap}), $L$ to
+\noindent gdzie $w_l$ to współczynnik filtra o~numerze $l$ (ang. \textit{tap}), $L$ to
 długość odpowiedzi impulsowej, a~$z^{-l}$ to operator opóźnienia o~$l$ próbek.
 \par W związku z~\ref{eq::fir}, wyjście filtra SOI dane jest:
 \begin{equation}
         y(n) = \sum_{l = 0}^{L - 1}w_lx(n - l) \implies y(n) = \textbf{w}^T\textbf{x}(n),
 \end{equation}
-
-gdzie \textbf{w} to wektor współczynników filtra:
+\noindent gdzie \textbf{w} to wektor współczynników filtra:
 \begin{equation}
         \textbf{w} \equiv \begin{bmatrix}
             w_0 \quad
@@ -156,15 +160,14 @@ gdzie \textbf{w} to wektor współczynników filtra:
             w_{L - 1} 
         \end{bmatrix}^T,
 \end{equation}
-
-a \textbf{x}(n) to wektor wejść w chwili $n$:
+\noindent a \textbf{x}(n) to wektor wejść w chwili $n$:
 \begin{equation}
         \textbf{x}(n) \equiv \begin{bmatrix}
             x(n) \quad
             x(n - 1) \quad
             \cdots \quad
             x(n - L + 1)
-        \end{bmatrix}^T,
+        \end{bmatrix}^T.
 \end{equation}
 
 Analizując schemat \ref{analysis::scheme_0} można dojść do logicznego wniosku,
@@ -182,7 +185,7 @@ rysunku \ref{analysis::scheme_1}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.60\textwidth]{graf/analysis/scheme_1.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 1}
+    \caption{Wyprowadzenie schematu systemu ANC, 1.}
     \label{analysis::scheme_1}
 \end{figure}
 
@@ -201,8 +204,7 @@ minimalizując wartość oczekiwaną kwadratu błędu \cite{bib:kuo_morgan}:
 \begin{equation}
     E[e^2(n)] = E[d^2(n)] - 2\textbf{p}^T\textbf{w}(n) + \textbf{w}^T(n)\textbf{R}\textbf{w}(n),
 \end{equation}
-
-gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej:
+\noindent gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej:
 \begin{equation}
     \textbf{p} \equiv E[d(n)\textbf{x}(n)] = \begin{bmatrix}
         r_{dx}(0) & r_{dx}(1) & \cdots & r_{dx}(L - 1)
@@ -211,8 +213,7 @@ gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej:
 \begin{equation}
     r_{dx}(k) \equiv E[d(n)x(n - k)],
 \end{equation}
-
-a \textbf{R} jest macierzą autokorelacji sygnału wejściowego $x(n)$:
+\noindent \remark{kontynuacja akapitu musi być bez wcięcia}a \textbf{R} jest macierzą autokorelacji sygnału wejściowego $x(n)$:
 \begin{equation}
     \textbf{R} \equiv E[\textbf{x}(n)\textbf{x}^T(n)] = 
     \begin{bmatrix}
@@ -293,7 +294,7 @@ $W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_2.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 2}
+    \caption{Wyprowadzenie schematu systemu ANC, 2.}
     \label{analysis::scheme_2}
 \end{figure}
 
@@ -330,7 +331,7 @@ na rysunku \ref{analysis::scheme_3}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_3.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 3}
+    \caption{Wyprowadzenie schematu systemu ANC, 3.}
     \label{analysis::scheme_3}
 \end{figure}
 
@@ -410,7 +411,7 @@ rysunku \ref{analysis::scheme_4}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_4.png}
-    \caption{Wyprowadzenie schematu systemu ANC, 4}
+    \caption{Wyprowadzenie schematu systemu ANC, 4.}
     \label{analysis::scheme_4}
 \end{figure}
 
@@ -490,7 +491,7 @@ Schemat systemu z~wykorzystaniem algorytmu FXLMS przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_5.png}
-    \caption{Schemat systemu ANC}
+    \caption{Schemat systemu ANC.}
     \label{analysis::scheme_5}
 \end{figure}
 
@@ -552,7 +553,9 @@ zostosowaniu prostokątnego okna o długości $M$:
     \label{eq::px}
 \end{equation}
 
-Równanie \ref{eq::px} w przypadku dobrania $M = L$ może zostać sprowadzone do
+Równanie \ref{eq::px} w przypadku dobrania $M = L$ \remark{to podejście
+to chyba wymaga stacjonarności, NLMS jest też dobry dla niestacjonarnych,
+i tam po prostu przy normalizacji M musi się równać L.} może zostać sprowadzone do
 postaci:
 \begin{equation}
     \hat{P}_x(n) = \frac{1}{L}\sum_{l = 0}^{L - 1} x^2(n - l) \
@@ -602,7 +605,7 @@ o~normalizację danych wejściowych schemat systemu ANC przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_6.png}
-    \caption{Schemat systemu ANC z~normalizacją danych wejściowych}
+    \caption{Schemat systemu ANC z~normalizacją danych wejściowych.}
     \label{analysis::scheme_6}
 \end{figure}
 
@@ -640,7 +643,10 @@ opisano poniżej:
     \end{equation}
 
     Na wejście identyfikowanego procesu podaje się sygnał identyfikujący
-    o~wariancji $\lambda^2$, przez który dzielona jest funkcja korelacji
+    o~wariancji $\lambda^2$\remark{brakuje to chyba założenia,
+    że ten sygnał identyfikacyjny musi być biały. Natomiast
+    w metodzie korelacyjnej wcale nie musi, tylko wtedy jest
+    do rozwiązania układ równań.}, przez który dzielona jest funkcja korelacji
     wzajemnej $R_{xy}(n)$ wejścia obiektu $x(n)$ i~wyjścia $y(n)$. Uzyskaną
     w~ten sposób odpowiedź impulsową ogarnicza się do długości, której wartość
     można określić wizualnie na podstawie przebiegu funkcji $\hat{s}(n)$ i~jest
@@ -675,7 +681,7 @@ których każdy jest okresowy wewnątrz okna czasowego o wybranej długości
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/offline_ident.png}
-    \caption{Schemat eksperymentu identyfikacji metodami offline}
+    \caption{Schemat eksperymentu identyfikacji metodami offline.}
     \label{analysis::offline_ident}
 \end{figure}
 
@@ -708,7 +714,7 @@ uwzględniono na rysunku \ref{analysis::feedback}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.64\textwidth]{graf/analysis/feedback.png}
-    \caption{Schemat systemu ANC z~uwzględnieniem dodatkowego sprzężenia}
+    \caption{Schemat systemu ANC z~uwzględnieniem dodatkowego sprzężenia.}
     \label{analysis::feedback}
 \end{figure}
 
@@ -726,7 +732,7 @@ i~zaktualizowany z~jego uwzględnieniem schemat przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{graf/analysis/feed_canc.png}
-    \caption{Schemat systemu ANC z~niwelacją sprzężenia}
+    \caption{Schemat systemu ANC z~niwelacją sprzężenia.}
     \label{analysis::feed_canc}
 \end{figure}
 
@@ -752,7 +758,7 @@ identyfikacji przyjmuje w~tym przypadku postać jak na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/feedback_ident.png}
-    \caption{Identyfikacja sprzężenia}
+    \caption{Identyfikacja sprzężenia.}
     \label{analysis::feedback_ident}
 \end{figure}
 

@@ -59,7 +59,7 @@ wytłumiać hałasy o~największej energii w~pasmach niskich. Długość fali je
 odwrotnie proporcjonalna do jej częstotliwości 
 \cite{bib:resnick}
 \begin{equation}
-    \lambda = \frac{v}{f}
+    \lambda = \frac{v}{f},
 \end{equation}
 więc wolnozmienna fala akustyczna propagująca w~powietrzu ($v \approx 343$
 $\frac{\text{m}}{\text{s}}$) o~przykładowej częstotliwości 343 Hz osiągnie
@@ -93,12 +93,12 @@ wyciszony. Wizualizację fizycznej idei ANC przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{graf/intro/anc.png}
-    \caption{Wizualizacja fizycznej idei aktywnej redukcji hałasu}
+    \caption{Wizualizacja fizycznej idei aktywnej redukcji hałasu.}
     \label{intro::anc}
 \end{figure}
 \par Tor, którym porusza się hałas w~omawianej tematyce jest w~większości
 przypadków zmienny w~czasie, co powoduje, że częstotliwość, amplituda, faza jak
-i~prędkość rozchodzenia się drgań w~ośrodku jest mocno niestacjonarna, Jest to
+i~prędkość rozchodzenia się drgań w~ośrodku jest mocno niestacjonarna. Jest to
 spowodowane aktualną temperaturą, wilgotnością powietrza, ciśnieniem jak
 i~rozmieszczeniem oraz typem elementów wokół, absorobujących lub/i~odbijających
 fale akustyczne w określony sposób. Takie zachowanie często wymaga, żeby
@@ -129,7 +129,7 @@ rysunku \ref{intro::processing}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/intro/processing.png}
-    \caption{Typowy tor przetwarzania}
+    \caption{Typowy tor przetwarzania.}
     \label{intro::processing}
 \end{figure}
 
@@ -142,11 +142,23 @@ wsparciem dla operacji często wykorzystywanych w~liczeniu szybkiej transformaty
 Fouriera (odwracanie bitów, ang. \textit{bit reversal}). Dodatkowo, instrukcje
 na tego typu jednostkach obliczeniowych mogą być realizowane są w~sposób
 potokowy (ang. \textit{pipelining}), co pozwala na jednoczesne wykonywanie kilku
-rozkazów maszynowych (superskalarność), znacząco przyśpieszając obliczenia. \par
+rozkazów maszynowych (superskalarność)\remark{superskalarność i pipelining to dwie różne rzeczy. Chodziło mi o to, że równoległość = superskalarność, a nie pipelining.}, znacząco przyśpieszając obliczenia. \par
 Pomimo, że wykorzystanie procesorów sygnałowych lub odpowiednio wydajnych
 mikrokontrolerów jest z~pewnością jednym z~najlepszych wyborów przy
 projektowaniu systemu przetwarzającego sygnały w~czasie rzeczywistym, to z~takim
-rozwiązaniem wiąże się szereg problemów:
+rozwiązaniem wiąże się szereg problemów:\remark{tego to teraz nie rozumiem,
+to na czym można by realizować układy ANC, i przecież realizuje
+Pan go na odpowiednio wydajnym mikrokontrolerze, bo AM3358 to
+generalnie mikrokontroler. I ogólnie wiele tych punktów może
+być dość dyskusyjnych. Tzn. były pewne procesory DSP, gdzie
+tworzono je z takim podejściem, że chodzi im tylko o DSP,
+nie projektują tam procesora, by mógł wykonywać różne zadania,
+by zwiększyć wydajność robią bardzo brzydką architekturę,
+co później owocowało bym, że były rzadko stosowane, wymagały
+nietypowych kompilatorów, \ldots I potem np. Texas Instruments
+zaczął robić OMAP, które zawierały ich DSP C6000 oraz ARMa
+dla normalnego kodu, bo ich C6000 to jest tragiczny jak
+chodzi o~normalne kody.}
 \begin{enumerate}
 
     \item \textbf{Wysoka cena i~mała dostępność} --- w~większości przypadków

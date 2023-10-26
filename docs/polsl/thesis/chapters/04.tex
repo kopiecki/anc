@@ -54,10 +54,10 @@ oraz cieszą się dobrymi opiniami. Ich droższym odpowiednikiem jest flagowy
 Beyerdynamic MM1, a~najbardziej znaczące parametry \cite{bib:behringer}
 przedstawiono poniżej:
 \begin{enumerate}
-    \item Typ --- pojemnościowy, phantom +15 do +48 V.
+    \item Typ --- pojemnościowy, phantom +15~V do +48 V.
     \item Charakterystyka kierunkowa --- kulista.
     \item Odpowiedź częstotliwościowa --- relatywnie płaska, z~pofalowaniami
-    w~paśmie 5 do 10 kHz i~zakresie 20 do 20000 Hz.
+    w~paśmie 5~kHz do 10 kHz i~zakresie 20~Hz do 20000 Hz.
     \item Czułość --- $15 \text{ }\frac{\text{mV}}{{\text{Pa}}}$.
 \end{enumerate}
 Czułość mikrofonów informuje o~wartości napięcia dla danego ciśnienia
@@ -74,7 +74,9 @@ dB SPL. Pracując na hałasach w zakresie 85 do 105 dB SPL, dla górnej granicy
 otrzymuje się około 3.5 Pa, czyli odpowiednio około 52.5 mV. W przypadku
 przetwornika analogowo-cyfrowego pracującego w przedziale od 0 V do 5 V (2.5 V
 amplitudy sygnału przy nałożonej składowej stałej 2.5 V), 52.5 mV z mikrofonu
-powinno odpowiadać maksymalnemu zakresowi 2.5 V, co pozwala na obliczenie
+powinno odpowiadać maksymalnemu zakresowi 2.5 V\remark{nie do końca,
+52.5 mV to będzie RMS, dla sinusa 1 kHz zwykle się określa,
+a~2.5~V to musi być maksymalna wartość}, co pozwala na obliczenie
 wzmocnienia:
 \begin{equation}
         k = \frac{U_{out}}{U_{mic}} = \frac{2.5}{0.0525} = 47.6190 \approx 42 \text{ dB},
@@ -93,7 +95,7 @@ wchodząc w techniczne szczegóły, z~najbardziej znaczących parametrów
     \textit{woofer, tweeter}).
     \item Maksymalny zakres poziomu akustycznego --- 103 dB SPL, 106 dB SPL w
     piku.
-    \item Charakterystyka częstotliwościowa do $\pm 3$ dB --- 42.5 do 35000 Hz,
+    \item Charakterystyka częstotliwościowa do $\pm 3$ dB --- 42.5~Hz do 35000 Hz,
     płaska.
     \item SNR --- powyżej 100 dB.
 \end{enumerate}
@@ -188,6 +190,9 @@ tłumienia oraz dobroć. Wielkości te określone są odpowiednio:
 \begin{equation}
     Q = \frac{1}{R}\sqrt{\frac{L}{C}}.
 \end{equation}
+\remark{czy ten wzór u góry jest na pewno dobry? Bo z niego
+wynika $2Q = 2R \sqrt{\frac{C}{L}}$, co nie zgadza się
+z tym drugim, a drugi jest na pewno dobry.}
 
 Współczynnik tłumienia może znajdować się w~czterech typach zakresów:
 \begin{enumerate}
@@ -209,7 +214,7 @@ które nie jest tłumione (możliwe płaskie) \cite{bib:lc}. Podstawiając $\zet
     C = \frac{1}{\omega_0 R\sqrt{2}}.
 \end{equation}
 
-Jako rezystancję przyjmuje się rezystancję wewnętrzną cewki. W~zaprojektowanym
+Jako rezystancję przyjmuje się rezystancję wewnętrzną cewki\remark{nie zawsze, bo czasami dodaje się specjalnie opornik, by ją zwiększyć, lub mieć lepiej kontrolowaną, cewki często mają $\pm30\%$}. W~zaprojektowanym
 układzie $L = 4.7 \text{ }\mu$H i~$C = 1080 \text{ }\mu$F, z~czego wynika $f_c
 \approx 2.47$ kHz oraz warunek na rezystancję cewki:
 \begin{equation}
@@ -694,7 +699,7 @@ Omawiany układ przedstawiono na rysunku \ref{hw::safe}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.55\textwidth]{graf/hw/safe.png}
-    \caption{Filtr dolnoprzepustowy i~limiter}
+    \caption{Filtr dolnoprzepustowy i~limiter\remark{KiCAD umożliwia zapis schematów jako pdf, jakoś wtedy byłaby dużo lepsza.}}
     \label{hw::safe}
 \end{figure}
 

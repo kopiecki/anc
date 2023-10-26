@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  25 OCT 2023 16:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  26 OCT 2023 18:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1574,7 +1574,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [5]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-13.
+25.
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )) (./chapters/02.tex
@@ -1588,12 +1588,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [6]
 Rozdzia\l  2.
-<graf/analysis/bb_fw_anc.png, id=549, 573.14125pt x 317.185pt>
+<graf/analysis/bb_fw_anc.png, id=550, 573.14125pt x 317.185pt>
 File: graf/analysis/bb_fw_anc.png Graphic file (type png)
 <use graf/analysis/bb_fw_anc.png>
 Package pdftex.def Info: graf/analysis/bb_fw_anc.png  used on input line 32.
 (pdftex.def)             Requested size: 223.07211pt x 123.44997pt.
-<graf/analysis/fb_anc.png, id=550, 573.14125pt x 317.185pt>
+<graf/analysis/fb_anc.png, id=551, 573.14125pt x 317.185pt>
 File: graf/analysis/fb_anc.png Graphic file (type png)
 <use graf/analysis/fb_anc.png>
 Package pdftex.def Info: graf/analysis/fb_anc.png  used on input line 39.
@@ -1601,7 +1601,7 @@ Package pdftex.def Info: graf/analysis/fb_anc.png  used on input line 39.
 [7
 
  <./graf/analysis/bb_fw_anc.png> <./graf/analysis/fb_anc.png>]
-<graf/analysis/systems.png, id=562, 1155.31625pt x 376.40625pt>
+<graf/analysis/systems.png, id=563, 1155.31625pt x 376.40625pt>
 File: graf/analysis/systems.png Graphic file (type png)
 <use graf/analysis/systems.png>
 Package pdftex.def Info: graf/analysis/systems.png  used on input line 88.
@@ -1616,7 +1616,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [8 <./graf/analysis/systems.png>]
-<graf/analysis/scheme_0.png, id=574, 813.0375pt x 316.18124pt>
+<graf/analysis/scheme_0.png, id=575, 813.0375pt x 316.18124pt>
 File: graf/analysis/scheme_0.png Graphic file (type png)
 <use graf/analysis/scheme_0.png>
 Package pdftex.def Info: graf/analysis/scheme_0.png  used on input line 111.
@@ -1631,133 +1631,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [9 <./graf/analysis/scheme_0.png>]
-<graf/analysis/scheme_1.png, id=587, 853.1875pt x 442.65375pt>
+<graf/analysis/scheme_1.png, id=588, 853.1875pt x 442.65375pt>
 File: graf/analysis/scheme_1.png Graphic file (type png)
 <use graf/analysis/scheme_1.png>
-Package pdftex.def Info: graf/analysis/scheme_1.png  used on input line 184.
+Package pdftex.def Info: graf/analysis/scheme_1.png  used on input line 187.
 (pdftex.def)             Requested size: 273.14923pt x 141.71962pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[10 <./graf/analysis/scheme_1.png>]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[11]
-Overfull \hbox (14.44463pt too wide) in paragraph at lines 290--292
-[]\T1/lmr/m/n/12 Posiadaj¡c zde-fi-nio-wany apa-rat ob-li-cze-niowy bie-»¡-cej 
-es-ty-ma-cji pa-ra-me-trów fil-tra $\OML/lmm/m/it/12 W\OT1/lmr/m/n/12 (\OML/lmm
-/m/it/12 z[]\OT1/lmr/m/n/12 )$
- []
-
-<graf/analysis/scheme_2.png, id=622, 853.1875pt x 442.65375pt>
-File: graf/analysis/scheme_2.png Graphic file (type png)
-<use graf/analysis/scheme_2.png>
-Package pdftex.def Info: graf/analysis/scheme_2.png  used on input line 295.
-(pdftex.def)             Requested size: 318.66948pt x 165.33281pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[12 <./graf/analysis/scheme_2.png>]
-<graf/analysis/scheme_3.png, id=639, 1004.75375pt x 488.82625pt>
-File: graf/analysis/scheme_3.png Graphic file (type png)
-<use graf/analysis/scheme_3.png>
-Package pdftex.def Info: graf/analysis/scheme_3.png  used on input line 332.
-(pdftex.def)             Requested size: 318.66948pt x 155.03278pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[13 <./graf/analysis/scheme_3.png>]
-<graf/analysis/scheme_4.png, id=655, 813.0375pt x 482.80376pt>
-File: graf/analysis/scheme_4.png Graphic file (type png)
-<use graf/analysis/scheme_4.png>
-Package pdftex.def Info: graf/analysis/scheme_4.png  used on input line 412.
-(pdftex.def)             Requested size: 318.66948pt x 189.22832pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 459--461
-
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[15 <./graf/analysis/scheme_4.png>]
-<graf/analysis/scheme_5.png, id=684, 866.23625pt x 483.8075pt>
-File: graf/analysis/scheme_5.png Graphic file (type png)
-<use graf/analysis/scheme_5.png>
-Package pdftex.def Info: graf/analysis/scheme_5.png  used on input line 492.
-(pdftex.def)             Requested size: 318.66948pt x 177.97983pt.
-
-Underfull \vbox (badness 1655) has occurred while \output is active []
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[16 <./graf/analysis/scheme_5.png>]
-Underfull \vbox (badness 7796) has occurred while \output is active []
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[17]
-Overfull \hbox (16.00114pt too wide) in paragraph at lines 583--585
-[]\T1/lmr/m/n/12 Normalizacj¦ kroku, de-fi-niu-j¡c¡ al-go-rytm NLMS mo»na za-st
-o-so-wa¢ w al-go-ryt-mie FXLMS,
- []
-
-<graf/analysis/scheme_6.png, id=720, 866.23625pt x 483.8075pt>
-File: graf/analysis/scheme_6.png Graphic file (type png)
-<use graf/analysis/scheme_6.png>
-Package pdftex.def Info: graf/analysis/scheme_6.png  used on input line 604.
-(pdftex.def)             Requested size: 318.66948pt x 177.97983pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -1770,39 +1648,165 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[18 <./graf/analysis/scheme_6.png>]
-Overfull \hbox (3.848pt too wide) in paragraph at lines 659--662
+[10]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[11 <./graf/analysis/scheme_1.png>]
+Overfull \hbox (14.44463pt too wide) in paragraph at lines 291--293
+[]\T1/lmr/m/n/12 Posiadaj¡c zde-fi-nio-wany apa-rat ob-li-cze-niowy bie-»¡-cej 
+es-ty-ma-cji pa-ra-me-trów fil-tra $\OML/lmm/m/it/12 W\OT1/lmr/m/n/12 (\OML/lmm
+/m/it/12 z[]\OT1/lmr/m/n/12 )$
+ []
+
+<graf/analysis/scheme_2.png, id=620, 853.1875pt x 442.65375pt>
+File: graf/analysis/scheme_2.png Graphic file (type png)
+<use graf/analysis/scheme_2.png>
+Package pdftex.def Info: graf/analysis/scheme_2.png  used on input line 296.
+(pdftex.def)             Requested size: 318.66948pt x 165.33281pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[12]
+<graf/analysis/scheme_3.png, id=637, 1004.75375pt x 488.82625pt>
+File: graf/analysis/scheme_3.png Graphic file (type png)
+<use graf/analysis/scheme_3.png>
+Package pdftex.def Info: graf/analysis/scheme_3.png  used on input line 333.
+(pdftex.def)             Requested size: 318.66948pt x 155.03278pt.
+
+Underfull \vbox (badness 1661) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[13 <./graf/analysis/scheme_2.png>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[14 <./graf/analysis/scheme_3.png>]
+<graf/analysis/scheme_4.png, id=663, 813.0375pt x 482.80376pt>
+File: graf/analysis/scheme_4.png Graphic file (type png)
+<use graf/analysis/scheme_4.png>
+Package pdftex.def Info: graf/analysis/scheme_4.png  used on input line 413.
+(pdftex.def)             Requested size: 318.66948pt x 189.22832pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[15 <./graf/analysis/scheme_4.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 460--462
+
+ []
+
+<graf/analysis/scheme_5.png, id=682, 866.23625pt x 483.8075pt>
+File: graf/analysis/scheme_5.png Graphic file (type png)
+<use graf/analysis/scheme_5.png>
+Package pdftex.def Info: graf/analysis/scheme_5.png  used on input line 493.
+(pdftex.def)             Requested size: 318.66948pt x 177.97983pt.
+
+Underfull \vbox (badness 1924) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[16]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[17 <./graf/analysis/scheme_5.png>]
+Overfull \hbox (16.00114pt too wide) in paragraph at lines 586--588
+[]\T1/lmr/m/n/12 Normalizacj¦ kroku, de-fi-niu-j¡c¡ al-go-rytm NLMS mo»na za-st
+o-so-wa¢ w al-go-ryt-mie FXLMS,
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[18]
+<graf/analysis/scheme_6.png, id=729, 866.23625pt x 483.8075pt>
+File: graf/analysis/scheme_6.png Graphic file (type png)
+<use graf/analysis/scheme_6.png>
+Package pdftex.def Info: graf/analysis/scheme_6.png  used on input line 607.
+(pdftex.def)             Requested size: 318.66948pt x 177.97983pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[19 <./graf/analysis/scheme_6.png>]
+Overfull \hbox (3.848pt too wide) in paragraph at lines 665--668
 []\T1/lmr/m/n/12 Zastosowanie al-go-rytmu LMS, ob-ser-wo-wa-nie ak-tu-ali-zo-wa
 -nych wspóª-czyn-ni-ków trans-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 665--672
+Underfull \hbox (badness 10000) in paragraph at lines 671--678
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 665--672
+Underfull \hbox (badness 10000) in paragraph at lines 671--678
 
  []
 
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[19]
-<graf/analysis/offline_ident.png, id=748, 867.24pt x 484.81125pt>
+<graf/analysis/offline_ident.png, id=745, 867.24pt x 484.81125pt>
 File: graf/analysis/offline_ident.png Graphic file (type png)
 <use graf/analysis/offline_ident.png>
-Package pdftex.def Info: graf/analysis/offline_ident.png  used on input line 67
-7.
+Package pdftex.def Info: graf/analysis/offline_ident.png  used on input line 68
+3.
 (pdftex.def)             Requested size: 318.66948pt x 178.14195pt.
 
-Underfull \vbox (badness 2261) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
@@ -1813,19 +1817,32 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[20 <./graf/analysis/offline_ident.png>]
-<graf/analysis/feedback.png, id=759, 867.24pt x 480.79625pt>
+[20]
+<graf/analysis/feedback.png, id=758, 867.24pt x 480.79625pt>
 File: graf/analysis/feedback.png Graphic file (type png)
 <use graf/analysis/feedback.png>
-Package pdftex.def Info: graf/analysis/feedback.png  used on input line 710.
+Package pdftex.def Info: graf/analysis/feedback.png  used on input line 716.
 (pdftex.def)             Requested size: 291.35594pt x 161.52441pt.
-<graf/analysis/feed_canc.png, id=762, 867.24pt x 654.445pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[21 <./graf/analysis/offline_ident.png>]
+<graf/analysis/feed_canc.png, id=768, 867.24pt x 654.445pt>
 File: graf/analysis/feed_canc.png Graphic file (type png)
 <use graf/analysis/feed_canc.png>
-Package pdftex.def Info: graf/analysis/feed_canc.png  used on input line 728.
+Package pdftex.def Info: graf/analysis/feed_canc.png  used on input line 734.
 (pdftex.def)             Requested size: 273.14923pt x 206.1213pt.
 
-Overfull \hbox (2.29018pt too wide) in paragraph at lines 733--737
+Overfull \hbox (2.29018pt too wide) in paragraph at lines 739--743
 []\T1/lmr/m/n/12 Transmitancja $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 z[]\OT1/lmr
 /m/n/12 )$\T1/lmr/m/n/12 , ana-lo-gicz-nie jak $[]\OT1/lmr/m/n/12 (\OML/lmm/m/i
 t/12 z[]\OT1/lmr/m/n/12 )$\T1/lmr/m/n/12 , sta-nowi zi-den-ty-fi-ko-wany obiekt
@@ -1841,12 +1858,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[21 <./graf/analysis/feedback.png> <./graf/analysis/feed_canc.png>]
-<graf/analysis/feedback_ident.png, id=772, 866.23625pt x 452.69125pt>
+[22 <./graf/analysis/feedback.png> <./graf/analysis/feed_canc.png>]
+<graf/analysis/feedback_ident.png, id=778, 866.23625pt x 452.69125pt>
 File: graf/analysis/feedback_ident.png Graphic file (type png)
 <use graf/analysis/feedback_ident.png>
 Package pdftex.def Info: graf/analysis/feedback_ident.png  used on input line 7
-54.
+60.
 (pdftex.def)             Requested size: 318.66948pt x 166.53299pt.
 )
 (./chapters/03.tex
@@ -1858,32 +1875,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[22 <./graf/analysis/feedback_ident.png>]
+[23 <./graf/analysis/feedback_ident.png>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[24
+
+]
 Rozdzia\l  3.
 
 Underfull \vbox (badness 1478) has occurred while \output is active []
 
- [23
-
-]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[24]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[25]
+ [25]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -1911,7 +1919,25 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [28]
-<graf/impl/top.png, id=878, 710.655pt x 731.73375pt>
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[29]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[30]
+<graf/impl/top.png, id=888, 710.655pt x 731.73375pt>
 File: graf/impl/top.png Graphic file (type png)
 <use graf/impl/top.png>
 Package pdftex.def Info: graf/impl/top.png  used on input line 335.
@@ -1925,7 +1951,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[29 <./graf/impl/top.png>]) (./chapters/04.tex
+[31 <./graf/impl/top.png>]) (./chapters/04.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -1934,9 +1960,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[30]
+[32]
 Rozdzia\l  4.
-<graf/hw/top.png, id=891, 1466.47874pt x 743.77875pt>
+<graf/hw/top.png, id=900, 1466.47874pt x 743.77875pt>
 File: graf/hw/top.png Graphic file (type png)
 <use graf/hw/top.png>
 Package pdftex.def Info: graf/hw/top.png  used on input line 8.
@@ -1947,7 +1973,7 @@ Overfull \hbox (0.29282pt too wide) in paragraph at lines 23--25
 zen-tuj¡ sy-gnaªy ana-lo-gowe, z któ-
  []
 
-[31
+[33
 
  <./graf/hw/top.png>]
 Overfull \hbox (0.1203pt too wide) in paragraph at lines 43--46
@@ -1963,11 +1989,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[32]
-<graf/hw/power_dist.png, id=915, 1155.31625pt x 804.00375pt>
+[34]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[35]
+<graf/hw/power_dist.png, id=940, 1155.31625pt x 804.00375pt>
 File: graf/hw/power_dist.png Graphic file (type png)
 <use graf/hw/power_dist.png>
-Package pdftex.def Info: graf/hw/power_dist.png  used on input line 130.
+Package pdftex.def Info: graf/hw/power_dist.png  used on input line 132.
 (pdftex.def)             Requested size: 455.24411pt x 316.81125pt.
 
 
@@ -1978,7 +2013,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[33]
+[36 <./graf/hw/power_dist.png>]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 195.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 195.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 195.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -1987,20 +2029,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[34 <./graf/hw/power_dist.png>]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[35]
-<graf/hw/input.png, id=960, 776.9025pt x 134.75343pt>
+[37]
+<graf/hw/input.png, id=971, 776.9025pt x 134.75343pt>
 File: graf/hw/input.png Graphic file (type png)
 <use graf/hw/input.png>
-Package pdftex.def Info: graf/hw/input.png  used on input line 228.
+Package pdftex.def Info: graf/hw/input.png  used on input line 233.
 (pdftex.def)             Requested size: 455.24411pt x 78.96306pt.
 
 
@@ -2011,77 +2044,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[36 <./graf/hw/input.png (PNG copy)>]
-<graf/hw/split.png, id=977, 898.85812pt x 376.40625pt>
+[38 <./graf/hw/input.png (PNG copy)>]
+<graf/hw/split.png, id=988, 898.85812pt x 376.40625pt>
 File: graf/hw/split.png Graphic file (type png)
 <use graf/hw/split.png>
-Package pdftex.def Info: graf/hw/split.png  used on input line 286.
+Package pdftex.def Info: graf/hw/split.png  used on input line 291.
 (pdftex.def)             Requested size: 364.19667pt x 152.5126pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[37 <./graf/hw/split.png (PNG copy)>]
-<graf/hw/smps.png, id=994, 629.35126pt x 256.70906pt>
-File: graf/hw/smps.png Graphic file (type png)
-<use graf/hw/smps.png>
-Package pdftex.def Info: graf/hw/smps.png  used on input line 323.
-(pdftex.def)             Requested size: 455.24411pt x 185.69212pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[38 <./graf/hw/smps.png (PNG copy)>]
-<graf/hw/ref.png, id=1009, 668.4975pt x 209.28188pt>
-File: graf/hw/ref.png Graphic file (type png)
-<use graf/hw/ref.png>
-Package pdftex.def Info: graf/hw/ref.png  used on input line 360.
-(pdftex.def)             Requested size: 341.43307pt x 106.892pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[39 <./graf/hw/ref.png (PNG copy)>]
-<graf/hw/off.png, id=1022, 505.89pt x 249.18094pt>
-File: graf/hw/off.png Graphic file (type png)
-<use graf/hw/off.png>
-Package pdftex.def Info: graf/hw/off.png  used on input line 385.
-(pdftex.def)             Requested size: 341.43307pt x 168.17845pt.
-<graf/hw/analog_in.png, id=1024, 1175.39125pt x 182.6825pt>
-File: graf/hw/analog_in.png Graphic file (type png)
-<use graf/hw/analog_in.png>
-Package pdftex.def Info: graf/hw/analog_in.png  used on input line 397.
-(pdftex.def)             Requested size: 455.24411pt x 70.75528pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[40 <./graf/hw/off.png (PNG copy)> <./graf/hw/analog_in.png>]
-<graf/hw/xlr.png, id=1034, 433.62pt x 330.48468pt>
-File: graf/hw/xlr.png Graphic file (type png)
-<use graf/hw/xlr.png>
-Package pdftex.def Info: graf/hw/xlr.png  used on input line 421.
-(pdftex.def)             Requested size: 227.62206pt x 173.48184pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -2094,16 +2062,87 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[41 <./graf/hw/xlr.png (PNG copy)>]
-<graf/hw/emif.png, id=1045, 249.93375pt x 385.44pt>
+[39]
+<graf/hw/smps.png, id=1006, 629.35126pt x 256.70906pt>
+File: graf/hw/smps.png Graphic file (type png)
+<use graf/hw/smps.png>
+Package pdftex.def Info: graf/hw/smps.png  used on input line 328.
+(pdftex.def)             Requested size: 455.24411pt x 185.69212pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[40 <./graf/hw/split.png (PNG copy)>]
+<graf/hw/ref.png, id=1020, 668.4975pt x 209.28188pt>
+File: graf/hw/ref.png Graphic file (type png)
+<use graf/hw/ref.png>
+Package pdftex.def Info: graf/hw/ref.png  used on input line 365.
+(pdftex.def)             Requested size: 341.43307pt x 106.892pt.
+
+Underfull \vbox (badness 3780) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[41 <./graf/hw/smps.png (PNG copy)>]
+<graf/hw/off.png, id=1035, 505.89pt x 249.18094pt>
+File: graf/hw/off.png Graphic file (type png)
+<use graf/hw/off.png>
+Package pdftex.def Info: graf/hw/off.png  used on input line 390.
+(pdftex.def)             Requested size: 341.43307pt x 168.17845pt.
+<graf/hw/analog_in.png, id=1037, 1175.39125pt x 182.6825pt>
+File: graf/hw/analog_in.png Graphic file (type png)
+<use graf/hw/analog_in.png>
+Package pdftex.def Info: graf/hw/analog_in.png  used on input line 402.
+(pdftex.def)             Requested size: 455.24411pt x 70.75528pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[42 <./graf/hw/ref.png (PNG copy)> <./graf/hw/off.png (PNG copy)>]
+<graf/hw/xlr.png, id=1046, 433.62pt x 330.48468pt>
+File: graf/hw/xlr.png Graphic file (type png)
+<use graf/hw/xlr.png>
+Package pdftex.def Info: graf/hw/xlr.png  used on input line 426.
+(pdftex.def)             Requested size: 227.62206pt x 173.48184pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[43 <./graf/hw/analog_in.png> <./graf/hw/xlr.png (PNG copy)>]
+<graf/hw/emif.png, id=1056, 249.93375pt x 385.44pt>
 File: graf/hw/emif.png Graphic file (type png)
 <use graf/hw/emif.png>
-Package pdftex.def Info: graf/hw/emif.png  used on input line 459.
+Package pdftex.def Info: graf/hw/emif.png  used on input line 464.
 (pdftex.def)             Requested size: 136.57462pt x 210.62817pt.
-<graf/hw/op_diff.png, id=1047, 467.49657pt x 268.75406pt>
+<graf/hw/op_diff.png, id=1058, 467.49657pt x 268.75406pt>
 File: graf/hw/op_diff.png Graphic file (type png)
 <use graf/hw/op_diff.png>
-Package pdftex.def Info: graf/hw/op_diff.png  used on input line 473.
+Package pdftex.def Info: graf/hw/op_diff.png  used on input line 478.
 (pdftex.def)             Requested size: 227.62206pt x 130.85817pt.
 
 
@@ -2114,14 +2153,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[42 <./graf/hw/emif.png (PNG copy)> <./graf/hw/op_diff.png (PNG copy)>]
-<graf/hw/preamp.png, id=1060, 359.09157pt x 324.46219pt>
+[44 <./graf/hw/emif.png (PNG copy)>]
+<graf/hw/preamp.png, id=1071, 359.09157pt x 324.46219pt>
 File: graf/hw/preamp.png Graphic file (type png)
 <use graf/hw/preamp.png>
-Package pdftex.def Info: graf/hw/preamp.png  used on input line 513.
+Package pdftex.def Info: graf/hw/preamp.png  used on input line 518.
 (pdftex.def)             Requested size: 182.09486pt x 164.5378pt.
 
-Underfull \vbox (badness 2512) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
@@ -2132,11 +2171,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[43 <./graf/hw/preamp.png (PNG copy)>]
-<graf/hw/sellen_key.png, id=1073, 490.83376pt x 277.035pt>
+[45 <./graf/hw/op_diff.png (PNG copy)>]
+<graf/hw/sellen_key.png, id=1085, 490.83376pt x 277.035pt>
 File: graf/hw/sellen_key.png Graphic file (type png)
 <use graf/hw/sellen_key.png>
-Package pdftex.def Info: graf/hw/sellen_key.png  used on input line 536.
+Package pdftex.def Info: graf/hw/sellen_key.png  used on input line 541.
 (pdftex.def)             Requested size: 227.62206pt x 128.4733pt.
 
 
@@ -2147,12 +2186,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[44 <./graf/hw/sellen_key.png (PNG copy)>]
-<graf/hw/freqs.png, id=1090, 1231.60126pt x 1291.07344pt>
+[46 <./graf/hw/preamp.png (PNG copy)> <./graf/hw/sellen_key.png (PNG copy)>]
+<graf/hw/freqs.png, id=1098, 1231.60126pt x 1291.07344pt>
 File: graf/hw/freqs.png Graphic file (type png)
 <use graf/hw/freqs.png>
-Package pdftex.def Info: graf/hw/freqs.png  used on input line 616.
+Package pdftex.def Info: graf/hw/freqs.png  used on input line 621.
 (pdftex.def)             Requested size: 364.19667pt x 381.76958pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2162,11 +2204,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[45 <./graf/hw/freqs.png (PNG copy)>]
-<graf/hw/filter.png, id=1101, 954.56625pt x 272.51813pt>
+[47]
+<graf/hw/filter.png, id=1114, 954.56625pt x 272.51813pt>
 File: graf/hw/filter.png Graphic file (type png)
 <use graf/hw/filter.png>
-Package pdftex.def Info: graf/hw/filter.png  used on input line 626.
+Package pdftex.def Info: graf/hw/filter.png  used on input line 631.
 (pdftex.def)             Requested size: 455.24411pt x 129.96724pt.
 
 
@@ -2177,22 +2219,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[46 <./graf/hw/filter.png (PNG copy)>]
-<graf/hw/offset.png, id=1119, 481.8pt x 256.70906pt>
+[48 <./graf/hw/freqs.png (PNG copy)> <./graf/hw/filter.png (PNG copy)>]
+<graf/hw/offset.png, id=1128, 481.8pt x 256.70906pt>
 File: graf/hw/offset.png Graphic file (type png)
 <use graf/hw/offset.png>
-Package pdftex.def Info: graf/hw/offset.png  used on input line 673.
+Package pdftex.def Info: graf/hw/offset.png  used on input line 678.
 (pdftex.def)             Requested size: 232.17198pt x 123.70073pt.
-<graf/hw/safe.png, id=1122, 373.395pt x 260.47313pt>
-File: graf/hw/safe.png Graphic file (type png)
-<use graf/hw/safe.png>
-Package pdftex.def Info: graf/hw/safe.png  used on input line 696.
-(pdftex.def)             Requested size: 250.38564pt x 174.66313pt.
-<graf/hw/analog_in_full.png, id=1124, 2131.965pt x 670.75594pt>
-File: graf/hw/analog_in_full.png Graphic file (type png)
-<use graf/hw/analog_in_full.png>
-Package pdftex.def Info: graf/hw/analog_in_full.png  used on input line 707.
-(pdftex.def)             Requested size: 455.24411pt x 143.22716pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2202,16 +2237,39 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[47 <./graf/hw/offset.png (PNG copy)> <./graf/hw/safe.png (PNG copy)>]
-<graf/hw/analog_out.png, id=1133, 1516.66624pt x 293.095pt>
+[49 <./graf/hw/offset.png (PNG copy)>]
+<graf/hw/safe.png, id=1140, 373.395pt x 260.47313pt>
+File: graf/hw/safe.png Graphic file (type png)
+<use graf/hw/safe.png>
+Package pdftex.def Info: graf/hw/safe.png  used on input line 701.
+(pdftex.def)             Requested size: 250.38564pt x 174.66313pt.
+<graf/hw/analog_in_full.png, id=1142, 2131.965pt x 670.75594pt>
+File: graf/hw/analog_in_full.png Graphic file (type png)
+<use graf/hw/analog_in_full.png>
+Package pdftex.def Info: graf/hw/analog_in_full.png  used on input line 712.
+(pdftex.def)             Requested size: 455.24411pt x 143.22716pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[50 <./graf/hw/safe.png (PNG copy)>]
+<graf/hw/analog_out.png, id=1150, 1516.66624pt x 293.095pt>
 File: graf/hw/analog_out.png Graphic file (type png)
 <use graf/hw/analog_out.png>
-Package pdftex.def Info: graf/hw/analog_out.png  used on input line 723.
+Package pdftex.def Info: graf/hw/analog_out.png  used on input line 728.
 (pdftex.def)             Requested size: 455.24411pt x 87.97389pt.
-<graf/hw/in_bandpass.png, id=1135, 324.46219pt x 278.54062pt>
+<graf/hw/in_bandpass.png, id=1152, 324.46219pt x 278.54062pt>
 File: graf/hw/in_bandpass.png Graphic file (type png)
 <use graf/hw/in_bandpass.png>
-Package pdftex.def Info: graf/hw/in_bandpass.png  used on input line 745.
+Package pdftex.def Info: graf/hw/in_bandpass.png  used on input line 750.
 (pdftex.def)             Requested size: 227.62206pt x 195.41061pt.
 
 
@@ -2222,12 +2280,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[48 <./graf/hw/analog_in_full.png (PNG copy)> <./graf/hw/analog_out.png>]
-<graf/hw/gain_out.png, id=1145, 323.70938pt x 305.64188pt>
+[51 <./graf/hw/analog_in_full.png (PNG copy)> <./graf/hw/analog_out.png>]
+<graf/hw/gain_out.png, id=1162, 323.70938pt x 305.64188pt>
 File: graf/hw/gain_out.png Graphic file (type png)
 <use graf/hw/gain_out.png>
-Package pdftex.def Info: graf/hw/gain_out.png  used on input line 765.
+Package pdftex.def Info: graf/hw/gain_out.png  used on input line 770.
 (pdftex.def)             Requested size: 204.85846pt x 193.4275pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2237,11 +2298,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[49 <./graf/hw/in_bandpass.png (PNG copy)> <./graf/hw/gain_out.png (PNG copy)>]
-<graf/hw/synch.png, id=1155, 217.5628pt x 319.94531pt>
+[52 <./graf/hw/in_bandpass.png (PNG copy)> <./graf/hw/gain_out.png (PNG copy)>]
+<graf/hw/synch.png, id=1171, 217.5628pt x 319.94531pt>
 File: graf/hw/synch.png Graphic file (type png)
 <use graf/hw/synch.png>
-Package pdftex.def Info: graf/hw/synch.png  used on input line 800.
+Package pdftex.def Info: graf/hw/synch.png  used on input line 805.
 (pdftex.def)             Requested size: 159.33821pt x 234.33435pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2251,16 +2312,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[50 <./graf/hw/synch.png (PNG copy)>]
-<graf/hw/out_filter.png, id=1162, 302.63063pt x 188.20313pt>
+[53 <./graf/hw/synch.png (PNG copy)>]
+<graf/hw/out_filter.png, id=1179, 302.63063pt x 188.20313pt>
 File: graf/hw/out_filter.png Graphic file (type png)
 <use graf/hw/out_filter.png>
-Package pdftex.def Info: graf/hw/out_filter.png  used on input line 820.
+Package pdftex.def Info: graf/hw/out_filter.png  used on input line 825.
 (pdftex.def)             Requested size: 227.62206pt x 141.5569pt.
-<graf/hw/analog_out_full.png, id=1164, 938.00438pt x 304.13625pt>
+<graf/hw/analog_out_full.png, id=1181, 938.00438pt x 304.13625pt>
 File: graf/hw/analog_out_full.png Graphic file (type png)
 <use graf/hw/analog_out_full.png>
-Package pdftex.def Info: graf/hw/analog_out_full.png  used on input line 831.
+Package pdftex.def Info: graf/hw/analog_out_full.png  used on input line 836.
 (pdftex.def)             Requested size: 455.24411pt x 147.60335pt.
 
 
@@ -2271,7 +2332,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[51 <./graf/hw/out_filter.png (PNG copy)> <./graf/hw/analog_out_full.png (PNG c
+[54 <./graf/hw/out_filter.png (PNG copy)> <./graf/hw/analog_out_full.png (PNG c
 opy)>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2281,16 +2342,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[52]
-<graf/hw/i2s.png, id=1185, 1431.3475pt x 414.54875pt>
+[55]
+<graf/hw/i2s.png, id=1202, 1431.3475pt x 414.54875pt>
 File: graf/hw/i2s.png Graphic file (type png)
 <use graf/hw/i2s.png>
-Package pdftex.def Info: graf/hw/i2s.png  used on input line 912.
+Package pdftex.def Info: graf/hw/i2s.png  used on input line 917.
 (pdftex.def)             Requested size: 455.24411pt x 131.84232pt.
-<graf/hw/l_j.png, id=1187, 1279.78125pt x 406.51875pt>
+<graf/hw/l_j.png, id=1204, 1279.78125pt x 406.51875pt>
 File: graf/hw/l_j.png Graphic file (type png)
 <use graf/hw/l_j.png>
-Package pdftex.def Info: graf/hw/l_j.png  used on input line 939.
+Package pdftex.def Info: graf/hw/l_j.png  used on input line 944.
 (pdftex.def)             Requested size: 455.24411pt x 144.6098pt.
 
 
@@ -2301,7 +2362,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[53 <./graf/hw/i2s.png>]
+[56 <./graf/hw/i2s.png>]
 Underfull \vbox (badness 2384) has occurred while \output is active []
 
 
@@ -2313,11 +2374,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[54 <./graf/hw/l_j.png>]
-<graf/hw/spi.png, id=1209, 1826.825pt x 575.14874pt>
+[57 <./graf/hw/l_j.png>]
+<graf/hw/spi.png, id=1225, 1826.825pt x 575.14874pt>
 File: graf/hw/spi.png Graphic file (type png)
 <use graf/hw/spi.png>
-Package pdftex.def Info: graf/hw/spi.png  used on input line 1016.
+Package pdftex.def Info: graf/hw/spi.png  used on input line 1021.
 (pdftex.def)             Requested size: 455.24411pt x 143.3217pt.
 
 
@@ -2328,14 +2389,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[55 <./graf/hw/spi.png>]
-<graf/hw/adc_dac.png, id=1219, 834.11626pt x 312.16624pt>
+[58 <./graf/hw/spi.png>]
+<graf/hw/adc_dac.png, id=1236, 834.11626pt x 312.16624pt>
 File: graf/hw/adc_dac.png Graphic file (type png)
 <use graf/hw/adc_dac.png>
-Package pdftex.def Info: graf/hw/adc_dac.png  used on input line 1063.
+Package pdftex.def Info: graf/hw/adc_dac.png  used on input line 1068.
 (pdftex.def)             Requested size: 409.71692pt x 153.3391pt.
 
-Overfull \hbox (3.97945pt too wide) in paragraph at lines 1073--1086
+Overfull \hbox (3.97945pt too wide) in paragraph at lines 1078--1091
 []\T1/lmr/m/n/12 W celu mi-ni-ma-li-za-cji opó¹-nie« w to-rze prze-twa-rza-nia,
  wy-brane prze-twor-niki analogowo-
  []
@@ -2348,16 +2409,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[56 <./graf/hw/adc_dac.png>]
-<graf/hw/cap_1.png, id=1231, 797.98125pt x 184.69pt>
+[59 <./graf/hw/adc_dac.png>]
+<graf/hw/cap_1.png, id=1248, 797.98125pt x 184.69pt>
 File: graf/hw/cap_1.png Graphic file (type png)
 <use graf/hw/cap_1.png>
-Package pdftex.def Info: graf/hw/cap_1.png  used on input line 1128.
+Package pdftex.def Info: graf/hw/cap_1.png  used on input line 1133.
 (pdftex.def)             Requested size: 409.71692pt x 94.82753pt.
-<graf/hw/cap_0.png, id=1232, 1074.0125pt x 433.62pt>
+<graf/hw/cap_0.png, id=1249, 1074.0125pt x 433.62pt>
 File: graf/hw/cap_0.png Graphic file (type png)
 <use graf/hw/cap_0.png>
-Package pdftex.def Info: graf/hw/cap_0.png  used on input line 1135.
+Package pdftex.def Info: graf/hw/cap_0.png  used on input line 1140.
 (pdftex.def)             Requested size: 341.43307pt x 137.84816pt.
 
 
@@ -2368,16 +2429,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[57 <./graf/hw/cap_1.png>]
-<graf/hw/return.png, id=1248, 737.75626pt x 355.3275pt>
+[60 <./graf/hw/cap_1.png>]
+<graf/hw/return.png, id=1265, 737.75626pt x 355.3275pt>
 File: graf/hw/return.png Graphic file (type png)
 <use graf/hw/return.png>
-Package pdftex.def Info: graf/hw/return.png  used on input line 1162.
+Package pdftex.def Info: graf/hw/return.png  used on input line 1167.
 (pdftex.def)             Requested size: 318.66948pt x 153.48183pt.
-<graf/hw/sections.png, id=1249, 678.535pt x 335.2525pt>
+<graf/hw/sections.png, id=1266, 678.535pt x 335.2525pt>
 File: graf/hw/sections.png Graphic file (type png)
 <use graf/hw/sections.png>
-Package pdftex.def Info: graf/hw/sections.png  used on input line 1169.
+Package pdftex.def Info: graf/hw/sections.png  used on input line 1174.
 (pdftex.def)             Requested size: 318.66948pt x 157.44592pt.
 
 
@@ -2388,11 +2449,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[58 <./graf/hw/cap_0.png> <./graf/hw/return.png>]
-<graf/hw/stackup.png, id=1261, 923.45pt x 207.77625pt>
+[61 <./graf/hw/cap_0.png> <./graf/hw/return.png>]
+<graf/hw/stackup.png, id=1278, 923.45pt x 207.77625pt>
 File: graf/hw/stackup.png Graphic file (type png)
 <use graf/hw/stackup.png>
-Package pdftex.def Info: graf/hw/stackup.png  used on input line 1209.
+Package pdftex.def Info: graf/hw/stackup.png  used on input line 1214.
 (pdftex.def)             Requested size: 409.71692pt x 92.18588pt.
 
 
@@ -2403,7 +2464,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[59 <./graf/hw/sections.png> <./graf/hw/stackup.png>]) (./chapters/05.tex
+[62 <./graf/hw/sections.png> <./graf/hw/stackup.png>]) (./chapters/05.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -2412,22 +2473,31 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[60]
-Rozdzia\l  5.
-[61
+[63]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[64
 
 ]
-<graf/sw/preempt_0.png, id=1295, 882.29625pt x 232.87pt>
+Rozdzia\l  5.
+[65]
+<graf/sw/preempt_0.png, id=1316, 882.29625pt x 232.87pt>
 File: graf/sw/preempt_0.png Graphic file (type png)
 <use graf/sw/preempt_0.png>
 Package pdftex.def Info: graf/sw/preempt_0.png  used on input line 46.
 (pdftex.def)             Requested size: 455.24411pt x 120.15501pt.
-<graf/sw/preempt_1.png, id=1297, 1209.51875pt x 251.94125pt>
+<graf/sw/preempt_1.png, id=1318, 1209.51875pt x 251.94125pt>
 File: graf/sw/preempt_1.png Graphic file (type png)
 <use graf/sw/preempt_1.png>
 Package pdftex.def Info: graf/sw/preempt_1.png  used on input line 59.
 (pdftex.def)             Requested size: 455.24411pt x 94.82756pt.
-<graf/sw/prior_inv.png, id=1299, 740.7675pt x 291.0875pt>
+<graf/sw/prior_inv.png, id=1320, 740.7675pt x 291.0875pt>
 File: graf/sw/prior_inv.png Graphic file (type png)
 <use graf/sw/prior_inv.png>
 Package pdftex.def Info: graf/sw/prior_inv.png  used on input line 79.
@@ -2441,13 +2511,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[62 <./graf/sw/preempt_0.png> <./graf/sw/preempt_1.png>]
-<graf/sw/preempt_rt_0.png, id=1311, 1313.90875pt x 251.94125pt>
+[66 <./graf/sw/preempt_0.png> <./graf/sw/preempt_1.png>]
+<graf/sw/preempt_rt_0.png, id=1332, 1313.90875pt x 251.94125pt>
 File: graf/sw/preempt_rt_0.png Graphic file (type png)
 <use graf/sw/preempt_rt_0.png>
 Package pdftex.def Info: graf/sw/preempt_rt_0.png  used on input line 105.
 (pdftex.def)             Requested size: 455.24411pt x 87.29271pt.
-<graf/sw/prior_inh.png, id=1314, 740.7675pt x 302.12875pt>
+<graf/sw/prior_inh.png, id=1335, 740.7675pt x 302.12875pt>
 File: graf/sw/prior_inh.png Graphic file (type png)
 <use graf/sw/prior_inh.png>
 Package pdftex.def Info: graf/sw/prior_inh.png  used on input line 116.
@@ -2461,18 +2531,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[63 <./graf/sw/prior_inv.png> <./graf/sw/preempt_rt_0.png>]
-<graf/sw/hw_irq.png, id=1324, 760.8425pt x 196.735pt>
+[67 <./graf/sw/prior_inv.png> <./graf/sw/preempt_rt_0.png>]
+<graf/sw/hw_irq.png, id=1345, 760.8425pt x 196.735pt>
 File: graf/sw/hw_irq.png Graphic file (type png)
 <use graf/sw/hw_irq.png>
 Package pdftex.def Info: graf/sw/hw_irq.png  used on input line 134.
 (pdftex.def)             Requested size: 364.19667pt x 94.17354pt.
-<graf/sw/hw_irq_rt.png, id=1325, 790.955pt x 248.93pt>
+<graf/sw/hw_irq_rt.png, id=1346, 790.955pt x 248.93pt>
 File: graf/sw/hw_irq_rt.png Graphic file (type png)
 <use graf/sw/hw_irq_rt.png>
 Package pdftex.def Info: graf/sw/hw_irq_rt.png  used on input line 141.
 (pdftex.def)             Requested size: 364.19667pt x 114.61934pt.
-<graf/sw/boot_process.png, id=1327, 869.2475pt x 659.46375pt>
+<graf/sw/boot_process.png, id=1348, 869.2475pt x 659.46375pt>
 File: graf/sw/boot_process.png Graphic file (type png)
 <use graf/sw/boot_process.png>
 Package pdftex.def Info: graf/sw/boot_process.png  used on input line 160.
@@ -2486,7 +2556,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[64 <./graf/sw/prior_inh.png> <./graf/sw/hw_irq.png> <./graf/sw/hw_irq_rt.png>]
+[68 <./graf/sw/prior_inh.png> <./graf/sw/hw_irq.png> <./graf/sw/hw_irq_rt.png>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -2495,54 +2565,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[65 <./graf/sw/boot_process.png>]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[66]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[67]
-Overfull \hbox (24.11388pt too wide) in paragraph at lines 294--305
-\T1/lmr/m/n/12 ko-rzy-sta-nym roz-wi¡-za-niu na-pi-sany mo-duª bez-po-±red-nio 
-za-st¡-piª ste-row-nik ko-deka PCM5102A,
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[68]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[69]
-<graf/sw/app_top.png, id=1382, 1069.9975pt x 924.45375pt>
-File: graf/sw/app_top.png Graphic file (type png)
-<use graf/sw/app_top.png>
-Package pdftex.def Info: graf/sw/app_top.png  used on input line 456.
-(pdftex.def)             Requested size: 318.66948pt x 275.3211pt.
-
+[69 <./graf/sw/boot_process.png>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -2560,8 +2583,50 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[71 <./graf/sw/app_top.png>]
-<graf/sw/alsa_buffer.png, id=1398, 658.46pt x 442.65375pt>
+[71]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[72]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[73]
+<graf/sw/app_top.png, id=1403, 1069.9975pt x 924.45375pt>
+File: graf/sw/app_top.png Graphic file (type png)
+<use graf/sw/app_top.png>
+Package pdftex.def Info: graf/sw/app_top.png  used on input line 456.
+(pdftex.def)             Requested size: 318.66948pt x 275.3211pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[74]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[75 <./graf/sw/app_top.png>]
+<graf/sw/alsa_buffer.png, id=1418, 658.46pt x 442.65375pt>
 File: graf/sw/alsa_buffer.png Graphic file (type png)
 <use graf/sw/alsa_buffer.png>
 Package pdftex.def Info: graf/sw/alsa_buffer.png  used on input line 510.
@@ -2575,7 +2640,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[72 <./graf/sw/alsa_buffer.png>]
+[76 <./graf/sw/alsa_buffer.png>]
 Overfull \hbox (4.24059pt too wide) in paragraph at lines 565--572
 []\T1/lmr/m/n/12 Implementacja al-go-ryt-mów cy-fro-wego prze-twa-rza-nia sy-gn
 a-ªów zo-staªa wy-ko-nana w spo-
@@ -2589,18 +2654,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[73]
+[77]
 Overfull \hbox (3.54427pt too wide) in paragraph at lines 575--577
 []\T1/lmr/m/it/12 -mfpu=neon, -mhard-float \T1/lmr/m/n/12 --- dla sprz¦-to-wych
  ob-li-cze« zmien-no-prze-cin-ko-wych (FPU) 
  []
 
-<graf/sw/non_simd.png, id=1412, 322.20375pt x 322.20375pt>
+<graf/sw/non_simd.png, id=1433, 322.20375pt x 322.20375pt>
 File: graf/sw/non_simd.png Graphic file (type png)
 <use graf/sw/non_simd.png>
 Package pdftex.def Info: graf/sw/non_simd.png  used on input line 588.
 (pdftex.def)             Requested size: 178.45836pt x 178.4663pt.
-<graf/sw/simd.png, id=1413, 322.20375pt x 241.90375pt>
+<graf/sw/simd.png, id=1434, 322.20375pt x 241.90375pt>
 File: graf/sw/simd.png Graphic file (type png)
 <use graf/sw/simd.png>
 Package pdftex.def Info: graf/sw/simd.png  used on input line 594.
@@ -2613,17 +2678,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[74 <./graf/sw/non_simd.png> <./graf/sw/simd.png>]
-Overfull \hbox (4.10283pt too wide) in paragraph at lines 651--655
+[78 <./graf/sw/non_simd.png> <./graf/sw/simd.png>]
+Overfull \hbox (4.10283pt too wide) in paragraph at lines 651--660
 \T1/lmr/bx/n/12 dziale liczby ge-ne-ro-wane s¡ rów-no-mier-nie \T1/lmr/m/n/12 -
 -- w przy-padku, kiedy RAND_MAX
  []
 
-<graf/sw/lfsr.png, id=1433, 1395.2125pt x 217.81375pt>
-File: graf/sw/lfsr.png Graphic file (type png)
-<use graf/sw/lfsr.png>
-Package pdftex.def Info: graf/sw/lfsr.png  used on input line 679.
-(pdftex.def)             Requested size: 273.14923pt x 42.64134pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -2632,16 +2692,34 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[75]
-<graf/sw/prng_psd.png, id=1445, 3227.05624pt x 1770.615pt>
+[79]
+<graf/sw/lfsr.png, id=1461, 1395.2125pt x 217.81375pt>
+File: graf/sw/lfsr.png Graphic file (type png)
+<use graf/sw/lfsr.png>
+Package pdftex.def Info: graf/sw/lfsr.png  used on input line 691.
+(pdftex.def)             Requested size: 273.14923pt x 42.64134pt.
+<graf/sw/prng_psd.png, id=1465, 3227.05624pt x 1770.615pt>
 File: graf/sw/prng_psd.png Graphic file (type png)
 <use graf/sw/prng_psd.png>
-Package pdftex.def Info: graf/sw/prng_psd.png  used on input line 712.
+Package pdftex.def Info: graf/sw/prng_psd.png  used on input line 724.
 (pdftex.def)             Requested size: 318.66948pt x 174.82942pt.
-<graf/sw/app_flow.png, id=1447, 2477.255pt x 527.9725pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[80 <./graf/sw/lfsr.png>]
+<graf/sw/app_flow.png, id=1475, 2477.255pt x 527.9725pt>
 File: graf/sw/app_flow.png Graphic file (type png)
 <use graf/sw/app_flow.png>
-Package pdftex.def Info: graf/sw/app_flow.png  used on input line 725.
+Package pdftex.def Info: graf/sw/app_flow.png  used on input line 737.
 (pdftex.def)             Requested size: 455.24411pt x 97.02083pt.
 
 
@@ -2652,7 +2730,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[76 <./graf/sw/lfsr.png> <./graf/sw/prng_psd.png>]
+[81 <./graf/sw/prng_psd.png> <./graf/sw/app_flow.png>]) (./chapters/06.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -2661,26 +2739,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[77 <./graf/sw/app_flow.png>]) (./chapters/06.tex
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[78]
+[82]
 Rozdzia\l  6.
-<graf/verification/board.png, id=1480, 1607.00375pt x 1033.8625pt>
+<graf/verification/board.png, id=1501, 1607.00375pt x 1033.8625pt>
 File: graf/verification/board.png Graphic file (type png)
 <use graf/verification/board.png>
 Package pdftex.def Info: graf/verification/board.png  used on input line 9.
 (pdftex.def)             Requested size: 455.24411pt x 292.87125pt.
-[79
+[83
 
  <./graf/verification/board.png>]
-<graf/verification/gain_out.png, id=1491, 803.0pt x 504.88625pt>
+<graf/verification/gain_out.png, id=1512, 803.0pt x 504.88625pt>
 File: graf/verification/gain_out.png Graphic file (type png)
 <use graf/verification/gain_out.png>
 Package pdftex.def Info: graf/verification/gain_out.png  used on input line 66.
@@ -2695,14 +2764,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[80 <./graf/verification/gain_out.png (PNG copy)>]
-<graf/verification/100hz_out.png, id=1501, 803.0pt x 504.88625pt>
+[84 <./graf/verification/gain_out.png (PNG copy)>]
+<graf/verification/100hz_out.png, id=1522, 803.0pt x 504.88625pt>
 File: graf/verification/100hz_out.png Graphic file (type png)
 <use graf/verification/100hz_out.png>
 Package pdftex.def Info: graf/verification/100hz_out.png  used on input line 83
 .
 (pdftex.def)             Requested size: 318.66948pt x 200.36389pt.
-<graf/verification/500hz_out.png, id=1502, 803.0pt x 504.88625pt>
+<graf/verification/500hz_out.png, id=1523, 803.0pt x 504.88625pt>
 File: graf/verification/500hz_out.png Graphic file (type png)
 <use graf/verification/500hz_out.png>
 Package pdftex.def Info: graf/verification/500hz_out.png  used on input line 89
@@ -2717,15 +2786,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[81 <./graf/verification/100hz_out.png (PNG copy)> <./graf/verification/500hz_o
+[85 <./graf/verification/100hz_out.png (PNG copy)> <./graf/verification/500hz_o
 ut.png (PNG copy)>]
-<graf/verification/diff_out.png, id=1512, 803.0pt x 504.88625pt>
+<graf/verification/diff_out.png, id=1533, 803.0pt x 504.88625pt>
 File: graf/verification/diff_out.png Graphic file (type png)
 <use graf/verification/diff_out.png>
 Package pdftex.def Info: graf/verification/diff_out.png  used on input line 108
 .
 (pdftex.def)             Requested size: 318.66948pt x 200.36389pt.
-<graf/verification/200hz_in.png, id=1514, 803.0pt x 504.88625pt>
+<graf/verification/200hz_in.png, id=1535, 803.0pt x 504.88625pt>
 File: graf/verification/200hz_in.png Graphic file (type png)
 <use graf/verification/200hz_in.png>
 Package pdftex.def Info: graf/verification/200hz_in.png  used on input line 125
@@ -2740,15 +2809,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[82 <./graf/verification/diff_out.png (PNG copy)> <./graf/verification/200hz_in
+[86 <./graf/verification/diff_out.png (PNG copy)> <./graf/verification/200hz_in
 .png (PNG copy)>]
-<graf/verification/200hz_psd_in.png, id=1523, 3233.07875pt x 1753.55125pt>
+<graf/verification/200hz_psd_in.png, id=1544, 3233.07875pt x 1753.55125pt>
 File: graf/verification/200hz_psd_in.png Graphic file (type png)
 <use graf/verification/200hz_psd_in.png>
 Package pdftex.def Info: graf/verification/200hz_psd_in.png  used on input line
  138.
 (pdftex.def)             Requested size: 364.19667pt x 197.52019pt.
-<graf/verification/500hz_in.png, id=1527, 803.0pt x 504.88625pt>
+<graf/verification/500hz_in.png, id=1548, 803.0pt x 504.88625pt>
 File: graf/verification/500hz_in.png Graphic file (type png)
 <use graf/verification/500hz_in.png>
 Package pdftex.def Info: graf/verification/500hz_in.png  used on input line 153
@@ -2763,15 +2832,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[83 <./graf/verification/200hz_psd_in.png> <./graf/verification/500hz_in.png (P
+[87 <./graf/verification/200hz_psd_in.png> <./graf/verification/500hz_in.png (P
 NG copy)>]
-<graf/verification/500hz_psd_in.png, id=1539, 3283.26625pt x 1755.55875pt>
+<graf/verification/500hz_psd_in.png, id=1559, 3283.26625pt x 1755.55875pt>
 File: graf/verification/500hz_psd_in.png Graphic file (type png)
 <use graf/verification/500hz_psd_in.png>
 Package pdftex.def Info: graf/verification/500hz_psd_in.png  used on input line
  168.
 (pdftex.def)             Requested size: 364.19667pt x 194.71931pt.
-<graf/verification/stand.png, id=1542, 2270.4825pt x 1454.43375pt>
+<graf/verification/stand.png, id=1562, 2270.4825pt x 1454.43375pt>
 File: graf/verification/stand.png Graphic file (type png)
 <use graf/verification/stand.png>
 Package pdftex.def Info: graf/verification/stand.png  used on input line 184.
@@ -2785,15 +2854,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[84 <./graf/verification/500hz_psd_in.png> <./graf/verification/stand.png (PNG 
+[88 <./graf/verification/500hz_psd_in.png> <./graf/verification/stand.png (PNG 
 copy)>]
-<graf/verification/ident_0.png, id=1551, 2546.7647pt x 1324.19719pt>
+<graf/verification/ident_0.png, id=1571, 2546.7647pt x 1324.19719pt>
 File: graf/verification/ident_0.png Graphic file (type png)
 <use graf/verification/ident_0.png>
 Package pdftex.def Info: graf/verification/ident_0.png  used on input line 199.
 
 (pdftex.def)             Requested size: 295.90588pt x 153.8454pt.
-<graf/verification/raw_120hz.png, id=1554, 2536.97812pt x 1342.2647pt>
+<graf/verification/raw_120hz.png, id=1574, 2536.97812pt x 1342.2647pt>
 File: graf/verification/raw_120hz.png Graphic file (type png)
 <use graf/verification/raw_120hz.png>
 Package pdftex.def Info: graf/verification/raw_120hz.png  used on input line 22
@@ -2801,7 +2870,7 @@ Package pdftex.def Info: graf/verification/raw_120hz.png  used on input line 22
 (pdftex.def)             Requested size: 223.07211pt x 118.01315pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10.95> on input line 222.
-<graf/verification/raw_220hz.png, id=1555, 2580.64125pt x 1330.21968pt>
+<graf/verification/raw_220hz.png, id=1575, 2580.64125pt x 1330.21968pt>
 File: graf/verification/raw_220hz.png Graphic file (type png)
 <use graf/verification/raw_220hz.png>
 Package pdftex.def Info: graf/verification/raw_220hz.png  used on input line 22
@@ -2816,9 +2885,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[85 <./graf/verification/ident_0.png (PNG copy)> <./graf/verification/raw_120hz
+[89 <./graf/verification/ident_0.png (PNG copy)> <./graf/verification/raw_120hz
 .png (PNG copy)> <./graf/verification/raw_220hz.png (PNG copy)>]
-<graf/verification/raw_sum.png, id=1566, 2569.34906pt x 1352.05125pt>
+<graf/verification/raw_sum.png, id=1585, 2569.34906pt x 1352.05125pt>
 File: graf/verification/raw_sum.png Graphic file (type png)
 <use graf/verification/raw_sum.png>
 Package pdftex.def Info: graf/verification/raw_sum.png  used on input line 239.
@@ -2833,44 +2902,44 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[86 <./graf/verification/raw_sum.png (PNG copy)>]
-<graf/verification/alpha_120hz_01.png, id=1583, 2556.55125pt x 1348.28719pt>
+[90 <./graf/verification/raw_sum.png (PNG copy)>]
+<graf/verification/alpha_120hz_01.png, id=1602, 2556.55125pt x 1348.28719pt>
 File: graf/verification/alpha_120hz_01.png Graphic file (type png)
 <use graf/verification/alpha_120hz_01.png>
 Package pdftex.def Info: graf/verification/alpha_120hz_01.png  used on input li
 ne 290.
 (pdftex.def)             Requested size: 223.07211pt x 117.63744pt.
-<graf/verification/alpha_220hz_01.png, id=1584, 2559.5625pt x 1338.50063pt>
+<graf/verification/alpha_220hz_01.png, id=1603, 2559.5625pt x 1338.50063pt>
 File: graf/verification/alpha_220hz_01.png Graphic file (type png)
 <use graf/verification/alpha_220hz_01.png>
 Package pdftex.def Info: graf/verification/alpha_220hz_01.png  used on input li
 ne 295.
 (pdftex.def)             Requested size: 223.07211pt x 116.6406pt.
-<graf/verification/alpha_sum_01.png, id=1585, 2505.36pt x 1335.48938pt>
+<graf/verification/alpha_sum_01.png, id=1604, 2505.36pt x 1335.48938pt>
 File: graf/verification/alpha_sum_01.png Graphic file (type png)
 <use graf/verification/alpha_sum_01.png>
 Package pdftex.def Info: graf/verification/alpha_sum_01.png  used on input line
  300.
 (pdftex.def)             Requested size: 223.07211pt x 118.90504pt.
-<graf/verification/alpha_120hz_08.png, id=1589, 2560.3153pt x 1349.04pt>
+<graf/verification/alpha_120hz_08.png, id=1608, 2560.3153pt x 1349.04pt>
 File: graf/verification/alpha_120hz_08.png Graphic file (type png)
 <use graf/verification/alpha_120hz_08.png>
 Package pdftex.def Info: graf/verification/alpha_120hz_08.png  used on input li
 ne 330.
 (pdftex.def)             Requested size: 223.07211pt x 117.51785pt.
-<graf/verification/alpha_120hz_06.png, id=1590, 2555.04562pt x 1352.05125pt>
+<graf/verification/alpha_120hz_06.png, id=1609, 2555.04562pt x 1352.05125pt>
 File: graf/verification/alpha_120hz_06.png Graphic file (type png)
 <use graf/verification/alpha_120hz_06.png>
 Package pdftex.def Info: graf/verification/alpha_120hz_06.png  used on input li
 ne 335.
 (pdftex.def)             Requested size: 223.07211pt x 118.02774pt.
-<graf/verification/alpha_120hz_04.png, id=1591, 2570.85469pt x 1347.53438pt>
+<graf/verification/alpha_120hz_04.png, id=1610, 2570.85469pt x 1347.53438pt>
 File: graf/verification/alpha_120hz_04.png Graphic file (type png)
 <use graf/verification/alpha_120hz_04.png>
 Package pdftex.def Info: graf/verification/alpha_120hz_04.png  used on input li
 ne 340.
 (pdftex.def)             Requested size: 223.07211pt x 116.91377pt.
-<graf/verification/alpha_120hz_02.png, id=1592, 2552.78719pt x 1349.04pt>
+<graf/verification/alpha_120hz_02.png, id=1611, 2552.78719pt x 1349.04pt>
 File: graf/verification/alpha_120hz_02.png Graphic file (type png)
 <use graf/verification/alpha_120hz_02.png>
 Package pdftex.def Info: graf/verification/alpha_120hz_02.png  used on input li
@@ -2885,51 +2954,51 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[87 <./graf/verification/alpha_120hz_01.png (PNG copy)> <./graf/verification/al
+[91 <./graf/verification/alpha_120hz_01.png (PNG copy)> <./graf/verification/al
 pha_220hz_01.png (PNG copy)> <./graf/verification/alpha_sum_01.png (PNG copy)>]
-<graf/verification/alpha_220hz_08.png, id=1602, 2601.72pt x 1342.2647pt>
+<graf/verification/alpha_220hz_08.png, id=1622, 2601.72pt x 1342.2647pt>
 File: graf/verification/alpha_220hz_08.png Graphic file (type png)
 <use graf/verification/alpha_220hz_08.png>
 Package pdftex.def Info: graf/verification/alpha_220hz_08.png  used on input li
 ne 359.
 (pdftex.def)             Requested size: 223.07211pt x 115.08432pt.
-<graf/verification/alpha_220hz_06.png, id=1603, 2643.8775pt x 1345.27594pt>
+<graf/verification/alpha_220hz_06.png, id=1623, 2643.8775pt x 1345.27594pt>
 File: graf/verification/alpha_220hz_06.png Graphic file (type png)
 <use graf/verification/alpha_220hz_06.png>
 Package pdftex.def Info: graf/verification/alpha_220hz_06.png  used on input li
 ne 364.
 (pdftex.def)             Requested size: 223.07211pt x 113.49506pt.
-<graf/verification/alpha_220hz_04.png, id=1604, 2539.98938pt x 1334.73656pt>
+<graf/verification/alpha_220hz_04.png, id=1624, 2539.98938pt x 1334.73656pt>
 File: graf/verification/alpha_220hz_04.png Graphic file (type png)
 <use graf/verification/alpha_220hz_04.png>
 Package pdftex.def Info: graf/verification/alpha_220hz_04.png  used on input li
 ne 369.
 (pdftex.def)             Requested size: 223.07211pt x 117.20871pt.
-<graf/verification/alpha_220hz_02.png, id=1605, 2584.40532pt x 1349.04pt>
+<graf/verification/alpha_220hz_02.png, id=1625, 2584.40532pt x 1349.04pt>
 File: graf/verification/alpha_220hz_02.png Graphic file (type png)
 <use graf/verification/alpha_220hz_02.png>
 Package pdftex.def Info: graf/verification/alpha_220hz_02.png  used on input li
 ne 374.
 (pdftex.def)             Requested size: 223.07211pt x 116.42686pt.
-<graf/verification/alpha_sum_08.png, id=1607, 2574.61874pt x 1339.25343pt>
+<graf/verification/alpha_sum_08.png, id=1627, 2574.61874pt x 1339.25343pt>
 File: graf/verification/alpha_sum_08.png Graphic file (type png)
 <use graf/verification/alpha_sum_08.png>
 Package pdftex.def Info: graf/verification/alpha_sum_08.png  used on input line
  388.
 (pdftex.def)             Requested size: 223.07211pt x 116.03183pt.
-<graf/verification/alpha_sum_06.png, id=1608, 2577.63pt x 1346.02875pt>
+<graf/verification/alpha_sum_06.png, id=1628, 2577.63pt x 1346.02875pt>
 File: graf/verification/alpha_sum_06.png Graphic file (type png)
 <use graf/verification/alpha_sum_06.png>
 Package pdftex.def Info: graf/verification/alpha_sum_06.png  used on input line
  393.
 (pdftex.def)             Requested size: 223.07211pt x 116.47507pt.
-<graf/verification/alpha_sum_04.png, id=1609, 2508.37125pt x 1342.2647pt>
+<graf/verification/alpha_sum_04.png, id=1629, 2508.37125pt x 1342.2647pt>
 File: graf/verification/alpha_sum_04.png Graphic file (type png)
 <use graf/verification/alpha_sum_04.png>
 Package pdftex.def Info: graf/verification/alpha_sum_04.png  used on input line
  398.
 (pdftex.def)             Requested size: 223.07211pt x 119.36491pt.
-<graf/verification/alpha_sum_02.png, id=1610, 2585.91093pt x 1333.23094pt>
+<graf/verification/alpha_sum_02.png, id=1630, 2585.91093pt x 1333.23094pt>
 File: graf/verification/alpha_sum_02.png Graphic file (type png)
 <use graf/verification/alpha_sum_02.png>
 Package pdftex.def Info: graf/verification/alpha_sum_02.png  used on input line
@@ -2943,25 +3012,25 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[88 <./graf/verification/alpha_120hz_08.png (PNG copy)> <./graf/verification/al
+[92 <./graf/verification/alpha_120hz_08.png (PNG copy)> <./graf/verification/al
 pha_120hz_06.png (PNG copy)> <./graf/verification/alpha_120hz_04.png (PNG copy)
 > <./graf/verification/alpha_120hz_02.png (PNG copy)> <./graf/verification/alph
 a_220hz_08.png (PNG copy)> <./graf/verification/alpha_220hz_06.png (PNG copy)> 
 <./graf/verification/alpha_220hz_04.png (PNG copy)> <./graf/verification/alpha_
 220hz_02.png (PNG copy)>]
-<graf/verification/l_120hz_256.png, id=1624, 2552.03438pt x 1322.69156pt>
+<graf/verification/l_120hz_256.png, id=1644, 2552.03438pt x 1322.69156pt>
 File: graf/verification/l_120hz_256.png Graphic file (type png)
 <use graf/verification/l_120hz_256.png>
 Package pdftex.def Info: graf/verification/l_120hz_256.png  used on input line 
 458.
 (pdftex.def)             Requested size: 223.07211pt x 115.60605pt.
-<graf/verification/l_120hz_512.png, id=1625, 2570.85469pt x 1324.19719pt>
+<graf/verification/l_120hz_512.png, id=1645, 2570.85469pt x 1324.19719pt>
 File: graf/verification/l_120hz_512.png Graphic file (type png)
 <use graf/verification/l_120hz_512.png>
 Package pdftex.def Info: graf/verification/l_120hz_512.png  used on input line 
 463.
 (pdftex.def)             Requested size: 223.07211pt x 114.889pt.
-<graf/verification/l_120hz_1024.png, id=1626, 2434.59563pt x 1322.69156pt>
+<graf/verification/l_120hz_1024.png, id=1646, 2434.59563pt x 1322.69156pt>
 File: graf/verification/l_120hz_1024.png Graphic file (type png)
 <use graf/verification/l_120hz_1024.png>
 Package pdftex.def Info: graf/verification/l_120hz_1024.png  used on input line
@@ -2976,40 +3045,40 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[89 <./graf/verification/alpha_sum_08.png (PNG copy)> <./graf/verification/alph
+[93 <./graf/verification/alpha_sum_08.png (PNG copy)> <./graf/verification/alph
 a_sum_06.png (PNG copy)> <./graf/verification/alpha_sum_04.png (PNG copy)> <./g
 raf/verification/alpha_sum_02.png (PNG copy)>]
-<graf/verification/l_220hz_256.png, id=1638, 2503.85437pt x 1335.48938pt>
+<graf/verification/l_220hz_256.png, id=1656, 2503.85437pt x 1335.48938pt>
 File: graf/verification/l_220hz_256.png Graphic file (type png)
 <use graf/verification/l_220hz_256.png>
 Package pdftex.def Info: graf/verification/l_220hz_256.png  used on input line 
 482.
 (pdftex.def)             Requested size: 223.07211pt x 118.96619pt.
-<graf/verification/l_220hz_512.png, id=1639, 2484.28125pt x 1324.19719pt>
+<graf/verification/l_220hz_512.png, id=1657, 2484.28125pt x 1324.19719pt>
 File: graf/verification/l_220hz_512.png Graphic file (type png)
 <use graf/verification/l_220hz_512.png>
 Package pdftex.def Info: graf/verification/l_220hz_512.png  used on input line 
 487.
 (pdftex.def)             Requested size: 223.07211pt x 118.88972pt.
-<graf/verification/l_220hz_1024.png, id=1640, 2502.34875pt x 1332.47812pt>
+<graf/verification/l_220hz_1024.png, id=1658, 2502.34875pt x 1332.47812pt>
 File: graf/verification/l_220hz_1024.png Graphic file (type png)
 <use graf/verification/l_220hz_1024.png>
 Package pdftex.def Info: graf/verification/l_220hz_1024.png  used on input line
  492.
 (pdftex.def)             Requested size: 223.07211pt x 118.77927pt.
-<graf/verification/l_sum_256.png, id=1642, 2570.10187pt x 1334.73656pt>
+<graf/verification/l_sum_256.png, id=1660, 2570.10187pt x 1334.73656pt>
 File: graf/verification/l_sum_256.png Graphic file (type png)
 <use graf/verification/l_sum_256.png>
 Package pdftex.def Info: graf/verification/l_sum_256.png  used on input line 50
 6.
 (pdftex.def)             Requested size: 223.07211pt x 115.84416pt.
-<graf/verification/l_sum_512.png, id=1643, 2587.41656pt x 1350.54562pt>
+<graf/verification/l_sum_512.png, id=1661, 2587.41656pt x 1350.54562pt>
 File: graf/verification/l_sum_512.png Graphic file (type png)
 <use graf/verification/l_sum_512.png>
 Package pdftex.def Info: graf/verification/l_sum_512.png  used on input line 51
 1.
 (pdftex.def)             Requested size: 223.07211pt x 116.43317pt.
-<graf/verification/l_sum_1024.png, id=1644, 2554.29282pt x 1330.9725pt>
+<graf/verification/l_sum_1024.png, id=1662, 2554.29282pt x 1330.9725pt>
 File: graf/verification/l_sum_1024.png Graphic file (type png)
 <use graf/verification/l_sum_1024.png>
 Package pdftex.def Info: graf/verification/l_sum_1024.png  used on input line 5
@@ -3024,11 +3093,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[90 <./graf/verification/l_120hz_256.png (PNG copy)> <./graf/verification/l_120
+[94 <./graf/verification/l_120hz_256.png (PNG copy)> <./graf/verification/l_120
 hz_512.png (PNG copy)> <./graf/verification/l_120hz_1024.png (PNG copy)> <./gra
 f/verification/l_220hz_256.png (PNG copy)> <./graf/verification/l_220hz_512.png
  (PNG copy)> <./graf/verification/l_220hz_1024.png (PNG copy)>]
-<graf/verification/120hz_128.png, id=1656, 2531.70844pt x 1333.98375pt>
+<graf/verification/120hz_128.png, id=1674, 2531.70844pt x 1333.98375pt>
 File: graf/verification/120hz_128.png Graphic file (type png)
 <use graf/verification/120hz_128.png>
 Package pdftex.def Info: graf/verification/120hz_128.png  used on input line 54
@@ -3046,15 +3115,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[91 <./graf/verification/l_sum_256.png (PNG copy)> <./graf/verification/l_sum_5
+[95 <./graf/verification/l_sum_256.png (PNG copy)> <./graf/verification/l_sum_5
 12.png (PNG copy)> <./graf/verification/l_sum_1024.png (PNG copy)>]
-<graf/verification/220hz_16000.png, id=1665, 2540.74219pt x 1321.93875pt>
+<graf/verification/220hz_16000.png, id=1684, 2540.74219pt x 1321.93875pt>
 File: graf/verification/220hz_16000.png Graphic file (type png)
 <use graf/verification/220hz_16000.png>
 Package pdftex.def Info: graf/verification/220hz_16000.png  used on input line 
 559.
 (pdftex.def)             Requested size: 341.43307pt x 177.64719pt.
-<graf/verification/sum_16000.png, id=1667, 2570.10187pt x 1359.57938pt>
+<graf/verification/sum_16000.png, id=1686, 2570.10187pt x 1359.57938pt>
 File: graf/verification/sum_16000.png Graphic file (type png)
 <use graf/verification/sum_16000.png>
 Package pdftex.def Info: graf/verification/sum_16000.png  used on input line 56
@@ -3069,15 +3138,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[92 <./graf/verification/120hz_128.png (PNG copy)> <./graf/verification/220hz_1
+[96 <./graf/verification/120hz_128.png (PNG copy)> <./graf/verification/220hz_1
 6000.png (PNG copy)> <./graf/verification/sum_16000.png (PNG copy)>]
-<graf/verification/120hz_16000.png, id=1679, 2481.27pt x 1345.27594pt>
+<graf/verification/120hz_16000.png, id=1698, 2481.27pt x 1345.27594pt>
 File: graf/verification/120hz_16000.png Graphic file (type png)
 <use graf/verification/120hz_16000.png>
 Package pdftex.def Info: graf/verification/120hz_16000.png  used on input line 
 598.
 (pdftex.def)             Requested size: 364.19667pt x 197.45143pt.
-<graf/verification/220hz_128.png, id=1681, 2571.6075pt x 1349.79282pt>
+<graf/verification/220hz_128.png, id=1700, 2571.6075pt x 1349.79282pt>
 File: graf/verification/220hz_128.png Graphic file (type png)
 <use graf/verification/220hz_128.png>
 Package pdftex.def Info: graf/verification/220hz_128.png  used on input line 60
@@ -3095,32 +3164,32 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[93 <./graf/verification/120hz_16000.png (PNG copy)>]
-<graf/verification/sum_128.png, id=1690, 2491.05656pt x 1344.52313pt>
+[97 <./graf/verification/120hz_16000.png (PNG copy)>]
+<graf/verification/sum_128.png, id=1709, 2491.05656pt x 1344.52313pt>
 File: graf/verification/sum_128.png Graphic file (type png)
 <use graf/verification/sum_128.png>
 Package pdftex.def Info: graf/verification/sum_128.png  used on input line 618.
 
 (pdftex.def)             Requested size: 341.43307pt x 184.27242pt.
-<graf/verification/P_120hz_80.png, id=1697, 2570.10187pt x 1323.44438pt>
+<graf/verification/P_120hz_80.png, id=1716, 2570.10187pt x 1323.44438pt>
 File: graf/verification/P_120hz_80.png Graphic file (type png)
 <use graf/verification/P_120hz_80.png>
 Package pdftex.def Info: graf/verification/P_120hz_80.png  used on input line 6
 48.
 (pdftex.def)             Requested size: 223.07211pt x 114.86409pt.
-<graf/verification/P_120hz_60.png, id=1698, 2579.88844pt x 1333.98375pt>
+<graf/verification/P_120hz_60.png, id=1717, 2579.88844pt x 1333.98375pt>
 File: graf/verification/P_120hz_60.png Graphic file (type png)
 <use graf/verification/P_120hz_60.png>
 Package pdftex.def Info: graf/verification/P_120hz_60.png  used on input line 6
 53.
 (pdftex.def)             Requested size: 223.07211pt x 115.33101pt.
-<graf/verification/P_120hz_40.png, id=1699, 2536.97812pt x 1321.93875pt>
+<graf/verification/P_120hz_40.png, id=1718, 2536.97812pt x 1321.93875pt>
 File: graf/verification/P_120hz_40.png Graphic file (type png)
 <use graf/verification/P_120hz_40.png>
 Package pdftex.def Info: graf/verification/P_120hz_40.png  used on input line 6
 58.
 (pdftex.def)             Requested size: 223.07211pt x 116.22607pt.
-<graf/verification/P_120hz_20.png, id=1700, 2537.73094pt x 1331.72531pt>
+<graf/verification/P_120hz_20.png, id=1719, 2537.73094pt x 1331.72531pt>
 File: graf/verification/P_120hz_20.png Graphic file (type png)
 <use graf/verification/P_120hz_20.png>
 Package pdftex.def Info: graf/verification/P_120hz_20.png  used on input line 6
@@ -3135,51 +3204,51 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[94 <./graf/verification/220hz_128.png (PNG copy)> <./graf/verification/sum_128
+[98 <./graf/verification/220hz_128.png (PNG copy)> <./graf/verification/sum_128
 .png (PNG copy)>]
-<graf/verification/P_220hz_80.png, id=1710, 2574.61874pt x 1346.02875pt>
+<graf/verification/P_220hz_80.png, id=1729, 2574.61874pt x 1346.02875pt>
 File: graf/verification/P_220hz_80.png Graphic file (type png)
 <use graf/verification/P_220hz_80.png>
 Package pdftex.def Info: graf/verification/P_220hz_80.png  used on input line 6
 78.
 (pdftex.def)             Requested size: 223.07211pt x 116.61884pt.
-<graf/verification/P_220hz_60.png, id=1711, 2547.5175pt x 1351.29843pt>
+<graf/verification/P_220hz_60.png, id=1730, 2547.5175pt x 1351.29843pt>
 File: graf/verification/P_220hz_60.png Graphic file (type png)
 <use graf/verification/P_220hz_60.png>
 Package pdftex.def Info: graf/verification/P_220hz_60.png  used on input line 6
 83.
 (pdftex.def)             Requested size: 223.07211pt x 118.31255pt.
-<graf/verification/P_220hz_40.png, id=1712, 2512.13531pt x 1344.52313pt>
+<graf/verification/P_220hz_40.png, id=1731, 2512.13531pt x 1344.52313pt>
 File: graf/verification/P_220hz_40.png Graphic file (type png)
 <use graf/verification/P_220hz_40.png>
 Package pdftex.def Info: graf/verification/P_220hz_40.png  used on input line 6
 88.
 (pdftex.def)             Requested size: 223.07211pt x 119.38112pt.
-<graf/verification/P_220hz_20.png, id=1713, 2581.39406pt x 1349.04pt>
+<graf/verification/P_220hz_20.png, id=1732, 2581.39406pt x 1349.04pt>
 File: graf/verification/P_220hz_20.png Graphic file (type png)
 <use graf/verification/P_220hz_20.png>
 Package pdftex.def Info: graf/verification/P_220hz_20.png  used on input line 6
 93.
 (pdftex.def)             Requested size: 223.07211pt x 116.57095pt.
-<graf/verification/P_sum_80.png, id=1715, 2539.23656pt x 1336.24219pt>
+<graf/verification/P_sum_80.png, id=1734, 2539.23656pt x 1336.24219pt>
 File: graf/verification/P_sum_80.png Graphic file (type png)
 <use graf/verification/P_sum_80.png>
 Package pdftex.def Info: graf/verification/P_sum_80.png  used on input line 707
 .
 (pdftex.def)             Requested size: 223.07211pt x 117.3817pt.
-<graf/verification/P_sum_60.png, id=1716, 2551.28156pt x 1364.84906pt>
+<graf/verification/P_sum_60.png, id=1735, 2551.28156pt x 1364.84906pt>
 File: graf/verification/P_sum_60.png Graphic file (type png)
 <use graf/verification/P_sum_60.png>
 Package pdftex.def Info: graf/verification/P_sum_60.png  used on input line 712
 .
 (pdftex.def)             Requested size: 223.07211pt x 119.33237pt.
-<graf/verification/P_sum_40.png, id=1717, 2568.59625pt x 1346.78156pt>
+<graf/verification/P_sum_40.png, id=1736, 2568.59625pt x 1346.78156pt>
 File: graf/verification/P_sum_40.png Graphic file (type png)
 <use graf/verification/P_sum_40.png>
 Package pdftex.def Info: graf/verification/P_sum_40.png  used on input line 717
 .
 (pdftex.def)             Requested size: 223.07211pt x 116.95122pt.
-<graf/verification/P_sum_20.png, id=1718, 2574.61874pt x 1341.51187pt>
+<graf/verification/P_sum_20.png, id=1737, 2574.61874pt x 1341.51187pt>
 File: graf/verification/P_sum_20.png Graphic file (type png)
 <use graf/verification/P_sum_20.png>
 Package pdftex.def Info: graf/verification/P_sum_20.png  used on input line 722
@@ -3194,24 +3263,24 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[95 <./graf/verification/P_120hz_80.png (PNG copy)> <./graf/verification/P_120h
+[99 <./graf/verification/P_120hz_80.png (PNG copy)> <./graf/verification/P_120h
 z_60.png (PNG copy)> <./graf/verification/P_120hz_40.png (PNG copy)> <./graf/ve
 rification/P_120hz_20.png (PNG copy)> <./graf/verification/P_220hz_80.png (PNG 
 copy)> <./graf/verification/P_220hz_60.png (PNG copy)> <./graf/verification/P_2
 20hz_40.png (PNG copy)> <./graf/verification/P_220hz_20.png (PNG copy)>]
-<graf/verification/P_120hz_fifo.png, id=1728, 2488.79813pt x 1326.45563pt>
+<graf/verification/P_120hz_fifo.png, id=1746, 2488.79813pt x 1326.45563pt>
 File: graf/verification/P_120hz_fifo.png Graphic file (type png)
 <use graf/verification/P_120hz_fifo.png>
 Package pdftex.def Info: graf/verification/P_120hz_fifo.png  used on input line
  736.
 (pdftex.def)             Requested size: 223.07211pt x 118.89009pt.
-<graf/verification/P_220hz_fifo.png, id=1729, 2527.94438pt x 1323.44438pt>
+<graf/verification/P_220hz_fifo.png, id=1747, 2527.94438pt x 1323.44438pt>
 File: graf/verification/P_220hz_fifo.png Graphic file (type png)
 <use graf/verification/P_220hz_fifo.png>
 Package pdftex.def Info: graf/verification/P_220hz_fifo.png  used on input line
  741.
 (pdftex.def)             Requested size: 223.07211pt x 116.78253pt.
-<graf/verification/P_sum_fifo.png, id=1730, 2502.34875pt x 1336.24219pt>
+<graf/verification/P_sum_fifo.png, id=1748, 2502.34875pt x 1336.24219pt>
 File: graf/verification/P_sum_fifo.png Graphic file (type png)
 <use graf/verification/P_sum_fifo.png>
 Package pdftex.def Info: graf/verification/P_sum_fifo.png  used on input line 7
@@ -3226,16 +3295,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[96 <./graf/verification/P_sum_80.png (PNG copy)> <./graf/verification/P_sum_60
-.png (PNG copy)> <./graf/verification/P_sum_40.png (PNG copy)> <./graf/verifica
-tion/P_sum_20.png (PNG copy)> <./graf/verification/P_120hz_fifo.png (PNG copy)>
- <./graf/verification/P_220hz_fifo.png (PNG copy)> <./graf/verification/P_sum_f
-ifo.png (PNG copy)>]
-<graf/verification/anc_rand_sin.png, id=1741, 2469.225pt x 1352.80406pt>
+[100 <./graf/verification/P_sum_80.png (PNG copy)> <./graf/verification/P_sum_6
+0.png (PNG copy)> <./graf/verification/P_sum_40.png (PNG copy)> <./graf/verific
+ation/P_sum_20.png (PNG copy)> <./graf/verification/P_120hz_fifo.png (PNG copy)
+> <./graf/verification/P_220hz_fifo.png (PNG copy)> <./graf/verification/P_sum_
+fifo.png (PNG copy)>]
+<graf/verification/anc_rand_sin.png, id=1759, 2469.225pt x 1352.80406pt>
 File: graf/verification/anc_rand_sin.png Graphic file (type png)
 <use graf/verification/anc_rand_sin.png>
 Package pdftex.def Info: graf/verification/anc_rand_sin.png  used on input line
- 781.
+ 784.
 (pdftex.def)             Requested size: 341.43307pt x 187.05872pt.
 
 
@@ -3246,18 +3315,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[97 <./graf/verification/anc_rand_sin.png (PNG copy)>]
-<graf/verification/raw_rand.png, id=1751, 2569.34906pt x 1335.48938pt>
+[101 <./graf/verification/anc_rand_sin.png (PNG copy)>]
+<graf/verification/raw_rand.png, id=1770, 2569.34906pt x 1335.48938pt>
 File: graf/verification/raw_rand.png Graphic file (type png)
 <use graf/verification/raw_rand.png>
-Package pdftex.def Info: graf/verification/raw_rand.png  used on input line 804
+Package pdftex.def Info: graf/verification/raw_rand.png  used on input line 807
 .
 (pdftex.def)             Requested size: 341.43307pt x 177.47113pt.
-<graf/verification/anc_rand_0.png, id=1753, 2568.59625pt x 1338.50063pt>
+<graf/verification/anc_rand_0.png, id=1772, 2568.59625pt x 1338.50063pt>
 File: graf/verification/anc_rand_0.png Graphic file (type png)
 <use graf/verification/anc_rand_0.png>
 Package pdftex.def Info: graf/verification/anc_rand_0.png  used on input line 8
-15.
+18.
 (pdftex.def)             Requested size: 364.19667pt x 189.7784pt.
 
 
@@ -3268,20 +3337,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[98 <./graf/verification/raw_rand.png (PNG copy)> <./graf/verification/anc_rand
-_0.png (PNG copy)>]
-<graf/verification/mlyny.png, id=1763, 2559.5625pt x 1343.0175pt>
+[102 <./graf/verification/raw_rand.png (PNG copy)> <./graf/verification/anc_ran
+d_0.png (PNG copy)>]
+<graf/verification/mlyny.png, id=1783, 2559.5625pt x 1343.0175pt>
 File: graf/verification/mlyny.png Graphic file (type png)
 <use graf/verification/mlyny.png>
-Package pdftex.def Info: graf/verification/mlyny.png  used on input line 839.
+Package pdftex.def Info: graf/verification/mlyny.png  used on input line 842.
 (pdftex.def)             Requested size: 341.43307pt x 179.1478pt.
-<graf/verification/anc_opc.png, id=1765, 2584.40532pt x 1343.0175pt>
+<graf/verification/anc_opc.png, id=1785, 2584.40532pt x 1343.0175pt>
 File: graf/verification/anc_opc.png Graphic file (type png)
 <use graf/verification/anc_opc.png>
-Package pdftex.def Info: graf/verification/anc_opc.png  used on input line 849.
+Package pdftex.def Info: graf/verification/anc_opc.png  used on input line 852.
 
 (pdftex.def)             Requested size: 341.43307pt x 177.4264pt.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -3290,27 +3362,29 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[99 <./graf/verification/mlyny.png (PNG copy)> <./graf/verification/anc_opc.png
- (PNG copy)>]
-<graf/verification/bad_120.png, id=1777, 2494.82062pt x 1319.68031pt>
+[103 <./graf/verification/mlyny.png (PNG copy)>]
+<graf/verification/bad_120.png, id=1796, 2494.82062pt x 1319.68031pt>
 File: graf/verification/bad_120.png Graphic file (type png)
 <use graf/verification/bad_120.png>
-Package pdftex.def Info: graf/verification/bad_120.png  used on input line 877.
+Package pdftex.def Info: graf/verification/bad_120.png  used on input line 880.
 
 (pdftex.def)             Requested size: 223.07211pt x 117.98077pt.
-<graf/verification/bad_220.png, id=1778, 2545.25906pt x 1341.51187pt>
+<graf/verification/bad_220.png, id=1797, 2545.25906pt x 1341.51187pt>
 File: graf/verification/bad_220.png Graphic file (type png)
 <use graf/verification/bad_220.png>
-Package pdftex.def Info: graf/verification/bad_220.png  used on input line 882.
+Package pdftex.def Info: graf/verification/bad_220.png  used on input line 885.
 
 (pdftex.def)             Requested size: 223.07211pt x 117.55803pt.
-<graf/verification/bad_sum.png, id=1779, 2582.14688pt x 1336.24219pt>
+<graf/verification/bad_sum.png, id=1798, 2582.14688pt x 1336.24219pt>
 File: graf/verification/bad_sum.png Graphic file (type png)
 <use graf/verification/bad_sum.png>
-Package pdftex.def Info: graf/verification/bad_sum.png  used on input line 887.
+Package pdftex.def Info: graf/verification/bad_sum.png  used on input line 890.
 
 (pdftex.def)             Requested size: 223.07211pt x 115.42432pt.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -3319,8 +3393,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[100 <./graf/verification/bad_120.png (PNG copy)> <./graf/verification/bad_220.
-png (PNG copy)> <./graf/verification/bad_sum.png (PNG copy)>]
+[104 <./graf/verification/anc_opc.png (PNG copy)>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -3329,7 +3402,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[101]) (./chapters/07.tex
+[105 <./graf/verification/bad_120.png (PNG copy)> <./graf/verification/bad_220.
+png (PNG copy)> <./graf/verification/bad_sum.png (PNG copy)>])
+(./chapters/07.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -3338,9 +3413,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[102]
+[106]
 Rozdzia\l  7.
-[103
+[107
 
 ])
 
@@ -3351,7 +3426,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[104]
+[108]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
 51.
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
@@ -3363,7 +3438,7 @@ Overfull \hbox (15.03812pt too wide) in paragraph at lines 152--152
 / beaglebone -[]
  []
 
-[105
+[109
 
 ]
 Overfull \hbox (7.27534pt too wide) in paragraph at lines 152--152
@@ -3406,7 +3481,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[106]
+[110]
 Overfull \hbox (4.62537pt too wide) in paragraph at lines 152--152
 \T1/lmr/m/sc/12 url\T1/lmr/m/n/12 : []$\T1/lmtt/m/n/12 https : / / www . ti . c
 om / lit / an / sprack0 / sprack0 . pdf$[] \T1/lmr/m/n/12 (term. wiz. 23.07.202
@@ -3421,7 +3496,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[107]
+[111]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -3430,9 +3505,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[108
+[112
 
-] [109] [110] (./chapters/08.tex) (./chapters/09.tex [111
+] [113] [114] (./chapters/08.tex) (./chapters/09.tex [115
 
 
 ]
@@ -3444,20 +3519,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[112
+[116
 
-]) [113]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[114
-
-] (./main.lof [115]
+]) [117]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -3466,7 +3530,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[116])
+[118
+
+] (./main.lof [119]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[120])
 \tf@lof=\write7
 \openout7 = `main.lof'.
 
@@ -3479,7 +3554,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[117]
+[121]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -3488,13 +3563,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[118
+[122
 
 ] (./main.lot)
 \tf@lot=\write8
 \openout8 = `main.lot'.
 
- [119] (./main.aux)
+ [123] (./main.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -3505,33 +3580,35 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 47394 strings out of 480139
- 1041065 string characters out of 5893693
+ 47427 strings out of 480139
+ 1041416 string characters out of 5893693
  1768067 words of memory out of 5000000
- 63815 multiletter control sequences out of 15000+600000
- 563159 words of font info for 78 fonts, out of 8000000 for 9000
+ 63835 multiletter control sequences out of 15000+600000
+ 579453 words of font info for 94 fonts, out of 8000000 for 9000
  79 hyphenation exceptions out of 8191
  89i,12n,92p,1916b,3460s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
-ips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share
+ips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share
 /texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ma
 thsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}</usr/share/texmf/f
 onts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbxi10
 .pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/font
 s/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb
 ></usr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/typ
-e1/public/lm/lmmi6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/
-share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/publi
-c/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/tex
-mf/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr
-i8.pfb></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></usr/share/texmf/fon
-ts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.
-pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/t
-ype1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on main.pdf (127 pages, 25101005 bytes).
+e1/public/lm/lmmi6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi7.pfb></usr/
+share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/publi
+c/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/te
+xmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri
+10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fon
+ts/type1/public/lm/lmri8.pfb></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb
+></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/t
+ype1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></u
+sr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/pu
+blic/lm/lmtt12.pfb>
+Output written on main.pdf (131 pages, 25139805 bytes).
 PDF statistics:
- 2269 PDF objects out of 2487 (max. 8388607)
- 1896 compressed objects within 19 object streams
- 622 named destinations out of 1000 (max. 500000)
+ 2297 PDF objects out of 2487 (max. 8388607)
+ 1915 compressed objects within 20 object streams
+ 626 named destinations out of 1000 (max. 500000)
  1366 words of extra memory for PDF output out of 10000 (max. 10000000)
 

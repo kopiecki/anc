@@ -238,7 +238,7 @@ poszczególnych partycji przedstawiono poniżej:
     rozruchowego. Wymagany jest system plików FAT32.
 
     \item Partycja systemowa --- zawiera pliki jądra systemu i~drzewa urządzeń.
-    Wymagany jest system plików EXT4.
+    Wymagany jest system plików EXT4\remark{nie jest wymagany, Linux obsługuje wiele systemów plików.}.
 
     \item Partycja z~głównym systemem plików --- zawiera wypakowany główny system
     plików systemu. Wymagany jest system plików EXT4.
@@ -298,7 +298,7 @@ znaczących kwestii, sterownik zawiera deklarację struktury opisującą
 konfigurację płytki dla transferów wejściowych i~wyjściowych (wspierane formaty,
 liczba kanałów) oraz funkcję, która umożliwia jego załadowanie i~widoczność w
 systemie. W wykorzystanym rozwiązaniu napisany moduł bezpośrednio zastąpił
-sterownik kodeka PCM5102A, zachowując początkową nazwę, więc dodatkowe
+sterownik kodeka PCM\-5102A, zachowując początkową nazwę, więc dodatkowe
 modyfikacje w~plikach konfiguracyjnych jądra nie były konieczne. Domyślnie,
 sterownik kodeka PCM5102A ładowany jest dynamicznie jako moduł, więc po
 zbudowaniu jądra wymagana jest ich instalacja w~głównym systemie plików.
@@ -651,18 +651,30 @@ Z głównych mankamentów generatora \textit{rand()} można wyróżnić:
     w tym przedziale liczby generowane są równomiernie} --- w~przypadku, kiedy
     RAND\_MAX zdefiniowany jest jako maksymalny zakres 32 bitowy, a~użytkownik
     chce wygenerować losową liczbę 16 bitową, to wygenerowana liczba pochodzi
-    z~rozkładu nierównomiernego \cite{bib:rand}.
+    z~rozkładu nierównomiernego \cite{bib:rand}.\remark{nie rozumiem tego,
+    dokumentacja rand() od zawsze mówi jasno, że losuje wartość
+    z 0 do RAND\_MAX, i~powszechnie znane jest, że jak chce się
+    dostać inny zakres to trzeba podzielić i pomnożyć,
+    i nie ma tego problemu, z dokładnością do nieliniwości
+    tego przekształcenia}
     \item \textbf{Stan generatora inicjalizowany jest globanie} --- 
     niemożliwym jest wykorzystanie kilku instancji silnika w~jednej aplikacji,
     co~znacząco komplikuje pracę, kiedy programista chce urównoleglić
-    niektóre operacje \cite{bib:rand}.
+    niektóre operacje \cite{bib:rand}\remark{od dawna jest też rand\_r()}.
     \item \textbf{Jakość implementacji jest wątpliwa} --- generatory LCG słyną
     z~niskiej losowości bitów mniej znaczących w~porównaniu z~bardziej
     znaczącymi. Liczby generowane za pomocą tych generatorów mogą tworzyć
     widoczne struktury kratowe lub płaskie, co bardzo dobrze widać w przypadku
     generatora RANDU \cite{bib:rand}. Dodatkowo sprawdzono, że typowe
     implementacji LCG zazwyczaj wypadają bardzo źle w testach losowości
-    statystycznej \cite{bib:prng} 
+    statystycznej \cite{bib:prng}
+    \remark{implementacja LCG zwykle jest przyzwoita, przynajmniej
+    w zakresie założeń, no i w sensownych bibliotekach standardowych.
+    A LCG nie są takie złe, tylko w przypadku rand() jest bardzo
+    źle, bo te założenia przyjęto źle, dano tam bardzo mały stan.
+    Ale też to były inne czasy, mało RAMu, a ten stan ma każdy
+    proces w systemie. Tzn. tutaj nie problem implementacji,
+    a interfejsu, że np. srand() przyjmuje seed jako unsigned int.}
 \end{itemize}
 
 Mając na uwadze problemy wyszczególnione wyżej, w~celu generacji sygnału
