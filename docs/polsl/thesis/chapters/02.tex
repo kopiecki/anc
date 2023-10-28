@@ -347,6 +347,12 @@ antyaliasingowy oraz przetwornik analogowo-cyfrowy. Analogicznie jak w~przypadku
 transmitancji $S'(z^{-1})$, tor jest kompozycją elementów akustycznych
 i~elektronicznych.
 
+\item $G(z^{-1})$ --- reprezentuje dynamikę toru związanego z pomiarem sygnału
+referencyjnego $x(n)$. W~jego skład wchodzi tor dźwięku do mikrofonu
+referencyjnego, mikrofon referencyjny, przedwzmacniacz, filtr antyaliasingowy
+oraz przetwornik analogowo-cyfrowy. Analogicznie jak w~przypadku transmitancji
+$S'(z^{-1})$ i $R(z^{-1})$, tor jest kompozycją elementów akustycznych i~elektronicznych.
+
 \end{itemize}
 
 Po dodaniu dodatkowych obiektów z~układu wyłaniają się dwa, znaczące
@@ -363,29 +369,38 @@ zdefiniowany tor podstawowy, tym razem określony jako:
     \label{eq::s}
 \end{equation}
 
-Mając na uwadze \ref{eq::p} i~\ref{eq::s}, zależność definiująca błąd
-$E(z^{-1})$ zostaje zmodyfikowana do postaci:
+Dodatkowo, transmitancja $G(z^{-1})$ wprowadza zależność na sygnał referencyjny
+$x(n)$:
 \begin{equation}
-    E(z^{-1}) = R(z^{-1})\left[P'(z^{-1}) - S'(z^{-1})W(z^{-1})\right]X(z^{-1}).
+    X(z^{-1}) = G(z^{-1})H(z^{-1})
+    \label{eq::x}
 \end{equation}
 
-Jeżeli $W(z^{-1})$ jest zbieżne, to w tym przypadku:
+Mając na uwadze \ref{eq::p}, \ref{eq::s} i \ref{eq::x} zależność definiująca
+błąd $E(z^{-1})$ zostaje zmodyfikowana do postaci:
 \begin{equation}
-    E(z^{-1}) = 0 \implies W(z^{-1}) = \frac{P'(z^{-1})}{S'(z^{-1})}.
+    E(z^{-1}) = R(z^{-1})\left[P'(z^{-1}) - G(z^{-1})S'(z^{-1})W(z^{-1})\right]H(z^{-1}).
+\end{equation}
+
+Jeżeli $W(z^{-1})$ jest w przybliżeniu zbieżne, to w tym przypadku:
+\begin{equation}
+    E(z^{-1}) = 0 \implies W(z^{-1}) = \frac{P'(z^{-1})}{G(z^{-1})S'(z^{-1})}.
     \label{eq::adapt}
 \end{equation}
 
 Bezpośrednio z~zależności \ref{eq::adapt} można wywnioskować, że zadaniem filtru
 adaptacyjnego $W(z^{-1})$ w takiej sytuacji jest nie tylko bieżąca estymacja
-parametrów toru $P(z^{-1})$, ale również biężąca estymacja parametrów toru
-$S'(z^{-1})$ wraz z~jego odwróceniem. Jest to mocno problematyczne, ponieważ:
+parametrów toru $P'(z^{-1})$, ale również biężąca estymacja parametrów
+transmitancji $G(z^{-1})$ i toru $S'(z^{-1})$ wraz z~ich odwróceniem. Jest to
+mocno problematyczne, ponieważ:
 \begin{enumerate} 
 
     \item Niemożliwym jest kompensować opóźnienia $S'(z^{-1})$, jeżeli
     $P(z^{-1})$ nie zawiera takiego samego lub mniejszego.
 
-    \item Jeżeli istnieje częstotliwość, dla której $S'(\omega) = 0$, to filtr
-    staje się niestabilny. Taką częstotliwość nazywa się niesterowalną.
+    \item Jeżeli istnieje częstotliwość, dla której $S'(\omega) = 0$ lub
+    $G(z^{-1})$, to filtr staje się niestabilny. Taką częstotliwość nazywa się
+    niesterowalną.
 
 \end{enumerate}
 
@@ -397,8 +412,10 @@ efektach.
 
 \par Schemat \ref{analysis::scheme_3} może zostać uproszczony, bazując na
 informacji, że transmitancje \ref{eq::p} i~\ref{eq::s} mają wspólny składnik
-w~postaci transmitancji $R(z^{-1})$. Tak zmodyfikowany schemat przedstawiono na
-rysunku \ref{analysis::scheme_4}:
+w~postaci transmitancji $R(z^{-1})$, a transmitancja $G(z^{-1})$ może zostać
+przesunięta zgodnie z algebrą schematów blokowych na wejście układu wraz z jej
+późniejszym uwzględnieniem w transmitancji toru podstawowego. Tak zmodyfikowany
+schemat przedstawiono na rysunku \ref{analysis::scheme_4}:
 
 \begin{figure}[H]
     \centering

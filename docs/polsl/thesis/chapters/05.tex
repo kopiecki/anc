@@ -618,8 +618,8 @@ SIMD i~rezultat przykładowego testu filtracji przedstawiono w~tabeli
     \centering
     \begin{tabular}{|| c | c | c | c ||} 
         \hline
-        \textbf{Długość filtra} & \textbf{Ilość iteracji} & \textbf{Czas, bez
-        SIMD} & \textbf{Czas, z~SIMD} \\
+        \textbf{Długość filtra} & \textbf{Ilość iteracji} & \textbf{Czas bez
+        SIMD} & \textbf{Czas z~SIMD} \\
         [0.5ex] \hline\hline
         128 & 10e6 & 27.389 s& 4.460 s\\ 
         \hline\hline
@@ -641,54 +641,33 @@ podstawowa implementacja może opierać się na wykorzystaniu funkcji
 \textit{rand()} z~biblioteki standardowej języka C. Funkcja \textit{rand()}
 wykorzystywana jest do generacji liczby pseudolosowej z~przedziału 0 do wartości
 RAND\_MAX, która zależy od implementacji bilblioteki na daną architekturę
-\cite{bib:cpp}. \par Funkcja \textit{rand()}, będąca implementacją generatora
-liczb pseudolosowych napisana jest w~oparciu o~liniowy generator kongruencjalny
-(ang. \textit{Linear congruential generator}, LCG), który nie słynie z~dobrej
-jakości w~porównaniu z~innymi generatorami liczb pseudolosowych \cite{bib:rand}.
-Z głównych mankamentów generatora \textit{rand()} można wyróżnić:
-\begin{itemize}
-    \item \textbf{Przedział generacji jest zdefiniowany przez bibliotekę i~tylko
-    w tym przedziale liczby generowane są równomiernie} --- w~przypadku, kiedy
-    RAND\_MAX zdefiniowany jest jako maksymalny zakres 32 bitowy, a~użytkownik
-    chce wygenerować losową liczbę 16 bitową, to wygenerowana liczba pochodzi
-    z~rozkładu nierównomiernego \cite{bib:rand}.\remark{nie rozumiem tego,
-    dokumentacja rand() od zawsze mówi jasno, że losuje wartość
-    z 0 do RAND\_MAX, i~powszechnie znane jest, że jak chce się
-    dostać inny zakres to trzeba podzielić i pomnożyć,
-    i nie ma tego problemu, z dokładnością do nieliniwości
-    tego przekształcenia}
-    \item \textbf{Stan generatora inicjalizowany jest globanie} --- 
-    niemożliwym jest wykorzystanie kilku instancji silnika w~jednej aplikacji,
-    co~znacząco komplikuje pracę, kiedy programista chce urównoleglić
-    niektóre operacje \cite{bib:rand}\remark{od dawna jest też rand\_r()}.
-    \item \textbf{Jakość implementacji jest wątpliwa} --- generatory LCG słyną
-    z~niskiej losowości bitów mniej znaczących w~porównaniu z~bardziej
-    znaczącymi. Liczby generowane za pomocą tych generatorów mogą tworzyć
-    widoczne struktury kratowe lub płaskie, co bardzo dobrze widać w przypadku
-    generatora RANDU \cite{bib:rand}. Dodatkowo sprawdzono, że typowe
-    implementacji LCG zazwyczaj wypadają bardzo źle w testach losowości
-    statystycznej \cite{bib:prng}
-    \remark{implementacja LCG zwykle jest przyzwoita, przynajmniej
-    w zakresie założeń, no i w sensownych bibliotekach standardowych.
-    A LCG nie są takie złe, tylko w przypadku rand() jest bardzo
-    źle, bo te założenia przyjęto źle, dano tam bardzo mały stan.
-    Ale też to były inne czasy, mało RAMu, a ten stan ma każdy
-    proces w systemie. Tzn. tutaj nie problem implementacji,
-    a interfejsu, że np. srand() przyjmuje seed jako unsigned int.}
-\end{itemize}
-
-Mając na uwadze problemy wyszczególnione wyżej, w~celu generacji sygnału
-identyfikującego posłużono się klasą generatorów będącą podzbiorem generatorów
-działających na bazie rejestru przesuwnego z~liniowym sprzężeniem zwrotnym (ang.
-\textit{Linear Feedback Shift Register}, LFSR). W~literaturze
-\cite{bib:kuo_morgan} \cite{bib:figwer} można spotkać się z~sygnałami PRBS (ang.
-\textit{Pseudorandom binary sequence}), które generowane są właśnie z~ich
-wykorzystaniem. Przykładowy, ugólniony sposób działania generatorów tej klasy
-przedstawiono na rysunku \ref{sw::lfsr}:
+\cite{bib:cpp}. \par Omawiana funkcja, będąca implementacją generatora liczb
+pseudolosowych napisana jest w~oparciu o~liniowy generator kongruencjalny (ang.
+\textit{Linear congruential generator}, LCG), którego typowe implementacje w
+zakresie zakresie przyjętych założeń zwykle są przyzwoite i zdaniem autora
+mogłyby zostać bezproblemowo wykorzystane do generacji odpowiedniego sygnału
+identyfikującego. Problemem jest dostępna implementacja LCG w postaci funkcji
+\textit{rand()}, która była pisana w~czasach mocno odległych technologicznie od
+dzisiejszych, w~wyniku czego parametry generatora, które odpowiedzialne są
+za~jakość losowości generowanych liczb, zostały dobrane adekwatnie
+do~tamtejszych ograniczeń (bardzo niski stan generatora). Wynikiem takiego
+doboru jest implementacja, która słynie z~niskiej losowości bitów mniej
+znaczących w~porównaniu z~bardziej znaczącymi, gdzie generowane liczby mogą
+tworzyć widoczne struktury kratowe lub płaskie, co bardzo dobrze widać w
+przypadku generatora RANDU \cite{bib:rand}. Dodatkowo zweryfikowano, że LCG z
+niskim stanem wypadają bardzo źle w testach losowości statystycznej biblioteki
+\textit{TestU01}. \par Mając na uwadze problemy wyszczególnione wyżej, w~celu
+generacji sygnału identyfikującego posłużono się klasą generatorów będącą
+podzbiorem generatorów działających na bazie rejestru przesuwnego z~liniowym
+sprzężeniem zwrotnym (ang. \textit{Linear Feedback Shift Register}, LFSR).
+W~literaturze \cite{bib:kuo_morgan} \cite{bib:figwer} można spotkać się
+z~sygnałami PRBS (ang. \textit{Pseudorandom binary sequence}), które generowane
+są właśnie z~ich wykorzystaniem. Przykładowy, ugólniony sposób działania
+generatorów tej klasy przedstawiono na rysunku \ref{sw::lfsr}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{graf/sw/lfsr.png}
+    \includegraphics[width=0.8\textwidth]{graf/sw/lfsr.png}
     \caption{Przykładowy LFSR}
     \label{sw::lfsr}
 \end{figure}
@@ -721,7 +700,7 @@ próbek przedstawiono na rysunku \ref{sw::prng_psd}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/sw/prng_psd.png}
+    \includegraphics[width=0.8\textwidth]{graf/sw/prng_psd.png}
     \caption{Funkcja autokorelacji i~GWM sygnału z~generatora
     \textit{xoroshiro16++}}
     \label{sw::prng_psd}

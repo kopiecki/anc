@@ -220,11 +220,13 @@ Pomiary przeprowadzono na trzech sygnałach wejściowych zdefiniowanych poniżej
             \centering
             \includegraphics[width=\textwidth]{graf/verification/raw_120hz.png}
             \caption{Sinusoida o $f = 120$ Hz}
+            \label{ver::120hz}
         \end{subfigure}
         \begin{subfigure}[b]{0.49\textwidth}
             \centering
             \includegraphics[width=\textwidth]{graf/verification/raw_220hz.png}
             \caption{Sinusoida o $f = 220$ Hz}
+            \label{ver::220hz}
         \end{subfigure}
            \caption{Przebiegi referencyjne}
            \label{ver::sig_sine}
@@ -288,17 +290,17 @@ przedstawiono na rysunkach \ref{ver::ref_sig}.
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{graf/verification/alpha_120hz_01.png}
-        \caption{Przebieg $e(n)$ dla 1 sygnału testowego}
+        \caption{Pierwszy sygnał testowy}
     \end{subfigure}
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{graf/verification/alpha_220hz_01.png}
-        \caption{Przebieg $e(n)$ dla 2 sygnału testowego}
+        \caption{Drugi sygnał testowy}
     \end{subfigure}
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{graf/verification/alpha_sum_01.png}
-        \caption{Przebieg $e(n)$ dla 3 sygnału testowego}
+        \caption{Trzeci sygnał testowy}
     \end{subfigure}
        \caption{Przebiegi referencyjne $e(n)$ dla sygnałów testowych}
        \label{ver::ref_sig}
@@ -320,8 +322,8 @@ dobierano zgodnie z~zależnością:
     \alpha(i) = \frac{i}{50}, \qquad \text{dla } i = 1, 2, 3, 4.
 \end{equation}
 
-Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
-\ref{ver::alpha_120hz}:
+Rezultaty dla pierwszego sygnału testowego \ref{ver::120hz} przedstawiono na
+rysunku \ref{ver::alpha_120hz}:
 
 \begin{figure}[H]
     \centering
@@ -345,12 +347,12 @@ Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
         \includegraphics[width=\textwidth]{graf/verification/alpha_120hz_02.png}
         \caption{$\alpha = 0.02$}
     \end{subfigure}
-       \caption{Badania wpływu rozmiaru kroku $\alpha$ --- sygnał 1}
+    \caption{Przebiegi $e(t)$ dla sygnału pierwszego --- wpływ $\alpha$.}
        \label{ver::alpha_120hz}
 \end{figure}
 
-Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
-\ref{ver::alpha_220hz}:
+Rezultaty dla drugiego sygnału testowego \ref{ver::220hz} przedstawiono na
+rysunku \ref{ver::alpha_220hz}:
 
 \begin{figure}[H]
     \centering
@@ -374,12 +376,12 @@ Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
         \includegraphics[width=\textwidth]{graf/verification/alpha_220hz_02.png}
         \caption{$\alpha = 0.02$}
     \end{subfigure}
-       \caption{Badania wpływu rozmiaru kroku $\alpha$ --- sygnał 2}
+    \caption{Przebiegi $e(t)$ dla sygnału drugiego --- wpływ $\alpha$.}
        \label{ver::alpha_220hz}
 \end{figure}
 
-Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
-\ref{ver::alpha_sum}:
+Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sine} przedstawiono na
+rysunku \ref{ver::alpha_sum}:
 
 \begin{figure}[H]
     \centering
@@ -403,7 +405,7 @@ Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
         \includegraphics[width=\textwidth]{graf/verification/alpha_sum_02.png}
         \caption{$\alpha = 0.02$}
     \end{subfigure}
-       \caption{Badania wpływu rozmiaru kroku $\alpha$ - sygnał 3}
+    \caption{Przebiegi $e(t)$ dla sygnału trzeciego --- wpływ $\alpha$.}
        \label{ver::alpha_sum}
 \end{figure}
 
@@ -448,7 +450,7 @@ z zależnością:
     L(i) = 2^i \qquad \text{dla } i = 8, 9, 10.
 \end{equation}
 
-Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
+Rezultaty dla pierwszego sygnału testowego \ref{ver::120hz} przedstawiono na rysunku
 \ref{ver::l_120hz}:
 
 \begin{figure}[H]
@@ -468,11 +470,11 @@ Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
         \includegraphics[width=\textwidth]{graf/verification/l_120hz_1024.png}
         \caption{$L = 1024$}
     \end{subfigure}
-       \caption{Badania wpływu długości $L$ filtra $W(z^{-1})$ --- sygnał 1}
+    \caption{Przebiegi $e(t)$ dla sygnału pierwszego --- wpływ $L$.}
        \label{ver::l_120hz}
 \end{figure}
 
-Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
+Rezultaty dla drugiego sygnału testowego \ref{ver::220hz} przedstawiono na rysunku
 \ref{ver::l_220hz}:
 
 \begin{figure}[H]
@@ -492,12 +494,12 @@ Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
         \includegraphics[width=\textwidth]{graf/verification/l_220hz_1024.png}
         \caption{$L = 1024$}
     \end{subfigure}
-       \caption{Badania wpływu długości $L$ filtra $W(z^{-1})$ --- sygnał 2}
-       \label{ver::l_220hz}
+    \caption{Przebiegi $e(t)$ dla sygnału drugiego --- wpływ $L$.}
+    \label{ver::l_220hz}
 \end{figure}
 
-Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
-\ref{ver::l_sum}:
+Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sine} przedstawiono na
+rysunku \ref{ver::l_sum}:
 
 \begin{figure}[H]
     \centering
@@ -516,7 +518,7 @@ Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
         \includegraphics[width=\textwidth]{graf/verification/l_sum_1024.png}
         \caption{$L = 1024$}
     \end{subfigure}
-       \caption{Badania wpływu długości $L$ filtra $W(z^{-1})$ --- sygnał 3}
+        \caption{Przebiegi $e(t)$ dla sygnału trzeciego --- wpływ $L$.}
        \label{ver::l_sum}
 \end{figure}
 
@@ -544,8 +546,8 @@ przyjęto:
     f'_s = 2f'_{s,\text{ref}} = 4000 \text{ Hz}.
 \end{equation}
 
-Rezultaty dla wybranych sygnałów testowych przedstawiono na rysunkach
-\ref{ver::16_khz}:
+Rezultaty dla sygnałów testowych \ref{ver::120hz}, \ref{ver::220hz} i
+\ref{ver::sig_sine} przedstawiono na rysunkach \ref{ver::16_khz}:
 
 \begin{figure}[H]
     \centering
@@ -564,8 +566,8 @@ Rezultaty dla wybranych sygnałów testowych przedstawiono na rysunkach
         \includegraphics[width=\textwidth]{graf/verification/sum_16000.png}
         \caption{Trzeci sygnał testowy}
     \end{subfigure}
-        \caption{Badania wpływu częstotliwości próbkowania}
-        \label{ver::16_khz}
+    \caption{Przebiegi $e(t)$ dla sygnałów testowych --- wpływ $f'_s$.}
+    \label{ver::16_khz}
 \end{figure}
 
 Analizując przebiegi \ref{ver::16_khz} można stwierdzić, że zwiększona
@@ -591,8 +593,8 @@ przyjęto:
     n_f = 2n_{f,\text{ref}} = 128 \text{ ramek}.
 \end{equation}
 
-Rezultaty dla wybranych sygnałów testowych przedstawiono na rysunkach
-\ref{ver::nf128}:
+Rezultaty dla sygnałów testowych \ref{ver::120hz}, \ref{ver::220hz} i
+\ref{ver::sig_sine} przedstawiono na rysunkach \ref{ver::nf128}:
 
 \begin{figure}[H]
     \centering
@@ -611,8 +613,8 @@ Rezultaty dla wybranych sygnałów testowych przedstawiono na rysunkach
         \includegraphics[width=\textwidth]{graf/verification/sum_128.png}
         \caption{Trzeci sygnał testowy}
     \end{subfigure}
-        \caption{Badania wpływu rozmiaru fragmentu}
-       \label{ver::nf128}
+        \caption{Przebiegi $e(t)$ dla sygnałów testowych --- wpływ $n_f$.}
+        \label{ver::nf128}
 \end{figure}
 
 Wnioskując z~\ref{ver::nf128} można stwierdzić, że zwiększony rozmiar fragmentu
@@ -637,8 +639,8 @@ z~zależnością:
     P(i) = 100\frac{i}{5}, \qquad \text{dla } i = 1, 2, 3, 4.
 \end{equation}
 
-Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
-\ref{ver::p_120hz}:
+Rezultaty dla pierwszego sygnału testowego \ref{ver::120hz} przedstawiono na
+rysunku \ref{ver::p_120hz}:
 
 \begin{figure}[H]
     \centering
@@ -663,12 +665,12 @@ Rezultaty dla pierwszego sygnału testowego przedstawiono na rysunku
         \caption{$P = 20$}
         \label{ver::120hz_boom}
     \end{subfigure}
-       \caption{Badania wpływu poziomu priorytetu $P$ --- sygnał 1}
-       \label{ver::p_120hz}
+    \caption{Przebiegi $e(t)$ dla sygnału pierwszego --- wpływ $P$.}
+    \label{ver::p_120hz}
 \end{figure}
 
-Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
-\ref{ver::p_120hz}:
+Rezultaty dla drugiego sygnału testowego \ref{ver::220hz} przedstawiono na
+rysunku \ref{ver::p_120hz}:
 
 \begin{figure}[H]
     \centering
@@ -692,12 +694,12 @@ Rezultaty dla drugiego sygnału testowego przedstawiono na rysunku
         \includegraphics[width=\textwidth]{graf/verification/P_220hz_20.png}
         \caption{$P = 20$}
     \end{subfigure}
-       \caption{Badania wpływu poziomu priorytetu $P$ --- sygnał 2}
-       \label{ver::p_220hz}
+    \caption{Przebiegi $e(t)$ dla sygnału drugiego --- wpływ $P$.}
+    \label{ver::p_220hz}
 \end{figure}
 
-Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
-\ref{ver::p_sum}:
+Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sum} przedstawiono na
+rysunku \ref{ver::p_sum}:
 
 \begin{figure}[H]
     \centering
@@ -721,11 +723,12 @@ Rezultaty dla trzeciego sygnału testowego przedstawiono na rysunku
         \includegraphics[width=\textwidth]{graf/verification/P_sum_20.png}
         \caption{$P = 20$}
     \end{subfigure}
-       \caption{Badania wpływu poziomu priorytetu $P$ --- sygnał 3}
+       \caption{Przebiegi $e(t)$ dla sygnału trzeciego --- wpływ $P$.}
        \label{ver::p_sum}
 \end{figure}
 
-\par Na rysunkach \ref{ver::fifo} przedstawiono przebiegi uzyskane dla zmiany
+\par Na rysunkach \ref{ver::fifo} przedstawiono przebiegi dla sygnałów testowych
+\ref{ver::120hz}, \ref{ver::220hz} i \ref{ver::sig_sine} uzyskane dla zmiany
 wytycznej planisty z~SCHED\_RR na SCHED\_FIFO:
 
 \begin{figure}[H]
@@ -745,7 +748,7 @@ wytycznej planisty z~SCHED\_RR na SCHED\_FIFO:
         \includegraphics[width=\textwidth]{graf/verification/P_sum_fifo.png}
         \caption{Trzeci sygnał testowy}
     \end{subfigure}
-       \caption{Badania rozszerzeń czasu rzeczywistego --- zmiana wytycznej planisty}
+       \caption{Przebiegi $e(t)$ --- zmiana wytycznej planisty.}
        \label{ver::fifo}
 \end{figure}
 
@@ -787,7 +790,7 @@ dodatkowych zmian.
 
 \subsection{Dodatkowe eksperymenty i~podsumowanie badań}
 
-\subsubsection{Ekperyment --- losowe pobudzenia sinusoidalne}
+\subsubsection{Eksperyment --- pseudolosowe pobudzenia sinusoidalne}
 
 Eksperyment opiera się na wykorzystaniu sygnału testowego, który składa się
 z~pobudzeń sinusoidalnych z zakresu od 100 Hz do 400 Hz generowanych w~pewnych
@@ -799,7 +802,7 @@ przedstawiono na rysunku \ref{ver::rand_sin}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{graf/verification/anc_rand_sin.png}
-    \caption{Eksperyment --- pseudolosowe pobudzenia sinusoidalne}
+    \caption{Przebieg $e(t)$ dla pobudzeń sinusoidalnych.}
     \label{ver::rand_sin}
 \end{figure}
 
@@ -812,7 +815,7 @@ wpływu algorytmów, zauważono, że system jest w stanie w dobrym stopniu tłum
 sinusoidy do założonego pasma. Poza nim, system nie działa prawidłowo i~zaczyna
 generować sygnały powodujące większy hałas niż wejściowy.
 
-\subsubsection{Eksperyment --- hałas losowy}
+\subsubsection{Eksperyment --- hałas pseudolosowy}
 
 W przeprowadzonym eksperymencie, korzystając z zestawu parametrów referencyjnych
 określonych w tabeli \ref{tab::ref}, jako hałas wykorzystano sygnał losowy
@@ -821,8 +824,8 @@ błędu sygnału przedstawiono na rysunku \ref{ver::sig_rand}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/verification/raw_rand.png}
-    \caption{Sygnał testowy --- szum losowy (po przybliżeniu i~normalizacji)}
+    \includegraphics[width=0.8\textwidth]{graf/verification/raw_rand.png}
+    \caption{Przebieg $e(t)$ dla sygnału pseudolosowego.}
     \label{ver::sig_rand}
 \end{figure}
 
@@ -833,7 +836,7 @@ Hanna dla $f'_s = 2$ kHz przedstawiono na rysunku \ref{ver::anc_rand_psd}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/verification/anc_rand_0.png}
-    \caption{Sygnał losowy --- pierwszy eksperyment}
+    \caption{Porównanie --- GWM $e(t)$ dla sygnału pseudolosowego.}
     \label{ver::anc_rand_psd}
 \end{figure}
 
@@ -843,21 +846,27 @@ przeprowadzonych wcześniej badań, z których wynika, że algorytm zbiega się
 zdecydowanie zbyt wolno, żeby poprawnie reagować na szybkozmienny, pseudolosowy
 sygnał wejściowy. W przypadku włączonego systemu, pasmo do 500 Hz jest w wielu
 miejscach o większej mocy, niż w przypadku wyłączonego, co świadczy o tym, że
-włączone ANC tylko pogarsza sprawę i powoduje większy hałas.
+włączone ANC tylko pogarsza sprawę i powoduje większy hałas, co jest również
+odczuwalne przez słuchacza znajdującego się niedaleko mikrofonu błedu.
 
 \subsubsection{Eksperyment --- hałasy rzeczywiste}
 
 W przeprowadzonym eksperymencie sprawdzono, jak układ zachowuje się dla
-rzeczywistych sygnałów wejściowych pochodzących z elektrowni. Działanie układu
-dla pierwszego sygnału, będącego nagraniem pracujących młynów kulowych,
-przedstawiono w postaci przebiegów gęstości widmowej mocy oblicznej metodą
-Welcha z oknem Hanna dla $f'_s = 2$ kHz dla włączonego i~wyłączonego systemu na
-rysunku \ref{ver::mlyny}:
+rzeczywistych hałasów pochodzących z elektrowni. Nagrania w formacie
+\textit{.wav} odtwarzano z głośnika symulującego źródło hałasu, natężenie
+dźwieku starano utrzymać się na poziomie 80 dB SPL i do eksperymentu
+wykorzystano zestaw parametrów referencyjnych określonych w tabeli
+\ref{tab::ref}, analogicznie jak w przypadku reszty badań. Analizy
+przeprowadzano z wykorzystaniem przebiegów gęstości widmowych mocy oblicznych
+metodą Welcha z oknem Hanna dla $f'_s = 2$ kHz dla włączonego i~wyłączonego
+systemu. \par Porównanie przebiegów gęstości widmowych mocy w przypadku
+włączonego i wyłączonego systemu dla pierwszego hałasu, będącego nagraniem
+pracujących młynów kulowych, przedstawiono na rysunku \ref{ver::mlyny}:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/verification/mlyny.png}
-    \caption{Eksperyment --- hałas generowany przez pracujące młyny kulowe}
+    \caption{Porównanie --- GWM sygnału $e(t)$ dla hałasu młynów kulowych.}
     \label{ver::mlyny}
 \end{figure}
 
@@ -867,18 +876,20 @@ w analogiczny sposób przedstawiono na rysunku \ref{ver::pompy}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/verification/anc_opc.png}
-    \caption{Eksperyment --- hałas generowany przez pracujące pompy wody}
+    \caption{Porównanie --- GWM sygnału $e(t)$ dla hałasu pomp wody.}
     \label{ver::pompy}
 \end{figure}
 
 Jak można zauważyć z rysunku \ref{ver::mlyny}, układ był w stanie wytłumić mocno
-odznaczający się pik w okolicach 400 Hz o około 12 dB. Poza osłabieniem
-odznaczającej się składowej, moc reszty przy włączonym tłumieniu jest na
-podobnym poziomie co przy wyłączonym systemie. \par Dla drugiego eksperymentu,
-wprost z rysunku \ref{ver::pompy} można zauważyć, że dla tego typu sygnału układ
-nie działa w sposób przewidywalny. Włączony system podwyższa moc wielu
-składowych pasma do 500 Hz, gdzie najbardziej odznaczającymi są te z przedziału
-od około 250 Hz do 300 Hz.
+odznaczającą się składową występujacą w okolicach częstotliwości 400 Hz o około
+12 dB. Poza osłabieniem odznaczającej się składowej, moc reszty przy włączonym
+tłumieniu jest na podobnym poziomie co przy wyłączonym systemie. \par Dla
+drugiego eksperymentu, wprost z rysunku \ref{ver::pompy} można zauważyć, że dla
+tego typu sygnału układ nie działa w sposób przewidywalny. Włączony system
+podwyższa moc wielu składowych pasma do 500 Hz, gdzie najbardziej odznaczającymi
+są te z przedziału od około 250 Hz do 300 Hz. Zachowanie, uchwycone na przebiegu
+\ref{ver::pompy} wizualnie i słyszalnie przypomina te, które uzyskano dla hałasu
+pseudolosowego na rysunku \ref{ver::anc_rand_psd}.
 
 \subsubsection{Eksperyment --- działanie algorytmu na jądrze bez łatki PREEMPT\_RT}
 
@@ -930,29 +941,29 @@ przedstawiono poniżej:
     \begin{equation}
         \alpha_{ref} = 0.1,
     \end{equation}
-    staje się niestabilny dla większych wartości i zbiega się wolniej dla
-    mniejszych wartości. 
+    staje się niestabilny dla większych wartości i zbiega się wolniej im wartość
+    jest mniejsza.
 
     \item Długość filtra $W(z^{-1})$ --- nie wpływa znacząco na jakość
     tłumienia, ale ma duży wpływ na szybkość wykonywania obliczeń. Dla długości
-    większych niż 1024 obliczenia zaczynają trwać zbyt długo, co skutkuje
-    przerwami w~transmisji i destabilizacją pętli przetwarzania.
+    większych niż 1024 ($L > 1024$) obliczenia zaczynają trwać zbyt długo, co
+    skutkuje przerwami w~transmisji i~destabilizacją pętli przetwarzania.
 
     \item Częstotliwość próbkowania $f'_s$ --- podobnie jak długość filtra
     $W(z^{-1})$, nie wpływa znacząco na jakość tłumienia, ale im jest większa,
     tym okno czasowe na wykonanie obliczeń mniejsze. Zweryfikowano,
     że~zaprojektowany układ zaczyna nie nadążać z~obliczeniami dla
-    częstotliwości większej niż 4000 Hz (z uwzględnieniem czterokrotnej
-    decymacji).
+    częstotliwości większej niż 4000 Hz ($f'_s > 4000$ Hz), z uwzględnieniem
+    czterokrotnej decymacji ($M = 4$).
 
     \item Długość fragmentu $n_f$ --- im większa, tym system działa gorzej.
     Zwiększenie długości powoduje zwiększenie opóźnienia w~torze przetwarzania,
     co ma mocno negatywny wpływ na jakość tłumienia.
 
     \item Poziom priorytetu $P$ --- do momentu, jeżeli nie przekracza się
-    poziomu, w~którym pracują inne procesy w systemie, nie powoduje znaczących
-    zmian. Poza tym poziomem, który dla przeprowadzonych pomiarów zdefiniowany
-    był na $P = 20$, istnieje szansa, że algorytm się rozsynchronizuje.
+    poziomu, w~którym pracują inne procesy w systemie, nie powoduje zmian. Poza
+    tym poziomem, który dla przeprowadzonych pomiarów zdefiniowany był na $P =
+    20$, istnieje szansa, że algorytm się rozsynchronizuje.
 
     \item Wytyczna planisty --- w~wykonanych badaniach nie zaobserwowano
     decydującego wpływu, jednak jak można zaobserwować, SCHED\_RR działa
@@ -965,9 +976,10 @@ W dodatkowych eksperymentach zweryfikowano, że:
     pojedynczych sinusoid i~ich sum dla założonego pasma (do 500 Hz)} --- poza
     tym pasmem, układ zaczyna generować sygnały nie powodujące tłumienia.
     Poprawnie tłumione są również sygnały składające się z~sum sinusoid, jednak
-    warunkiem jest, aby hałas nie zmieniał swojej częstotliwości szybciej niż
-    około 1 s.
-    \item \textbf{System nie jest w stanie tłumić hałasów losowych} ---
+    warunkiem jest, aby hałas nie zmieniał swojej częstotliwości szybciej niż w
+    czasie około jednej sekundy.
+    \item \textbf{System nie jest w stanie tłumić hałasów losowych i tych nie
+    posiadających wyróżniających się składowych częstotliwosciowych} ---
     zbieżność algorytmu dla takich sygnałów jest zbyt wolna.
     \item \textbf{System jest w stanie wytłumić mocno odznaczające się składowe
     częstotliwościowe hałasów rzeczywistych o około 12 dB} --- w przypadku

@@ -144,23 +144,13 @@ na tego typu jednostkach obliczeniowych mogą być realizowane są w~sposób
 równległy (superskalarność), pozwalający na jednoczesne wykonywanie kilku
 rozkazów maszynowych lub potokowy, umożliwiający podział logiki na
 specjalizowane grupy, z której każda będzie wykonywała część pracy związanej z
-wykonaniem rozkazu, znacząco przyśpieszając obliczenia. \par Pomimo, że
-wykorzystanie procesorów sygnałowych lub odpowiednio wydajnych mikrokontrolerów
-jest z~pewnością jednym z~najlepszych wyborów przy projektowaniu systemu
-przetwarzającego sygnały w~czasie rzeczywistym, to z~takim rozwiązaniem wiąże
-się szereg problemów:
+wykonaniem rozkazu, znacząco przyśpieszając obliczenia. 
 
-\remark{tego to teraz nie rozumiem, to na czym można by
-realizować układy ANC, i przecież realizuje Pan go na odpowiednio wydajnym
-mikrokontrolerze, bo AM3358 to generalnie mikrokontroler. I ogólnie wiele tych
-punktów może być dość dyskusyjnych. Tzn. były pewne procesory DSP, gdzie
-tworzono je z takim podejściem, że chodzi im tylko o DSP, nie projektują tam
-procesora, by mógł wykonywać różne zadania, by zwiększyć wydajność robią bardzo
-brzydką architekturę, co później owocowało bym, że były rzadko stosowane,
-wymagały nietypowych kompilatorów, \ldots I potem np. Texas Instruments zaczął
-robić OMAP, które zawierały ich DSP C6000 oraz ARMa dla normalnego kodu, bo ich
-C6000 to jest tragiczny jak chodzi o~normalne kody.}
-
+\par Wykorzystanie procesorów sygnałowych jest jednym z najczęściej stosowanych
+wyborów projektowych przy konstrukcji układów przetwarzających sygnały w czasie
+rzeczywistym i rozwiązania na nich oparte również najczęściej spotyka się w
+literaturze \cite{bib:kuo_morgan} \cite{bib:lyons}, jednak z realizacją układu w
+taki sposób w dzisiejszych czasach autor widzi szereg problemów:
 
 \begin{enumerate}
 

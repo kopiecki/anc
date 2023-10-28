@@ -44,26 +44,12 @@ działania algorytmu. Z~częstotliwością próbkowania również można iść w
 stronę, zwiększając ją wraz z~krotnością decymacji w pętli przetwarzania. Takie
 działanie, poza zmniejszeniem opóźnień, może również pozwolić na implementację
 prostszej części analogowej, zmniejszając wymagania na projektowane filtry. \par
-Poza modyfikacjami systemowymi, zaimplementowane rozwiązanie można ulepszyć
-poprzez urównoleglenie operacji przedstawionych na rysunku \ref{sw::app_flow}.
-Równoczesne przetwarzanie sygnałów $x(n)$ i~$e(n)$ z~pewnością spowoduje szybsze
-działanie pętli przetwarzania\remark{BBB ma tylko 1 procesor, a i też
-tak jak ostatnio mówiliśmy, tutaj nie ma za dużo przetwarzania
-związanego z $e(n)$}, a~to można wykorzystać do zwiększenia próbkowania
-lub długości filtrów, jeżeli będzie taka potrzeba. Poza tym, program można
-rozszerzyć o~wspomnianą w~sekcji analizy tematu metodę niwelowania dodatkowej
-pętli sprzężenia, jeżeli wymagane jest, aby układ działał na hałasach o~wyższym
-natężeniu i~z~ułożeniem sprzętu, powodującym wpływanie sygnału $y(n)$ na $x(n)$.
-W przypadku zaprojektowanej elektorniki, patrząc z~perspektywy czasu autor
-uważa, że wybrane przetworniki mogłyby być mniejszej dokładności (przykładowo 12
-bitowe), a~filtry o~mniejszym stopniu, powodując mniejsze opóźnienia w~torach
-analogowych\remark{z tym ostatnim to tak nie do końca. Jeśli chce
-Pan tłumić na określonym poziomie częstotliwości aliasingowe
-to musi mieć Pan jakieś tam opóźnienie, i tak jak kiedyś analizowałem,
-to przy filtrach analogowych optymalny stopień zależy od poziomu.
-I z tego co pamiętam to dla -45 dB optymalny był rząd 6-ty. Pan
-ma jakieś -36 dB, i może faktycznie 4-ty byłby lepszy. Ja to
-sprawdzałem dla filtrach optymalnych pod względem opóźnienia fazowego.
-Dla Butterwortha to może być trochę inaczej.}.
+Poza modyfikacjami systemowymi, program można rozszerzyć o~wspomnianą w~sekcji
+analizy tematu metodę niwelowania dodatkowej pętli sprzężenia, jeżeli wymagane
+jest, aby układ działał na hałasach o~wyższym natężeniu lub/i~z~ułożeniem
+sprzętu, powodującym wpływanie sygnału $y(n)$ na $x(n)$. W przypadku
+zaprojektowanej elektorniki, patrząc z~perspektywy czasu autor uważa, że wybrane
+przetworniki mogłyby być mniejszej dokładności (przykładowo 12 bitowe), a~filtry
+o~mniejszym stopniu, redukując koszta i upraszczając tory analogowe.
 
 
