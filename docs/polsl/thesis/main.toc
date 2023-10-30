@@ -20,7 +20,7 @@
 \contentsline {subsection}{\numberline {2.2.1}Identyfikacja toru pierwotnego}{9}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Algorytm LMS}{11}{subsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.2.3}Wpływ toru wtórnego}{13}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Algorytm FXLMS}{16}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.4}Algorytm FXLMS}{15}{subsection.2.2.4}%
 \contentsline {subsection}{\numberline {2.2.5}Usprawnienie procesu doboru kroku}{17}{subsection.2.2.5}%
 \contentsline {subsection}{\numberline {2.2.6}Metody identyfikacji toru wtórnego}{19}{subsection.2.2.6}%
 \contentsline {subsection}{\numberline {2.2.7}Neutralizacja sprzężenia --- możliwe usprawnienie}{21}{subsection.2.2.7}%

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  29 OCT 2023 18:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.10.18)  30 OCT 2023 13:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -117,7 +117,7 @@ Package: amsthm 2020/05/29 v2.20.6
 Package: babel 2022/01/26 3.70 The Babel package
 \babel@savecnt=\count272
 \U@D=\dimen148
-\l@unhyphenated=\language8
+\l@unhyphenated=\language87
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
@@ -128,16 +128,12 @@ Language: british 2017/06/06 v3.3r English support from the babel system
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel-english/english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
-Package babel Info: Hyphen rules for 'british' set to \l@english
-(babel)             (\language0). Reported on input line 82.
-Package babel Info: Hyphen rules for 'UKenglish' set to \l@english
-(babel)             (\language0). Reported on input line 83.
 Package babel Info: Hyphen rules for 'canadian' set to \l@english
 (babel)             (\language0). Reported on input line 102.
-Package babel Info: Hyphen rules for 'australian' set to \l@english
-(babel)             (\language0). Reported on input line 105.
-Package babel Info: Hyphen rules for 'newzealand' set to \l@english
-(babel)             (\language0). Reported on input line 108.
+Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
+(babel)             (\language10). Reported on input line 105.
+Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
+(babel)             (\language10). Reported on input line 108.
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/babel-polish/polish.ldf
 Language: polish 2005/03/31 v1.2l Polish support from the babel system
@@ -940,7 +936,7 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 \bibhang=\skip67
 \blx@bcfin=\read4
 \blx@bcfout=\write4
-\blx@langwohyphens=\language9
+\blx@langwohyphens=\language88
 \c@mincomprange=\count382
 \c@maxcomprange=\count383
 \c@mincompwidth=\count384
@@ -1571,7 +1567,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [5]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-18.
+19.
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )) (./chapters/02.tex
@@ -1646,6 +1642,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [10 <./graf/analysis/scheme_1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 249--251
+
+ []
+
+
+Underfull \vbox (badness 3746) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -1655,12 +1659,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 258--260
-
- []
-
-
-Overfull \hbox (14.44463pt too wide) in paragraph at lines 283--285
+Overfull \hbox (14.44463pt too wide) in paragraph at lines 274--276
 []\T1/lmr/m/n/12 Posiadaj¡c zde-fi-nio-wany apa-rat ob-li-cze-niowy bie-»¡-cej 
 es-ty-ma-cji pa-ra-me-trów fil-tra $\OML/lmm/m/it/12 W\OT1/lmr/m/n/12 (\OML/lmm
 /m/it/12 z[]\OT1/lmr/m/n/12 )$
@@ -1669,7 +1668,7 @@ es-ty-ma-cji pa-ra-me-trów fil-tra $\OML/lmm/m/it/12 W\OT1/lmr/m/n/12 (\OML/lmm
 <graf/analysis/scheme_2.png, id=624, 853.1875pt x 442.65375pt>
 File: graf/analysis/scheme_2.png Graphic file (type png)
 <use graf/analysis/scheme_2.png>
-Package pdftex.def Info: graf/analysis/scheme_2.png  used on input line 288.
+Package pdftex.def Info: graf/analysis/scheme_2.png  used on input line 279.
 (pdftex.def)             Requested size: 318.66948pt x 165.33281pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1683,7 +1682,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <graf/analysis/scheme_3.png, id=640, 1003.75pt x 487.8225pt>
 File: graf/analysis/scheme_3.png Graphic file (type png)
 <use graf/analysis/scheme_3.png>
-Package pdftex.def Info: graf/analysis/scheme_3.png  used on input line 325.
+Package pdftex.def Info: graf/analysis/scheme_3.png  used on input line 316.
 (pdftex.def)             Requested size: 318.66948pt x 154.87076pt.
 
 
@@ -1704,10 +1703,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [14]
-<graf/analysis/scheme_4.png, id=667, 813.0375pt x 482.80376pt>
+<graf/analysis/scheme_4.png, id=668, 813.0375pt x 482.80376pt>
 File: graf/analysis/scheme_4.png Graphic file (type png)
 <use graf/analysis/scheme_4.png>
-Package pdftex.def Info: graf/analysis/scheme_4.png  used on input line 422.
+Package pdftex.def Info: graf/analysis/scheme_4.png  used on input line 415.
 (pdftex.def)             Requested size: 318.66948pt x 189.22832pt.
 
 
@@ -1719,14 +1718,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [15 <./graf/analysis/scheme_4.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 469--471
+Underfull \hbox (badness 10000) in paragraph at lines 462--464
 
  []
 
-<graf/analysis/scheme_5.png, id=685, 866.23625pt x 483.8075pt>
+<graf/analysis/scheme_5.png, id=686, 866.23625pt x 483.8075pt>
 File: graf/analysis/scheme_5.png Graphic file (type png)
 <use graf/analysis/scheme_5.png>
-Package pdftex.def Info: graf/analysis/scheme_5.png  used on input line 502.
+Package pdftex.def Info: graf/analysis/scheme_5.png  used on input line 495.
 (pdftex.def)             Requested size: 318.66948pt x 177.97983pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1750,7 +1749,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [17 <./graf/analysis/scheme_5.png>]
-Overfull \hbox (16.00114pt too wide) in paragraph at lines 592--594
+Overfull \hbox (16.00114pt too wide) in paragraph at lines 585--587
 []\T1/lmr/m/n/12 Normalizacj¦ kroku, de-fi-niu-j¡c¡ al-go-rytm NLMS mo»na za-st
 o-so-wa¢ w al-go-ryt-mie FXLMS,
  []
@@ -1767,7 +1766,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <graf/analysis/scheme_6.png, id=732, 866.23625pt x 483.8075pt>
 File: graf/analysis/scheme_6.png Graphic file (type png)
 <use graf/analysis/scheme_6.png>
-Package pdftex.def Info: graf/analysis/scheme_6.png  used on input line 613.
+Package pdftex.def Info: graf/analysis/scheme_6.png  used on input line 606.
 (pdftex.def)             Requested size: 318.66948pt x 177.97983pt.
 
 
@@ -1779,26 +1778,26 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [19 <./graf/analysis/scheme_6.png>]
-Overfull \hbox (3.848pt too wide) in paragraph at lines 668--671
+Overfull \hbox (3.848pt too wide) in paragraph at lines 661--664
 []\T1/lmr/m/n/12 Zastosowanie al-go-rytmu LMS, ob-ser-wo-wa-nie ak-tu-ali-zo-wa
 -nych wspóª-czyn-ni-ków trans-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 674--681
+Underfull \hbox (badness 10000) in paragraph at lines 667--674
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 674--681
+Underfull \hbox (badness 10000) in paragraph at lines 667--674
 
  []
 
 <graf/analysis/offline_ident.png, id=748, 867.24pt x 484.81125pt>
 File: graf/analysis/offline_ident.png Graphic file (type png)
 <use graf/analysis/offline_ident.png>
-Package pdftex.def Info: graf/analysis/offline_ident.png  used on input line 68
-6.
+Package pdftex.def Info: graf/analysis/offline_ident.png  used on input line 67
+9.
 (pdftex.def)             Requested size: 318.66948pt x 178.14195pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1812,7 +1811,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <graf/analysis/feedback.png, id=762, 867.24pt x 480.79625pt>
 File: graf/analysis/feedback.png Graphic file (type png)
 <use graf/analysis/feedback.png>
-Package pdftex.def Info: graf/analysis/feedback.png  used on input line 719.
+Package pdftex.def Info: graf/analysis/feedback.png  used on input line 712.
 (pdftex.def)             Requested size: 291.35594pt x 161.52441pt.
 
 
@@ -1827,10 +1826,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <graf/analysis/feed_canc.png, id=772, 867.24pt x 654.445pt>
 File: graf/analysis/feed_canc.png Graphic file (type png)
 <use graf/analysis/feed_canc.png>
-Package pdftex.def Info: graf/analysis/feed_canc.png  used on input line 737.
+Package pdftex.def Info: graf/analysis/feed_canc.png  used on input line 730.
 (pdftex.def)             Requested size: 273.14923pt x 206.1213pt.
 
-Overfull \hbox (2.29018pt too wide) in paragraph at lines 742--746
+Overfull \hbox (2.29018pt too wide) in paragraph at lines 735--739
 []\T1/lmr/m/n/12 Transmitancja $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 z[]\OT1/lmr
 /m/n/12 )$\T1/lmr/m/n/12 , ana-lo-gicz-nie jak $[]\OT1/lmr/m/n/12 (\OML/lmm/m/i
 t/12 z[]\OT1/lmr/m/n/12 )$\T1/lmr/m/n/12 , sta-nowi zi-den-ty-fi-ko-wany obiekt
@@ -1842,7 +1841,7 @@ lmr/m/n/12 .
 File: graf/analysis/feedback_ident.png Graphic file (type png)
 <use graf/analysis/feedback_ident.png>
 Package pdftex.def Info: graf/analysis/feedback_ident.png  used on input line 7
-63.
+56.
 (pdftex.def)             Requested size: 318.66948pt x 166.53299pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -3515,12 +3514,12 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 47397 strings out of 480139
- 1041046 string characters out of 5893693
- 1768152 words of memory out of 5000000
- 63818 multiletter control sequences out of 15000+600000
+ 47392 strings out of 478287
+ 1040983 string characters out of 5849288
+ 1772897 words of memory out of 5000000
+ 64057 multiletter control sequences out of 15000+600000
  567422 words of font info for 79 fonts, out of 8000000 for 9000
- 79 hyphenation exceptions out of 8191
+ 1141 hyphenation exceptions out of 8191
  89i,12n,92p,1916b,3460s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share
@@ -3539,10 +3538,10 @@ ts/type1/public/lm/lmss12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/
 type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on main.pdf (129 pages, 26037665 bytes).
+Output written on main.pdf (129 pages, 26037551 bytes).
 PDF statistics:
  2290 PDF objects out of 2487 (max. 8388607)
  1912 compressed objects within 20 object streams
- 621 named destinations out of 1000 (max. 500000)
+ 620 named destinations out of 1000 (max. 500000)
  1366 words of extra memory for PDF output out of 10000 (max. 10000000)
 

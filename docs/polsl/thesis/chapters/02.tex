@@ -108,7 +108,7 @@ lub cyfrowe odpowiedniki w~trakcie przekraczania domen i~wchodzenia w blok
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_0.png}
-    \caption{Wyprowadzenie schematu ANC --- uogólnienie}
+    \caption{Wyprowadzenie schematu ANC --- uogólnienie.}
     \label{analysis::scheme_0}
 \end{figure}
 
@@ -135,11 +135,11 @@ w~zagadanieniach związanych z~systemami ANC, głównie ze względu na wygodę,
 ponieważ są zawsze stabilne i łatwe w~implementacji. \par Transmitancja takiego
 modelu (odpowiedź impulsowa) dana jest zależnością \cite{bib:lyons}:
 \begin{equation}
-    K(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L} w_lz^{-l},
+    K(z^{-1}) = \frac{Y(z^{-1})}{X(z^{-1})} = \sum_{l = 0}^{L - 1} w_lz^{-l},
     \label{eq::fir}
 \end{equation}
-\noindent gdzie $w_l$ to współczynnik filtra o~numerze $l$ (ang. \textit{tap}), $L$ to
-długość odpowiedzi impulsowej, a~$z^{-l}$ to operator opóźnienia o~$l$ próbek.
+\noindent gdzie $w_l$ to współczynnik filtra o~numerze $l$ (ang. \textit{tap}),
+$L$ to ilość współczynników, a~$z^{-l}$ to operator opóźnienia o~$l$ próbek.
 \par W związku z~\ref{eq::fir}, wyjście filtra SOI dane jest:
 \begin{equation}
         y(n) = \sum_{l = 0}^{L - 1}w_lx(n - l) \implies y(n) = \textbf{w}^T\textbf{x}(n),
@@ -147,18 +147,18 @@ długość odpowiedzi impulsowej, a~$z^{-l}$ to operator opóźnienia o~$l$ pró
 \noindent gdzie \textbf{w} to wektor współczynników filtra:
 \begin{equation}
         \textbf{w} \equiv \begin{bmatrix}
-            w_0 \quad
-            w_1 \quad
-            \cdots \quad
+            w_0, \quad
+            w_1, \quad
+            \cdots, \quad
             w_{L - 1} 
         \end{bmatrix}^T,
 \end{equation}
 \noindent a \textbf{x}(n) to wektor wejść w chwili $n$:
 \begin{equation}
         \textbf{x}(n) \equiv \begin{bmatrix}
-            x(n) \quad
-            x(n - 1) \quad
-            \cdots \quad
+            x(n), \quad
+            x(n - 1), \quad
+            \cdots, \quad
             x(n - L + 1)
         \end{bmatrix}^T.
 \end{equation}
@@ -231,20 +231,11 @@ minimalizując wartość oczekiwaną kwadratu błędu \cite{bib:kuo_morgan}:
 \noindent gdzie \textbf{w}(n) to wektor obliczonych współczynników filtra w~chwili $n$:
 \begin{equation}
         \textbf{w}(n) \equiv \begin{bmatrix}
-            w(n)_0 \quad
-            w(n)_1 \quad
-            \cdots \quad
-            w(n)_{L - 1}
-        \end{bmatrix}^T,
-\end{equation}
-\noindent a \textbf{x}(n) to wektor wejść w~chwili $n$:
-\begin{equation}
-        \textbf{x}(n) \equiv \begin{bmatrix}
-            x(n) \quad
-            x(n - 1) \quad
-            \cdots \quad
-            x(n - L + 1)
-        \end{bmatrix}^T,
+            w_0(n), \quad
+            w_1(n), \quad
+            \cdots, \quad
+            w_{L - 1}(n)
+        \end{bmatrix}^T.
 \end{equation}
 
 Parametr $\mu$ przyjęło się nazywać krokiem algorytmu LMS. Jego wartość decyduje
@@ -292,13 +283,13 @@ $W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2
 
 Bezpośrednio z~\ref{analysis::scheme_2} można zapisać:
 \begin{equation}
-    E(z^{-1}) = D(z^{-1}) - Y(z^{-1}) = P(z^{-1})W(z^{-1}) - W(z^{-1})X(z^{-1}).
+    E(z^{-1}) = D(z^{-1}) - Y(z^{-1}) = X(z^{-1})\left[P(z^{-1}) -  W(z^{-1})\right].
 \end{equation}
 Ideowo, jeżeli $W(z^{-1})$ będzie w przybliżeniu zbieżny:
 \begin{equation}
     E(z^{-1}) = 0 \implies P(z^{-1}) = W(z^{-1}),
 \end{equation}
-\noindent to gdy $X(z^{-1}) \neq 0$:
+\noindent to dla każdego $X(z^{-1})$:
 \begin{equation}
     y(n) = d(n) \implies e(n) = d(n) - y(n) = 0.
 \end{equation}
@@ -384,19 +375,21 @@ błąd $E(z^{-1})$ zostaje zmodyfikowana do postaci:
 
 Jeżeli $W(z^{-1})$ jest w przybliżeniu zbieżne, to w tym przypadku:
 \begin{equation}
-    E(z^{-1}) = 0 \implies W(z^{-1}) = \frac{P'(z^{-1})}{G(z^{-1})S'(z^{-1})}.
+    E(z^{-1}) = 0 \implies P'(z^{-1}) = {G(z^{-1})W(z^{-1})S'(z^{-1})}.
     \label{eq::adapt}
 \end{equation}
 
-Bezpośrednio z~zależności \ref{eq::adapt} można wywnioskować, że zadaniem filtru
-adaptacyjnego $W(z^{-1})$ w takiej sytuacji jest nie tylko bieżąca estymacja
-parametrów toru $P'(z^{-1})$, ale również biężąca estymacja parametrów
-transmitancji $G(z^{-1})$ i toru $S'(z^{-1})$ wraz z~ich odwróceniem. Jest to
-mocno problematyczne, ponieważ:
+Filtr $W(z^{-1})$ można wyznaczyć rozwiązując równanie \ref{eq::adapt} i
+bezpośrednio z~niego można wywnioskować, że zadaniem filtru adaptacyjnego
+$W(z^{-1})$ w takiej sytuacji jest nie tylko bieżąca estymacja parametrów toru
+$P'(z^{-1})$, ale również biężąca estymacja parametrów transmitancji $G(z^{-1})$
+i toru $S'(z^{-1})$ wraz z~ich odwróceniem. Jest to mocno problematyczne,
+ponieważ:
 \begin{enumerate} 
 
     \item Niemożliwym jest kompensować opóźnienia $S'(z^{-1})$, jeżeli
-    $P(z^{-1})$ nie zawiera takiego samego lub mniejszego.
+    $P(z^{-1})$ nie zawiera takiego samego lub mniejszego (prawa strona równania
+    \ref{eq::adapt} ma więcej współczynników niż lewa).
 
     \item Jeżeli istnieje częstotliwość, dla której $S'(\omega) = 0$ lub
     $G(z^{-1}) = 0$, to filtr staje się niestabilny. Taką częstotliwość nazywa się
