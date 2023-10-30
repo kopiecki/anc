@@ -177,8 +177,8 @@ rysunku \ref{analysis::scheme_1}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.60\textwidth]{graf/analysis/scheme_1.png}
-    \caption{Wyprowadzenie schematu ANC --- bieżąca estymacja parametrów}
+    \includegraphics[width=0.78\textwidth]{graf/analysis/scheme_1.png}
+    \caption{Wyprowadzenie schematu ANC --- bieżąca estymacja parametrów.}
     \label{analysis::scheme_1}
 \end{figure}
 
@@ -192,21 +192,22 @@ błędu średniokwadratowego. \par Błąd w analizowanym przypadku jest równy:
 \begin{equation}
     e(n) = d(n) - y(n) = d(n) - \textbf{w}^T(n)\textbf{x}(n).
 \end{equation}
-Jeżeli założy się, że wektor $\textbf{w}(n)$ jest sekwencją deterministyczną, to
-minimalizując wartość oczekiwaną kwadratu błędu \cite{bib:kuo_morgan}:
+Jeżeli założy się, że wektor $\textbf{w}(n)$ jest sekwencją deterministyczną i
+$\textbf{x}(n)$ jest stacjonarny, to minimalizując wartość oczekiwaną kwadratu
+błędu \cite{bib:kuo_morgan}:
 \begin{equation}
     E[e^2(n)] = E[d^2(n)] - 2\textbf{p}^T\textbf{w}(n) + \textbf{w}^T(n)\textbf{R}\textbf{w}(n),
 \end{equation}
 \noindent gdzie \textbf{p} to odniesiony do wejścia wektor korelacji wzajemnej:
 \begin{equation}
     \textbf{p} \equiv E[d(n)\textbf{x}(n)] = \begin{bmatrix}
-        r_{dx}(0) & r_{dx}(1) & \cdots & r_{dx}(L - 1)
+        r_{dx}(0), & r_{dx}(1), & \cdots, & r_{dx}(L - 1)
     \end{bmatrix}^T,
 \end{equation}
 \begin{equation}
     r_{dx}(k) \equiv E[d(n)x(n - k)],
 \end{equation}
-\noindent \textbf{R} jest macierzą autokorelacji sygnału wejściowego $x(n)$:
+\noindent a \textbf{R} jest macierzą autokorelacji sygnału wejściowego $x(n)$:
 \begin{equation}
     \textbf{R} \equiv E[\textbf{x}(n)\textbf{x}^T(n)] = 
     \begin{bmatrix}
@@ -276,7 +277,7 @@ $W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_2.png}
+    \includegraphics[width=0.75\textwidth]{graf/analysis/scheme_2.png}
     \caption{Wyprowadzenie schematu ANC --- algortm LMS}
     \label{analysis::scheme_2}
 \end{figure}
@@ -285,11 +286,10 @@ Bezpośrednio z~\ref{analysis::scheme_2} można zapisać:
 \begin{equation}
     E(z^{-1}) = D(z^{-1}) - Y(z^{-1}) = X(z^{-1})\left[P(z^{-1}) -  W(z^{-1})\right].
 \end{equation}
-Ideowo, jeżeli $W(z^{-1})$ będzie w przybliżeniu zbieżny:
+Jeżeli $P(z^{-1})$ będzie stacjonarne, to dla każdego $X(z^{-1})$:
 \begin{equation}
     E(z^{-1}) = 0 \implies P(z^{-1}) = W(z^{-1}),
 \end{equation}
-\noindent to dla każdego $X(z^{-1})$:
 \begin{equation}
     y(n) = d(n) \implies e(n) = d(n) - y(n) = 0.
 \end{equation}
@@ -380,15 +380,14 @@ Jeżeli $W(z^{-1})$ jest w przybliżeniu zbieżne, to w tym przypadku:
 \end{equation}
 
 Filtr $W(z^{-1})$ można wyznaczyć rozwiązując równanie \ref{eq::adapt} i
-bezpośrednio z~niego można wywnioskować, że zadaniem filtru adaptacyjnego
-$W(z^{-1})$ w takiej sytuacji jest nie tylko bieżąca estymacja parametrów toru
-$P'(z^{-1})$, ale również biężąca estymacja parametrów transmitancji $G(z^{-1})$
-i toru $S'(z^{-1})$ wraz z~ich odwróceniem. Jest to mocno problematyczne,
-ponieważ:
+bezpośrednio z~niego wywnioskować, że zadaniem filtru $W(z^{-1})$ w takiej
+sytuacji jest nie tylko bieżąca estymacja parametrów toru $P'(z^{-1})$, ale
+również biężąca estymacja parametrów transmitancji $G(z^{-1})$ i toru
+$S'(z^{-1})$ wraz z~ich odwróceniem. Jest to mocno problematyczne, ponieważ:
 \begin{enumerate} 
 
     \item Niemożliwym jest kompensować opóźnienia $S'(z^{-1})$, jeżeli
-    $P(z^{-1})$ nie zawiera takiego samego lub mniejszego (prawa strona równania
+    $P'(z^{-1})$ nie zawiera takiego samego lub mniejszego (prawa strona równania
     \ref{eq::adapt} ma więcej współczynników niż lewa).
 
     \item Jeżeli istnieje częstotliwość, dla której $S'(\omega) = 0$ lub
@@ -424,7 +423,7 @@ jest zależnością:
     W(z^{-1}) = \frac{P(z^{-1})}{S(z^{-1})}.
 \end{equation}
 
-Czyli sytuacja, mimo że uproszczona, jest analogiczna jak w \ref{eq::adapt}.
+Czyli sytuacja, mimo że uproszczona, jest podobna jak w \ref{eq::adapt}.
 Wykorzystanie standardowego algorytmu LMS, ze względu na transmitancję
 $S(z^{-1})$, jest znacząco utrudnione, dlatego, aby układ ANC działał
 prawidłowo, wymagane jest wprowadzenie zmian w jego strukturze.
@@ -439,28 +438,8 @@ filtru adaptacyjnego $W(z^{-1})$. Błąd w~takim przypadku można zdefiniować j
     \label{eq::fxlms_error}
 \end{equation}
 
-\noindent gdzie $\textbf{w}(n)$ to wektor współczynników filtra $W(z^{-1})$ w~chwili $n$:
-\begin{equation}
-    \textbf{w} \equiv \begin{bmatrix}
-        w_0(n) \quad
-        w_1(n) \quad
-        \cdots \quad
-        w_{L - 1}(n)
-    \end{bmatrix}^T,
-\end{equation}
-
-\noindent \textbf{x}(n) to wektor wejść w chwili $n$:
-\begin{equation}
-    \textbf{x}(n) \equiv \begin{bmatrix}
-        x(n) \quad
-        x(n - 1) \quad
-        \cdots \quad
-        x(n - L + 1)
-    \end{bmatrix}^T,
-\end{equation}
-
-\noindent a $s(n)$ to odpowiedź impulsowa toru wtórnego $S(n^{-1})$ w~chwili $n$. Operator
-$\ast$ oznacza konwolucję liniową, czyli filtrację. \\
+\noindent gdzie $s(n)$ to odpowiedź impulsowa toru wtórnego $S(n^{-1})$ w~chwili
+$n$. Operator $\ast$ oznacza konwolucję liniową, czyli filtrację. \\
 \par Jeżeli dla błędu \ref{eq::fxlms_error} zostanie wyprowadzony algorytm LMS,
 otrzymane zostanie zmodyfikowane równanie aktualizacji współczynników:
 \begin{equation}
@@ -486,7 +465,6 @@ zmodyfikować do postaci:
 \begin{equation}
     \textbf{x'}(n) = \hat{s}(n) \ast \textbf{x}(n),
 \end{equation}
-
 Schemat systemu z~wykorzystaniem algorytmu FXLMS przedstawiono na rysunku
 \ref{analysis::scheme_5}:
 
@@ -536,16 +514,10 @@ o~estymację mocy sygnału $x(n)$:
     \label{eq::mupx}
 \end{equation}
 
-\noindent gdzie $\alpha$ jest nowo zdefiniowanym, znormalizowanym krokiem algorytmu
-spełnającym założenie
+\noindent gdzie $\alpha$ jest nowo zdefiniowanym, znormalizowanym krokiem
+algorytmu spełnającym założenie \cite{bib:kuo_morgan}:
 \begin{equation}
     0 < \alpha < 2.
-\end{equation}
-
-Matematycznie dowieść można, że optymalna wartość kroku $\alpha$ w przypadku
-braku zakłóceń dana jest jako:
-\begin{equation}
-    \alpha_{opt} = \frac{E\left[|y(n) - \hat{y}(n)|^2\right]}{E\left[|e(n)|^2\right]} = 1,
 \end{equation}
 
 W celu wyznaczenia $\hat{P}_x(n)$ można posłużyć się metodą opartą na
@@ -670,9 +642,8 @@ czyli ich składowe częstotliwościowe są równomiernie rozłożone w~całym p
 zainteresowań. Przykładami takich sygnałów może szum biały o~wariancji
 $\lambda^2$ i~sygnał wielosinusoidalny, będący sumą sygnałów sinusoidalnych, z
 których każdy jest okresowy wewnątrz okna czasowego o wybranej długości
-\cite{bib:figwer}. \\\\
-\par Schemat eksperymentu identyfikacji metodami offline przedstawiono na rysunku
-\ref{analysis::offline_ident}:
+\cite{bib:figwer}. \par Schemat eksperymentu identyfikacji metodami offline
+przedstawiono na rysunku \ref{analysis::offline_ident}:
 
 \begin{figure}[H]
     \centering
@@ -709,7 +680,7 @@ uwzględniono na rysunku \ref{analysis::feedback}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.64\textwidth]{graf/analysis/feedback.png}
+    \includegraphics[width=0.7\textwidth]{graf/analysis/feedback.png}
     \caption{Schemat systemu ANC z~uwzględnieniem dodatkowego sprzężenia.}
     \label{analysis::feedback}
 \end{figure}
@@ -727,17 +698,17 @@ i~zaktualizowany z~jego uwzględnieniem schemat przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{graf/analysis/feed_canc.png}
+    \includegraphics[width=0.75\textwidth]{graf/analysis/feed_canc.png}
     \caption{Schemat systemu ANC z~niwelacją sprzężenia.}
     \label{analysis::feed_canc}
 \end{figure}
 
 Transmitancja $\hat{F}(z^{-1})$, analogicznie jak $\hat{S}(z^{-1})$, stanowi
 zidentyfikowany obiekt $F(z^{-1})$. Jeżeli $F(z^{-1}) = \hat{F}(z^{-1})$, to
-wpływ sprzężenia pozostaje całkowicie zneutralizowany. Sygnał $x(n)$ wchodzący
-na wejście filtra $\hat{S}(z^{-1})$ przyjmuje postać:
+wpływ sprzężenia pozostaje całkowicie zneutralizowany. Sygnał $\hat{x}(n)$
+wchodzący na wejście filtra $\hat{S}(z^{-1})$ przyjmuje postać:
 \begin{equation}
-    x(n) = u(n) - \sum_{m = 0}^{M - 1}\hat{f_m}y(n - m - 1),
+    \hat{x}(n) = x(n) - \sum_{m = 0}^{M - 1}\hat{f_m}y(n - m - 1),
 \end{equation}
 
 \noindent gdzie $u(n)$ jest nowo oznaczonym sygnałem referencyjnym, $M$ jest
@@ -753,7 +724,7 @@ eksperymentu identyfikacji przyjmuje w~tym przypadku postać jak na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/feedback_ident.png}
+    \includegraphics[width=0.8\textwidth]{graf/analysis/feedback_ident.png}
     \caption{Identyfikacja sprzężenia.}
     \label{analysis::feedback_ident}
 \end{figure}

@@ -644,7 +644,7 @@ RAND\_MAX, która zależy od implementacji bilblioteki na daną architekturę
 \cite{bib:cpp}. \par Omawiana funkcja, będąca implementacją generatora liczb
 pseudolosowych napisana jest w~oparciu o~liniowy generator kongruencjalny (ang.
 \textit{Linear congruential generator}, LCG), którego typowe implementacje w
-zakresie zakresie przyjętych założeń zwykle są przyzwoite i zdaniem autora
+zakresie zakresie przyjętych założeń zwykle są dobrej jakości i zdaniem autora
 mogłyby zostać bezproblemowo wykorzystane do generacji odpowiedniego sygnału
 identyfikującego. Problemem jest dostępna implementacja LCG w postaci funkcji
 \textit{rand()}, która była pisana w~czasach mocno odległych technologicznie od
@@ -654,8 +654,10 @@ do~tamtejszych ograniczeń (bardzo niski stan generatora). Wynikiem takiego
 doboru jest implementacja, która słynie z~niskiej losowości bitów mniej
 znaczących w~porównaniu z~bardziej znaczącymi, gdzie generowane liczby mogą
 tworzyć widoczne struktury kratowe lub płaskie, co bardzo dobrze widać w
-przypadku generatora RANDU \cite{bib:rand}. Dodatkowo zweryfikowano, że LCG z
-niskim stanem wypadają bardzo źle w testach losowości statystycznej biblioteki
+przypadku generatora RANDU \cite{bib:rand}. Tak zaimplementowany generator nie
+jest w stanie wygenerować wymaganego sygnału białego, ponieważ kolejno
+generowane sekwencje nie są białe. Dodatkowo zweryfikowano, że LCG z niskim
+stanem wypadają bardzo źle w testach losowości statystycznej biblioteki
 \textit{TestU01}. \par Mając na uwadze problemy wyszczególnione wyżej, w~celu
 generacji sygnału identyfikującego posłużono się klasą generatorów będącą
 podzbiorem generatorów działających na bazie rejestru przesuwnego z~liniowym
@@ -674,11 +676,10 @@ generatorów tej klasy przedstawiono na rysunku \ref{sw::lfsr}:
 
 Na jakość generatora działającego w~oparciu LFSR wpływ mają numery bitów
 wykorzystywane do obliczenia nowego stanu, rodzaj i~ilość operacji na nich
-przeprowadzanych oraz stan początkowy (ang. \textit{seed}). Jak można zauważyć
-z~\ref{sw::lfsr}, dla stanu początkowego 0~generator nie będzie działał
-poprawnie. Każdy LFSR jest związany z~określonym wielomianem i~maksymalny okres,
-w~którym generowane liczby się nie duplikują, ogarniczony jest przez jego
-stopień i~zdefiniowany jest przez liczbę bitów $M$:
+przeprowadzanych oraz stan początkowy (ang. \textit{seed}). Każdy LFSR jest
+związany z~określonym wielomianem i~maksymalny okres, w~którym generowane liczby
+się nie duplikują, ogarniczony jest przez jego stopień i~zdefiniowany jest przez
+liczbę bitów $M$:
 \begin{equation}
     T = 2^{M} - 1
 \end{equation}
