@@ -16,7 +16,7 @@ najbardziej popularne i~sprawdzone opcje:
     Działanie opiera się na stworzeniu mikrojądra obok głównego, obsługującego
     jedynie krytyczne zadania.
 
-    \item \textbf{RTAI} (ang. \textit{Real-Time Application Interface}) - podobnie jak
+    \item \textbf{RTAI} (ang. \textit{Real-Time Application Interface}) --- podobnie jak
     Xenomai, zapewnia zestaw interfejsów pozwalających na realizację krytycznych
     zadań z~użyciem drugiego jądra, które w~przeciwieństwie do środowiska
     Xenomai, nie jest realizowane w~architekturze mikrojądra.
@@ -44,7 +44,7 @@ Przebieg wywłaszczenia przedstawiono na rysunku \ref{sw::preempt_0}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/sw/preempt_0.png}
-    \caption{Przebieg wywłaszczenia zadania}
+    \caption{Przebieg wywłaszczenia zadania.}
     \label{sw::preempt_0}
 \end{figure}
 
@@ -57,7 +57,7 @@ wyobrazić sobie sytuację, którą przedstawiono na~rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/sw/preempt_1.png}
-    \caption{Przebieg wywłaszczenia zadania w sytuacji wywołania systemowego}
+    \caption{Przebieg wywłaszczenia zadania w sytuacji wywołania systemowego.}
     \label{sw::preempt_1}
 \end{figure}
 
@@ -77,7 +77,7 @@ Przebieg takiego problemu przedstawiono na rysunku \ref{sw::prior_inv}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/sw/prior_inv.png}
-    \caption{Przebieg problemu inwersji priorytetów}
+    \caption{Przebieg problemu inwersji priorytetów.}
     \label{sw::prior_inv}
 \end{figure}
 
@@ -103,7 +103,7 @@ z~trybu jądra może zostać rozwiązany jak przedstawiono na~rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/sw/preempt_rt_0.png}
-    \caption{Wywłaszczenie zadania z~przestrzeni jądra}
+    \caption{Wywłaszczenie zadania z~przestrzeni jądra.}
     \label{sw::preempt_rt_0}
 \end{figure}
 
@@ -114,7 +114,7 @@ przedstawiono na rysunku \ref{sw::prior_inh}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{graf/sw/prior_inh.png}
-    \caption{Dziedziczenie priorytetu}
+    \caption{Dziedziczenie priorytetu.}
     \label{sw::prior_inh}
 \end{figure}
 
@@ -131,17 +131,17 @@ obsłudze przerwania, a~wątkowej przedstawiono na rysunkach \ref{sw::hw_irq}:
     \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \includegraphics[width=0.8\textwidth]{graf/sw/hw_irq.png}
-        \caption{Standarowa obsługa przerwania}
+        \includegraphics[width=\textwidth]{graf/sw/hw_irq.png}
+        \caption{Standarowa obsługa przerwania.}
         \label{sw::std_irq}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \includegraphics[width=0.8\textwidth]{graf/sw/hw_irq_rt.png}
-        \caption{Wątkowa realizacja przerwania sprzętowego}
+        \includegraphics[width=\textwidth]{graf/sw/hw_irq_rt.png}
+        \caption{Wątkowa realizacja przerwania sprzętowego.}
     \end{subfigure}
-       \caption{Porównanie obsługi przerwań sprzętowych}
+       \caption{Porównanie obsługi przerwań sprzętowych.}
        \label{sw::hw_irq}
 \end{figure}
 
@@ -157,15 +157,15 @@ obliczeniowej przedstawiono na rysunku \ref{sw::boot_process}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{graf/sw/boot_process.png}
-    \caption{Proces uruchomienia systemu operacyjnego}
+    \includegraphics[width=0.8\textwidth]{graf/sw/boot_process.png}
+    \caption{Proces uruchomienia systemu operacyjnego.}
     \label{sw::boot_process}
 \end{figure}
 
 Opis poszczególnych etapów przedstawiono poniżej:
 \begin{enumerate}
 
-    \item Pierwszy etap rozruchowy (ang. \textit{Boot ROM}) --- jego zadanie
+    \item \textbf{Pierwszy etap rozruchowy} (ang. \textit{Boot ROM}) --- jego zadanie
     polega na inicjalizacji podstawowych magistral i~peryferiów niezbędnych do
     dalszych etapów rozruchu. Znajduje się z~zafiksowanej przestrzeni adresowej
     z~uprawnieniami tylko do odczytu, z~której procesor bezpośrednio po
@@ -176,13 +176,13 @@ Opis poszczególnych etapów przedstawiono poniżej:
     pamięci SRAM procesora. Jako, że~program znajduje się w~pamięci tylko do
     odczytu, nie podlega modyfikacji.
 
-    \item Drugi etap rozruchowy --- kontynuuje inicjalizację peryferiów procesora
-    oraz~ładuje trzeci program rozruchowy (plik u-boot.img), wymagający
-    najwięcej miejsca do~pamięci DDR. Po załadowaniu, przekazuje mu pełną
-    kontrolę. 
+    \item \textbf{Drugi etap rozruchowy} --- kontynuuje inicjalizację peryferiów
+    procesora oraz~ładuje trzeci program rozruchowy (plik u-boot.img),
+    wymagający najwięcej miejsca do~pamięci DDR. Po załadowaniu, przekazuje mu
+    pełną kontrolę. 
 
-    \item Trzeci etap rozruchowy --- ładuje jądro wraz z~\textit{device tree} do
-    pamięci DDR oraz inicjalizuje peryferia, które mogą zostać do tego
+    \item \textbf{Trzeci etap rozruchowy} --- ładuje jądro wraz z~\textit{device
+    tree} do pamięci DDR oraz inicjalizuje peryferia, które mogą zostać do tego
     wykorzystane (I2C, NAND, FLASH, Ethernet). Proces ładowania należy
     odpowiednio skonfigurować, wskazując programowi miejsce, w który znajduje
     się obraz jądra oraz adres w~pamięci, do którego ma je załadować.
@@ -190,16 +190,16 @@ Opis poszczególnych etapów przedstawiono poniżej:
     (\textit{uEnv.txt}, \textit{uboot.env}) lub dynamicznie, wpisując polecenia
     na etapie działania programu.
 
-    \item Jądro --- wykonuje, planuje i~zarządza procesami. Jest pośrednikiem
-    między interakcjami ze sprzętem (peryferiami), kontrolując je za
-    pośrednictwem sterowników, które mogą być osadzone statycznie lub ładowane
-    dynamicznie w~postaci modułów. Po uruchomieniu i~przeprowadzeniu procesu
-    inicjalizacji, włącza programy startowe i~umożliwia użytkownikowi pracę.
-    Zadania wykonywane przez jądro zawierają się w~tak zwanej przetrzenii jądra
-    (ang. \textit{kernel space}), która tworzy osobną przestrzeń adresową
+    \item \textbf{Jądro} --- wykonuje, planuje i~zarządza procesami. Jest
+    pośrednikiem między interakcjami ze sprzętem (peryferiami), kontrolując je
+    za pośrednictwem sterowników, które mogą być osadzone statycznie lub
+    ładowane dynamicznie w~postaci modułów. Po uruchomieniu i~przeprowadzeniu
+    procesu inicjalizacji, włącza programy startowe i~umożliwia użytkownikowi
+    pracę. Zadania wykonywane przez jądro zawierają się w~tak zwanej przetrzenii
+    jądra (ang. \textit{kernel space}), która tworzy osobną przestrzeń adresową
     niedostępną dla aplikacji użytkownika. 
 
-    \item Główny system plików --- zawiera zestaw plików i~katalogów,
+    \item \textbf{Główny system plików} --- zawiera zestaw plików i~katalogów,
     niezbędnych do działania systemu. Z~tego miejsca wychodzą pozostałe
     struktury katalogów, które definiują obszar roboczy użytkowników systemu
     wraz z~aplikacjami, z~których korzystają.
@@ -234,14 +234,14 @@ poszczególnych partycji przedstawiono poniżej:
 
 \begin{enumerate}
 
-    \item Partycja rozruchowa --- zawiera pliki drugiego i~trzeciego programu
+    \item \textbf{Partycja rozruchowa} --- zawiera pliki drugiego i~trzeciego programu
     rozruchowego. Wymagany jest system plików FAT32.
 
-    \item Partycja systemowa --- zawiera pliki jądra systemu i~drzewa urządzeń.
-    Najczęściej wykorzystuje się jest system plików EXT4.
+    \item \textbf{Partycja systemowa} --- zawiera pliki jądra systemu i~drzewa
+    urządzeń. Najczęściej wykorzystuje się jest system plików EXT4.
 
-    \item Partycja z~głównym systemem plików --- zawiera wypakowany główny system
-    plików systemu. Wymagany jest system plików EXT4.
+    \item \textbf{Partycja z~głównym systemem plików} --- zawiera wypakowany
+    główny system plików systemu. Wymagany jest system plików EXT4.
 
 \end{enumerate}
 
@@ -260,17 +260,18 @@ podzielić na trzy główne kroki:
 
 \begin{enumerate}
 
-    \item Pobranie kodów źródłowych z~repozytorium twórców --- jeżeli
+    \item \textbf{Pobranie kodów źródłowych z~repozytorium twórców} --- jeżeli
     oprogramowanie udostępniane jest na~licencjach otwartoźródłowych, to twórcy
     zwyczajowo magazynują wszystkie kody źródłowe na ogólnodostępnych
     w~internecie repozytoriach.
 
-    \item Konfiguracja procesu budowania --- może się różnić w~zależności od
-    wykorzystywanego przez program systemu budowania. Typowo, procesowi należy
-    wskazać plik konfiguracyjny z~charakterystyką używanej platformy.
+    \item \textbf{Konfiguracja procesu budowania} --- może się różnić
+    w~zależności od wykorzystywanego przez program systemu budowania. Typowo,
+    procesowi należy wskazać plik konfiguracyjny z~charakterystyką używanej
+    platformy.
 
-    \item Budowanie --- proces kompilacji zakończony generacją odpowiedniego pliku
-    wykonywalnego.
+    \item \textbf{Budowanie} --- proces kompilacji zakończony generacją
+    odpowiedniego pliku wykonywalnego.
 
 \end{enumerate}
 
@@ -322,9 +323,9 @@ z~którym praca sprowadza się do modyfikacji następujących plików
 
 \begin{itemize}
 
-    \item Pliki z~kodem źródłowym (rozszerzenie \textit{.dts})
+    \item Pliki z~kodem źródłowym (rozszerzenie \textit{.dts}).
 
-    \item Pliki nagłówkowe (rozszerzenie \textit{.dtsi})
+    \item Pliki nagłówkowe (rozszerzenie \textit{.dtsi}).
 
     \item Pliki będące wynikiem budowania plików źródłowych (rozszerzenie
     \textit{.dtb}), które finalnie muszą znaleźć się obok obrazu jądra
@@ -349,10 +350,10 @@ został dodatkowy plik nagłówkowy \textit{.dtsi} dodany do~głównego pliku
 następująca:
 \begin{enumerate}
 
-    \item Zdefiniowanie pinów McASP --- płytka BeagleBone Black wspiera wiele
-    możliwych konfiguracji wyprowadzeń, które kontrolowane są przez wewnętrzny
-    multilpekser. W ramach projektu wykorzystano McASP0, którego konfigurację
-    wyprowadzeń przedstawiono w tabeli \ref{tab::mcasp}:
+    \item \textbf{Zdefiniowanie pinów McASP} --- płytka BeagleBone Black wspiera
+    wiele możliwych konfiguracji wyprowadzeń, które kontrolowane są przez
+    wewnętrzny multilpekser. W ramach projektu wykorzystano McASP0, którego
+    konfigurację wyprowadzeń przedstawiono w tabeli \ref{tab::mcasp}:
 
     \begin{table}[H]
         \centering
@@ -377,13 +378,13 @@ następująca:
             \hline\hline
         \end{tabular}
     \end{adjustbox}
-    \caption{Konfiguracja wyprowadzeń McASP w drzewie urządzeń}
+    \caption{Konfiguracja wyprowadzeń McASP w drzewie urządzeń.}
     \label{tab::mcasp}
 
     \end{table}
 
-    \item Zdefiniowanie węzła McASP --- stworzenie węzła \textit{mcasp0} z
-    odpowiednim zestawem wartości, z~których można wyróżnić:
+    \item \textbf{Zdefiniowanie węzła McASP} --- stworzenie węzła
+    \textit{mcasp0} z odpowiednim zestawem wartości, z~których można wyróżnić:
     \begin{itemize}
 
         \item Odwołanie do wyprowadzeń (wartość \textit{pinctrl}) --- odwołanie do
@@ -397,18 +398,19 @@ następująca:
 
     \end{itemize}
 
-    \item Zdefiniowanie węzła zegara i~przypisanie go sygnałowi \textbf{AHCLK} ---
-    jego domyślna częstotliwość wynosi 24.576 MHz i~na jego podstawie generowane
-    są pozostałe zegary interfejsu McASP (\textbf{ACLKX} i~\textbf{FSX})
+    \item \textbf{Zdefiniowanie węzła zegara i~przypisanie go sygnałowi
+    \textbf{AHCLK}} --- jego domyślna częstotliwość wynosi 24.576 MHz i~na jego
+    podstawie generowane są pozostałe zegary interfejsu McASP (\textbf{ACLKX}
+    i~\textbf{FSX})
 
-    \item Zdefiniowanie węzła opisującego sporzadzoną płytkę drukowaną - wymaga
-    odwołania do zmodyfikowanego sterownika kodeka PCM5102A, którego opisano w
-    sekcji jądra.
+    \item \textbf{Zdefiniowanie węzła opisującego sporzadzoną płytkę drukowaną}
+    - wymaga odwołania do zmodyfikowanego sterownika kodeka PCM5102A, którego
+    opisano w sekcji jądra.
 
-    \item Zdefiniowanie węzłą urządzenia dźwiękowego --- wykonana płytka drukowana
-    będzie docelowo widoczna w~systemie jako urządzenie dźwiękowe (karta
-    dźwiękowa). Deklaracja urządzenia dźwiękowego wymaga zdefiniowanie zestawu
-    wartości, które opisano poniżej:
+    \item \textbf{Zdefiniowanie węzłą urządzenia dźwiękowego} --- wykonana
+    płytka drukowana będzie docelowo widoczna w~systemie jako urządzenie
+    dźwiękowe (karta dźwiękowa). Deklaracja urządzenia dźwiękowego wymaga
+    zdefiniowanie zestawu wartości, które opisano poniżej:
     \begin{itemize}
 
         \item Odniesienie do nadrzędnego sterownika karty --- wykorzystano
@@ -454,7 +456,7 @@ Diagram aplikacji przedstawiono na rysunku \ref{sw::app_top}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/sw/app_top.png}
-    \caption{Diagram aplikacji}
+    \caption{Diagram aplikacji.}
     \label{sw::app_top}
 \end{figure}
 
@@ -508,7 +510,7 @@ w~określony sposób, który przedstawiono na rysunku \ref{sw::alsa_buffer}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{graf/sw/alsa_buffer.png}
-    \caption{Podział bufora sterownika}
+    \caption{Podział bufora sterownika.}
     \label{sw::alsa_buffer}
 \end{figure}
 
@@ -571,9 +573,9 @@ wiąże się z~deklaracją dodatkowych flag przekazywanych kompulatorowi
 i~w~przypadku pakietu GCC są to:
 \begin{itemize} 
     \item \textit{-ffast-math, -ftree-vectorize} --- dla obliczeń wektorowych
-    (wykorzystanie SIMD)
+    (wykorzystanie SIMD).
     \item \textit{-mfpu=neon, -mhard-float} --- dla sprzętowych obliczeń
-    zmiennoprzecinkowych (FPU)
+    zmiennoprzecinkowych (FPU).
 \end{itemize}
 
 Poza flagami kompilacji, w~przypadku wykorzystania SIMD ważne jest, aby program
@@ -586,15 +588,15 @@ i~z~wykorzystaniem koprocesora SIMD przedstawiono na rysunkach \ref{sw::simd}:
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=0.8\textwidth]{graf/sw/non_simd.png}
-        \caption{Operacja wektorowa bez SIMD}
+        \caption{Operacja wektorowa bez SIMD.}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=0.9\textwidth]{graf/sw/simd.png}
-        \caption{Operacja wektorowa z~SIMD}
+        \caption{Operacja wektorowa z~SIMD.}
     \end{subfigure}
-        \caption{Porównanie operacji wektorowych}
+        \caption{Porównanie operacji wektorowych.}
         \label{sw::simd}
 \end{figure}
 
@@ -625,7 +627,7 @@ SIMD i~rezultat przykładowego testu filtracji przedstawiono w~tabeli
         \hline\hline
     \end{tabular}
 
-    \caption{Test wykorzystania SIMD}
+    \caption{Test wykorzystania SIMD.}
     \label{tab::simd_test}
 \end{table}
 
@@ -668,7 +670,7 @@ generatorów tej klasy przedstawiono na rysunku \ref{sw::lfsr}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{graf/sw/lfsr.png}
-    \caption{Przykładowy LFSR}
+    \caption{Przykładowy LFSR.}
     \label{sw::lfsr}
 \end{figure}
 
@@ -700,7 +702,7 @@ próbek przedstawiono na rysunku \ref{sw::prng_psd}:
     \centering
     \includegraphics[width=0.8\textwidth]{graf/sw/prng_psd.png}
     \caption{Funkcja autokorelacji i~GWM sygnału z~generatora
-    \textit{xoroshiro16++}}
+    \textit{xoroshiro16++}.}
     \label{sw::prng_psd}
 \end{figure}
 
@@ -712,7 +714,7 @@ Przebieg operacji w~głównej pętli programowej przedstawiono na schemacie
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/sw/app_flow.png}
-    \caption{Przebieg operacji - pętla ANC}
+    \caption{Przebieg operacji - pętla ANC.}
     \label{sw::app_flow}
 \end{figure}
 
@@ -773,4 +775,3 @@ jest częstotliwość próbkowania $f_s$, krotność decymacji $M$ (należy pami
 fragmentu $n_f$ oraz krok algorytmu NLMS $\alpha$. Poza parametrami
 numerycznymi, konfiguracji również podlega poziom priorytetu oraz wytyczna
 planisty procesu.
-

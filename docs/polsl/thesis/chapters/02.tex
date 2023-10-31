@@ -247,8 +247,8 @@ zdefiniowanym:
     \label{eq::lms_const}
 \end{equation}
 
-\noindent gdzie $\lambda_{max}$ zdefiniowana jest jako maksymalna wartość własna macierzy
-\textbf{R} \ref{eq::auto_corr_mat}. \\
+\noindent gdzie $\lambda_{max}$ zdefiniowana jest jako maksymalna wartość własna
+macierzy \textbf{R} \ref{eq::auto_corr_mat}. \\
 \par Zastosowanie warunku stabilności w formie \ref{eq::lms_const} jest
 niepraktyczne z~powodu problematycznych obliczeń $\lambda_{max}$ dla dużych
 rzędów filtra $W(z^{-1})$. W związku z~tym, w praktycznym kryterium stabilności
@@ -278,7 +278,7 @@ $W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{graf/analysis/scheme_2.png}
-    \caption{Wyprowadzenie schematu ANC --- algortm LMS}
+    \caption{Wyprowadzenie schematu ANC --- algortm LMS.}
     \label{analysis::scheme_2}
 \end{figure}
 
@@ -314,7 +314,7 @@ na rysunku \ref{analysis::scheme_3}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_3.png}
-    \caption{Wyprowadzenie schematu ANC --- dodatkowe transmitancje}
+    \caption{Wyprowadzenie schematu ANC --- dodatkowe transmitancje.}
     \label{analysis::scheme_3}
 \end{figure}
 
@@ -350,7 +350,7 @@ Po dodaniu dodatkowych obiektów z~układu wyłaniają się dwa, znaczące
 z~perspektywy ANC tory przetwarzania. Pierwszym z~nich jest dokładniej
 zdefiniowany tor podstawowy, tym razem określony jako:
 \begin{equation}
-    P(z^{-1}) = P'(z^{-1})R(z^{-1}), % zrobic z primem
+    P'(z^{-1}) = P''(z^{-1})R(z^{-1}),
     \label{eq::p}
 \end{equation}
 
@@ -370,32 +370,33 @@ $x(n)$:
 Mając na uwadze \ref{eq::p}, \ref{eq::s} i \ref{eq::x} zależność definiująca
 błąd $E(z^{-1})$ zostaje zmodyfikowana do postaci:
 \begin{equation}
-    E(z^{-1}) = R(z^{-1})\left[P'(z^{-1}) - G(z^{-1})S'(z^{-1})W(z^{-1})\right]H(z^{-1}).
+    E(z^{-1}) = R(z^{-1})\left[P''(z^{-1}) - G(z^{-1})S'(z^{-1})W(z^{-1})\right]H(z^{-1}).
 \end{equation}
 
 Jeżeli $W(z^{-1})$ jest w przybliżeniu zbieżne, to w tym przypadku:
 \begin{equation}
-    E(z^{-1}) = 0 \implies P'(z^{-1}) = {G(z^{-1})W(z^{-1})S'(z^{-1})}.
-    \label{eq::adapt}
+    E(z^{-1}) = 0 \implies P''(z^{-1}) = {G(z^{-1})W(z^{-1})S'(z^{-1})},
+    \label{eq::adapt_a}
 \end{equation}
 \begin{equation}
-    W(z^{-1}) = \frac{P'(z^{-1}}{G(z^{-1})}{S'(z^{-1}}) % równażne
+    W(z^{-1}) = \frac{P''(z^{-1})}{G(z^{-1})S'(z^{-1})}.
+    \label{eq::adapt_b}
 \end{equation}
 
-Filtr $W(z^{-1})$ można wyznaczyć rozwiązując równanie \ref{eq::adapt} i
-bezpośrednio z~niego wywnioskować, że zadaniem filtru $W(z^{-1})$ w takiej
-sytuacji jest nie tylko bieżąca estymacja parametrów toru $P'(z^{-1})$, ale
-również biężąca estymacja parametrów transmitancji $G(z^{-1})$ i toru
-$S'(z^{-1})$ wraz z~ich odwróceniem. Jest to mocno problematyczne, ponieważ:
+Filtr $W(z^{-1})$ można wyznaczyć rozwiązując równanie \ref{eq::adapt_a} i
+bezpośrednio z \ref{eq::adapt_b} wywnioskować, że jego zadaniem jest nie tylko
+bieżąca estymacja parametrów toru $P''(z^{-1})$, ale również biężąca estymacja
+parametrów transmitancji $G(z^{-1})$ i toru $S'(z^{-1})$ wraz z~ich odwróceniem.
+Jest to mocno problematyczne, ponieważ:
 \begin{enumerate} 
 
     \item Niemożliwym jest kompensować opóźnienia $S'(z^{-1})$, jeżeli
-    $P'(z^{-1})$ nie zawiera takiego samego lub mniejszego (prawa strona równania
-    \ref{eq::adapt} ma więcej współczynników niż lewa).
+    $P''(z^{-1})$ nie zawiera takiego samego lub mniejszego (prawa strona
+    równania \ref{eq::adapt_a} ma więcej współczynników niż lewa).
 
     \item Jeżeli istnieje częstotliwość, dla której $S'(\omega) = 0$ lub
-    $G(\omega) = 0$, to filtr staje się niestabilny. Taką częstotliwość nazywa się
-    niesterowalną.
+    $G(\omega) = 0$, to filtr staje się niestabilny. Taką częstotliwość nazywa
+    się niesterowalną.
 
 \end{enumerate}
 
@@ -415,7 +416,7 @@ schemat przedstawiono na rysunku \ref{analysis::scheme_4}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_4.png}
-    \caption{Wyprowadzenie schematu ANC --- uproszczenie o wspólny składnik}
+    \caption{Wyprowadzenie schematu ANC --- uproszczenie o wspólny składnik.}
     \label{analysis::scheme_4}
 \end{figure}
 
@@ -426,7 +427,7 @@ jest zależnością:
     W(z^{-1}) = \frac{P(z^{-1})}{S(z^{-1})}.
 \end{equation}
 
-Czyli sytuacja, mimo że uproszczona, jest podobna jak w \ref{eq::adapt}.
+Czyli sytuacja, mimo że uproszczona, jest podobna jak w \ref{eq::adapt_b}.
 Wykorzystanie standardowego algorytmu LMS, ze względu na transmitancję
 $S(z^{-1})$, jest znacząco utrudnione, dlatego, aby układ ANC działał
 prawidłowo, wymagane jest wprowadzenie zmian w jego strukturze.
@@ -473,7 +474,7 @@ Schemat systemu z~wykorzystaniem algorytmu FXLMS przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_5.png}
+    \includegraphics[width=0.8\textwidth]{graf/analysis/scheme_5.png}
     \caption{Schemat systemu ANC.}
     \label{analysis::scheme_5}
 \end{figure}
@@ -507,11 +508,9 @@ dobór kroku jest wartość $P_{x}(n)$, która typowo zmienia się adekwatnie do
 sygnału referencyjnego $x(n)$. Zmiany mocy $P_{x}(n)$ w trakcie działania
 algorytmu mogą spowodować, że początkowo dobrany krok przestaje być poprawny, co
 skutkuje gorszą zbieżnością lub nawet destabilizacją adaptacji
-\cite{bib:kuo_morgan}.
-
-\par Aby rozwiązać problem wpływu mocy sygnał wyjściowego na proces uczenia
-algorytmu, krok $\mu$ przy każdej iteracji może zostać znormalizowany w oparciu
-o~estymację mocy sygnału $x(n)$:
+\cite{bib:kuo_morgan}. \par Aby rozwiązać problem wpływu mocy sygnał wyjściowego
+na proces uczenia algorytmu, krok $\mu$ przy każdej iteracji może zostać
+znormalizowany w oparciu o~estymację mocy sygnału $x(n)$:
 \begin{equation}
     \mu(n) = \frac{\alpha}{L\hat{P}_x(n)},
     \label{eq::mupx}
@@ -523,17 +522,14 @@ algorytmu spełnającym założenie \cite{bib:kuo_morgan}:
     0 < \alpha < 2.
 \end{equation}
 
-%% P(x) = E[x(n)^2] dla x(n) stacjonarnego, więc można posłużyć sie
-%% estymatorem okna (usunąć estymacje mocy?)
-
-Równanie \ref{eq::px} dla $M = L$ może zostać sprowadzone do postaci:
+Aby wyznaczyć $\hat{P}_x(n)$ można posłużyć się estymatorem:
 \begin{equation}
     \hat{P}_x(n) = \frac{1}{L}\sum_{l = 0}^{L - 1} x^2(n - l) \
         = \frac{\textbf{x}^T(n)\textbf{x}(n)}{L},
     \label{eq::pxL}
 \end{equation}
 
-\noindent i podstawiając \ref{eq::pxL} do \ref{eq::mupx} otrzymuje się:
+Podstawiając \ref{eq::pxL} do \ref{eq::mupx} otrzymuje się:
 \begin{equation}
     \mu(n) = \frac{\alpha}{\textbf{x}^T(n)\textbf{x}(n)}.
     \label{eq::mun}
@@ -574,7 +570,7 @@ o~normalizację danych wejściowych schemat systemu ANC przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_6.png}
+    \includegraphics[width=0.8\textwidth]{graf/analysis/scheme_6.png}
     \caption{Schemat systemu ANC z~normalizacją danych wejściowych.}
     \label{analysis::scheme_6}
 \end{figure}
@@ -606,7 +602,7 @@ opisano poniżej:
 
 \begin{enumerate}
 
-    \item Identyfikację odpowiedzi impulsowej metoda korelacyjną
+    \item \textbf{Identyfikację odpowiedzi impulsowej metoda korelacyjną}
     \cite{bib:figwer}:
     \begin{equation}
         \hat{s}(n) = \frac{R_{xy}(n)}{\lambda^2}.
@@ -619,7 +615,7 @@ opisano poniżej:
     wartość można określić wizualnie na podstawie przebiegu funkcji $\hat{s}(n)$
     i~jest to typowo moment, w~którym osiąga ona małe wartości (wygasza się).
 
-    \item Wykorzystanie doświadczalnego estymatora transmitancji
+    \item \textbf{Wykorzystanie doświadczalnego estymatora transmitancji}
     \cite{bib:stoica}:
     \begin{equation}
         \hat{S}(j\omega) = \frac{\hat{Y}(j\omega)}{\hat{X}(j\omega)}.
@@ -629,7 +625,7 @@ opisano poniżej:
     a~następnie przez siebie dzielone. Zależność na $\hat{s}(n)$ otrzymuje się
     poprzez zastosowanie odwrotnej transformacji na $\hat{S}(j\omega)$.
 
-    \item Zastosowanie algorytmu LMS, obserwowanie aktualizowanych
+    \item \textbf{Zastosowanie algorytmu LMS} --- obserwowanie aktualizowanych
     współczynników transmitancji i~zatrzymanie obliczeń w~przypadku, kiedy
     osiągną one odpowiedni poziom zbieżności.
 
@@ -646,7 +642,7 @@ przedstawiono na rysunku \ref{analysis::offline_ident}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/offline_ident.png}
+    \includegraphics[width=0.9\textwidth]{graf/analysis/offline_ident.png}
     \caption{Schemat eksperymentu identyfikacji metodami offline.}
     \label{analysis::offline_ident}
 \end{figure}
@@ -735,4 +731,3 @@ badaniach nie zauważono znaczących wpływów sprzężenia na stabilność i~ja
 tłumienia, dlatego programową niwelację sprzężenia potraktowano na tym etapie
 jako dodatek i~możliwe usprawnienie w~sytuacji, kiedy projekt będzie rozwijany
 w~przyszłości.
-

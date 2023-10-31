@@ -6,7 +6,7 @@ rysunku \ref{hw::arch}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/top.png}
-    \caption{Architektura sprzętowa - najwyższy poziom}
+    \caption{Architektura sprzętowa --- najwyższy poziom.}
     \label{hw::arch}
 \end{figure}
 
@@ -14,10 +14,10 @@ rysunku \ref{hw::arch}:
 składają się cztery główne sekcje, które komunikują się z~elementami
 zewnętrznymi zaznaczonymi na szaro. Z~sekcji można wyróżnić:
 \begin{itemize}
-    \item Sekcję zasilania (\textbf{PSU}, ang. \textit{Power supply unit})
-    \item Sekcję wejściowych torów analogowych (\textbf{Input}, wejście)
-    \item Sekcję wyjściowych torów analogowych (\textbf{Output}, wyjście)
-    \item Sekcję przetworników (\textbf{ADC/DAC})
+    \item Sekcję zasilania (\textbf{PSU}, ang. \textit{Power supply unit}).
+    \item Sekcję wejściowych torów analogowych (\textbf{Input}, wejście).
+    \item Sekcję wyjściowych torów analogowych (\textbf{Output}, wyjście).
+    \item Sekcję przetworników (\textbf{ADC/DAC}).
 \end{itemize}
 
 Na diagramie konektory o~najmniejszej grubości reprezentują sygnały analogowe,
@@ -54,11 +54,11 @@ oraz cieszą się dobrymi opiniami. Ich droższym odpowiednikiem jest flagowy
 Beyerdynamic MM1, a~najbardziej znaczące parametry \cite{bib:behringer}
 przedstawiono poniżej:
 \begin{enumerate}
-    \item Typ --- pojemnościowy, phantom +15~V do +48 V.
-    \item Charakterystyka kierunkowa --- kulista.
-    \item Odpowiedź częstotliwościowa --- relatywnie płaska, z~pofalowaniami
-    w~paśmie 5~kHz do 10 kHz i~zakresie 20~Hz do 20000 Hz.
-    \item Czułość --- $15 \text{ }\frac{\text{mV}}{{\text{Pa}}}$.
+    \item \textbf{Typ} --- pojemnościowy, phantom +15~V do +48 V.
+    \item \textbf{Charakterystyka kierunkowa} --- kulista.
+    \item \textbf{Odpowiedź częstotliwościowa} --- relatywnie płaska,
+    z~pofalowaniami w~paśmie od 5~kHz do 10 kHz i~zakresie od 20~Hz do 20000 Hz.
+    \item \textbf{Czułość} --- $15 \text{ }\frac{\text{mV}}{{\text{Pa}}}$.
 \end{enumerate}
 Czułość mikrofonów informuje o~wartości napięcia dla danego ciśnienia
 aktustycznego i~opisuje ją zależność:
@@ -71,14 +71,15 @@ Na podstawie tego parametru dobiera się wzmocnienie przedwzmacniacza
 \cite{bib:mic}. Dla wybranych mikrofonów z~czułością na poziomie $15 \text{
 }\frac{\text{mV}}{{\text{Pa}}}$, uzyskuje się 15~mV dla 1~Pa, co odpowiada 94 dB
 SPL. Pracując na hałasach w zakresie od 85 dB SPL do 105 dB SPL, dla górnej
-granicy otrzymuje się około 3.5~Pa, czyli odpowiednio około 52.5~mV, co odpowiada amplitudzie $52.5\sqrt{2}$~mV. W~przypadku
-przetwornika analogowo-cyfrowego, pracującego w przedziale od 0 V do 5~V, $52.5\sqrt{2}$~mV 
-z mikrofonu powinno odpowiadać maksymalnemu zakresowi 2.5~V, co
-pozwala na obliczenie wzmocnienia:
+granicy otrzymuje się około 3.5~Pa, czyli odpowiednio około 52.5~mV, co
+odpowiada amplitudzie $52.5\sqrt{2}$~mV. W~przypadku przetwornika
+analogowo-cyfrowego, pracującego w przedziale od 0 V do 5~V, $52.5\sqrt{2}$~mV z
+mikrofonu powinno odpowiadać maksymalnemu zakresowi 2.5~V, co pozwala na
+obliczenie wzmocnienia:
 \begin{equation}
         k = \frac{U_{\text{out}}}{U_{\text{mic}}} = 
-	    \frac{2.5}{0.0525\sqrt{2}} =  \approx 39 \text{ dB},
-        \label{eq::k_preamp} %% przeliczyć ponownie
+	    \frac{2.5}{0.0525\sqrt{2}} =  33.6717.
+        \label{eq::k_preamp}
 \end{equation}
 
 \subsection{Zestaw głośnikowy}
@@ -89,13 +90,11 @@ wchodząc w techniczne szczegóły, z~najbardziej znaczących parametrów
 \cite{bib:krk} można wyróżnić:
 
 \begin{enumerate}
-    \item Typ i~konfiguracja --- aktywny, głośnik wysoko i~nisko tonowy (ang.
-    \textit{woofer, tweeter}).
-    \item Maksymalny zakres poziomu akustycznego --- 103 dB SPL, 106 dB SPL w
-    piku.
-    \item Charakterystyka częstotliwościowa do $\pm 3$ dB --- 42.5~Hz do 35000 Hz,
-    płaska.
-    \item SNR --- powyżej 100 dB.
+    \item \textbf{Typ i~konfiguracja} --- aktywny, głośnik wysoko i~nisko tonowy.
+    \item \textbf{Maksymalny zakres poziomu akustycznego} --- 103 dB SPL.
+    \item \textbf{Charakterystyka częstotliwościowa} --- od 42.5~Hz do 35000 Hz
+    do $\pm 3$ dB.
+    \item \textbf{SNR} --- powyżej 100 dB.
 \end{enumerate}
 
 \subsection{Platforma obliczeniowa}
@@ -127,20 +126,20 @@ Diagram dystrybucji zasilania przedstawiono na rysunku \ref{hw::power_dist}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/hw/power_dist.png}
-    \caption{Diagram dystrybucji zasilania}
+    \includegraphics[width=0.9\textwidth]{graf/hw/power_dist.png}
+    \caption{Diagram dystrybucji zasilania.}
     \label{hw::power_dist}
 \end{figure}
 
 Wykorzystane symbole zostały wyjaśnione poniżej:
 \begin{itemize}
-    \item \textbf{EXT} (ang. \textit{External}) --- zasilanie zewnętrzne
+    \item \textbf{EXT} (ang. \textit{External}) --- zasilanie zewnętrzne.
     \item \textbf{LDO} (ang. \textit{Low dropout regulator}) --- linowy regulator
-    napięcia niskiego spadku
+    napięcia niskiego spadku.
     \item \textbf{REF} (ang. \textit{Reference voltage}) --- generator napięcia
-    referencyjnego
+    referencyjnego.
     \item \textbf{SMPS} (ang. \textit{Switching-mode power supply}) --- zasilacz
-    impulsowy
+    impulsowy.
 \end{itemize}
 
 \subsection{Sekcja wejściowa}
@@ -191,10 +190,10 @@ tłumienia oraz dobroć. Wielkości te określone są odpowiednio:
 
 Współczynnik tłumienia może znajdować się w~czterech typach zakresów:
 \begin{enumerate}
-    \item $\zeta = 0$ --- brak tłumienia, nieskończone oscylacje,
+    \item $\zeta = 0$ --- brak tłumienia, nieskończone oscylacje.
     \item $\zeta > 0$ i~$\zeta < 1$ --- tłumienie subkrytyczne, oscylacje są
-    wygaszane po pewnym czasie,
-    \item $\zeta = 1$ --- tłumienie krytyczne bez oscylacji,
+    wygaszane po pewnym czasie.
+    \item $\zeta = 1$ --- tłumienie krytyczne bez oscylacji.
     \item $\zeta > 1$ --- nadmierne tłumienie.
 \end{enumerate}
 
@@ -225,7 +224,7 @@ częstotliwości przedstawiono na rysunku \ref{hw::input}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/input.png}
-    \caption{Sekcja wejściowa}
+    \caption{Sekcja wejściowa.}
     \label{hw::input}
 \end{figure}
 
@@ -282,8 +281,8 @@ dobierane były według not aplikacyjnych producenta przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{graf/hw/split.png}
-    \caption{Symetryzacja szyn zasilających}
+    \includegraphics[width=\textwidth]{graf/hw/split.png}
+    \caption{Symetryzacja szyn zasilających.}
     \label{hw::split}
 \end{figure}
 
@@ -320,7 +319,7 @@ rysunku \ref{hw::smps}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/smps.png}
-    \caption{Zasilanie domeny cyfrowej}
+    \caption{Zasilanie domeny cyfrowej.}
     \label{hw::smps}
 \end{figure}
 
@@ -356,8 +355,8 @@ układ wraz z~kondensatorami odsprzęgającymi przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{graf/hw/ref.png}
-    \caption{Referencja domeny analogowo-cyfrowej}
+    \includegraphics[width=\textwidth]{graf/hw/ref.png}
+    \caption{Referencja domeny analogowo-cyfrowej.}
     \label{hw::ref}
 \end{figure}
 
@@ -376,13 +375,13 @@ wejście nieodwracające wzmiacniaczy operacyjnych w sekcji analogowej, których
 impedancja wejściowa jest liczona w M$\Omega$ (teoretycznie impedancja wejściowa
 wzmacniacza operacyjnego jest nieskończona \cite{bib:art}). \par W~celu
 generacji takiego sygnału posłużono się układem napięcia odniesienia
-\cite{bib:max6001}, który wraz z~niezbędnymi kondensatorami odsprzęgającymi
-przedstawiono na rysunku \ref{hw::off}.
+\cite{bib:max6001}, który wraz z kondensatorami odsprzęgającymi przedstawiono na
+rysunku \ref{hw::off}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{graf/hw/off.png}
-    \caption{Układ napięcia odniesienia}
+    \includegraphics[width=0.72\textwidth]{graf/hw/off.png}
+    \caption{Układ napięcia odniesienia.}
     \label{hw::off}
 \end{figure}
 
@@ -394,7 +393,7 @@ Schemat blokowy wejściowego toru analogowego przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/analog_in.png}
-    \caption{Schemat blokowy wejściowego toru analogowego}
+    \caption{Schemat blokowy wejściowego toru analogowego.}
     \label{hw::analog}
 \end{figure}
 
@@ -418,7 +417,7 @@ stałą. Omawianą część schematu przedstawiono na rysunku \ref{hw::xlr}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{graf/hw/xlr.png}
-    \caption{Wejście zbalansowane}
+    \caption{Wejście zbalansowane.}
     \label{hw::xlr}
 \end{figure}
 
@@ -455,8 +454,8 @@ Omawiany układ przedstawiono na rysunku \ref{hw::emif}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{graf/hw/emif.png}
-    \caption{Filtr EMI wraz z ogranicznikiem diodowym}
+    \includegraphics[width=0.32\textwidth]{graf/hw/emif.png}
+    \caption{Filtr EMI wraz z ogranicznikiem diodowym.}
     \label{hw::emif}
 \end{figure}
 
@@ -469,8 +468,8 @@ zastosowań jest wzmacniacz różnicowy, a~jego topologię przedstawiono na rysu
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{graf/hw/op_diff.png}
-    \caption{Wzmacniacz różnicowy}
+    \includegraphics[width=0.6\textwidth]{graf/hw/op_diff.png}
+    \caption{Wzmacniacz różnicowy.}
     \label{hw::op_diff}
 \end{figure}
 
@@ -503,14 +502,14 @@ postaci:
 \end{equation}
 
 Jako wzmocnienie wybrano obliczone wcześniej \ref{eq::k_preamp} z~zaokrągleniem
-w~górę, przyjmując $k = 50$, oraz $R_f = 100$ k$\Omega$ i~$R_1 = 2$ k$\Omega$
+w~górę, przyjmując $k = 40$, oraz $R_f = 100$ k$\Omega$ i~$R_1 = 2.5$ k$\Omega$
 w~symobolach schematu \ref{hw::op_diff}. Omawiany układ przedstawiono na rysunku
 \ref{hw::preamp}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{graf/hw/preamp.png}
-    \caption{Wzmocnienie różnicowe}
+    \includegraphics[width=0.7\textwidth]{graf/hw/preamp.png}
+    \caption{Wzmocnienie różnicowe.}
     \label{hw::preamp}
 \end{figure}
 
@@ -532,8 +531,8 @@ z~jednostkowym wzmocnieniem \cite{bib:tietze}, którą przedstawiono na rysunku
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{graf/hw/sellen_key.png}
-    \caption{Topologia Sellena-Keya z jednostkowym wzmocnieniem}
+    \includegraphics[width=0.7\textwidth]{graf/hw/sellen_key.png}
+    \caption{Topologia Sellena-Keya z jednostkowym wzmocnieniem.}
     \label{hw::sellen_key}
 \end{figure}
 
@@ -613,7 +612,7 @@ Charakterystykę amplitudową i~fazową układu przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{graf/hw/freqs.png}
-    \caption{Charakterystyka aplitudowa i~fazowa układu filtra}
+    \caption{Charakterystyka aplitudowa i~fazowa układu filtra.}
     \label{hw::freqs}
 \end{figure}
 
@@ -623,7 +622,7 @@ omawiany układ przedstawiono na rysunku \ref{hw::filt}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/filter.png}
-    \caption{Filtr antyaliasingowy}
+    \caption{Filtr antyaliasingowy.}
     \label{hw::filt}
 \end{figure}
 
@@ -669,8 +668,8 @@ bufora składowej stałej przedstawiono na rysunku \ref{hw::offset}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.51\textwidth]{graf/hw/offset.png}
-    \caption{Układ pozycjonujący}
+    \includegraphics[width=0.6\textwidth]{graf/hw/offset.png}
+    \caption{Układ pozycjonujący.}
     \label{hw::offset}
 \end{figure}
 
@@ -687,13 +686,13 @@ na wartości $R = 1$ k$\Omega$ i~$C = 10$ nF, uzyskując w~ten sposób $f_c \app
 przed napięciami przekraczającymi jego zakres. O~układzie realizującym to
 zadanie wspominano już w~sekcji wejścia zbalansowanego, lecz w~tym przypadku,
 limiter ogranicza amplitudy sygnału wejściowego do zakresu przetwornika. Z~tego
-wynika, że diody w~układzie będą połączone z~zasilaniem +5 V i~masą (0 V). \par
+wynika, że diody w~układzie będą połączone z~zasilaniem +5 V i~masą (0 V).
 Omawiany układ przedstawiono na rysunku \ref{hw::safe}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.55\textwidth]{graf/hw/safe.png}
-    \caption{Filtr dolnoprzepustowy i~limiter}
+    \includegraphics[width=0.6\textwidth]{graf/hw/safe.png}
+    \caption{Filtr dolnoprzepustowy i~limiter.}
     \label{hw::safe}
 \end{figure}
 
@@ -704,7 +703,7 @@ Pełen schemat omawianej sekcji przedstawiono na rysunku \ref{hw::analog_in_full
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/analog_in_full.png}
-    \caption{Pełen schemat wejściowej sekcji analogowej}
+    \caption{Pełen schemat wejściowej sekcji analogowej.}
     \label{hw::analog_in_full}
 \end{figure}
 
@@ -720,7 +719,7 @@ Schemat blokowy wyjściowego toru analogowego przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/analog_out.png}
-    \caption{Schemat blokowy wyjściowego toru analogowego}
+    \caption{Schemat blokowy wyjściowego toru analogowego.}
     \label{hw::analog_out}
 \end{figure}
 
@@ -741,8 +740,8 @@ natomiast dla sekcji górnoprzepustowej dobrano $R = 100$ k$\Omega$ i~$C = 47
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{graf/hw/in_bandpass.png}
-    \caption{Wejściowy filtr pasmowoprzepustowy}
+    \includegraphics[width=0.52\textwidth]{graf/hw/in_bandpass.png}
+    \caption{Wejściowy filtr pasmowoprzepustowy.}
     \label{hw::in_bandpass}
 \end{figure}
 
@@ -755,14 +754,14 @@ wymaganiem przy doborze wzmocnienia układu jest uniknięcie saturacji wyjścia,
 które ograniczone jest przez symetryczne zasilanie układu, równe $\pm$12 V. W
 związku z~tym, zdecydowano się wzmocnienie $k = 4$ poprzez zastosowanie
 rezystorów $R_1 = 6$ k$\Omega$ i~$R_f = 18$ k$\Omega$. Taki wybór skutkuje
-$U_{wy} = 10$ V dla $U_{we} = 2.5$ V, czyli górnego zakresu przetwornika, co
-daje zalecane dla tego układu 2 V zapasu. Omawiany układ przedstawiono na
-rysunku \ref{hw::gain_out}:
+$U_{\text{wy}} = 10$ V dla $U_{\text{we}} = 2.5$ V, czyli górnego zakresu
+przetwornika, co daje zalecane dla tego układu 2 V zapasu. Omawiany układ
+przedstawiono na rysunku \ref{hw::gain_out}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{graf/hw/gain_out.png}
-    \caption{Wzmocnienie sekcji wyjściowej}
+    \includegraphics[width=0.5\textwidth]{graf/hw/gain_out.png}
+    \caption{Wzmocnienie sekcji wyjściowej.}
     \label{hw::gain_out}
 \end{figure}
 
@@ -796,8 +795,8 @@ schematu przedstawiono na rysunku \ref{hw::synch}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.35\textwidth]{graf/hw/synch.png}
-    \caption{Układy sterujące wyjściem analogowym}
+    \includegraphics[width=0.45\textwidth]{graf/hw/synch.png}
+    \caption{Układy sterujące wyjściem analogowym.}
     \label{hw::synch}
 \end{figure}
 
@@ -817,7 +816,7 @@ złącza. Omawianą część schematu przedstawiono na rysunku \ref{hw::out_filt
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{graf/hw/out_filter.png}
-    \caption{Filtracja końcowa toru analogowego}
+    \caption{Filtracja końcowa toru analogowego.}
     \label{hw::out_filter}
 \end{figure}
 
@@ -828,7 +827,7 @@ Pełen schemat omawianej sekcji przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/analog_out_full.png}
-    \caption{Pełen schemat wyjściowej sekcji analogowej}
+    \caption{Pełen schemat wyjściowej sekcji analogowej.}
     \label{hw::analog_out_full}
 \end{figure}
 
@@ -850,7 +849,7 @@ z~urządzeniami wysyłającymi dane cyfrowe reprezentujące dźwięk w~formacie 
 można podzielić na trzy grupy \cite{bib:mcasp}:
 \begin{enumerate}
 
-    \item Piny zegarowe - dzielone na trzy podgrupy:
+    \item \textbf{Piny zegarowe} - dzielone na trzy podgrupy:
     \begin{enumerate}
 
         \item Wysokoczęstotliwościowe (\textbf{AHCLK}) --- wykorzystywane do
@@ -868,11 +867,11 @@ można podzielić na trzy grupy \cite{bib:mcasp}:
 
     \end{enumerate}
 
-    \item Piny resetujące --- umożliwiają wyłączanie (w~kontekście audio
-    wyciszanie) peryferiów w~zależności od zdefiniowanej logiki. Sygnały
+    \item \textbf{Piny resetujące} --- umożliwiają wyłączanie (w~kontekście
+    audio wyciszanie) peryferiów w~zależności od zdefiniowanej logiki. Sygnały
     zazwyczaj podpinane są do wejść resetujących dane cyfrowe układy audio.
 
-    \item Piny danych (\textbf{ARX}) --- nazwa jest samo wyjaśniająca. 
+    \item \textbf{Piny danych} (\textbf{ARX}) --- nazwa jest samo wyjaśniająca. 
 
 \end{enumerate}
 
@@ -909,7 +908,7 @@ konfiguracji przedstawiono na rysunku \ref{hw::i2s}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/i2s.png}
-    \caption{Diagram czasowy komunikacji I$^2$S}
+    \caption{Diagram czasowy komunikacji I$^2$S.}
     \label{hw::i2s}
 \end{figure}
 
@@ -936,7 +935,7 @@ pochodnego przedstawiono na rysunku \ref{hw::l_j}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/l_j.png}
-    \caption{Diagram czasowy komunikacji \textit{Left justified} I$^2$S}
+    \caption{Diagram czasowy komunikacji \textit{Left justified} I$^2$S.}
     \label{hw::l_j}
 \end{figure}
 
@@ -980,7 +979,7 @@ Wpływ parametrów na charakterystykę transmisji przedstawiono w~tabelach
         1 & Zegar w stanie wysokim (stan bezczynności) \\
         \hline\hline
     \end{tabular}
-    \caption{Wpływ wartości CPOL na charakterystyke transmisji}
+    \caption{Wpływ wartości CPOL na charakterystyke transmisji.}
     \label{tab::cpol}
 \end{table}
 
@@ -994,7 +993,7 @@ Wpływ parametrów na charakterystykę transmisji przedstawiono w~tabelach
         1 & Zapis na zboczu narastającym, odczyt na opadającym \\
         \hline\hline
     \end{tabular}
-    \caption{Wpływ wartości CPHA na charakterystyke transmisji}
+    \caption{Wpływ wartości CPHA na charakterystyke transmisji.}
     \label{tab::cpha}
 \end{table}
 
@@ -1013,7 +1012,7 @@ diagram czasowy komunikacji SPI w~trybie 3 przedstawiono na rysunku
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{graf/hw/spi.png}
-    \caption{Ideowy diagram transmisji SPI w trybie 3}
+    \caption{Ideowy diagram transmisji SPI w trybie 3.}
     \label{hw::spi}
 \end{figure}
 
@@ -1037,7 +1036,7 @@ stronie dwóch interfejsów przedstawiono w tabeli \ref{tab::spi_to_i2s}:
         MISO/MOSI & SDATA \\
         \hline\hline
     \end{tabular}
-    \caption{Realizacja połączeń SPI do I$^2$S}
+    \caption{Realizacja połączeń SPI do I$^2$S.}
     \label{tab::spi_to_i2s}
 \end{table}
 
@@ -1060,7 +1059,7 @@ przedstawiono na rysunku \ref{hw::adc_dac}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{graf/hw/adc_dac.png}
-    \caption{Diagram połączeń sekcji przetworników}
+    \caption{Diagram połączeń sekcji przetworników.}
     \label{hw::adc_dac}
 \end{figure}
 
@@ -1103,36 +1102,37 @@ projektowych \cite{bib:ott}, które opisano poniżej:
 
 \begin{enumerate}
 
-    \item Minimalizacja długości scieżek --- elementy powinny być umieszczone jak
-    najbliżej siebie. Im dłuższa ścieżka, tym wpływ pojemności i~indukcyjności
-    pasożytniczych większy, co powoduje niechciane efekty filtracji. Szczególną
-    uwagę należy zwrócić na sekcje krytyczne, takie jak sprzężenia zwrotne
-    wzmacniaczy operacyjnych i~wyjście przełączające przetwornic impulsowych.
+    \item \textbf{Minimalizacja długości scieżek} --- elementy powinny być
+    umieszczone jak najbliżej siebie. Im dłuższa ścieżka, tym wpływ pojemności
+    i~indukcyjności pasożytniczych większy, co powoduje niechciane efekty
+    filtracji. Szczególną uwagę należy zwrócić na sekcje krytyczne, takie jak
+    sprzężenia zwrotne wzmacniaczy operacyjnych i~wyjście przełączające
+    przetwornic impulsowych.
 
-    \item Grubości ścieżek --- im grubsza scieżka, tym jej impedancja mniejsza.
-    Grubość należy dobierać na podstawie płynącego prądu, który zwykle większy
-    jest dla ścieżek którymi poprowadzone jest zasilanie. W projekcie
+    \item \textbf{Grubości ścieżek} --- im grubsza scieżka, tym jej impedancja
+    mniejsza. Grubość należy dobierać na podstawie płynącego prądu, który zwykle
+    większy jest dla ścieżek którymi poprowadzone jest zasilanie. W projekcie
     zastosowano 0.5 mm grubości na ścieżki sygnałowe i~1 mm grubości na ścieżki
     zasilania.
 
-    \item Kondensatory odsprzęgające --- powinny być możliwie najbliżej docelowych
-    układów. Jako, że mają zapewnić filtrację zasilania i~lokalny bufor energii,
-    im dalej od docelowego układu, tym swoje zadanie spełniają gorzej. Mogą
-    również służyć jako mosty pomiędzy wartstwami i~płaszczyznami, kiedy droga
-    sygnału może wymagać ich zmiany, co przedstawiono na rysunkach
+    \item \textbf{Kondensatory odsprzęgające} --- powinny być możliwie najbliżej
+    docelowych układów. Jako, że mają zapewnić filtrację zasilania i~lokalny
+    bufor energii, im dalej od docelowego układu, tym swoje zadanie spełniają
+    gorzej. Mogą również służyć jako mosty pomiędzy wartstwami i~płaszczyznami,
+    kiedy droga sygnału może wymagać ich zmiany, co przedstawiono na rysunkach
     \ref{hw::cap_1} i~\ref{hw::cap_0}:
 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.9\textwidth]{graf/hw/cap_1.png}
-        \caption{Zapewnienie powrotów przez kondensatory odsprzęgające}
+        \caption{Zapewnienie powrotów przez kondensatory odsprzęgające.}
         \label{hw::cap_1}
     \end{figure}
 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.75\textwidth]{graf/hw/cap_0.png}
-        \caption{Zmiany warst przez kondensatory odsprzęgające}
+        \caption{Zmiany warst przez kondensatory odsprzęgające.}
         \label{hw::cap_0}
     \end{figure}
 
@@ -1141,36 +1141,37 @@ projektowych \cite{bib:ott}, które opisano poniżej:
     krótszą drogą oraz stabilniejszą masą (brak spadków związanych ze szybkim
     przełączaniem sygnałów cyfrowych).
 
-    \item Powroty sygnałów i~rozmieszczenie elementów --- sygnały najczęściej,
-     jeżeli pod lub nad jest warstwa odniesienia, jako drogę powrotną wybiorą tą
-     bezpośrednio pod lub nad ścieżką sygnałową, ponieważ jest to dla nich droga
-     o~najmniejszej induktancji \cite{bib:ott}. Mając to na uwadze, elementy
-     i~przelotki należy układać tak, aby nie zaburzać drogi powrotnej sygnałów.
-     Duża ilość przelotek lub otworów (przykładowo na elementy THT) może
-     skutkować zablokowaniem bezpośredniego powrotu, tworząc sloty. Dodatkowo,
-     elementy należy ustawiać w~sposób zapewniający unikanie warstwowego
-     krzyżowania się sygnałów różnych sekcji i~domen. Układając sekcje cyfrową
-     należy zwrócić uwagę, czy sygnały powrotne, jeżeli odniesione są do tej
-     samej płaszczyzny co sygnały analogowe, nie będą przechodzić bezpośrednio
-     pod lub nad ścieżkami oraz układami analogowymi i~odwrotnie. Szybkozmienne
-     sygnały cyfrowe w~powrocie mogą zakłócać sygnały analogowe. Opisywane
-     sytuacje przedstawiono na rysunkach \ref{hw::returns} i~\ref{hw::sections}:
+    \item \textbf{Powroty sygnałów i~rozmieszczenie elementów} --- sygnały
+     najczęściej, jeżeli pod lub nad jest warstwa odniesienia, jako drogę
+     powrotną wybiorą tą bezpośrednio pod lub nad ścieżką sygnałową, ponieważ
+     jest to dla nich droga o~najmniejszej induktancji \cite{bib:ott}. Mając to
+     na uwadze, elementy i~przelotki należy układać tak, aby nie zaburzać drogi
+     powrotnej sygnałów. Duża ilość przelotek lub otworów (przykładowo na
+     elementy THT) może skutkować zablokowaniem bezpośredniego powrotu, tworząc
+     sloty. Dodatkowo, elementy należy ustawiać w~sposób zapewniający unikanie
+     warstwowego krzyżowania się sygnałów różnych sekcji i~domen. Układając
+     sekcje cyfrową należy zwrócić uwagę, czy sygnały powrotne, jeżeli
+     odniesione są do tej samej płaszczyzny co sygnały analogowe, nie będą
+     przechodzić bezpośrednio pod lub nad ścieżkami oraz układami analogowymi
+     i~odwrotnie. Szybkozmienne sygnały cyfrowe w~powrocie mogą zakłócać sygnały
+     analogowe. Opisywane sytuacje przedstawiono na rysunkach \ref{hw::returns}
+     i~\ref{hw::sections}:
 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{graf/hw/return.png}
-        \caption{Problematyczne powroty - nieciągłość plaszczyzny odniesienia}
+        \caption{Problematyczne powroty --- nieciągłość plaszczyzny odniesienia.}
         \label{hw::returns}
     \end{figure}
 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{graf/hw/sections.png}
-        \caption{Poprawne ułożenie sekcji}
+        \caption{Poprawne ułożenie sekcji.}
         \label{hw::sections}
     \end{figure}
 
-    \item Rozmieszczenie warstw (ang. \textit{stackup}) --- dla płytek
+    \item \textbf{Rozmieszczenie warstw} (ang. \textit{stackup}) --- dla płytek
     wielowarstwowych powinno być realizowane z~myślą o~optymalnych powrotach
     sygnałów i~najniższej emisji, a~grubości warstw dobierane na podstawie
     docelowej impedancji ścieżek. Przy projektowaniu rozmieszczenia należy
@@ -1206,7 +1207,7 @@ projektowych \cite{bib:ott}, które opisano poniżej:
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.9\textwidth]{graf/hw/stackup.png}
-        \caption{Rozłożenie warstw}
+        \caption{Rozłożenie warstw.}
         \label{hw::stackup}
     \end{figure}
 
@@ -1216,19 +1217,19 @@ projektowych \cite{bib:ott}, które opisano poniżej:
     gdyby warstwy sygnałowe umieścić bliżej ich warst odniesienia, tak, aby
     również spełnić trzecią.
 
-    \item Terminatory --- należy stosować w~celu kontroli impedancji ścieżek
-    transmisyjnych. Dla szybkozmiennych sygnałów i~długich ścieżek z~powodu
-    pojemności i~idukcyjności pasożytniczych w~torze mogą wystąpić niechcianie
-    oscylacje, które należy wytłumić. Terminatory docelowo dobiera się na
-    podstawie impedancji charakterystycznej ścieżki. Wykorzystane sygnały
+    \item \textbf{Terminatory} --- należy stosować w~celu kontroli impedancji
+    ścieżek transmisyjnych. Dla szybkozmiennych sygnałów i~długich ścieżek
+    z~powodu pojemności i~idukcyjności pasożytniczych w~torze mogą wystąpić
+    niechcianie oscylacje, które należy wytłumić. Terminatory docelowo dobiera
+    się na podstawie impedancji charakterystycznej ścieżki. Wykorzystane sygnały
     cyfrowe w~projekcie, mimo że~wolnozmienne częstotliwościowo, posiadają
     bardzo szybkie zbocze, więc wykorzystano terminatory szeregowe w~postaci
     rezystorów o~rezystancji 100 $\Omega$ bezpośrednio przy ich źródle.
 
-    \item Pola masowe --- puste powierzchnie na warstwach sygnałowych należy
-    wypełniać masą i~łączyć przelotkami z~warstwą masy (jeżeli jest). Przy
-    układaniu przelotek należy uważać, żeby nie stworzyć odciętych od reszty
-    powierzchni (slotów), powodujących problematyczne powroty, które
+    \item \textbf{Pola masowe} --- puste powierzchnie na warstwach sygnałowych
+    należy wypełniać masą i~łączyć przelotkami z~warstwą masy (jeżeli jest).
+    Przy układaniu przelotek należy uważać, żeby nie stworzyć odciętych od
+    reszty powierzchni (slotów), powodujących problematyczne powroty, które
     przedstawiono na rysunku \ref{hw::returns}. Wypełnienie masą tworzy ekran
     jak i~również może zapewniać dodatkowe drogi powrotne dla sygnałów.
     

@@ -219,6 +219,38 @@
     \field{urlyear}{2023}
   \endentry
 
+  \entry{bib:art}{book}{}
+    \name{author}{2}{}{%
+      {{hash=HP}{%
+         family={Horowitz},
+         familyi={H\bibinitperiod},
+         given={Paul},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=WH}{%
+         family={Winfield},
+         familyi={W\bibinitperiod},
+         given={Hill},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwa Naukowo-Techniczne}%
+    }
+    \strng{namehash}{HPWH1}
+    \strng{fullhash}{HPWH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{isbn}{83-204-2123-3}
+    \field{title}{Sztuka elektroniki}
+    \list{location}{1}{%
+      {Warszawa}%
+    }
+    \field{year}{1997}
+  \endentry
+
   \entry{bib:ana_ada}{misc}{}
     \name{author}{3}{}{%
       {{hash=JJK}{%
@@ -624,38 +656,6 @@
     \field{sortinithash}{S}
     \field{isbn}{83-01-12158-0}
     \field{title}{Identyfikacja systemów}
-    \list{location}{1}{%
-      {Warszawa}%
-    }
-    \field{year}{1997}
-  \endentry
-
-  \entry{bib:art}{book}{}
-    \name{author}{2}{}{%
-      {{hash=TU}{%
-         family={Tietze},
-         familyi={T\bibinitperiod},
-         given={Ulrich},
-         giveni={U\bibinitperiod},
-      }}%
-      {{hash=SC}{%
-         family={Schenk},
-         familyi={S\bibinitperiod},
-         given={Christoph},
-         giveni={C\bibinitperiod},
-      }}%
-    }
-    \list{publisher}{1}{%
-      {Wydawnictwa Naukowo-Techniczne}%
-    }
-    \strng{namehash}{TUSC1}
-    \strng{fullhash}{TUSC1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{T}
-    \field{sortinithash}{T}
-    \field{isbn}{83-204-2123-3}
-    \field{title}{Sztuka elektroniki}
     \list{location}{1}{%
       {Warszawa}%
     }
