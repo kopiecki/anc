@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  30 OCT 2023 23:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.10.31)  31 OCT 2023 01:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -117,7 +117,7 @@ Package: amsthm 2020/05/29 v2.20.6
 Package: babel 2022/01/26 3.70 The Babel package
 \babel@savecnt=\count272
 \U@D=\dimen148
-\l@unhyphenated=\language8
+\l@unhyphenated=\language87
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
@@ -128,16 +128,12 @@ Language: british 2017/06/06 v3.3r English support from the babel system
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel-english/english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
-Package babel Info: Hyphen rules for 'british' set to \l@english
-(babel)             (\language0). Reported on input line 82.
-Package babel Info: Hyphen rules for 'UKenglish' set to \l@english
-(babel)             (\language0). Reported on input line 83.
 Package babel Info: Hyphen rules for 'canadian' set to \l@english
 (babel)             (\language0). Reported on input line 102.
-Package babel Info: Hyphen rules for 'australian' set to \l@english
-(babel)             (\language0). Reported on input line 105.
-Package babel Info: Hyphen rules for 'newzealand' set to \l@english
-(babel)             (\language0). Reported on input line 108.
+Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
+(babel)             (\language72). Reported on input line 105.
+Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
+(babel)             (\language72). Reported on input line 108.
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/babel-polish/polish.ldf
 Language: polish 2005/03/31 v1.2l Polish support from the babel system
@@ -940,7 +936,7 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 \bibhang=\skip67
 \blx@bcfin=\read4
 \blx@bcfout=\write4
-\blx@langwohyphens=\language9
+\blx@langwohyphens=\language88
 \c@mincomprange=\count382
 \c@maxcomprange=\count383
 \c@mincompwidth=\count384
@@ -3482,12 +3478,12 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 47389 strings out of 480139
- 1040947 string characters out of 5893693
- 1768151 words of memory out of 5000000
- 63817 multiletter control sequences out of 15000+600000
+ 47385 strings out of 478287
+ 1040899 string characters out of 5849288
+ 1772896 words of memory out of 5000000
+ 64056 multiletter control sequences out of 15000+600000
  563159 words of font info for 78 fonts, out of 8000000 for 9000
- 79 hyphenation exceptions out of 8191
+ 1141 hyphenation exceptions out of 8191
  89i,12n,92p,1916b,3460s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share
@@ -3505,7 +3501,7 @@ i8.pfb></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></usr/share/texmf/fon
 ts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/t
 ype1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on main.pdf (127 pages, 26019045 bytes).
+Output written on main.pdf (127 pages, 26019050 bytes).
 PDF statistics:
  2272 PDF objects out of 2487 (max. 8388607)
  1899 compressed objects within 19 object streams

@@ -350,7 +350,7 @@ Po dodaniu dodatkowych obiektów z~układu wyłaniają się dwa, znaczące
 z~perspektywy ANC tory przetwarzania. Pierwszym z~nich jest dokładniej
 zdefiniowany tor podstawowy, tym razem określony jako:
 \begin{equation}
-    P(z^{-1}) = P'(z^{-1})R(z^{-1}),
+    P(z^{-1}) = P'(z^{-1})R(z^{-1}), % zrobic z primem
     \label{eq::p}
 \end{equation}
 
@@ -378,6 +378,9 @@ Jeżeli $W(z^{-1})$ jest w przybliżeniu zbieżne, to w tym przypadku:
     E(z^{-1}) = 0 \implies P'(z^{-1}) = {G(z^{-1})W(z^{-1})S'(z^{-1})}.
     \label{eq::adapt}
 \end{equation}
+\begin{equation}
+    W(z^{-1}) = \frac{P'(z^{-1}}{G(z^{-1})}{S'(z^{-1}}) % równażne
+\end{equation}
 
 Filtr $W(z^{-1})$ można wyznaczyć rozwiązując równanie \ref{eq::adapt} i
 bezpośrednio z~niego wywnioskować, że zadaniem filtru $W(z^{-1})$ w takiej
@@ -391,7 +394,7 @@ $S'(z^{-1})$ wraz z~ich odwróceniem. Jest to mocno problematyczne, ponieważ:
     \ref{eq::adapt} ma więcej współczynników niż lewa).
 
     \item Jeżeli istnieje częstotliwość, dla której $S'(\omega) = 0$ lub
-    $G(z^{-1}) = 0$, to filtr staje się niestabilny. Taką częstotliwość nazywa się
+    $G(\omega) = 0$, to filtr staje się niestabilny. Taką częstotliwość nazywa się
     niesterowalną.
 
 \end{enumerate}
@@ -438,7 +441,7 @@ filtru adaptacyjnego $W(z^{-1})$. Błąd w~takim przypadku można zdefiniować j
     \label{eq::fxlms_error}
 \end{equation}
 
-\noindent gdzie $s(n)$ to odpowiedź impulsowa toru wtórnego $S(n^{-1})$ w~chwili
+\noindent gdzie $s(n)$ to odpowiedź impulsowa toru wtórnego $S(z^{-1})$ w~chwili
 $n$. Operator $\ast$ oznacza konwolucję liniową, czyli filtrację. \\
 \par Jeżeli dla błędu \ref{eq::fxlms_error} zostanie wyprowadzony algorytm LMS,
 otrzymane zostanie zmodyfikowane równanie aktualizacji współczynników:
@@ -520,12 +523,8 @@ algorytmu spełnającym założenie \cite{bib:kuo_morgan}:
     0 < \alpha < 2.
 \end{equation}
 
-W celu wyznaczenia $\hat{P}_x(n)$ można posłużyć się metodą opartą na
-zostosowaniu prostokątnego okna o długości $M$:
-\begin{equation}
-    \hat{P}_x(n) = \frac{1}{M}\sum_{m = 0}^{M - 1} x^2(n - m).
-    \label{eq::px}
-\end{equation}
+%% P(x) = E[x(n)^2] dla x(n) stacjonarnego, więc można posłużyć sie
+%% estymatorem okna (usunąć estymacje mocy?)
 
 Równanie \ref{eq::px} dla $M = L$ może zostać sprowadzone do postaci:
 \begin{equation}
@@ -708,7 +707,7 @@ zidentyfikowany obiekt $F(z^{-1})$. Jeżeli $F(z^{-1}) = \hat{F}(z^{-1})$, to
 wpływ sprzężenia pozostaje całkowicie zneutralizowany. Sygnał $\hat{x}(n)$
 wchodzący na wejście filtra $\hat{S}(z^{-1})$ przyjmuje postać:
 \begin{equation}
-    \hat{x}(n) = x(n) - \sum_{m = 0}^{M - 1}\hat{f_m}y(n - m - 1),
+    \hat{x}(n) = x_f(n) - \sum_{m = 0}^{M - 1}\hat{f_m}y(n - m - 1),
 \end{equation}
 
 \noindent gdzie $u(n)$ jest nowo oznaczonym sygnałem referencyjnym, $M$ jest
