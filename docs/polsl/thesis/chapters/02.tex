@@ -59,7 +59,7 @@ one charakterystyce hałasu pierwotnego, na podstawie której można zdefiniowa�
     niespodziewane zaburzenia ośrodka. Jako, że jest losowy, jego energia jest
     dość równo rozprowadzona w całym paśmie częstotliwości.
     
-    \item \textbf{Hałas wąskopasmowy} --- skoncentrowany w specifycznych
+    \item \textbf{Hałas wąskopasmowy} --- skoncentrowany w specyficznych
     pasmach. Może być wywołany przez maszyny pracujące w sposób okresowy,
     przykładowo silniki lub obracające się wały. W związku, że praca takich
     elementów jest periodyczna, to hałas, który dystrybuują, również.
@@ -123,7 +123,7 @@ schemacie można opisać następująco:
     podstawowego.
     \item $y(n)$ --- sterowanie głośnika, antyhałas mający wynikowo wytłumić
     sygnał $d(n)$.
-    \item $e(n)$ --- hałas resztkowy, mierzony przez mikrofon błedu.
+    \item $e(n)$ --- hałas resztkowy, mierzony przez mikrofon błędu.
 \end{itemize}
 
 \subsection{Identyfikacja toru pierwotnego}
@@ -253,7 +253,8 @@ własna macierzy \textbf{R} \ref{eq::auto_corr_mat}. \\
 niepraktyczne z~powodu problematycznych obliczeń $\lambda_{\text{max}}$ dla
 dużych rzędów filtra $W(z^{-1})$. W związku z~tym, w praktycznym kryterium
 stabilności algorytmu LMS przyjęło się stosować estymację $\lambda_{\text{max}}$
-na podstawie śladu macierzy \textbf{R} \cite{bib:kuo_morgan}:
+na podstawie śladu macierzy \textbf{R} \ref{eq::auto_corr_mat}
+\cite{bib:kuo_morgan}:
 \begin{equation}
     \lambda_{\text{max}} \leq \sum_{l = 0}^{L - 1}\lambda_l = Lr_{xx}(0) = LP_x,
 \end{equation}
@@ -368,11 +369,10 @@ $x(n)$:
     \label{eq::x}
 \end{equation}
 
-Mając na uwadze \ref{eq::p}, \ref{eq::s} i \ref{eq::x} zależność definiująca
-błąd $E(z^{-1})$ na schemacie \ref{analysis::scheme_3} zostaje zmodyfikowana do
-postaci:
+Mając na uwadze \ref{eq::p}, \ref{eq::s} i \ref{eq::x}, zależność definiującą
+błąd $E(z^{-1})$ na schemacie \ref{analysis::scheme_3} można zapisać jako:
 \begin{equation}
-    E(z^{-1}) = R(z^{-1})\left[P''(z^{-1}) - G(z^{-1})S'(z^{-1})W(z^{-1})\right]H(z^{-1}).
+    E(z^{-1}) = R(z^{-1})\left[P''(z^{-1}) - G(z^{-1})W(z^{-1})S'(z^{-1})\right]H(z^{-1}).
 \end{equation}
 
 Jeżeli $W(z^{-1})$ jest w przybliżeniu zbieżne, to w tym przypadku:
@@ -709,16 +709,15 @@ wchodzący na wejście filtra $\hat{S}(z^{-1})$ przyjmuje postać:
     \hat{x}(n) = x_f(n) - \sum_{m = 0}^{M - 1}\hat{f_m}y(n - m - 1),
 \end{equation}
 
-\noindent gdzie $u(n)$ jest nowo oznaczonym sygnałem referencyjnym, $M$ jest
-długością zidentyfikowanego filtra $\hat{F}(z^{-1})$, a $\hat{f}_m$ jego
-zidentyfikowaną odpowiedzią impulsową. Należy zauważyć, że w~schemacie
-wprowadzono dodatkowe opóźnienie o~jedną próbkę przed blokiem zidentyfikowanego
-toru sprzężenia. Jest to spowodowane faktem, że w~czasie kiedy system zbiera
-próbkę sygnału referencyjnego zaznaczonego na schemacie jako $u(n)$, to wyjście
-filtra $W(z^{-1})$ nie jest jeszcze obliczone. \par Transmitancję $F(z^{-1})$
-można identyfikować w~operciu o~te same metody co $S(z^{-1})$. Schemat
-identyfikacji przyjmuje w~tym przypadku postać jak na rysunku
-\ref{analysis::feedback_ident}:
+\noindent gdzie $x_f(n)$ jest sygnałem referencyjnym z uwzględnionym wpływem
+dodatkowej pętli sprzężenia, $M$ jest długością zidentyfikowanego filtra
+$\hat{F}(z^{-1})$, a $\hat{f}_m$ jego zidentyfikowaną odpowiedzią impulsową.
+Należy zauważyć, że w~schemacie wprowadzono dodatkowe opóźnienie o~jedną próbkę
+przed blokiem zidentyfikowanego toru sprzężenia. Jest to spowodowane faktem, że
+w~czasie kiedy system zbiera próbkę sygnału referencyjnego, to wyjście filtra
+$W(z^{-1})$ nie jest jeszcze obliczone. \par Transmitancję $F(z^{-1})$ można
+identyfikować w~operciu o~te same metody co $S(z^{-1})$. Schemat identyfikacji
+przyjmuje w~tym przypadku postać jak na rysunku \ref{analysis::feedback_ident}:
 
 \begin{figure}[H]
     \centering

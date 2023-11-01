@@ -128,7 +128,7 @@ bezpośrednio przy membranie w~cichym pokoju.
 \end{figure}
 
 Przebieg zielony przedstawia wejście przetwornika analogowo-cyfrowego, a~żółty
-wyjście wzmacniacza \ref{hw::op_diff}. Sygnał na wejściu przetwornika jest
+wyjście wzmacniacza \ref{hw::preamp}. Sygnał na wejściu przetwornika jest
 odpowiednio przesunięty o~dodaną składową stałą, a~amplitudy obu sygnałów są
 takie same. Gęstość widmową mocy obliczoną metodą Welcha z~oknem Hanna dla $f_s
 = 8$ kHz przedstawiono na rysunku \ref{ver::200hz_in_psd}:
@@ -156,7 +156,7 @@ Dźwięk odtworzono analogicznie jak w~poprzednim pomiarze.
 \end{figure}
 
 Przebieg zielony przedstawia wejście przetwornika analogowo-cyfrowego, a~żółty
-wyjście wzmacniacza \ref{hw::op_diff}. Poza obserwacjami analogicznymi jak
+wyjście wzmacniacza \ref{hw::preamp}. Poza obserwacjami analogicznymi jak
 w~punkcie wyżej, można zaobserwować, że~filtr \ref{hw::filt} w~tej sekcji
 zachowuje się zgodniej z~obliczeniami. Tłumienie dla sygnału o~częstotliwości
 granicznej wynosi około 3.22 dB. Gęstość widmową mocy obliczoną metodą Welcha
@@ -380,7 +380,7 @@ rysunkach \ref{ver::alpha_220hz}:
        \label{ver::alpha_220hz}
 \end{figure}
 
-Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sine} przedstawiono na
+Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sum} przedstawiono na
 rysunkach \ref{ver::alpha_sum}:
 
 \begin{figure}[H]
@@ -498,7 +498,7 @@ rysunkach \ref{ver::l_220hz}:
     \label{ver::l_220hz}
 \end{figure}
 
-Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sine} przedstawiono na
+Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sum} przedstawiono na
 rysunkach \ref{ver::l_sum}:
 
 \begin{figure}[H]
@@ -547,7 +547,7 @@ przyjęto:
 \end{equation}
 
 Rezultaty dla sygnałów testowych \ref{ver::120hz}, \ref{ver::220hz} i
-\ref{ver::sig_sine} przedstawiono na rysunkach \ref{ver::16_khz}:
+\ref{ver::sig_sum} przedstawiono na rysunkach \ref{ver::16_khz}:
 
 \begin{figure}[H]
     \centering
@@ -594,7 +594,7 @@ przyjęto:
 \end{equation}
 
 Rezultaty dla sygnałów testowych \ref{ver::120hz}, \ref{ver::220hz} i
-\ref{ver::sig_sine} przedstawiono na rysunkach \ref{ver::nf128}:
+\ref{ver::sig_sum} przedstawiono na rysunkach \ref{ver::nf128}:
 
 \begin{figure}[H]
     \centering
@@ -728,7 +728,7 @@ rysunkach \ref{ver::p_sum}:
 \end{figure}
 
 \par Na rysunkach \ref{ver::fifo} przedstawiono przebiegi dla sygnałów testowych
-\ref{ver::120hz}, \ref{ver::220hz} i \ref{ver::sig_sine} uzyskane dla zmiany
+\ref{ver::120hz}, \ref{ver::220hz} i \ref{ver::sig_sum} uzyskane dla zmiany
 wytycznej planisty z~SCHED\_RR na SCHED\_FIFO:
 
 \begin{figure}[H]
@@ -847,7 +847,7 @@ zdecydowanie zbyt wolno, żeby poprawnie reagować na szybkozmienny, pseudolosow
 sygnał wejściowy. W przypadku włączonego systemu, pasmo do 500 Hz jest w wielu
 miejscach o większej mocy, niż w przypadku wyłączonego, co świadczy o tym, że
 włączone ANC tylko pogarsza sprawę i powoduje większy hałas, co jest również
-odczuwalne przez słuchacza znajdującego się niedaleko mikrofonu błedu.
+odczuwalne przez słuchacza znajdującego się niedaleko mikrofonu błędu.
 
 \subsubsection{Eksperyment --- hałasy rzeczywiste}
 
@@ -982,7 +982,7 @@ W dodatkowych eksperymentach zweryfikowano, że:
     posiadających wyróżniających się składowych częstotliwosciowych} ---
     zbieżność algorytmu dla takich sygnałów jest zbyt wolna.
     \item \textbf{System jest w stanie wytłumić mocno odznaczające się składowe
-    częstotliwościowe hałasów rzeczywistych o około 12 dB} --- w przypadku
+    częstotliwościowe hałasów rzeczywistych o około 14 dB} --- w przypadku
     nagrania młynów kulowych, odznaczający się pik w~okolicach 400 Hz został
     wytłumiony o~około 14 dB.
 \end{enumerate}

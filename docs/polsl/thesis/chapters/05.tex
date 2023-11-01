@@ -65,7 +65,7 @@ Jeżeli przerwanie żądające wywołanie innego zadania nadejdzie w~momencie
 wykonywania wywołania systemowego, to takie przerwanie nie zostanie obsłużone do
 momentu jego zakończenia. Oznacza to, że w~niektórych sytuacjach nie sposób
 określić czasu potrzebnego na wykonanie zadania. Dodatkowo, każde zadanie
-w~trybie użytkownika może zostać wywłaszczone przez przerwanie sprzętowe,
+w~przestrzeni użytkownika może zostać wywłaszczone przez przerwanie sprzętowe,
 w~którego trakcie obsługi niemożliwa jest obsługa innych przerwań. Oznacza to,
 że~małe ważne przerwania sprzętowe mogą wywłaszczyć krytyczne czasowo zadania
 czasu rzeczywistego. \par Z~realizacją wywłaszczeń realizowanych w~standardowym
@@ -221,7 +221,7 @@ W~projekcie wykorzystano gotowy zestaw narzędzi udostępnianych przez firmę AR
 W ich skład wchodzi odpowiednio przebudowany GCC oraz zestaw bibliotek
 standardowych języka C i~C++. Wszystkie wyszczególnione na rysunku
 \ref{sw::boot_process} konfigurowalne etapy ładowania systemu operacyjnego wraz
-z~aplikacją działającą w~trybie użytkownia są budowane z~jego użyciem.
+z~aplikacją działającą w~przestrzeni użytkownia są budowane z~jego użyciem.
 
 \subsection{Przygotowanie nośnika}
 
@@ -417,8 +417,8 @@ następująca:
         \item Odniesienie do nadrzędnego sterownika karty --- wykorzystano
         domyślny, czyli \textit{simple-audio-card}.
 
-        \item Format transmisji --- wykorzystano tryb I$^2$S w trybie wyrównania w
-        lewo (ang. \textit{Left justified I$^2$S}), który opisano w sekcji
+        \item Format transmisji --- wykorzystano tryb I$^2$S w trybie wyrównania
+        w lewo (ang. \textit{Left justified I$^2$S}), który opisano w sekcji
         sprzętowej interfejsu cyfrowego.
 
         \item Odniesienia do urządzenia traktowanego jako \textit{master} i~jako
@@ -489,9 +489,9 @@ z~modułami jądra Linux, z~którymi komunikuje się system ALSA.
 
 System ALSA (ang. \textit{Advanced Linux Sound Architecture}) jest głównym
 środowiskiem kontrolującym urządzenia dźwiękowe w~systemie operacyjnym GNU/Linux
-i~jest bezpośrednim pośrednikiem pomiędzy aplikacjami działającymi w~trybie
-użytkownika oraz sterownikami działającymi w~trybie jądra. Udostępnia zestaw
-narzędzi, pozwalających na interakcję z~urządzeniami audio w~systemie
+i~jest bezpośrednim pośrednikiem pomiędzy aplikacjami działającymi w~przestrzeni
+użytkownika oraz sterownikami działającymi w~przestrzeni jądra. Udostępnia
+zestaw narzędzi, pozwalających na interakcję z~urządzeniami audio w~systemie
 (przykładowo programy \textit{aplay, arecord, alsamixer}) oraz~bibliotekę
 \textit{libasound}, która pozwala na~wywoływanie funkcji systemu ALSA
 w~aplikacji użytkownika. Z~funkcji udostępnianych przez bibliotekę można
@@ -502,9 +502,9 @@ reprezentacją dźwięku wykorzystywaną przez opisywany system jest modulacja
 pulsowo-kodowa (ang. \textit{Pulse Code Modulation}, PCM), a~próbki kodowane
 w~ten sposób alokowane są w~tworzonych na poziomie modułów jądra buforach
 cyklicznych, których długość można modyfikować korzystając z~funkcji
-udostępnianych przez bibliotekę. Jeżeli bufor jest zapełniony, sterownik
-generuje przerwanie, którego obsługa oddelegowana jest do modułu DMA (ang.
-\textit{Direct Memory Access}), przeprowadzającego nieblokujący transfer
+udostępnianych przez bibliotekę. Jeżeli bufor jest odpowiednio zapełniony,
+sterownik generuje przerwanie, którego obsługa oddelegowana jest do modułu DMA
+(ang. \textit{Direct Memory Access}), przeprowadzającego nieblokujący transfer
 z~bufora modułu do bufora aplikacji. Próbki w~buforze sterownika szeregowane są
 w~określony sposób, który przedstawiono na rysunku \ref{sw::alsa_buffer}:
 
@@ -518,19 +518,20 @@ w~określony sposób, który przedstawiono na rysunku \ref{sw::alsa_buffer}:
 Bufor składa się fragmentów (lub okresów, ang. \textit{periods}), składających
 się z~określonej ilości ramek. Ramki z~kolei składają się próbek przypisanych
 określonym kanałom karty, których długość zdefiniowana jest przez przyjęty
-format. W~trakcie działania programu w~trybie użytkownika, próbki transportowane
-są z/do~bufora sterownika do/z~bufora aplikacji. W~przypadku odczytywania danych
-może dojść do sytuacji, kiedy nie są one czytane z~odpowiednią prędkością przez
-aplikację w~trybie użytkownika, co~skutkuje nadpisaniem najstarszych próbek
-w~buforze cyklicznym sterownika. W przypadku zapisywania danych, może dojść do
-sytuacji odwrotnej, czyli bufor cykliczny całkowicie się opróżni, kiedy dane nie
-są odpowiednio szybko wysyłane. Opisywane sytuacje odpowiednio przyjęło się
-nazywać \textit{buffer overrun} i~\textit{buffer underrun} i~ich pojawienie się
-zazwyczaj skutkuje przerwami w~nagraniach/odtworzeniach. \par Bardzo znaczącą
-kwestią związaną z~przetwarzaniem sygnałów audio jest latencja, która
-w~omawianym kontekście informuje o~czasie, który jest potrzebny na przetworzenie
-danych w~systemie od momentu ich wprowadzenia do momentu ich wypuszczenia. W
-nomenklaturze systemu ALSA, zdefiniowana jest zależnością:
+format. W~trakcie działania programu w~przetrzeni użytkownika, próbki
+transportowane są z/do~bufora sterownika do/z~bufora aplikacji. W~przypadku
+odczytywania danych może dojść do sytuacji, kiedy nie są one czytane
+z~odpowiednią prędkością przez aplikację w~przestrzeni użytkownika, co~skutkuje
+nadpisaniem najstarszych próbek w~buforze cyklicznym sterownika. W przypadku
+zapisywania danych, może dojść do sytuacji odwrotnej, czyli bufor cykliczny
+całkowicie się opróżni, kiedy dane nie są odpowiednio szybko wysyłane. Opisywane
+sytuacje odpowiednio przyjęło się nazywać \textit{buffer overrun}
+i~\textit{buffer underrun} i~ich pojawienie się zazwyczaj skutkuje przerwami
+w~nagraniach/odtworzeniach. \par Bardzo znaczącą kwestią związaną
+z~przetwarzaniem sygnałów audio jest latencja, która w~omawianym kontekście
+informuje o~czasie, który jest potrzebny na przetworzenie danych w~systemie od
+momentu ich wprowadzenia do momentu ich wypuszczenia. W nomenklaturze systemu
+ALSA, zdefiniowana jest zależnością:
 \begin{equation}
     T_L = \frac{n_fL_{\text{fb}}}{f_sL_{\text{sb}}},
     \label{eq::alsa_latency}
@@ -678,9 +679,11 @@ generatorów tej klasy przedstawiono na rysunku \ref{sw::lfsr}:
 
 Na jakość generatora działającego w~oparciu LFSR wpływ mają numery bitów
 wykorzystywane do obliczenia nowego stanu, rodzaj i~ilość operacji na nich
-przeprowadzanych. Jak można zauważyć, z \ref{sw::lfsr} dla stanu początkowego 0 (ang. \textit{seed}) generator nie będzie działał poprawnie. Każdy LFSR jest związany z~określonym wielomianem i~maksymalny okres, w~którym 
-generowane liczby się nie duplikują, ogarniczony jest przez jego stopień i~zdefiniowany 
-jest przez liczbę bitów $M$:
+przeprowadzanych. Jak można zauważyć, z \ref{sw::lfsr} dla stanu początkowego 0
+(ang. \textit{seed}) generator nie będzie działał poprawnie. Każdy LFSR jest
+związany z~określonym wielomianem i~maksymalny okres, w~którym generowane liczby
+się nie duplikują, ogarniczony jest przez jego stopień i~zdefiniowany jest przez
+liczbę bitów $M$:
 \begin{equation}
     T = 2^{M} - 1.
 \end{equation}
@@ -730,8 +733,8 @@ wejściowe dane można poddawać procesowi decymacji, otrzymując w~ten sposób 
 istnieje tylko w~pętli przetwarzającej poszczególne próbki, a~przetworniki
 pracują w~dalszym ciągu na częstotliwości $f_s$. Decymacja pozwala na $M$ krotne
 zmniejszenie opóźnienia w~torze cyfrowym, wynikającego z~buforowania fragmentów,
-więc przykładowo, dla najniższego możliwego rozmiaru fragmentu $n_{f,min} = 8$
-ramek i~dzielnika $M = 4$ otrzymuje się opóźnienie 2 ramek, czyli 64 bajtów w
+więc przykładowo, dla najniższego możliwego rozmiaru fragmentu $n_{f,min} = 32$
+ramek i~dzielnika $M = 4$ otrzymuje się opóźnienie 8 ramek, czyli 32 bajty w
 przypadku dwóch kanałów i~próbek liczących 16 bitów. \par Proces przetwarzania,
 przedstawiony na rysunku \ref{sw::app_flow} można opisać następująco:
 \begin{enumerate}

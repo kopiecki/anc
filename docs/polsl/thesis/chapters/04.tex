@@ -54,7 +54,7 @@ oraz cieszą się dobrymi opiniami. Ich droższym odpowiednikiem jest flagowy
 Beyerdynamic MM1, a~najbardziej znaczące parametry \cite{bib:behringer}
 przedstawiono poniżej:
 \begin{enumerate}
-    \item \textbf{Typ} --- pojemnościowy, phantom +15~V do +48 V.
+    \item \textbf{Typ} --- pojemnościowy, phantom 15~V do 48 V.
     \item \textbf{Charakterystyka kierunkowa} --- kulista.
     \item \textbf{Odpowiedź częstotliwościowa} --- relatywnie płaska,
     z~pofalowaniami w~paśmie od 5~kHz do 10 kHz i~zakresie od 20~Hz do 20000 Hz.
@@ -407,10 +407,10 @@ fazie względem pierwszego. Tak zrealizowane połączenia, wraz z~odpowiednim
 ekranowaniem w przewodzie, pozwalają na minimalizację zakłóceń oraz strat. \par
 Bezpośrednio po doprowadzeniu sygnałów na układ, poprzez rezystory podciągające
 (ang. \textit{pull-up resistors}) do sygnałów doprowadzone jest zasilanie
-phantomowe o~wartości +15 V. Standard IEC 61938 definiuje wartości rezystancji
+phantomowe o~wartości 15 V. Standard IEC 61938 definiuje wartości rezystancji
 dla poszczególnych wartości napięć zasilania phantomowego i~wynoszą one 6.81
-k$\Omega$ dla zasilania +48 V, 1.2 k$\Omega$ dla zasilania +24 V i~680 $\Omega$
-dla zasilania +12 V. Jako, że wybrana wartość zasilania jest niestandardowa ze
+k$\Omega$ dla zasilania 48 V, 1.2 k$\Omega$ dla zasilania 24 V i~680 $\Omega$
+dla zasilania 12 V. Jako, że wybrana wartość zasilania jest niestandardowa ze
 względu na specyfikację mikrofonów, to jako rezystancje dobrano te, dla których
 wartości napięcia w standardzie jest najbliższa, czyli 680 $\Omega$. Po
 doprowadzeniu zasilania sygnały trafiają na kondensatory odcinające składową
@@ -454,7 +454,7 @@ Stała czasowa $\tau$ oraz częstotliwość odcięcia 3 dB dane są zależności
 
 Dobierając $R = 2$ k$\Omega$ i~$C = 10$ nF uzyskano $f_c \approx 7.957$ kHz.
 Poza filtrem, w~sekcji zaimplementowano saturację w~postaci ogranicznika
-diodowego ograniczającego amplitudy sygnału wejściowego do limitu +12 V.
+diodowego ograniczającego amplitudy sygnału wejściowego do limitu 12 V.
 Omawiany układ przedstawiono na rysunku \ref{hw::emif}:
 
 \begin{figure}[H]
@@ -641,7 +641,7 @@ omawiany układ przedstawiono na rysunku \ref{hw::filt}.
 
 Celem układu pozycjonującego jest zapewnienie, że sygnał wejściowy przetwornika
 analogowo-cyfrowego jest wyskalowany do jego pełnego zakresu dynamicznego,
-wynoszącego od 0 V do +5 V. Sygnał przed trafieniem na omawianą sekcję jest już
+wynoszącego od 0 V do 5 V. Sygnał przed trafieniem na omawianą sekcję jest już
 odpowiednio wzmocniony i~przefiltrowany, więc jedynym zadaniem układu jest
 dodanie do niego składowej stałej, będącej środkiem zakresu przetwornika. \par
 Zadanie te zrealizowano poprzez zastosowanie układu wzmacniacza różnicowego
@@ -692,13 +692,13 @@ dolnoprzepustowy RC pierwszego rzędu \ref{eq::rc}, odcinający możliwe szumy
 powstałe w~wyniku zastosowanych wzmacniaczy operacyjnych oraz zapewniający
 lokalny bufor energii dla kondensatora próbkującego wewnątrz przetwornika.
 Wymagania na taki filtr nie są surowe, ponieważ niechciane pasmo zostało
-odfiltorwane przez wcześniejszy filtr antyaliasingowy, dlatego zdecydowano się
+odfiltrowane przez wcześniejszy filtr antyaliasingowy, dlatego zdecydowano się
 na wartości $R = 1$ k$\Omega$ i~$C = 10$ nF, uzyskując w~ten sposób $f_c \approx
 15.91$ kHz. \par Wejście przetwornika analogowo-cyfrowego należy zabezpieczyć
 przed napięciami przekraczającymi jego zakres. O~układzie realizującym to
 zadanie wspominano już w~sekcji wejścia zbalansowanego, lecz w~tym przypadku,
 limiter ogranicza amplitudy sygnału wejściowego do zakresu przetwornika. Z~tego
-wynika, że diody w~układzie będą połączone z~zasilaniem +5 V i~masą (0 V).
+wynika, że diody w~układzie będą połączone z~zasilaniem 5 V i~masą (0 V).
 Omawiany układ przedstawiono na rysunku \ref{hw::safe}:
 
 \begin{figure}[H]
@@ -855,10 +855,10 @@ McASP (ang. \textit{Multi-channel audio serial port}) jest cyfrowym interfejsem
 komunikacyjnym opracowanym przez firmę Texas Instruments w~celu obsługi
 wielokanałowych systemów audio. W zależności od aplikacji, interfejs
 wykorzystywany jest do realizacji transferów multipleksowanych metodą TDM (ang.
-\textit{Time-division multiplexing}) z wyszczególnieniem konfiguracji I$^2$S
-(ang. \textit{Inter-IC sound}), będących standardowym protokołem komunikacyjnym
+\textit{Time-division Multiplexing}) z wyszczególnieniem konfiguracji I$^2$S
+(ang. \textit{Inter-IC Sound}), będących standardowym protokołem komunikacyjnym
 z~urządzeniami wysyłającymi dane cyfrowe reprezentujące dźwięk w~formacie PCM
-(ang. \textit{Pulse code modulation}). Piny obsługiwane przez interfejs McASP
+(ang. \textit{Pulse Code Modulation}). Piny obsługiwane przez interfejs McASP
 można podzielić na trzy grupy \cite{bib:mcasp}:
 \begin{enumerate}
 
@@ -899,11 +899,11 @@ służący do generacji pozostałych.
 \subsubsection{Metody komunikacji}
 
 Transfery z~wykorzystaniem trybu I$^2$S i~jego pochodnych realizowane są
-z~wykorzystaniem linii zegarowej (ang. \textit{Bit clock}, \textbf{BCLK}),
-selektora kanału (ang. \textit{Frame select}, \textbf{FS}) oraz danych (ang.
-\textit{Serial data}, \textbf{SDATA}). Dane przesyłane są w~formacie
+z~wykorzystaniem linii zegarowej (ang. \textit{Bit Clock}, \textbf{BCLK}),
+selektora kanału (ang. \textit{Frame Select}, \textbf{FS}) oraz danych (ang.
+\textit{Serial Data}, \textbf{SDATA}). Dane przesyłane są w~formacie
 definiującym najbardziej znaczący bit na początku transmisji (ang. \textit{MSB
-first}), której rozpoczęcie definiowane jest przez określony stan selektora
+First}), której rozpoczęcie definiowane jest przez określony stan selektora
 kanału (\textbf{FS}). Typowo zbocze opadające selektora definuje transmisję
 kanału lewego, a~narastające prawego, lecz możliwe są inne konfiguracje.
 
