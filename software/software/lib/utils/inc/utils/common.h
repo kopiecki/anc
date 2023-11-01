@@ -1,6 +1,6 @@
 /**
  * @file    common.h
- * @brief   <Provide some short description here>
+ * @brief   Common macros.
  */
 
 #ifndef COMMON_H_

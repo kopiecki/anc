@@ -18,22 +18,35 @@
 /* Opaque sound card handle */
 typedef struct sound_card_s sound_card_t;
 
+/**
+ * @brief Sound card stream type.
+ */
 enum sound_card_stream {
         SOUND_CARD_STREAM_PLAYBACK = 0,
         SOUND_CARD_STREAM_CAPTURE,
 };
 
+/**
+ * @brief Sound card access type.
+ * 
+ */
 enum sound_card_access {
         SOUND_CARD_ACCESS_INTERLEAVED = 3,
         SOUND_CARD_ACCESS_SEPARATE    = 4,
 };
 
+/**
+ * @brief Sound card format type.
+ */
 enum sound_card_format {
         SOUND_CARD_FORMAT_U16_LE = 4,
         SOUND_CARD_FORMAT_U24_LE = 8,
         SOUND_CARD_FORMAT_U32_LE = 12,
 };
 
+/**
+ * @brief Sound card configuration structure.
+ */
 struct sound_card_config {
         const char* name;
 
@@ -51,27 +64,99 @@ struct sound_card_config {
         bool blocking;
 };
 
+/**
+ * @brief Sound card task structure.
+ */
 struct sound_card_task {
         void* sample_buffer;
         size_t size;
 };
 
+/**
+ * @brief Sound card constructor
+ * 
+ * @param config                Configuration structure.
+ * @return sound_card_t*        State holder.
+ */
 sound_card_t* sound_card_construct(const struct sound_card_config* const config);
+
+/**
+ * @brief Sound card destructor
+ * 
+ * @param this                  State holder
+ */
 void sound_card_destruct(sound_card_t* const this);
 
+/**
+ * @brief Obtain sound card period size.
+ * 
+ * @param this                  State holder
+ * @return int                  Period size in bytes
+ */
 int sound_card_get_period_size_bytes(sound_card_t* const this);
 
+/**
+ * @brief Start sound card operation
+ * 
+ * @param self                  State holder
+ * @return int                  Error code, 0 if success
+ */
 int sound_card_start(sound_card_t* const self);
+
+/**
+ * @brief Obtained writeable samples counter.
+ * 
+ * @param self                  State holder.
+ * @return int                  Error code, 0 if success
+ */
 int sound_card_get_avail(sound_card_t* const self);
 
+/**
+ * @brief Read from sound card in blocking fashion
+ *
+ * @param this                  State holder.
+ * @param buffer                Output buffer.
+ * @param size                  Size of output buffer.
+ * @return int                  Number of received samples.
+ */
 int sound_card_capture(sound_card_t* const this, void* buffer, size_t size);
+
+/**
+ * @brief Write to sound card in blocking fashion
+ *
+ * @param this                  State holder.
+ * @param buffer                Output buffer.
+ * @param size                  Size of output buffer.
+ * @return int                  Number of written samples.
+ */
 int sound_card_playback(sound_card_t* const this, void* buffer, size_t size);
 
+/**
+ * @brief Synchronize two sound card devices (PLAYBACK and CAPTURE)
+ * 
+ * @param playback              Playback device.
+ * @param capture               Capture device.
+ * @return int                  Error code, 0 if success.
+ */
 int sound_card_synchronize(sound_card_t* const playback, sound_card_t* const capture);
 
+/**
+ * @brief Poll sound card playback capability
+ * 
+ * @param playback              Playback device state holder.
+ * @param task                  Write task.
+ * @return int                  Error code, 0 if success.
+ */
 int sound_card_poll_playback_loop(
         sound_card_t* const playback, struct sound_card_task* const task);
 
+/**
+ * @brief Check if sound card device is ready.
+ * 
+ * @param self                  State holder.
+ * @param ready                 Is ready.
+ * @return int                  Error code, 0 if success.
+ */
 int sound_card_poll_is_ready(sound_card_t* const self, bool* const ready);
 
 #endif /* SOUND_CARD_H_ */

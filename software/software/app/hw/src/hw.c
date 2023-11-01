@@ -1,6 +1,6 @@
 /**
  * @file    main.c
- * @brief   <Provide some short description here>
+ * @brief   ANC RT thread variation.
  */
 
 #include <errno.h>
@@ -131,7 +131,7 @@ static int create_devs(void)
         if (error < 0)
                 return error;
 
-        return 0;
+        return error;
 }
 
 static int create_buffers(void)
@@ -164,10 +164,11 @@ static int create_buffers(void)
 
         LOG_INFO("Created buffers");
 
-        return 0;
+        return error;
 }
 
-static int set_scheduler(int policy, int priority, const char* policy_name)
+[[maybe_unused]] static int set_scheduler(
+        int policy, int priority, const char* policy_name)
 {
         if (!priority) {
                 priority = sched_get_priority_max(policy);
@@ -191,7 +192,7 @@ static int set_scheduler(int policy, int priority, const char* policy_name)
                 policy_name,
                 priority);
 
-        return 0;
+        return error;
 }
 
 static int create_rt_thread(
@@ -253,9 +254,11 @@ static int create_rt_thread(
                 LOG_ERROR("Cannot create thread [%d, %s]", error, strerror(error));
                 return error;
         }
+
+        return error;
 }
 
-static void* identificate(void* foo)
+[[maybe_unused]] static void* identificate(void* foo)
 {
         LOG_INFO("Started identification loop");
 
@@ -287,13 +290,17 @@ static void* identificate(void* foo)
                 i += period_size;
         }
 
-        file_helpers_write_buf("error.txt", '\n', error_buff, F_HZ * 4, false);
+        file_helpers_write_buf(
+                "error.txt", '\n', (float*)error_buff, F_HZ * 4, false);
         LOG_INFO("Written error to error.txt");
 
-        file_helpers_write_buf("noise.txt", '\n', ref_buff, F_HZ * 4, false);
+        file_helpers_write_buf(
+                "noise.txt", '\n', (float*)ref_buff, F_HZ * 4, false);
         LOG_INFO("Written identification signal to noise.txt");
 
         LOG_INFO("Identification loop finished");
+
+        return NULL;
 }
 
 static void fxlms(void)
@@ -349,13 +356,17 @@ static void* anc_loop(void* foo)
                 i += period_size;
         }
 
-        file_helpers_write_buf("error.txt", '\n', error_buff, F_HZ * 4, false);
+        file_helpers_write_buf(
+                "error.txt", '\n', (float*)error_buff, F_HZ * 4, false);
         LOG_INFO("Written error to error.txt");
 
-        file_helpers_write_buf("noise.txt", '\n', ref_buff, F_HZ * 4, false);
+        file_helpers_write_buf(
+                "noise.txt", '\n', (float*)ref_buff, F_HZ * 4, false);
         LOG_INFO("Written identification signal to noise.txt");
 
         LOG_INFO("Identification loop finished");
+
+        return NULL;
 }
 
 void cleanup(void)

@@ -1,6 +1,6 @@
 /**
  * @file    logger.c
- * @brief   <Provide some short description here>
+ * @brief   Basic logger implementation
  */
 
 #include "utils/logger.h"
@@ -9,17 +9,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-
-static const char* logger_get_timestamp()
-{
-        time_t raw_time      = 0;
-
-        time(&raw_time);
-        char* time_str                 = ctime(&raw_time);
-        time_str[strlen(time_str) - 1] = '\0';
-
-        return time_str;
-}
 
 void logger_unused(const char* format, ...)
 {

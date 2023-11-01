@@ -1,6 +1,6 @@
 /**
  * @file    file_helpers.c
- * @brief   <Provide some short description here>
+ * @brief   File helpers implemenation
  */
 
 #include "utils/file_helpers.h"

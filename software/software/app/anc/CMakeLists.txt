@@ -1,6 +1,7 @@
 set(target_name "anc")
 
 set(target_sources
+        src/anc.c
         src/main.c
 )
 

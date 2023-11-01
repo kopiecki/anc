@@ -514,20 +514,6 @@ static int sound_card_sw_write_params(sound_card_t* const self)
         return error;
 }
 
-static int sound_card_prepare(sound_card_t* const self)
-{
-        int error = snd_pcm_prepare(self->pcm_handle);
-        if (error < 0)
-                LOG_ERROR(
-                        "Cannot prepare PCM device %s [%s]",
-                        self->name,
-                        snd_strerror(error));
-        else
-                LOG_DEBUG("Prepared PCM device %s", self->name);
-
-        return error;
-}
-
 static int sound_card_hw_configure(
         sound_card_t* const self, const struct sound_card_config* const config)
 {

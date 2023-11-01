@@ -1,6 +1,6 @@
 /**
  * @file    prng.h
- * @brief   <Provide some short description here>
+ * @brief   PRNG implementation.
  */
 
 #include "dsp/prng.h"

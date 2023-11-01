@@ -1,6 +1,6 @@
 /**
  * @file    circ_fifo.c
- * @brief   <Provide some short description here>
+ * @brief   Circural fifo implementation
  */
 
 #include "utils/circ_fifo.h"

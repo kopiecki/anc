@@ -1,6 +1,6 @@
 /**
  * @file    logger.h
- * @brief   <Provide some short description here>
+ * @brief   Basic logger.
  */
 
 #ifndef LOGGER_H_

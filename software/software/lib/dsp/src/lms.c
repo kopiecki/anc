@@ -1,6 +1,6 @@
 /**
  * @file    lms.c
- * @brief   <Provide some short description here>
+ * @brief   LMS implementation
  */
 
 #include "dsp/lms.h"
@@ -21,9 +21,6 @@ void dsp_lms(
         ASSERT(cf != NULL);
         ASSERT(IS_POW_2(order));
 
-        /**
-         * @brief Loop unrolling to optimize processing time.
-         */
         float mult = step * error;
         for (size_t i = 0u; i < order; i++) {
                 w[i] += mult * circ_fifo_peek(cf, i + offset);

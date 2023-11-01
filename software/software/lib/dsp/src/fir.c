@@ -1,6 +1,6 @@
 /**
  * @file    fir.c
- * @brief   <Provide some short description here>
+ * @brief   FIR implementation
  */
 
 #include "dsp/fir.h"

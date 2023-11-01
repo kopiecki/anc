@@ -1,6 +1,6 @@
 /**
  * @file    fir.h
- * @brief   <Provide some short description here>
+ * @brief   FIR filter header.
  */
 
 #ifndef FIR_H_

@@ -1,6 +1,6 @@
 /**
  * @file    assert.h
- * @brief   <Provide some short description here>
+ * @brief   Assertion helpers.
  */
 
 #ifndef ASSERT_H_

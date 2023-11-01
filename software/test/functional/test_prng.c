@@ -29,7 +29,7 @@ static int generate_noises()
         int error = file_helpers_write_buf(
                 "test/functional/output/randn.csv",
                 '\n',
-                randn_buf,
+                (float*)randn_buf,
                 N_SAMPLES,
                 false);
         if (error < 0)
@@ -38,7 +38,7 @@ static int generate_noises()
         error = file_helpers_write_buf(
                 "test/functional/output/xorshift.csv",
                 '\n',
-                xors_buf,
+                (float*)xors_buf,
                 N_SAMPLES,
                 false);
         

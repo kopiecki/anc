@@ -1,6 +1,6 @@
 /**
  * @file    lms.c
- * @brief   <Provide some short description here>
+ * @brief   NLMS implemenation
  */
 
 #include "dsp/lms.h"
