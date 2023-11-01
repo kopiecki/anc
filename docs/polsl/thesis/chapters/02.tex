@@ -70,7 +70,7 @@ W każdym przypadku wymagane jest, żeby element pomiarowy mierzący hałas na
 wejściu systemu był zdolny do zapewnienia odpowiedniej ilość informacji do
 wytworzenia adekwatnego sterowania. W przypadku hałasów szerokopasmowych wybór
 pada na mikrofon referencyjny, w przypadku hałasów wąskopasmowych, wybór
-czujnika można zaoptymalizować na rzecz nieakustycznego, takiego jak tachometr
+czujnika można zoptymalizować na rzecz nieakustycznego, takiego jak tachometr
 lub enkoder, kiedy mamy do czynienia z~hałasami wygenerowanymi przez obracający
 się mechanizm. Z~wykorzystaniem mikrofonu jako czujnika mierzącego hałas
 pierwotny często napotyka się na problem, że generowany antyhałas wpływa na
@@ -222,8 +222,8 @@ błędu \cite{bib:kuo_morgan}:
     r_{xx}(k) \equiv E[x(n)x(n - k)],
 \end{equation}
 
-\noindent metodą najniższego spadku, otrzymuje się równanie aktualizacji parametrów:
-
+\noindent metodą najniższego spadku, otrzymuje się równanie aktualizacji
+parametrów \cite{bib:kuo_morgan}:
 \begin{equation}
     \textbf{w}(n + 1) = \textbf{w}(n) + \mu\textbf{x}(n)e(n),
     \label{eq::lms}
@@ -239,23 +239,23 @@ błędu \cite{bib:kuo_morgan}:
         \end{bmatrix}^T.
 \end{equation}
 
-Parametr $\mu$ przyjęło się nazywać krokiem algorytmu LMS. Jego wartość decyduje
-o~szybkości adaptacji algorytmu i~ograniczona jest kryterium stabilności
-zdefiniowanym:
+Parametr $\mu$ przyjęło się nazywać krokiem algorytmu. Jego wartość decyduje
+o~szybkości adaptacji i~ograniczona jest kryterium stabilności zdefiniowanym
+\cite{bib:kuo_morgan}:
 \begin{equation}
-    0 < \mu < \frac{2}{\lambda_{max}},
+    0 < \mu < \frac{2}{\lambda_{\text{max}}},
     \label{eq::lms_const}
 \end{equation}
 
-\noindent gdzie $\lambda_{max}$ zdefiniowana jest jako maksymalna wartość własna
-macierzy \textbf{R} \ref{eq::auto_corr_mat}. \\
+\noindent gdzie $\lambda_{\text{max}}$ zdefiniowana jest jako maksymalna wartość
+własna macierzy \textbf{R} \ref{eq::auto_corr_mat}. \\
 \par Zastosowanie warunku stabilności w formie \ref{eq::lms_const} jest
-niepraktyczne z~powodu problematycznych obliczeń $\lambda_{max}$ dla dużych
-rzędów filtra $W(z^{-1})$. W związku z~tym, w praktycznym kryterium stabilności
-algorytmu LMS przyjęło się stosować estymację $\lambda_{max}$ na podstawie śladu
-macierzy \textbf{R} \cite{bib:kuo_morgan}:
+niepraktyczne z~powodu problematycznych obliczeń $\lambda_{\text{max}}$ dla
+dużych rzędów filtra $W(z^{-1})$. W związku z~tym, w praktycznym kryterium
+stabilności algorytmu LMS przyjęło się stosować estymację $\lambda_{\text{max}}$
+na podstawie śladu macierzy \textbf{R} \cite{bib:kuo_morgan}:
 \begin{equation}
-    \lambda_{max} \leq \sum_{l = 0}^{L - 1}\lambda_l = Lr_{xx}(0) = LP_x,
+    \lambda_{\text{max}} \leq \sum_{l = 0}^{L - 1}\lambda_l = Lr_{xx}(0) = LP_x,
 \end{equation}
 \begin{equation}
     P_x \equiv r_{xx}(0) = E[x^2(n)],
@@ -273,7 +273,8 @@ macierzy \textbf{R} \cite{bib:kuo_morgan}:
 \end{equation}
 
 Posiadając zdefiniowany aparat obliczeniowy bieżącej estymacji parametrów filtra
-$W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2}:
+$W(z^{-1})$, schemat można zaktualizować jak na rysunku
+\ref{analysis::scheme_2}:
 
 \begin{figure}[H]
     \centering
@@ -282,7 +283,7 @@ $W(z^{-1})$ schemat można zaktualizować jak na rysunku \ref{analysis::scheme_2
     \label{analysis::scheme_2}
 \end{figure}
 
-Bezpośrednio z~\ref{analysis::scheme_2} można zapisać:
+Bezpośrednio ze schematu \ref{analysis::scheme_2} można zapisać:
 \begin{equation}
     E(z^{-1}) = D(z^{-1}) - Y(z^{-1}) = X(z^{-1})\left[P(z^{-1}) -  W(z^{-1})\right].
 \end{equation}
@@ -303,17 +304,17 @@ uwzględniono w nim wpływu dodatkowych obiektów dynamicznych występujących
 w~systemie. Sygnały $x(n)$ i~$e(n)$ mierzone są za pomocą mikrofonów i~sygnał
 akustyczny, docierając do nich, musi przebyć pewną drogę. Dodatkowo, w~domenie
 elektronicznej występuje szereg układów przetwarzających, takich jak filtry,
-wzmacniacze i~przetworniki. Finalnie, wygenerowane wyjście układu musi
-wysterować głośnik i~końcowo trafić w tor propagującego się hałasu. \par
-Wszystkie wyszczególnione wyżej elementy posiadają swoją dynamikę i~zaniechanie
-ich opisów w~przypadku rzeczywistego układu powoduje gorszą zbieżność
-realizowanej adaptacji, a~co za tym idzie, gorsze tłumienie (lub jego całkowity
-brak). Schemat po uwzględnieniu dodatkowych obiektów dynamicznych przedstawiono
-na rysunku \ref{analysis::scheme_3}:
+wzmacniacze i~przetworniki. Finalnie, wyjście $y(n)$ układu musi wysterować
+głośnik i~końcowo trafić w tor propagującego się hałasu. \par Wszystkie
+wyszczególnione wyżej elementy posiadają swoją dynamikę i~zaniechanie ich opisów
+w~przypadku rzeczywistego układu powoduje gorszą zbieżność realizowanej
+adaptacji, a~co za tym idzie, gorsze tłumienie (lub jego całkowity brak).
+Schemat po uwzględnieniu dodatkowych obiektów dynamicznych przedstawiono na
+rysunku \ref{analysis::scheme_3}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graf/analysis/scheme_3.png}
+    \includegraphics[width=0.78\textwidth]{graf/analysis/scheme_3.png}
     \caption{Wyprowadzenie schematu ANC --- dodatkowe transmitancje.}
     \label{analysis::scheme_3}
 \end{figure}
@@ -368,7 +369,8 @@ $x(n)$:
 \end{equation}
 
 Mając na uwadze \ref{eq::p}, \ref{eq::s} i \ref{eq::x} zależność definiująca
-błąd $E(z^{-1})$ zostaje zmodyfikowana do postaci:
+błąd $E(z^{-1})$ na schemacie \ref{analysis::scheme_3} zostaje zmodyfikowana do
+postaci:
 \begin{equation}
     E(z^{-1}) = R(z^{-1})\left[P''(z^{-1}) - G(z^{-1})S'(z^{-1})W(z^{-1})\right]H(z^{-1}).
 \end{equation}
@@ -445,7 +447,8 @@ filtru adaptacyjnego $W(z^{-1})$. Błąd w~takim przypadku można zdefiniować j
 \noindent gdzie $s(n)$ to odpowiedź impulsowa toru wtórnego $S(z^{-1})$ w~chwili
 $n$. Operator $\ast$ oznacza konwolucję liniową, czyli filtrację. \\
 \par Jeżeli dla błędu \ref{eq::fxlms_error} zostanie wyprowadzony algorytm LMS,
-otrzymane zostanie zmodyfikowane równanie aktualizacji współczynników:
+otrzymane zostanie zmodyfikowane równanie aktualizacji współczynników
+\cite{bib:kuo_morgan}:
 \begin{equation}
     \textbf{w}(n + 1) = \textbf{w}(n) + \mu \textbf{x'}(n)e(n),
     \label{eq::fxlms_a}
@@ -459,13 +462,13 @@ Z równań \ref{eq::fxlms_a} i~\ref{eq::fxlms_b} bezpośrednio wynika, że jeże
 filtrem adaptacyjnym znajduje się dodatkowa transmitancja, to musi ona pojawić
 się w torze wejściowym algorytmu. Innymi słowy, wektor wejściowy $x(n)$ musi być
 filtrowany przez transmitancję na wyjściu filtra, skąd bierze się nazwa
-algorytmu (ang. \textit{FXLMS, Filtered x least mean square}). \par Aby
+algorytmu (ang. \textit{FXLMS, Filtered X Least Mean Squares}). \par Aby
 wykorzystać \ref{eq::fxlms_a} niezbędna jest wiedza o postaci transmitancji
 $S(z^{-1})$. Bazując na założeniu, że tor wtórny jest stacjonarny i~mniej
 skomplikowany niż tor podstawowy, estymację jego transmitancji można wyznaczyć
 korzystając z~technik identyfikacji dla obiektów stacjonarnych. Posiadając
-estymację toru wtórnego $S(z^{-1})$, równanie \ref{eq::fxlms_b} można
-zmodyfikować do postaci:
+estymację toru wtórnego $S(z^{-1})$ oznaczoną jako $\hat{S}(z^{-1})$, równanie
+\ref{eq::fxlms_b} można zmodyfikować do postaci:
 \begin{equation}
     \textbf{x'}(n) = \hat{s}(n) \ast \textbf{x}(n),
 \end{equation}
@@ -487,7 +490,7 @@ Przy takim układzie można stosować metody analizy określone dla tradycyjnego
 algorytmu LMS, które będą dokładniejsze, im wolniejsza adaptacja (im mniejsze
 $\mu$). \par W praktyce algorytm FXLMS jest stabilny nawet jeżeli współczynniki
 filtra $W(z^{-1})$ zmieniają się znacznie w odniesieniu do skali czasowej toru
-wtórnego. Maksymalny krok ograniczony jest przez:
+wtórnego. Maksymalny krok ograniczony jest przez \cite{bib:kuo_morgan}:
 \begin{equation}
     \mu_{max} = \frac{1}{P_{x'}(L + \Delta)},
     \label{eq::fxlms_stab}
@@ -550,7 +553,7 @@ modyfikacją przyjęło się nazywać znormalizowanym algorytmem NLMS (ang.
 Uczenia Rekurencyjnego} \cite{bib:figwer}.
 
 \par Normalizację kroku, definiującą algorytm NLMS można zastosować w~algorytmie
-FXLMS, otrzymując następujące równiania:
+FXLMS, otrzymując następujące równania:
 \begin{equation}
     \textbf{w}(n + 1) = \textbf{w}(n) + \mu(n)\textbf{x'}(n)e(n) 
         = \textbf{w}(n) + \alpha\frac{\textbf{x'}(n)}{\textbf{x'}^T(n)\textbf{x'}(n)}e(n),
@@ -564,7 +567,7 @@ FXLMS, otrzymując następujące równiania:
 Tak określony algorytm nie posiada ogólnie przyjętej nazwy, dlatego postępując
 zgodnie z~konwencją nazewnictwa modyfikacji algorytmu LMS, autor odwołując się
 do równań \ref{eq::fxnlms_a} i~\ref{eq::fxnlms_b} będzie używał akronimu FXNLMS
-(\textit{Filtered X Normalised Least Mean Squares}). Zaktualizowany
+(ang. \textit{Filtered X Normalised Least Mean Squares}). Zaktualizowany
 o~normalizację danych wejściowych schemat systemu ANC przedstawiono na rysunku
 \ref{analysis::scheme_6}
 
@@ -578,7 +581,7 @@ o~normalizację danych wejściowych schemat systemu ANC przedstawiono na rysunku
 \subsection{Metody identyfikacji toru wtórnego}
 
 Metod stosowane do identyfikacji toru wtórnego można podzielić na dwie
-kategorie, które opisano poniżej.
+kategorie, które opisano poniżej:
 
 \begin{enumerate}
 
@@ -714,7 +717,7 @@ toru sprzężenia. Jest to spowodowane faktem, że w~czasie kiedy system zbiera
 próbkę sygnału referencyjnego zaznaczonego na schemacie jako $u(n)$, to wyjście
 filtra $W(z^{-1})$ nie jest jeszcze obliczone. \par Transmitancję $F(z^{-1})$
 można identyfikować w~operciu o~te same metody co $S(z^{-1})$. Schemat
-eksperymentu identyfikacji przyjmuje w~tym przypadku postać jak na rysunku
+identyfikacji przyjmuje w~tym przypadku postać jak na rysunku
 \ref{analysis::feedback_ident}:
 
 \begin{figure}[H]

@@ -92,7 +92,7 @@ Samoistnie, jądro Linux nigdy nie będzie podstawą do stworzenia systemu
 operacyjnego czasu rzeczywistego, dlatego celem zestawu łatek PREEMPT\_RT jest
 minimalizacja latencji. Latencja w kontekście obliczeń w~czasie rzeczywistym
 definiowana jest jako czas liczony od momentu wystąpienia zdarzenia, którym może
-być rządanie realizacji zadania krytycznego, do momentu jego obsługi.
+być żądanie realizacji zadania krytycznego, do momentu jego obsługi.
 
 \par Zestaw łatek w odpowiedzi na problem \ref{sw::preempt_1} umożliwia
 wywłaszczenie wszystkich zadań, nawet tych z~trybu jądra. Mając taką możliwość,
@@ -123,7 +123,7 @@ Czyli w~przypadku chęci uzyskania dostępu przez zadanie o~wyższym priorytecie
 zadania \textbf{A} zostaje zwiększony, aby w~trakcie odblokowywania zasobów nie
 nastąpiło jego wywłaszczenie.
 
-\par Dodatkowo, wprawdzenie łatek umożliwia wątką realizację przerwań
+\par Dodatkowo, wprowadzenie łatek umożliwia wątką realizację przerwań
 sprzętowych, które standardowo są niewywłaszczalne. Różnice w~standardowej
 obsłudze przerwania, a~wątkowej przedstawiono na rysunkach \ref{sw::hw_irq}:
 
@@ -238,7 +238,7 @@ poszczególnych partycji przedstawiono poniżej:
     rozruchowego. Wymagany jest system plików FAT32.
 
     \item \textbf{Partycja systemowa} --- zawiera pliki jądra systemu i~drzewa
-    urządzeń. Najczęściej wykorzystuje się jest system plików EXT4.
+    urządzeń. Najczęściej wykorzystuje się system plików EXT4.
 
     \item \textbf{Partycja z~głównym systemem plików} --- zawiera wypakowany
     główny system plików systemu. Wymagany jest system plików EXT4.
@@ -275,16 +275,16 @@ podzielić na trzy główne kroki:
 
 \end{enumerate}
 
-Platforma BeagleBone Black, jako że jest popularnym układem, posiada już
-odpowiednio przygotowane pliki konfiguracyjne dla drugiego etapu budowania, więc
-dodatkowa ingerencja w~proces konfiguracji nie jest wymagana. Wynikiem
-pomyślnego zbudowania programu są pliki \textit{MLO} i~\textit{u-boot.img},
-będące odpowiednio drugim i~trzecim programem rozruchowym. Po wgraniu plików na
-partycję rozruchową nośnika i~uruchomieniu ładowania, trzeci program rozruchowy
-przedstawi się linią poleceń i~wymagane będzie wpisanie kilku komend,
-informujących program, skąd i~gdzie ma załadować pliki jądra systemu. Po
-zapisaniu konfiguracji, programy rozruchowe nie wymagają dodatkowych
-modyfikacji.
+Platforma BeagleBone Black\textsuperscript{\textregistered}, jako że jest
+popularnym układem, posiada już odpowiednio przygotowane pliki konfiguracyjne
+dla drugiego etapu budowania, więc dodatkowa ingerencja w~proces konfiguracji
+nie jest wymagana. Wynikiem pomyślnego zbudowania programu są pliki \textit{MLO}
+i~\textit{u-boot.img}, będące odpowiednio drugim i~trzecim programem
+rozruchowym. Po wgraniu plików na partycję rozruchową nośnika i~uruchomieniu
+ładowania, trzeci program rozruchowy przedstawi się linią poleceń i~wymagane
+będzie wpisanie kilku komend, informujących program, skąd i~gdzie ma załadować
+pliki jądra systemu. Po zapisaniu konfiguracji, programy rozruchowe nie wymagają
+dodatkowych modyfikacji.
 
 \subsection{Jądro Linux}
 
@@ -294,7 +294,7 @@ budowanego systemu w oparciu o~narzędzie \textit{menuconfig}, jednak domyślny
 plik konfiguracyjny, opisujący wybraną platformę na potrzeby realizowanego
 projektu jest wystarczający. \par Jedyną zmianą, którą wprowadzono w~kodach
 źródłowych jądra było dodanie prostego sterownika obsługującego zaprojektowaną
-płytkę drukowaną na bazie kodeku PCM5102A \cite{bib:sitara}. z~najbardziej
+płytkę drukowaną na bazie kodeku PCM5102A \cite{bib:sitara}. Z~najbardziej
 znaczących kwestii, sterownik zawiera deklarację struktury opisującą
 konfigurację płytki dla transferów wejściowych i~wyjściowych (wspierane formaty,
 liczba kanałów) oraz funkcję, która umożliwia jego załadowanie i~widoczność w
@@ -307,11 +307,12 @@ zbudowaniu jądra wymagana jest ich instalacja w~głównym systemie plików.
 \par Proces zastosowania zestawu łatek PREEMPT\_RT można wykonać manualnie, lub
 skorzystać z~gotowej opcji przygotowanej przez twórców repozytorium składującego
 kody źródłowe jądra systemu Linux przystosowane do pracy na platformie
-BeagleBone Black. Wersje jądra z~zastosowanym zestawem łatek PREEMPT\_RT
-oznaczone są tagami \textit{*-rt-*}, gdzie gwiazdki oznaczają numery wersji. Aby
-skorzystać z~gotowo połatanego jądra, wystarczy ściągnąć odpowiednią wersję
-i~przeprowadzić na niej znany już wcześniej proces budowania, którego wynikiem
-będzie plik \textit{zImage}, następnie ładowany na partycję systemową nośnika.
+BeagleBone Black\textsuperscript{\textregistered}. Wersje jądra z~zastosowanym
+zestawem łatek PREEMPT\_RT oznaczone są tagami \textit{*-rt-*}, gdzie gwiazdki
+oznaczają numery wersji. Aby skorzystać z~gotowo połatanego jądra, wystarczy
+ściągnąć odpowiednią wersję i~przeprowadzić na niej znany już wcześniej proces
+budowania, którego wynikiem będzie plik \textit{zImage}, następnie ładowany na
+partycję systemową nośnika.
 
 \subsection{\textit{Device tree}}
 
@@ -531,35 +532,36 @@ w~omawianym kontekście informuje o~czasie, który jest potrzebny na przetworzen
 danych w~systemie od momentu ich wprowadzenia do momentu ich wypuszczenia. W
 nomenklaturze systemu ALSA, zdefiniowana jest zależnością:
 \begin{equation}
-    T_L = \frac{n_fL_{fb}}{f_sL_{sb}},
+    T_L = \frac{n_fL_{\text{fb}}}{f_sL_{\text{sb}}},
     \label{eq::alsa_latency}
 \end{equation}
-gdzie $n_f$ to ilość fragmentów, $L_{fb}$ to rozmiar fragmentu w bajtach, $f_s$
-to częstotliwość próbkowania, a~$L_{sb}$ to rozmiar próbki w~bajtach. Jak można
-zauważyć, licznik równiania \ref{eq::alsa_latency} odpowiada rozmiarowi bufora
-bajtach, czyli całe wyrażnienie odpowiada czasowi potrzebnemu na zbuforowanie
-danych. Przykładowo, chcąc odtworzyć dźwięk z~szesnastobitowego systemu stereo
-(dwa kanały wyjściowe) z~typową częstotliwością audio $f_s = 44.1$ kHz, ramka ma
-rozmiar czterech bajtów (dwa bajty na dwa kanały, $L_{sb} = 2$). Deklarując
-rozmiar fragmentu na 2048 ramek uzyskuje się rozmiar fragmentu $L_{fb} = 8192$
-bajtów. Deklarując rozmiar bufora na dwa fragmenty $n_f = 2$, wynikowo otrzymuję
-się latencję $T_L = 93$ ms. Latencja dla stałego rozmiaru próbki jest więc
-odwrotnie proporcjonalna do częstotliwości próbkowania i~proporcjonalna do
-rozmiaru bufora. \par Ze zmniejszaniem latencji wiąże się szereg problemów.
-Deklarując coraz to mniejsze rozmiary fragmentów i~większe częstotliwości
-próbkowania, zwiększa się ilość przerwań na transfery próbek, co powoduje
-zwiększenie zużycia procesora, zmniejszając responsywność pozostałych aplikacji
-działających w systemie. Dodatkowo, okno czasowe pozwalające na wykonanie
-obliczeń w pętli przetwarzania skraca się, ponieważ czas potrzebny na
-zbuforowanie fragmentu jest krótszy. Minimalny rozmiar fragmentu zdefiniowany
-jest w sterownikach jądra obsługujących interfejsy cyfrowe komunikujace się ze
-wspierającymi je kartami dźwiekowymi i~dla McASP wynosi on \textbf{32 ramek}.
-Analogicznie zdefiniowane są dostępne częstotliwości próbkowania, które dla
-wykorzystywanego protokołu wynoszą \textbf{minimalnie 8 kHz i~maksymalnie 192
-kHz}. Projektując system ANC wymagana jest minimalizacja opóźnień w~torach
-przetwarzania, dlatego w~tym celu porządane jest, aby rozmiaru fragmentu
-i~częstotliwości próbkowania dobrać w~sposób zapewniający jak najniższą
-latencję, ale również pozwalający na zdążenie z~wykonaniem przetwarzania.
+gdzie $n_f$ to ilość fragmentów, $L_{\text{fb}}$ to rozmiar fragmentu w bajtach,
+$f_s$ to częstotliwość próbkowania, a~$L_{\text{sb}}$ to rozmiar próbki
+w~bajtach. Jak można zauważyć, licznik równiania \ref{eq::alsa_latency}
+odpowiada rozmiarowi bufora bajtach, czyli całe wyrażnienie odpowiada czasowi
+potrzebnemu na zbuforowanie danych. Przykładowo, chcąc odtworzyć dźwięk
+z~szesnastobitowego systemu stereo (dwa kanały wyjściowe) z~typową
+częstotliwością audio $f_s = 44.1$~kHz, ramka ma rozmiar czterech bajtów (dwa
+bajty na dwa kanały, $L_{\text{sb}} = 2$). Deklarując rozmiar fragmentu na 2048
+ramek uzyskuje się rozmiar fragmentu $L_{\text{fb}} = 8192$ bajtów. Deklarując
+rozmiar bufora na dwa fragmenty $n_f = 2$, wynikowo otrzymuję się latencję $T_L
+= 93$ ms. Latencja dla stałego rozmiaru próbki jest więc odwrotnie
+proporcjonalna do częstotliwości próbkowania i~proporcjonalna do rozmiaru
+bufora. \par Ze zmniejszaniem latencji wiąże się szereg problemów. Deklarując
+coraz to mniejsze rozmiary fragmentów i~większe częstotliwości próbkowania,
+zwiększa się ilość przerwań na transfery próbek, co powoduje zwiększenie zużycia
+procesora, zmniejszając responsywność pozostałych aplikacji działających w
+systemie. Dodatkowo, okno czasowe pozwalające na wykonanie obliczeń w pętli
+przetwarzania skraca się, ponieważ czas potrzebny na zbuforowanie fragmentu jest
+krótszy. Minimalny rozmiar fragmentu zdefiniowany jest w sterownikach jądra
+obsługujących interfejsy cyfrowe komunikujace się ze wspierającymi je kartami
+dźwiekowymi i~dla McASP wynosi on \textbf{32 ramek}. Analogicznie zdefiniowane
+są dostępne częstotliwości próbkowania, które dla wykorzystywanego protokołu
+wynoszą \textbf{minimalnie 8 kHz i~maksymalnie 192 kHz}. Projektując system ANC
+wymagana jest minimalizacja opóźnień w~torach przetwarzania, dlatego w~tym celu
+porządane jest, aby rozmiaru fragmentu i~częstotliwości próbkowania dobrać
+w~sposób zapewniający jak najniższą latencję, ale również pozwalający na
+zdążenie z~wykonaniem obliczeń.
 \section{Biblioteki użytkownika}
 
 \subsection{Biblioteka \textit{libdsp}}
@@ -567,7 +569,7 @@ latencję, ale również pozwalający na zdążenie z~wykonaniem przetwarzania.
 Implementacja algorytmów cyfrowego przetwarzania sygnałów została wykonana
 w~sposób pozwalający na wykorzystanie dostępnych na module Sitara AM3358 układów
 umożliwiajacych sprzętowe wykonanie operacji zmiennoprzecinkowych
-(\textit{Floating Point Unit}, FPU), oraz przetwarzanie strumieniowe
+(\textit{Floating Point Unit}, FPU), oraz przetwarzania strumieniowego
 (\textit{Single Instruction, Multiple Data}, SIMD). Wykorzystanie tych modułów
 wiąże się z~deklaracją dodatkowych flag przekazywanych kompulatorowi
 i~w~przypadku pakietu GCC są to:
@@ -638,8 +640,8 @@ przypadku zwiększa prędkość obliczeń około sześciokrotnie.
 
 Poza standardowymi sygnałami okresowymi wykorzystywanymi do testów i~symulacji,
 kwestią wartą poruszenia jest generator wykorzystywany w procesie identyfikacji
-toru wtórnego. Jako sygnał identyfikujący wybrano losowy szum biały, którego
-podstawowa implementacja może opierać się na wykorzystaniu funkcji
+toru wtórnego. Jako sygnał identyfikujący wybrano pseudolosowy szum biały,
+którego podstawowa implementacja może opierać się na wykorzystaniu funkcji
 \textit{rand()} z~biblioteki standardowej języka C. Funkcja \textit{rand()}
 wykorzystywana jest do generacji liczby pseudolosowej z~przedziału 0 do wartości
 RAND\_MAX, która zależy od implementacji bilblioteki na daną architekturę
@@ -656,8 +658,8 @@ do~tamtejszych ograniczeń (bardzo niski stan generatora). Wynikiem takiego
 doboru jest implementacja, która słynie z~niskiej losowości bitów mniej
 znaczących w~porównaniu z~bardziej znaczącymi, gdzie generowane liczby mogą
 tworzyć widoczne struktury kratowe lub płaskie, co bardzo dobrze widać w
-przypadku generatora RANDU \cite{bib:rand}. Dodatkowo zweryfikowano, że LCG z niskim
-stanem wypadają bardzo źle w testach losowości statystycznej biblioteki
+przypadku generatora RANDU \cite{bib:rand}. Dodatkowo zweryfikowano, że LCG z
+niskim stanem wypadają bardzo źle w testach losowości statystycznej biblioteki
 \textit{TestU01}. \par Mając na uwadze problemy wyszczególnione wyżej, w~celu
 generacji sygnału identyfikującego posłużono się klasą generatorów będącą
 podzbiorem generatorów działających na bazie rejestru przesuwnego z~liniowym
@@ -680,8 +682,9 @@ przeprowadzanych. Jak można zauważyć, z \ref{sw::lfsr} dla stanu początkoweg
 generowane liczby się nie duplikują, ogarniczony jest przez jego stopień i~zdefiniowany 
 jest przez liczbę bitów $M$:
 \begin{equation}
-    T = 2^{M} - 1
+    T = 2^{M} - 1.
 \end{equation}
+
 Istnieje wiele podzbiorów generatorów implementowanych na bazie LFSR. Jednym
 z~nich są generatory oparte na kombinacji alternatywy rozłącznej, przesunięcia
 i/lub~rotacji aktualnego stanu rejestru do obliczenia kolejnego. Omawiany

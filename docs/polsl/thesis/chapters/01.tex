@@ -54,8 +54,8 @@ pracy \cite{bib:kuo_morgan}. \par Największą wadą pasywnych rozwiązań jest
 jednak kwestia tłumienia hałasów o~niskich częstotliwościach. Z~racji, że
 ośrodek, w~którym propaguje się fala dźwiękowa wraz z~przeszkodami, które
 napotyka na swojej drodze, zachowują się jak filtry dolnoprzepustowe dla
-sygnałów akustycznych, to trudno zrealizować ściśle mechaniczny system zdolny
-wytłumiać hałasy o~największej energii w~pasmach niskich. Długość fali jest
+sygnałów akustycznych, to trudno zrealizować ściśle mechaniczny system zdolny do
+tłumienia hałasów o~największej energii w~pasmach niskich. Długość fali jest
 odwrotnie proporcjonalna do jej częstotliwości 
 \cite{bib:resnick}
 \begin{equation}
@@ -69,16 +69,17 @@ rozległych, grubych i~wykonanych ze specjalnych materiałów, mocno absorbując
 niechciany hałas, barier akustycznych. \par Zważając na powyższe, systemy ANC
 wykorzystywane są głównie w~celu tłumienia hałasów niskoczęstotliwościowych,
 tam, gdzie rozwiązania pasywne są najmniej efektywne. Typowe pasmo zainteresowań
-zamyka się w~przedziale \textbf{od 50 Hz do 500 Hz} \cite{bib:kuo_morgan}. Niskie
-częstotliwości powodują, że wymagania czasowe i~koszta nałożone na system ANC są
-z~reguły mniejsze, próbkowanie może odbywać się rzadziej, co skutkuje dłuższym
-czasem na wykonanie obliczeń i~wypracowaniem sterowania. Typowo, jeżeli hałas
-jest tonalny, ANC jest zdolne do osiągania tłumienia na poziomie 30 dB, gdzie 
-w~przypadku hałasów szerokopasmowych lub losowych, tłumienie jest zazwyczaj gorsze
-o~połowę. Zakres poziomu ciśnienia akustycznego (ang. \textit{Sound pressure
-level}, \textbf{SPL}) jest dobierany na podstawie charakterystyki źródła 
-i~zazwyczaj, ze względu na parametry typowego hałasu i~stosowanych urządzeń,
-zamyka się w~przedziale \textbf{od 80 dB SPL do 100 dB SPL}.
+zamyka się w~przedziale \textbf{od 50 Hz do 500 Hz} \cite{bib:kuo_morgan}.
+Niskie częstotliwości powodują, że wymagania czasowe i~koszta nałożone na system
+ANC są z~reguły mniejsze, próbkowanie może odbywać się rzadziej, co skutkuje
+dłuższym czasem na wykonanie obliczeń i~wypracowaniem sterowania. Typowo, jeżeli
+hałas jest tonalny, ANC jest zdolne do osiągania \textbf{tłumienia na poziomie
+30 dB}, gdzie w~przypadku hałasów szerokopasmowych lub losowych, tłumienie jest
+zazwyczaj gorsze o~połowę. Zakres poziomu ciśnienia akustycznego (ang.
+\textit{Sound pressure level}, \textbf{SPL}) jest dobierany na podstawie
+charakterystyki źródła i~zazwyczaj, ze względu na parametry typowego hałasu
+i~stosowanych urządzeń, zamyka się w~przedziale \textbf{od 80 dB SPL do 100 dB
+SPL}.
 
 \subsection{Idea przewodnia}
 
@@ -100,16 +101,16 @@ wyciszony. Wizualizację fizycznej idei ANC przedstawiono na rysunku
 przypadków zmienny w~czasie, co powoduje, że częstotliwość, amplituda, faza jak
 i~prędkość rozchodzenia się drgań w~ośrodku jest niestacjonarna. Jest to
 spowodowane aktualną temperaturą, wilgotnością powietrza, ciśnieniem jak
-i~rozmieszczeniem oraz typem elementów wokół, absorobujących lub~odbijających
+i~rozmieszczeniem oraz typem elementów wokół, absorbujących lub~odbijających
 fale akustyczne w określony sposób. Takie zachowanie często wymaga, żeby
-projektowany system był adaptacyjny co oznacza, że jego działanie będzie
+projektowany system był adaptacyjny, co oznacza, że jego działanie będzie
 odpowiednio korygowane, w~zależności od zaobserwowanych zmian charaketerystyki
 toru, którym propaguje się niechciany sygnał. Adaptacja realizowana jedynie
 w~sposób analogowy, pomimo że możliwa, posiada duże ograniczenia w zakresie
 elastyczności i~precyzyjności \cite{bib:ana_ada}, dlatego pożądane jest, aby
 w~systemach tego typu wykorzystać układy cyfrowe, próbkujące sygnały z~czujników
 oraz przetwarzające je z~wykorzystaniem odpowiednich algorytmów przetwarzania.
-Układy cyfrowe przeznaczonego do tego celu muszą być odpowiednio szybkie
+\par Układy cyfrowe przeznaczonego do tego celu muszą być odpowiednio szybkie
 i~precyzjne, aby wszystkie potrzebne obliczenia wykonać w~czasie rzeczywistym.
 W~celu uzyskania wysokiego stopnia tłumienia, niezbędne jest, aby amplituda
 hałasu i~antyhałasu była do siebie zbliżona z~dużą precyzją, a~faza dokładnie
@@ -137,7 +138,7 @@ Procesory sygnałowe charakteryzują się budową, która umożliwia sprzętowe
 wykonanie operacji często występujących w cyfrowym przetwarzaniu sygnałów.
 Przykładowo, na tego typu jednostkach istnieje możliwość wykonania operacji
 mnożenia i~odczytu z~dwóch niezależnych pamięci RAM w~jednym cyklu zegarowym,
-bufory cykliczne mogą być zaimplementowane na poziomie sprzętowym wraz ze
+a~bufory cykliczne mogą być zaimplementowane na poziomie sprzętowym wraz ze
 wsparciem dla operacji często wykorzystywanych w~liczeniu szybkiej transformaty
 Fouriera (odwracanie bitów, ang. \textit{bit reversal}). Dodatkowo, instrukcje
 na tego typu jednostkach obliczeniowych mogą być realizowane są w~sposób
@@ -216,33 +217,33 @@ Poza słowami wstępu zawartymi w aktualnym rozdziale, zakres pozostałej treśc
 pracy można opisać następująco:
 \begin{itemize}
 
-    \item Rozdział 2, Analiza tematu --- przedstawienie typów~i struktur
-    systemów ANC, szczegółowe opisanie teoretycznych zasad ich działania wraz z
-    wyprowadzeniem schematu blokowego systemu implementowanego w~dalszej części
-    pracy.
+    \item \textbf{Rozdział 2, Analiza tematu} --- przedstawienie typów~i
+    struktur systemów ANC, szczegółowe opisanie teoretycznych zasad ich
+    działania wraz z wyprowadzeniem schematu blokowego systemu implementowanego
+    w~dalszej części pracy.
 
-    \item Rozdział 3, Założenia i~proponowane rozwiązanie --- opisanie założeń
-    funkcjonalnych stawianych projektowanemu układowi z~podzieleniem na część
-    sprzętową i~programową oraz przedstawienie proponowanego rozwiązania
-    z~opisem na ich podstawie.
+    \item \textbf{Rozdział 3, Założenia i~proponowane rozwiązanie} --- opisanie
+    założeń funkcjonalnych stawianych projektowanemu układowi z~podzieleniem na
+    część sprzętową i~programową oraz przedstawienie proponowanego rozwiązania w
+    formie schematu architektury z~opisem na ich podstawie.
 
-    \item Rozdział 4, Implementacja części sprzętowej --- szczegółowy opis
-    implementacji zaprojektowanej i~sporządzonej elektroniki z~podziałem na
+    \item \textbf{Rozdział 4, Implementacja części sprzętowej} --- szczegółowy
+    opis implementacji zaprojektowanej i~sporządzonej elektroniki z~podziałem na
     określone sekcje.
 
-    \item Rozdział 5, Implementacji części programowej --- szczegółowy opis
-    implementacji oprogramowania z~podzieleniem na system operacyjny i~aplikację
-    działającą w trybie użytkownika.
+    \item \textbf{Rozdział 5, Implementacji części programowej} --- szczegółowy
+    opis implementacji oprogramowania z~podzieleniem na system operacyjny,
+    wprowadzone w nim modyfikacje i~aplikację działającą w trybie użytkownika.
 
-    \item Rozdział 6, Testy i~badania --- zweryfikowanie poprawności
+    \item \textbf{Rozdział 6, Testy i~badania} --- zweryfikowanie poprawności
     sporządzonego rozwiązania poprzez pomiary zasilania, analizę przebiegów
     czasowych określonych sygnałów analogowych oraz cyfrowych. Przeprowadzenie
     badań z~użyciem pełnego systemu na rzeczywistych lub symulowanych sygnałach,
-    ocena wydajności oraz ocena wpływu wybranych parametrów i~konfiguracji na
-    wynikowe tłumienie wraz z~komentarzem.
+    ocena wydajności oraz testowanie wpływu wybranych parametrów i~konfiguracji
+    na wynikowe tłumienie.
 
-    \item Roadział 7, Podsumowanie --- komentarz zamykający treść pracy. Finalna
-    ocena wykonanego systemu, obiektywna ocena jego działania oraz pomysły na
-    dalsze prace.
+    \item \textbf{Rozdział 7, Podsumowanie} --- komentarz zamykający treść
+    pracy. Finalna ocena wykonanego systemu, obiektywna ocena jego działania
+    oraz pomysły na możliwe usprawnienia i dalsze prace.
 
 \end{itemize}

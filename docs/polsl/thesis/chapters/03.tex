@@ -252,7 +252,7 @@ oraz~złącze Ethernet.
     \item Pełna kontrola nad sporządzoną elektroniką poprzez wykorzystany
     protokół cyfrowy.
 
-    \item Realizacja filtracji cyfrowej oraz algorytmu FXLMS.
+    \item Realizacja filtracji cyfrowej oraz algorytmu FXNLMS.
 
     \item Symulacyjna generacja hałasu w~postaci typowych sygnałów okresowych
     (sinus, cosinus, prostokąt, trójkąt, piła i~szum) o~konfigurowalnych
@@ -332,8 +332,8 @@ architektury zaprojektowanego systemu przedstawiono na rysunku \ref{impl::top}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{graf/impl/top.png}
-    \caption{Architektura zaprojektowanego systemu}
+    \includegraphics[width=\textwidth]{graf/impl/top.png}
+    \caption{Architektura zaprojektowanego systemu.}
     \label{impl::top}
 \end{figure}
 
@@ -341,7 +341,7 @@ Aplikacja działająca w przestrzeni użytkownika komunikuje się z~jądrem popr
 biblioteki systemowe, komunikujące się z~odpowiednimi sterownikami wspierającymi
 obsługę wybranego protokołu cyfrowego oraz bezpośrednie wywołania (ang.
 \textit{syscall}). Jądro, poprzez wykorzystanie planisty (ang.
-\textit{scheduler}) zarządza i~kontroluje alokację zasobów procesora platformy
+\textit{scheduler}), zarządza i~kontroluje alokację zasobów procesora platformy
 obliczeniowej potrzebnych do wykonywania procesów, wśród których wyróżniony jest
 proces zaimplementowanej aplikacji. Dzięki wykorzystanym rozszerzeniom czasu
 rzeczywistego aplikacja ma bezpośredni wpływ na przydzielone zasoby, głównie
@@ -357,14 +357,14 @@ programowe oparte są na licencjach otwartoźródłowych. Spośród nich można
 wyróżnić:
 
 \begin{itemize}
-    \item KiCAD --- wykorzystane EDA (ang. \textit{Electronic Design Automation}).
-    \item Język programowania Python --- wykorzystywany do prototypowania,
-    symulacji i~wizualizacji danych.
-    \item Język programowania C --- wykorzystany do implementacji.
-    \item GCC --- jako zestaw kompilatorów.
-    \item CMake i~GNU Make --- jako systemy budowania.
-    \item Docker --- jako narzędzie do wirtualizacji środowiska pracy
-    \item Git --- jako system kontroli wersji.
+    \item \textbf{KiCAD} --- wykorzystane EDA (ang. \textit{Electronic Design Automation}).
+    \item \textbf{Język programowania Python} --- wykorzystywany do
+    prototypowania, symulacji i~wizualizacji danych.
+    \item \textbf{Język programowania C} --- wykorzystany do implementacji.
+    \item \textbf{GCC} --- jako zestaw kompilatorów.
+    \item \textbf{CMake i~GNU Make} --- jako systemy budowania.
+    \item \textbf{Docker} --- jako narzędzie do wirtualizacji środowiska pracy
+    \item \textbf{Git} --- jako system kontroli wersji.
 \end{itemize}
 
 

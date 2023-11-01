@@ -12,11 +12,11 @@ Sporządzoną płytkę drukowaną przedstawiono na rysunku \ref{ver::board}:
 \end{figure}
 
 Widoczne na płyce przewody montażowe (kynary) są wynikiem błędu sprzętowego
-związanego z~zasilaniem phantom, dla którego bez modyfikacji poprowadzono +12 V.
-Z~racji, że wykorzystane mikrofony są wyspecyfikowane na zakres +15 do +48 V,
-zasilanie +15 V dostarczono przez przewody z~dużych kondensatorów sekcji
+związanego z~zasilaniem phantom, dla którego bez modyfikacji poprowadzono 12~V.
+Z~racji, że wykorzystane mikrofony są wyspecyfikowane na zakres od 15~V do 48~V,
+zasilanie 15~V dostarczono przez przewody z~dużych kondensatorów sekcji
 filtrującej główne zasilanie. Później zweryfikowano, że wybrane mikrofony
-również działają dobrze dla zasilania +12 V, pomiomo, że nie są na niego
+również działają dobrze dla zasilania 12~V, pomiomo, że nie są na niego
 wyspecyfikowane, więc finalnie przewody można usunąć i~zostawić początkowe
 połączenia.
 
@@ -58,7 +58,7 @@ zakresach.
 \subsection{Wyjściowe sekcje analogowe i~przetworniki}
 
 Pomiary wejść i~wyjść wzmacniacza \ref{hw::gain_out} dla wejściowego sinusa o
-częstotliwości 200 Hz i~ampitudzie równej połowie zakresu przetwornika
+częstotliwości 200~Hz i~ampitudzie równej połowie zakresu przetwornika
 przedstawiono na rysunku \ref{ver::gain_out}:
 
 \begin{figure}[H]
@@ -72,7 +72,7 @@ Przebieg zielony przedstawia wyjście, a~żółty wejście wzmacniacza
 \ref{hw::gain_out}. Jak można zauważyć, wzmocnienie dość dobrze pokrywa się
 z~obliczoną teoretycznie wartością $k \approx 4$, nie powoduje saturacji
 i~pozostawia bezpieczny zakres 2 V. \par Pomiary wejść i~wyjść filtra
-\ref{hw::filt} dla wejściowych sinusów o~częstotliwościach 100 Hz i~500 Hz oraz
+\ref{hw::filt} dla wejściowych sinusów o~częstotliwościach 100~Hz i~500~Hz oraz
 amplitudach równych połowie zakresu przetwornika przedstawiono na rysunkach
 \ref{ver::filter}:
 
@@ -257,7 +257,7 @@ skalowaniu do zakresu -1 do 1. Z parametrów poddawanych ocenie wyróżniono:
 
 Oceny wpływów poszczególnych parametrów realizowano dla stałych wartości
 pozostałych. Zestaw parametrów stanowiących punkt referencjny
-do reszty badań przedstawiono w tabeli \ref{tab::ref}
+do reszty badań przedstawiono w tabeli \ref{tab::ref}:
 
 \begin{table}[H]
     \centering
@@ -323,7 +323,7 @@ dobierano zgodnie z~zależnością:
 \end{equation}
 
 Rezultaty dla pierwszego sygnału testowego \ref{ver::120hz} przedstawiono na
-rysunku \ref{ver::alpha_120hz}:
+rysunkach \ref{ver::alpha_120hz}:
 
 \begin{figure}[H]
     \centering
@@ -352,7 +352,7 @@ rysunku \ref{ver::alpha_120hz}:
 \end{figure}
 
 Rezultaty dla drugiego sygnału testowego \ref{ver::220hz} przedstawiono na
-rysunku \ref{ver::alpha_220hz}:
+rysunkach \ref{ver::alpha_220hz}:
 
 \begin{figure}[H]
     \centering
@@ -381,7 +381,7 @@ rysunku \ref{ver::alpha_220hz}:
 \end{figure}
 
 Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sine} przedstawiono na
-rysunku \ref{ver::alpha_sum}:
+rysunkach \ref{ver::alpha_sum}:
 
 \begin{figure}[H]
     \centering
@@ -450,8 +450,8 @@ z zależnością:
     L(i) = 2^i \qquad \text{dla } i = 8, 9, 10.
 \end{equation}
 
-Rezultaty dla pierwszego sygnału testowego \ref{ver::120hz} przedstawiono na rysunku
-\ref{ver::l_120hz}:
+Rezultaty dla pierwszego sygnału testowego \ref{ver::120hz} przedstawiono na
+rysunkach \ref{ver::l_120hz}:
 
 \begin{figure}[H]
     \centering
@@ -474,8 +474,8 @@ Rezultaty dla pierwszego sygnału testowego \ref{ver::120hz} przedstawiono na ry
        \label{ver::l_120hz}
 \end{figure}
 
-Rezultaty dla drugiego sygnału testowego \ref{ver::220hz} przedstawiono na rysunku
-\ref{ver::l_220hz}:
+Rezultaty dla drugiego sygnału testowego \ref{ver::220hz} przedstawiono na
+rysunkach \ref{ver::l_220hz}:
 
 \begin{figure}[H]
     \centering
@@ -499,7 +499,7 @@ Rezultaty dla drugiego sygnału testowego \ref{ver::220hz} przedstawiono na rysu
 \end{figure}
 
 Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sine} przedstawiono na
-rysunku \ref{ver::l_sum}:
+rysunkach \ref{ver::l_sum}:
 
 \begin{figure}[H]
     \centering
@@ -579,7 +579,7 @@ próbkowania nie wpływa znacząco na przebiegi, to~jej wzrost objawia się
 mniejszym czasem na wykonanie obliczeń. W trakcie badań krotność decymacji
 pozostawała niezmienna, więc w związku z dwukrotnym zwiększeniem częstotliwości
 próbkowania, ilość obliczeń w pętli przetwarzania również zwiększyła się
-dwukrotnie. Zaobserwowano, że~dla częstotliwości większej niż 4000 Hz ($f's >
+dwukrotnie. Zaobserwowano, że~dla częstotliwości większej niż 4000~Hz ($f's >
 4000$ Hz) system zaczyna nie nadążać z wykonywaniem obliczeń, co~skutkuje,
 analogicznie jak w~przypadku zbyt długich filtrów, przerwaniem transmisji
 i~destabilizacją pętli przetwarzania.
@@ -640,7 +640,7 @@ z~zależnością:
 \end{equation}
 
 Rezultaty dla pierwszego sygnału testowego \ref{ver::120hz} przedstawiono na
-rysunku \ref{ver::p_120hz}:
+rysunkach \ref{ver::p_120hz}:
 
 \begin{figure}[H]
     \centering
@@ -670,7 +670,7 @@ rysunku \ref{ver::p_120hz}:
 \end{figure}
 
 Rezultaty dla drugiego sygnału testowego \ref{ver::220hz} przedstawiono na
-rysunku \ref{ver::p_120hz}:
+rysunkach \ref{ver::p_120hz}:
 
 \begin{figure}[H]
     \centering
@@ -699,7 +699,7 @@ rysunku \ref{ver::p_120hz}:
 \end{figure}
 
 Rezultaty dla trzeciego sygnału testowego \ref{ver::sig_sum} przedstawiono na
-rysunku \ref{ver::p_sum}:
+rysunkach \ref{ver::p_sum}:
 
 \begin{figure}[H]
     \centering
@@ -882,7 +882,7 @@ w analogiczny sposób przedstawiono na rysunku \ref{ver::pompy}:
 
 Jak można zauważyć z rysunku \ref{ver::mlyny}, układ był w stanie wytłumić mocno
 odznaczającą się składową występujacą w okolicach częstotliwości 400 Hz o około
-12 dB. Poza osłabieniem odznaczającej się składowej, moc reszty przy włączonym
+14 dB. Poza osłabieniem odznaczającej się składowej, moc reszty przy włączonym
 tłumieniu jest na podobnym poziomie co przy wyłączonym systemie. \par Dla
 drugiego eksperymentu, wprost z rysunku \ref{ver::pompy} można zauważyć, że dla
 tego typu sygnału układ nie działa w sposób przewidywalny. Włączony system
@@ -936,7 +936,7 @@ Wpływy poszczególnych parametrów na działanie systemu
 przedstawiono poniżej:
 
 \begin{enumerate}
-    \item Wielkość kroku adaptacji $\alpha$ algorytmu NLMS --- decyduje
+    \item \textbf{Wielkość kroku adaptacji algorytmu NLMS} $\alpha$ --- decyduje
     o~szybkości zbiegania się algorytmu. Algorytm najszybciej zbiega się dla:
     \begin{equation}
         \alpha_{ref} = 0.1,
@@ -944,30 +944,30 @@ przedstawiono poniżej:
     staje się niestabilny dla większych wartości i zbiega się wolniej im wartość
     jest mniejsza.
 
-    \item Długość filtra $W(z^{-1})$ --- nie wpływa znacząco na jakość
+    \item \textbf{Długość filtra} $W(z^{-1})$ --- nie wpływa znacząco na jakość
     tłumienia, ale ma duży wpływ na szybkość wykonywania obliczeń. Dla długości
     większych niż 1024 ($L > 1024$) obliczenia zaczynają trwać zbyt długo, co
     skutkuje przerwami w~transmisji i~destabilizacją pętli przetwarzania.
 
-    \item Częstotliwość próbkowania $f'_s$ --- podobnie jak długość filtra
+    \item \textbf{Częstotliwość próbkowania} $f'_s$ --- podobnie jak długość filtra
     $W(z^{-1})$, nie wpływa znacząco na jakość tłumienia, ale im jest większa,
     tym okno czasowe na wykonanie obliczeń mniejsze. Zweryfikowano,
     że~zaprojektowany układ zaczyna nie nadążać z~obliczeniami dla
     częstotliwości większej niż 4000 Hz ($f'_s > 4000$ Hz), z uwzględnieniem
     czterokrotnej decymacji ($M = 4$).
 
-    \item Długość fragmentu $n_f$ --- im większa, tym system działa gorzej.
+    \item \textbf{Długość fragmentu} $n_f$ --- im większa, tym system działa gorzej.
     Zwiększenie długości powoduje zwiększenie opóźnienia w~torze przetwarzania,
     co ma mocno negatywny wpływ na jakość tłumienia.
 
-    \item Poziom priorytetu $P$ --- do momentu, jeżeli nie przekracza się
+    \item \textbf{Poziom priorytetu} $P$ --- do momentu, jeżeli nie przekracza się
     poziomu, w~którym pracują inne procesy w systemie, nie powoduje zmian. Poza
     tym poziomem, który dla przeprowadzonych pomiarów zdefiniowany był na $P =
     20$, istnieje szansa, że algorytm się rozsynchronizuje.
 
-    \item Wytyczna planisty --- w~wykonanych badaniach nie zaobserwowano
-    decydującego wpływu, jednak jak można zaobserwować, SCHED\_RR działa
-    nieznacznie lepiej.
+    \item \textbf{Wytyczna planisty} --- w~wykonanych badaniach nie
+    zaobserwowano decydującego wpływu, jednak jak można zaobserwować, SCHED\_RR
+    działa nieznacznie lepiej.
 \end{enumerate}
 
 W dodatkowych eksperymentach zweryfikowano, że:
@@ -984,5 +984,5 @@ W dodatkowych eksperymentach zweryfikowano, że:
     \item \textbf{System jest w stanie wytłumić mocno odznaczające się składowe
     częstotliwościowe hałasów rzeczywistych o około 12 dB} --- w przypadku
     nagrania młynów kulowych, odznaczający się pik w~okolicach 400 Hz został
-    wytłumiony o~około 12 dB.
+    wytłumiony o~około 14 dB.
 \end{enumerate}
