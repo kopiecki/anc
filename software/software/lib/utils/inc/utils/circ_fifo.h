@@ -61,13 +61,19 @@ void circ_fifo_write(struct circ_fifo* const self, float data);
 float circ_fifo_read(struct circ_fifo* const self);
 
 /**
- * @brief Erase all data from circ fifo
+ * @brief Get all data from circ fifo
  * 
  * @param self          State holder
- * @return float* 
+ * @return float*       Obtained data
  */
 float* circ_fifo_purge(struct circ_fifo* const self);
 
+/**
+ * @brief Get circ fifo capacity
+ * 
+ * @param self          State holder
+ * @return size_t       Capacity
+ */
 static inline size_t circ_fifo_capacity(struct circ_fifo* const self)
 {
         return self->mask + 1u;
