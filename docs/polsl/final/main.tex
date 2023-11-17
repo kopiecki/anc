@@ -1,0 +1,274 @@
+\documentclass{beamer}
+
+\usetheme{Berlin}
+\usepackage{polski}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{subcaption}
+\usefonttheme{serif}
+
+\title{Egzamin dyplomowy}
+\subtitle{Układ aktywnego tłumienia hałasu pod nadzorem jądra systemu Linux z~rozszerzeniami real-time}
+
+\author{Daniel Kopiecki}
+\institute{Politechnika Śląska \\ Wydział Automatyki, Elektroniki i Informatyki}
+
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cel pracy}
+    Skonstruowanie prostego układu aktywnej redukcji hałasu w oparciu o
+    samodzielnie zaprojektowaną elektronikę, wykorzystując system operacyjny
+    ogólnego przeznaczenia z jądrem zawierającym rozszerzenia do pracy w czasie
+    rzeczywistym. 
+    \vfill
+    \par Projekt układu można podzielić na:
+    \begin{enumerate}
+        \item \textbf{Część sprzętową} --- płytkę drukowaną pracującą jako
+        zewnętrzna karta pomiarowa.
+        \item \textbf{Część programową} --- zmodyfikowany system operacyjny wraz
+        z aplikacją działającą w przestrzeni użytkownika.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Najważniejsze założenia projektowe}
+    \begin{itemize}
+        \item Wykonanie analogowego układu elektronicznego w postaci płytki
+        drukowanej, zdolnego do przetworzenia dwóch wejściowych i dwóch
+        wyjściowych kanałów audio do postaci cyfrowej wraz z ich dostarczeniem
+        do wybranej jednostki obliczeniowej.
+        \item Wykorzystanie jądra wyposażonego w rozszerzenia do pracy w czasie
+        rzeczywistym wraz z weryfikacją ich działania.
+        \item Implementacja aplikacji w przestrzeni użytkownika realizującej
+        proces aktywnej redukcji hałasu wraz z narzędziami do testów i
+        symulacji.
+        \item Wykorzystanie ogólnodostępnych i otwartoźródłowych rozwiązań.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Architektura systemu}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\linewidth]{../images/top.png}
+        \caption{Architektura skonstruowanego systemu}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Część sprzętowa}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{../images/hw_top.png}
+        \caption{Część sprzętowa --- architektura}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Część sprzętowa --- zasilania}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.75\linewidth]{../images/power_dist.png}
+        \caption{Diagram zasilań części sprzętowej}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Część sprzętowa --- tory analogowe}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{../images/analog_in.png}
+        \caption{Wejściowe tory analogowe}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{../images/analog_out.png}
+        \caption{Wyjściowe tory analogowe}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Część sprzętowa --- przetworniki}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{../images/adc_dac.png}
+        \caption{Sekcja przetworników}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Część programowa}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../images/app_top.png}
+        \caption{Architektura programowa}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Część programowa --- aplikacja}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{../images/app_flow.png}
+        \caption{Przebieg działania aplikacji}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rezultaty --- karta pomiarowa}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../images/board.png}
+        \caption{Karta pomiarowa}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+
+    \frametitle{Rezultaty --- pomiary z wykorzystaniem karty}
+    \centering
+    \begin{minipage}{.49\textwidth}
+    \centering
+    \begin{figure}
+        \begin{subfigure}{0.75\textwidth}
+          \centering
+          \includegraphics[width=\linewidth]{../images/200hz_in.png}
+        \end{subfigure}
+        \begin{subfigure}{\textwidth}
+          \centering
+          \includegraphics[width=\linewidth]{../images/200hz_psd_in.png}
+        \end{subfigure}
+        \caption{Sinusoida 200 Hz}
+        \end{figure}
+    \end{minipage}%
+    \begin{minipage}{.49\textwidth}
+        \begin{figure}
+            \begin{subfigure}{0.75\textwidth}
+              \centering
+              \includegraphics[width=\linewidth]{../images/500hz_in.png}
+            \end{subfigure}
+            \begin{subfigure}{\textwidth}
+              \centering
+              \includegraphics[width=\linewidth]{../images/500hz_psd_in.png}
+            \end{subfigure}
+            \caption{Sinusoida 500 Hz}
+            \end{figure}
+    \end{minipage}
+    
+\end{frame}
+
+\begin{frame}
+\frametitle{Stanowisko pomiarowe}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{../images/stand.png}
+    \caption{Stanowisko pomiarowe}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Przykładowe przebiegi błedu dla sygnałów testowych}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/alpha_120hz_01.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/alpha_220hz_01.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/alpha_sum_01.png}
+    \end{subfigure}
+       \caption{Przebiegi referencyjne $e(n)$ dla sygnałów testowych.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Przebiegi błędu --- jądro bez RT}
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../images/bad_120.png}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../images/bad_220.png}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../images/bad_sum.png}
+        \end{subfigure}
+        \caption{Przebiegi referencyjne $e(n)$ dla sygnałów testowych.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Losowe pobudzenia sinusoidalne}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\linewidth]{../images/anc_rand_sin.png}
+        \caption{Eksperyment --- losowe pobudzenia sinusoidalne}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hałas szerokopasmowy}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\linewidth]{../images/anc_rand_0.png}
+        \caption{Eksperyment --- hałas losowy}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hałasy rzeczywiste --- młyny kulowe}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\linewidth]{../images/mlyny.png}
+        \caption{Eksperyment --- młyny kulowe}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hałasy rzeczywiste --- pompy wody}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\linewidth]{../images/anc_opc.png}
+        \caption{Eksperyment --- pompy wody}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Badania}
+    \begin{itemize}
+        \item \textbf{Parametry} --- wielkość kroku adaptacji, długość filtra,
+        częstotliwość próbkowania, długość fragmentu, poziom priorytetu,
+        wytyczna planisty.
+        \item \textbf{Rezultaty} --- system jest w stanie tłumić sygnały
+        wąskopasmowe o około 15 dB do założonego pasma (500 Hz), jednak nie
+        radzi sobie z szerokopasmowymi.
+        \item \textbf{Powody} --- duże opóźnienia, buforowanie, zbyt wolna
+        adaptacja, latencja systemu operacyjnego.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \huge{Serdecznie dziękuję za uwagę}
+\end{frame}
+
+\end{document}
+
